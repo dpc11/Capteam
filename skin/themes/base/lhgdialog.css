@@ -1,0 +1,193 @@
+body
+{
+
+	background-color: #fff; 
+	height: 100%;
+ 
+}
+
+.contain
+{
+    position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	overflow: hidden;
+	border: 1px solid #AAAAAA;
+}
+
+.dlgtit
+{
+    height: 50px;
+	margin: 0px;
+	cursor: move;
+
+	background-repeat: repeat-x;
+	background-position: 0 0;
+	
+	border-bottom: 1px solid #E5E5E5;
+}
+
+.dlgtit #txt
+{
+
+	position: relative;
+	left: 15px;
+	top: 6px;
+	color: #000000;
+	font: 18px Tahoma, Arial, sans-serif;
+	line-height:35px;
+
+}
+.dlgtit>#txt{ +top: 6px;  }
+
+#xbtn
+{
+	position: absolute;
+	top: 15px;
+	right: 15px;
+	width: 21px;
+	height: 20px;
+	cursor: default;
+	background-image: url(images/btn_bg.gif);
+	background-repeat: no-repeat;
+	background-position: -22px 0;
+
+}
+
+.dlginner{ padding: 2px; }
+
+.dlgfoot
+{
+    position: absolute;
+	height: 29px;
+	_width: 100%;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-image: url(images/d_bg.gif);
+	background-repeat: repeat-x;
+	background-position: 0 -26px;
+}
+
+.dlgfoot ul
+{
+    list-style: none;
+	margin-top: 5px;
+	margin-right: 10px !important;
+	margin-right: 0;
+}
+
+.dlgfoot ul li
+{
+    width: 60px;
+	height: 21px;
+	float: right;
+	cursor: default;
+	margin-right: 10px;
+	text-align: center;
+	background-image: url(images/btn_bg.gif);
+	background-repeat: no-repeat;
+	background-position: 0 -21px;
+}
+
+.dlgfoot ul li span
+{
+    position: relative;
+	top: 3px;
+	_top: 5px;
+	font: 12px Verdana, Arial, sans-serif;
+}
+.dlgfoot>ul li span{ +top: 5px; }
+
+#dark
+{
+    position: absolute;
+	right: 2px;
+	bottom: 2px;
+	_bottom: 1px;
+	font-size: 0;
+	margin-right: 0;
+	height: 11px;
+	width: 11px;
+	cursor: nw-resize;
+	background-image: url(images/btn_bg.gif);
+	background-repeat: no-repeat;
+	background-position: -41px -9px;
+}
+
+#throbber
+{
+    width: 180px;
+    height: 25px;
+	top: 50%;
+	left: 50%;
+	margin-left: -90px;
+    margin-top: -12px;	
+	z-index: 2;
+	text-align: right;
+	font: 12px Verdana, Arial, sans-serif;
+	background-image: url(images/wait.gif);
+	background-repeat: no-repeat;
+}
+
+/********calendar*******/
+img {border: none;}
+li {list-style: none;}
+body,html{  font-family:Arial; width:100%;   margin: 0; padding: 0; }
+body {
+	font-size: 12px;
+}
+table {
+	font-size: 12px;
+}
+p{ margin:5px;}
+.fleft{float: left;}
+.fright{float: right;}
+.clearboth {
+	 clear:both;
+}
+.glink a{  text-decoration:none;  color:#0076AE;  }
+.glink a:hover{ text-decoration:underline; color:#0076AE}
+
+.calendar_main{ width:100%; background: #DFDFDF; }
+
+.day_border{ border:1px #B0B0B0 solid; }
+
+.day_hover_style{background: #D6E5F2; }
+.onday_style{background: #D0D7DF; width:14.2%; height:125px; }
+.day_style{background: #ffffff; width:14.2%; height:125px; }
+.day_mouse{ cursor: pointer; }
+.day_mouse_nul{ cursor: pointer; width:99%;}
+.day_mouse a{ cursor: pointer; color:#000000 !important;}
+.day_no{height:12px; text-align:right; margin: 4px; font-weight:bold; font-size:15px;}
+.day_main{height:105px; overflow:hidden; }
+
+.log_text{color: #666666; word-break: break-all;  overflow:auto; height:76px;}
+.overflow-a{ overflow:auto}
+.month_title{font-weight:bold; font-size:18px;}
+.ui-icon{ width: 16px; height: 16px; background-image: url(images/ui-icons_222222_256x240.png); }
+.month_pre{background-position: -98px -16px;}
+.month_next{background-position: -35px -16px;}
+.week_title{color:#999999; width:100%; text-align:center;}
+
+/********dialog*******/
+.dialog_main{ width:95%;}
+.dialog_left{ width:50px; }
+.dialog_select { width:100px; }
+.dialog_texta { width:95%; height: 165px;}
+.dialog_submit{ display:block; padding-top:5px; margin-top:5px; border-top: 1px dotted #ccc;}
+
+/********exam*******/
+.exam_text{ width:260px; height:70px; }
+.gray{ color:#999;}
+
+/********add task*******/
+.pt_list {  border-bottom:1px dashed #cccccc; line-height:200%; }
+.float_right{ float:right;}
+.float_left{ float:left;}
+.rowcon{ width:99%; }
+.icon_folder{ background:url(images/folder-horizontal.png) no-repeat; padding-left:20px; height:18px; display:block; float:left;}
+.icon_file{ background:url(images/document-text.png) no-repeat; padding-left:20px;  display:block; float:left; }
+.update_bg { background:#FBFAF3;  border:1px solid #FCEFA1; margin:25px auto; padding: 25px 0px;  text-align:center; width:65%;}

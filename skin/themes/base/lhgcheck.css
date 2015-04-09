@@ -1,0 +1,30 @@
+﻿/* 表单验证用到的样式开始 */
+/* chker是错误提示信息样式，chkok是成功提示信息样式 */
+.chker, .chkok
+{
+	margin-left: 5px;
+	padding-left: 20px;
+	font-weight: bold;
+	background-image: url(images/info.gif);
+	background-repeat: no-repeat;
+	
+}
+
+.chker{ color: #CD0A0A; font-weight:normal; background-position: 0 0; }
+.chkok{ color: #89CB0A; font-weight:normal; background-position: 0 -16px; }
+
+/* chkaj是AJAX验证时等待时的样式 */
+.chkaj
+{
+	margin-left: 5px;
+	padding-left: 20px;
+	font-weight: bold;
+	background-image: url(images/wait.gif);
+	background-repeat: no-repeat;
+}
+/* 表单验证用到的样式结束 */
+
+
+form {
+	display: inline;
+}

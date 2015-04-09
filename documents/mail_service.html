@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>WSS邮件提醒服务设置说明</title>
+
+<style type="text/css">
+<!--
+img {border: none;}
+li {list-style: none;}
+body,html{  font-family:Arial; width:100%;   margin: 0; padding: 0; min-width:960px; background:#E0E0E0; }
+body {
+	font-size: 12px; line-height:150%;
+}
+table {
+	font-size: 12px;
+}
+p{ margin:5px;}
+.main_body{ width:947px; margin:10px auto auto auto;}
+.content_bg{ width:945px; border:1px solid #CCCCCC;  background:#FFF; }
+.rowcon{ width:95%;  margin:auto; }
+.rowcon td a{ color:#395a90;text-decoration:underline;  padding-right:10px; }
+.rowcon td a:visited{ color:#395a90;text-decoration:underline; }
+.rowcon td a:hover{ color:#395a90;text-decoration:none; }
+.rowcon a{ color:#395a90;text-decoration:underline;  padding-right:10px; }
+.rowcon a:visited{ color:#395a90;text-decoration:underline; }
+.rowcon a:hover{ color:#395a90;text-decoration:none; }
+.big_text{ font-size:36px; font-weight:bold; line-height:150%;}
+.font_big18{ font-size:18px; font-weight:bold;}
+.ping_logo{ background:url(maillogo.png) no-repeat; width:197px; height:53px; margin:20px 0px 5px 0px;}
+}
+-->
+</style>
+</head>
+
+<body>
+
+<div class="main_body">
+<div class="ping_logo"></div>
+<div class="content_bg">
+<div class="rowcon">
+
+
+
+    
+  <p>&nbsp;</p>
+  <p><span class="font_big18">WSS邮件提醒服务设置说明</span><br/><br/><br/>
+  <b>WSS目前针对以下场景提供邮件提醒服务</b><br/>
+  1，创建新任务后，自动发送邮件提醒任务执行人（指派给谁）；<br/>
+  2，修改任务执行人后，自动发送邮件提醒修改后的任务执行人；<br/>
+  3，任务状态更新后（填写工作日志），自动发送邮件提醒任务负责人（来自谁）；<br/>
+  4，当任务有新备注时提醒任务执行人。
+  <br/><br/><br/>
+  </p>
+   <p>
+  <b>准备工作</b><br/>
+  1，为了接收提醒邮件，您需要为WSS的每一个用户添加电子邮件地址（如果您的系统已开始运行，最简单的添加方式是通知您的每一位员工自行添加电子邮件地址，登录后点击“修改个人信息”即可）；<br/>
+  2，您需要有一个支持SMTP的邮箱，WSS将通过该邮箱来发送提醒邮件；<br/>
+  您可以联系您公司的技术部门开通WSS专用的邮件帐号，如果您的公司没有企业邮局，则您可以在互联网上注册一个免费邮箱，用于发送提醒邮件（需要部署WSS的服务器可以访问互联网）。<br/>
+  时间关系，我们只测试了新浪的免费邮箱，注册地址： <a href="http://mail.sina.com" target="_blank">mail.sina.com</a>  
+   注意邮箱需开启SMTP，登录邮件设置页面开启即可。
+  <br/><br/><br/>
+  </p>
+     <p>
+  <b>设置说明</b><br/>
+  使用管理员权限登录后台设置，进入“邮件设置”后，按照说明进行相应的配置。
+  <br/><br/><br/>
+  </p>
+</div>
+</div>
+</div> <br/>
+</body>
+</html>

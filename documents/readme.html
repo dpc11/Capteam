@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>请先阅读 - WSS说明</title>
+
+<style type="text/css">
+<!--
+img {border: none;}
+li {list-style: none;}
+body,html{  font-family:Arial; width:100%;   margin: 0; padding: 0; min-width:960px; background:#E0E0E0; }
+body {
+	font-size: 12px; line-height:150%;
+}
+table {
+	font-size: 12px;
+}
+p{ margin:5px;}
+.main_body{ width:947px; margin:10px auto auto auto;}
+.content_bg{ width:945px; border:1px solid #CCCCCC;  background:#FFF; }
+.rowcon{ width:95%;  margin:auto; }
+.rowcon td a{ color:#395a90;text-decoration:underline;  padding-right:10px; }
+.rowcon td a:visited{ color:#395a90;text-decoration:underline; }
+.rowcon td a:hover{ color:#395a90;text-decoration:none; }
+.rowcon a{ color:#395a90;text-decoration:underline;  padding-right:10px; }
+.rowcon a:visited{ color:#395a90;text-decoration:underline; }
+.rowcon a:hover{ color:#395a90;text-decoration:none; }
+.big_text{ font-size:36px; font-weight:bold; line-height:150%;}
+.font_big18{ font-size:18px; font-weight:bold;}
+.ping_logo{ background:url(wss/skin/themes/base/images/wsslogo.png) no-repeat; width:158px; height:158px; margin:20px auto;}
+}
+-->
+</style>
+</head>
+
+<body>
+<div class="main_body">
+<div class="content_bg">
+<div class="rowcon">
+<div class="ping_logo"></div><div style="text-align:center">最简单实用的项目管理系统</div><br/>
+
+
+    
+  <p>&nbsp;</p>
+  <p><span class="font_big18">WSS快速安装说明</span><br/><br/>
+  以下为通用的安装方式，默认为已经部署好服务器环境，对于服务器部署不了解的用户，可以忽略以下内容，参考 <a href="readmefile/5minute.html"> 5分钟安装说明(Windows),</a>即使不懂任何技术,也可以在5分钟内安装好WSS(Linux用户请参见 <a href="readmefile/5minute_linux.html"> Linux安装说明</a>)。 <br/>
+  <br/>
+  </p>
+  <p>1，将WSS压缩包解压到本地文件夹。</p>
+    <p>2，使用数据库管理工具，在数据库中建立名为tankdb的数据库，编码格式为utf8。</p>
+    <p>3，使用数据库管理工具将解压得到的\database目录下的tankdb.sql文件导入刚刚建立的数据库tankdb。</p>
+    <p>4，使用文本编辑工具编辑解压得到的\wss\config\目录下的tank_config.php文件中有关数据库连接的内容。</p>
+    <p>5，将WSS文件夹上传至服务器的发布目录下。</p>
+    <p>6，在浏览器中输入<b>http://服务器地址/wss</b> 进入WSS登录页面。</p>
+    <p>7，默认管理员帐号：<b>admin</b> 密码：<b>admin</b> ，登录后可自行修改密码。</p>
+    <p>8，管理员登录后应登录后台开始进行数据初始化。<br /><br />
+	<b>[邮件提醒服务]</b> 您可以设置任务的邮件提醒服务，详见： <a href="readmefile/mail_service.html">WSS邮件提醒服务设置说明</a><br />
+	</p>
+    <br/>
+	
+	<p>注意: 老用户升级可不必更新数据库，直接覆盖WSS目录即可 <a href="老用户升级说明.txt">(升级说明)</a>。<br/ >
+	
+	另外，由于v1.2.X版变动较大，所以与历史版本(v1.1.X)并不完全兼容，对历史数据有依赖的老用户，可将原WSS目录重命名，从而实现两个版本的平滑过渡。</p><br/>
+	
+    安装过程中出现任何问题请先查看<a href="http://www.wssys.net/zh-cn/news.php?recordID=48" target="_blank">常见问题解答，</a>如问题没有解决，请到我们的 <a href="http://www.wssys.net/zh-CN/feedback.php" target="_blank">问题反馈</a>页面进行反馈(官方QQ群: 171229414)。<br/><br/><br/><br/>
+    
+  <span class="font_big18">系统需求</span><br/><br/>
+  <p>1，支持网站发布的服务器</p>
+  <p>2，PHP4.3或更高版本支持</p>
+  <p>3，MySQL4.0或更高版本支持
+  <br/><br/>
+  对于服务器部署不了解的用户，请参考 <a href="readmefile/5minute.html">5分钟安装说明(Windows),</a>Linux用户请参见 <a href="readmefile/5minute_linux.html"> Linux安装说明。</a><br/><br/><br/>
+  
+  <br/>
+  <span class="font_big18">免责声明</span><br/><br/>
+  </p>
+  <p>WSS为使用者根据需要自愿下载使用，White Shark System以及WSS的作者，对WSS使用过程中造成的任何数据丢失及其他风险不承担任何责任。<a href="license.txt">权利说明</a></p>
+  <br/>
+</div>
+</div>
+</div> <br/>
+</body>
+</html>
