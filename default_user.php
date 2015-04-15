@@ -54,18 +54,12 @@ if (isset($_GET['inputtitle'])) {
   $colinputtitle_Recordset1 = $_GET['inputtitle'];
 }
 
-//权限小于4只能看自己的任务 nbnat.com  QQ:39299672
-if($_SESSION['MM_rank'] < 4){
-	$zwhere= "AND uid={$_SESSION['MM_uid']} ";
-}
-
 mysql_select_db($database_tankdb, $tankdb);
-$query_Recordset1 = sprintf("SELECT * FROM tk_user WHERE tk_user_rank LIKE %s AND tk_user_rank $where %s AND tk_display_name LIKE %s  $zwhere $order %s", GetSQLValueString("%" . $colrole_Recordset1 . "%", "text"),
+$query_Recordset1 = sprintf("SELECT * FROM tk_user WHERE tk_user_rank LIKE %s AND tk_user_rank $where %s AND tk_display_name LIKE %s $order %s", GetSQLValueString("%" . $colrole_Recordset1 . "%", "text"),
 GetSQLValueString("%" . $colrole_dis . "%", "text"), 
 GetSQLValueString("%" . $colinputtitle_Recordset1 . "%", "text"),
 							GetSQLValueString($orderlist, "defined", $orderlist, "NULL"));
 $query_limit_Recordset1 = sprintf("%s LIMIT %d, %d", $query_Recordset1, $startRow_Recordset1, $maxRows_Recordset1);
-
 $Recordset1 = mysql_query($query_limit_Recordset1, $tankdb) or die(mysql_error());
 $row_Recordset1 = mysql_fetch_assoc($Recordset1);
 

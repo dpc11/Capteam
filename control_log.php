@@ -6,15 +6,9 @@ if (isset($_GET['pageNum_Recordset_log'])) {
 }
 $startRow_Recordset_log = $pageNum_Recordset_log * $maxRows_Recordset_log;
 
-
 $logtouser =   "0";
 if (isset($_GET['logtouser'])) {
   $logtouser = $_GET['logtouser'];
-}
-
-//权限小于4不能查看别人的动态 nbnat.com QQ:39299672
-if ($_SESSION['MM_rank'] < 4){
-	$logtouser=$_SESSION['MM_uid'];
 }
 
 $logproject = "0";
@@ -75,8 +69,6 @@ $query_Recordset_log = "SELECT * FROM tk_task_byday
 								inner join tk_status on tk_task_byday.csa_tb_status=tk_status.id 
 								inner join tk_task on tk_task_byday.csa_tb_backup1=tk_task.TID 
 								inner join tk_user on tk_task_byday.csa_tb_backup2=tk_user.uid 
-
-								{$where}
 
 ORDER BY csa_tb_lastupdate DESC" ;
 $query_limit_Recordset_log = sprintf("%s LIMIT %d, %d", $query_Recordset_log, $startRow_Recordset_log, $maxRows_Recordset_log);

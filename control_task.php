@@ -254,10 +254,6 @@ $cc_tome = GetSQLValueString("%%" . str_replace("%","%%",$cc_tome) . "%%", "text
 			{
 				$where.= " tk_task.test01 LIKE $cc_tome AND";
 			}
-			//权限小于4只能看自己的任务 nbnat.com  QQ:39299672
-			if($_SESSION['MM_rank'] < 4){
-				$where.= " tk_task.csa_from_user={$_SESSION['MM_uid']} or tk_task.csa_to_user={$_SESSION['MM_uid']} AND";
-			}
 
 mysql_select_db($database_tankdb, $tankdb);
 $query_Recordset1 = sprintf("SELECT *, 
@@ -295,7 +291,6 @@ $query_Recordset1 = sprintf("SELECT *,
 							GetSQLValueString($orderlist, "defined", $orderlist, "NULL")
 							);
 $query_limit_Recordset1 = sprintf("%s LIMIT %d, %d", $query_Recordset1, $startRow_Recordset1, $maxRows_Recordset1);
-
 $Recordset1 = mysql_query($query_limit_Recordset1, $tankdb) or die(mysql_error());
 $row_Recordset1 = mysql_fetch_assoc($Recordset1);
 
@@ -495,15 +490,9 @@ $outwhere = "";
 			{
 				$outwhere.= " tk_task.test01 LIKE $cc_tome AND";
 			}
-			//权限小于4只能看自己的任务 nbnat.com  QQ:39299672
-			if($_SESSION['MM_rank'] < 4){
-				$outwhere.= " tk_task.csa_from_user={$_SESSION['MM_uid']} or tk_task.csa_to_user={$_SESSION['MM_uid']} AND";
-			}
-
 			$outwhere.= " tk_status.task_status NOT LIKE $outstfinish AND";
 			$outwhere.= " tk_task.csa_plan_et <= $outday";
 
-			
 mysql_select_db($database_tankdb, $tankdb);
 $query_timeout = "SELECT *, 
 							

@@ -56,12 +56,7 @@ $where2 = "GROUP BY tk_project.id";
 $where1 = "";
 $where2 = "";
 }
-//权限小于4不能查看别人的动态 nbnat.com QQ:39299672
-if ($_SESSION['MM_rank'] < 4){
-	$where = "tk_task.csa_to_user = {$_SESSION['MM_uid']} AND tk_status_project.task_status NOT LIKE '%%$multilingual_dd_status_prjfinish%%' AND";
-	$where1 = "inner join tk_task on tk_project.id=tk_task.csa_project";
-	$where2 = "GROUP BY tk_project.id";
-}
+
 mysql_select_db($database_tankdb, $tankdb);
 $query_Recordset1 = sprintf("SELECT * FROM tk_project 
 							
@@ -72,9 +67,8 @@ $query_Recordset1 = sprintf("SELECT * FROM tk_project
 							GetSQLValueString("%" . $colinputtitle_Recordset1 . "%", "text"),
 							GetSQLValueString($sortlist, "defined", $sortlist, "NULL"),
 							GetSQLValueString($orderlist, "defined", $orderlist, "NULL"));
-			
+							
 $query_limit_Recordset1 = sprintf("%s LIMIT %d, %d", $query_Recordset1, $startRow_Recordset1, $maxRows_Recordset1);
-
 $Recordset1 = mysql_query($query_limit_Recordset1, $tankdb) or die(mysql_error());
 $row_Recordset1 = mysql_fetch_assoc($Recordset1);
 

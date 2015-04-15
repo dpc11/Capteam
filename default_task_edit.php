@@ -111,21 +111,15 @@ if (isset($_GET['pageNum_Recordset_actlog'])) {
 }
 $startRow_Recordset_actlog = $pageNum_Recordset_actlog * $maxRows_Recordset_actlog;
 
-//权限小于4只能看自己的任务 nbnat.com QQ:39299672
-if($_SESSION['MM_rank'] < 4){
-	$zwhere.= "AND tk_log_user={$_SESSION['MM_uid']} ";
-}
 mysql_select_db($database_tankdb, $tankdb);
 $query_Recordset_actlog = sprintf("SELECT * FROM tk_log 
 inner join tk_user on tk_log.tk_log_user =tk_user.uid 
-								WHERE tk_log_type = %s AND tk_log_class = 1 
-								{$zwhere}
+								 WHERE tk_log_type = %s AND tk_log_class = 1 
 								
 								ORDER BY tk_log_time DESC", 
 								GetSQLValueString($colname_Recordset_task, "text")
 								);
 $query_limit_Recordset_actlog = sprintf("%s LIMIT %d, %d", $query_Recordset_actlog, $startRow_Recordset_actlog, $maxRows_Recordset_actlog);
-echo $query_limit_Recordset_actlog;
 $Recordset_actlog = mysql_query($query_limit_Recordset_actlog, $tankdb) or die(mysql_error());
 $row_Recordset_actlog = mysql_fetch_assoc($Recordset_actlog);
 
