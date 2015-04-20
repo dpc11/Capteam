@@ -180,7 +180,7 @@ $.ajax({
  <?php if ($totalRows_Recordset_anc > 0) { // Show if recordset not empty ?> 
   <div class="anc_div"  >
 
-<div id="rollAD" style="height:20px; position:relative; overflow:hidden;">	
+<div id="rollAD" style="height:18px; position:relative; overflow:hidden;">	
 
 <div class="float_left"><strong><?php echo $multilingual_head_announcement; ?></strong>&nbsp;&nbsp;</div> 
 <div class="float_left">
