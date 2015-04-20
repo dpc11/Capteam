@@ -65,14 +65,14 @@ if (isset($_POST['textfield'])) {
   }*/
   $userrank = "5";
    
-  if ($loginStrrank == null) {
+  /*if ($loginStrrank == null) {
   $updateSQL = sprintf("UPDATE tk_user SET tk_user_rank=%s WHERE tk_user_login=%s", 
                        GetSQLValueString($userrank, "text"),                      
                        GetSQLValueString($loginStrlogin, "text"));
   mysql_select_db($database_tankdb, $tankdb);
   $Result2 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
   $_SESSION['MM_rank'] = $userrank;
-  }
+  }*/
 
     if (isset($_SESSION['PrevUrl']) && false) {
       $MM_redirectLoginSuccess = $_SESSION['PrevUrl'];	
