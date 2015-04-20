@@ -20,7 +20,9 @@ if (isset($_POST['textfield'])) {
   $MM_redirecttoReferrer = false;
   mysql_select_db($database_tankdb, $tankdb);
   	
-  $LoginRS__query=sprintf("SELECT tk_user_login, tk_user_pass, tk_display_name, uid, tk_user_status, tk_user_rank, tk_user_message, tk_user_lastuse FROM tk_user WHERE binary tk_user_login=%s AND (tk_user_pass=%s OR tk_user_pass=%s)",
+  //$LoginRS__query=sprintf("SELECT tk_user_login, tk_user_pass, tk_display_name, uid, tk_user_status, tk_user_rank, tk_user_message, tk_user_lastuse FROM tk_user WHERE binary tk_user_login=%s AND (tk_user_pass=%s OR tk_user_pass=%s)",
+  //GetSQLValueString($loginUsername, "text"), GetSQLValueString($tk_password, "text"), GetSQLValueString($password, "text")); 
+  $LoginRS__query=sprintf("SELECT tk_user_login, tk_user_pass, tk_display_name, uid, tk_user_lastuse FROM tk_user WHERE binary tk_user_login=%s AND (tk_user_pass=%s OR tk_user_pass=%s)",
   GetSQLValueString($loginUsername, "text"), GetSQLValueString($tk_password, "text"), GetSQLValueString($password, "text")); 
    
   $LoginRS = mysql_query($LoginRS__query, $tankdb) or die(mysql_error());
@@ -31,12 +33,15 @@ if (isset($_POST['textfield'])) {
   
 	
 
-    $loginStrGroup  = mysql_result($LoginRS,0,'tk_user_status');
+    //$loginStrGroup  = mysql_result($LoginRS,0,'tk_user_status');
+    $loginStrGroup  = "管理员";
 	$loginStrDisplayname  = mysql_result($LoginRS,0,'tk_display_name');
 	$loginStrpid  = mysql_result($LoginRS,0,'uid');
-	$loginStrrank  = mysql_result($LoginRS,0,'tk_user_rank');
+	//$loginStrrank  = mysql_result($LoginRS,0,'tk_user_rank');
+  $loginStrrank = 5;
 	$loginStrlogin  = mysql_result($LoginRS,0,'tk_user_login');
-	$loginStrmsg  = mysql_result($LoginRS,0,'tk_user_message');
+	//$loginStrmsg  = mysql_result($LoginRS,0,'tk_user_message');
+  $loginStrmsg = 0;
 	$loginStrlast  = mysql_result($LoginRS,0,'tk_user_lastuse');
 
 	//check_message( $loginStrpid );
@@ -51,13 +56,14 @@ if (isset($_POST['textfield'])) {
 	$_SESSION['MM_last'] = $loginStrlast;
 	
    //判断是否是老用户
-  if ($loginStrGroup == $multilingual_dd_role_admin) {
+  /*if ($loginStrGroup == $multilingual_dd_role_admin) {
   $userrank = "5";
   } else if ($loginStrGroup == $multilingual_dd_role_general){
   $userrank = "3";
   } else if ($loginStrGroup == $multilingual_dd_role_disabled){
   $userrank = "0";
-  }
+  }*/
+  $userrank = "5";
    
   if ($loginStrrank == null) {
   $updateSQL = sprintf("UPDATE tk_user SET tk_user_rank=%s WHERE tk_user_login=%s", 
@@ -72,7 +78,7 @@ if (isset($_POST['textfield'])) {
       $MM_redirectLoginSuccess = $_SESSION['PrevUrl'];	
     }
     header("Location: " . $MM_redirectLoginSuccess );
-  }
+  }//if end
   else {
     header("Location: ". $MM_redirectLoginFailed );
   }
