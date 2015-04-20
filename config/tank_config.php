@@ -1,9 +1,9 @@
 <?php
 error_reporting(0);
-$hostname_tankdb = "paytonsql.mysql.rds.aliyuncs.com:3306";    //database host 
-$database_tankdb = "wss";       //database name
-$username_tankdb = "wss";         //mysql user name
-$password_tankdb = "capteam";             //mysql password
+$hostname_tankdb = "paytonsql.mysql.rds.aliyuncs.com:3306";   //database host 
+$database_tankdb = "wss";   //database name
+$username_tankdb = "wss";   //mysql user name
+$password_tankdb = "capteam";   //mysql password
 $tankdb = mysql_connect($hostname_tankdb, $username_tankdb, $password_tankdb) or trigger_error(mysql_error(),E_USER_ERROR);
 mysql_query("set names 'utf8'");
 

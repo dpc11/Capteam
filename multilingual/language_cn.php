@@ -156,6 +156,8 @@ $multilingual_foot_feedbacktitle = "我们将在第一时间对您提出的问�
 $multilingual_foot_contact = "联系我们";
 
 // *** 首页(index.php)
+// *** 新建阶段页(stage_add.php)
+// *** 编辑阶段页(stage_edit.php)
 // *** 新建任务页(default_task_add.php)
 // *** 编辑任务页(default_task_plan.php)
 // *** 状态列表页(status_list.php)
@@ -190,6 +192,7 @@ $multilingual_default_createme = "我创建的任务";
 $multilingual_default_shortcut = "快捷方式:";
 $multilingual_default_task_id = "ID";
 $multilingual_default_task_title = "标题";
+$multilingual_default_stage_title = "阶段";
 $multilingual_default_task_description = "描述";
 $multilingual_default_task_to = "指派给";
 $multilingual_default_task_totalhour = "工时汇总";
@@ -198,6 +201,7 @@ $multilingual_default_task_status = "状态";
 $multilingual_default_task_planstart = "计划开始";
 $multilingual_default_task_planend = "计划完成";
 $multilingual_default_task_planhour = "计划用时(PV)";
+$multilingual_default_stage_type = "阶段类型";
 $multilingual_default_task_type = "任务类型";
 $multilingual_default_task_project = "所属项目";
 $multilingual_default_task_from = "来自";
@@ -220,6 +224,7 @@ $multilingual_default_task_section4 = "任务计划";
 $multilingual_default_task_section5 = "工作日志";
 $multilingual_default_task_others = "其他信息";
 $multilingual_default_task_parent = "上级任务";
+$multilingual_default_task_substage = "分解阶段";
 $multilingual_default_task_subtask = "子任务";
 $multilingual_default_task_ca = "控制帐户";
 $multilingual_default_task_catips = "<b>控制帐户(Control Account)</b>是指将当前任务作为一种管理控制点，控制帐户的工时数则为该任务的所有子任务及子任务下的所有节点的任务工时数汇总。";
@@ -238,6 +243,7 @@ $multilingual_default_tasktips = "<strong>注意!</strong> 任务以月为单位
 $multilingual_default_order = "排序";
 $multilingual_tasklist_title = "任务管理";
 $multilingual_taskadd_title = "新建任务";
+$multilingual_stageadd_title = "新建阶段";
 $multilingual_taskedit_title = "编辑任务";
 $multilingual_tasklog_title = "任务详情";
 $multilingual_tasklog_edit = "编辑任务基本信息";
@@ -307,13 +313,15 @@ $multilingual_taskadd_nosub = "没有子任务";
 $multilingual_default_alltask = "所有任务";
 
 $multilingual_taskadd_title_plh = "请填写任务标题";
+$multilingual_stageadd_title_plh = "请填写阶段名称";
 $multilingual_taskadd_totip = "任务执行人，任务创建后，执行人会收到通知";
 
 $multilingual_default_task_planpv = "计划用时";
 $multilingual_default_task_hourac = "实际用时";
 
 $multilingual_default_task_tag_tips = "Tag是任务的自定义标签，您可以按Tag来搜索所有具有相同标签的任务";
-$multilingual_default_task_type_tips = "任务类型是任务的重要属性，您可以根据任务类型来搜索任务，或进行统计";
+$multilingual_default_task_type_tips = "阶段类型是任务的重要属性，您可以根据任务类型来搜索任务，或进行统计";
+$multilingual_default_stage_type_tips = "阶段类型是分解出项目所处于的不同状态";
 
 $multilingual_default_task_cc = "抄送";
 $multilingual_default_task_cc_tips = "您可以将该任务抄送给多个人，当任务创建、状态更新、以及完成时，他们会收到站内消息通知";
@@ -356,7 +364,9 @@ $multilingual_project_title = "项目名称";
 $multilingual_project_code = "项目代码";
 $multilingual_project_start = "开始时间";
 $multilingual_project_end = "结束时间";
-$multilingual_project_touser = "负责人";
+$multilingual_project_lastupdate = "最近更新";
+$multilingual_project_captain = "组长";
+$multilingual_project_touser = "团队成员";
 $multilingual_project_status = "项目状态";
 $multilingual_project_ac = "实际成本(AC)";
 $multilingual_project_ev = "挣值(EV)";
@@ -366,6 +376,7 @@ $multilingual_project_tcpi = "完工尚需绩效指数(TCPI)";
 $multilingual_project_bac = "完工预算(BAC)";
 $multilingual_project_eac = "完工估算(EAC)";
 $multilingual_project_description = "项目概述";
+$multilingual_project_memeber = "项目成员";
 $multilingual_project_partya = "甲方单位";
 $multilingual_project_partyauser = "甲方联系人";
 $multilingual_project_partyacon = "甲方联系方式";
@@ -373,7 +384,7 @@ $multilingual_project_remark = "评论";
 $multilingual_project_none = "没有符合条件的项目";
 $multilingual_project_none2 = "还没创建项目";
 $multilingual_project_tips = "状态包含'结束'两字的项目纳入归档项目，在操作中不可使用";
-$multilingual_project_tips2 = "项目负责人对该项目拥有删除权限以外的所有权限";
+$multilingual_project_tips2 = "只有项目成员才能参与项目完成相应操作";
 $multilingual_project_view_title = "项目详情";
 $multilingual_project_view_section1 = "项目基本信息";
 $multilingual_project_view_section2 = "甲方信息";
@@ -396,7 +407,7 @@ $multilingual_projectstatus_edit = "编辑项目状态";
 $multilingual_projectstatus_titlerequired = "2-32个字符";
 $multilingual_project_taskoverlay = "工时消耗分布";
 $multilingual_project_hour = "小时";
-$multilingual_project_newtask = "下发任务";
+$multilingual_project_newstage = "分解阶段";
 
 $multilingual_projectmem_title = "项目成员管理";
 $multilingual_projectmem_text = "在WSS 扩展功能中，您可以为一个项目组添加固定的成员，所有项目相关的内容，如：任务、文档、日志、项目详情等，只对该项目组的成员开放。";
@@ -406,9 +417,9 @@ $multilingual_project_view_nowbstext = "<p>点击“下发任务”，可以基�
 <p>您可以根据需要按照里程碑或任务类型将大型项目分解为若干子项目或子任务，从而将复杂的任务简单化，同时，也便于管理、跟踪。</p>
 ";
 
-$multilingual_project_add_text = "<p>每个项目都会创造独特的产品、服务或成果。</p><br />
-<p>创建一个项目，然后您可以根据需要按照里程碑或任务类型将大型项目分解为若干子项目或子任务。</p><br />
-<p>为项目选择一个负责人，负责人可以修改该项目基本信息以及更新项目状态。</p>
+$multilingual_project_add_text = "<p>每个项目包含了一个团队。</p><br />
+<p>创建一个项目，然后您才能分解阶段。</p><br />
+<p>项目创建人就是组长，他／她可以为项目选择若干成员，并且分配不同职责：帮助组长分配任务，或者去完成任务。</p>
 ";
 $multilingual_project_title_tips = "请填写项目名称";
 

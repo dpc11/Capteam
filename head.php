@@ -44,7 +44,13 @@ if(strpos($_SERVER["HTTP_USER_AGENT"],"MSIE 8.0") || strpos($_SERVER["HTTP_USER_
 
     <div class="logo"><a href="index.php" class="logourl" >&nbsp;</a></div>
     <div class="nav_normal2">
-	<a href="index.php" class="
+    
+      <a href="project.php" class="
+	  <?php if($pagename == "project.php" || $pagename == "project_add.php" || $pagename == "project_view.php" || $pagename == "project_edit.php"){
+	  echo "nav_select";} ?>
+	  "><?php echo $multilingual_head_project; ?></a>
+	  
+	  <a href="index.php" class="
 	  <?php if($pagename == "index.php" || $pagename == "default_task_edit.php" || $pagename == "default_task_plan.php" || $pagename == "default_task_add.php") {
 	  echo "nav_select";} ?>
 	  "><?php echo $multilingual_head_task; ?></a>
@@ -54,20 +60,17 @@ if(strpos($_SERVER["HTTP_USER_AGENT"],"MSIE 8.0") || strpos($_SERVER["HTTP_USER_
 	  echo "nav_select";} ?>
 	  "><?php echo $multilingual_head_feed; ?></a>
 	  
-      <a href="project.php" class="
-	  <?php if($pagename == "project.php" || $pagename == "project_add.php" || $pagename == "project_view.php" || $pagename == "project_edit.php"){
-	  echo "nav_select";} ?>
-	  "><?php echo $multilingual_head_project; ?></a>
-	  
       <a href="file.php" class="
 	  <?php if($pagename == "file.php" || $pagename == "file_add.php" || $pagename == "file_project.php" || $pagename == "file_edit.php" || $pagename == "file_view.php"){
 	  echo "nav_select";} ?>
 	  "><?php echo $multilingual_head_file; ?></a>
 	  
+<!--
       <a href="default_user.php" class="
 	  <?php if($pagename == "default_user.php" || $pagename == "user_add.php" || $pagename == "user_view.php" || $pagename == "default_user_edit.php"){
 	  echo "nav_select";} ?>
 	  "><?php echo $multilingual_head_user; ?></a>
+-->
 	  
       <a href="default_announcement.php" class="
 	  <?php if($pagename == "default_announcement.php" || $pagename == "announcement_add.php" || $pagename == "announcement_view.php" || $pagename == "announcement_edit.php"){
@@ -86,9 +89,11 @@ if(strpos($_SERVER["HTTP_USER_AGENT"],"MSIE 8.0") || strpos($_SERVER["HTTP_USER_
 				  <li><a href="default_user_edit.php?UID=<?php echo "{$_SESSION['MM_uid']}"; ?>"><?php echo $multilingual_head_edituserinfo; ?></a></li>
 				  <?php }  ?>
 
+<!--
 				  <?php if ($_SESSION['MM_rank'] > "4") {  ?>
                   <li><a href="setting.php?type=setting"><?php echo $multilingual_head_backend; ?></a></li>
 				  <?php }  ?>
+-->
 
                   <li><?php echo $multilingual_head_help; ?></li>
                   <li class="divider"></li>
