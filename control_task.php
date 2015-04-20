@@ -2,17 +2,22 @@
 $phpself =$_SERVER['PHP_SELF'];
 $pagenames = end(explode("/",$phpself));
 
-$pagetabs = "mtask";
+<!--设置任务标签，初始值为所有的任务 -->
+$pagetabs = "alltask";
 if (isset($_GET['pagetab'])) {
   $pagetabs = $_GET['pagetab'];
 }
 
+<!--得到设置里的每页显示的任务数 -->
 $maxRows_Recordset1 = get_item( 'maxrows_task' );
 $pageNum_Recordset1 = 0;
 if (isset($_GET['pageNum_Recordset1'])) {
   $pageNum_Recordset1 = $_GET['pageNum_Recordset1'];
 }
 $startRow_Recordset1 = $pageNum_Recordset1 * $maxRows_Recordset1;
+
+<!--得到设置里的每页显示的任务过期数 -->   
+<!--pageNum_timeout=0 为第一页 -->
 
 $maxRows_timeout = get_item( 'maxrows_timeout' );
 $pageNum_timeout = 0;
@@ -22,7 +27,7 @@ if (isset($_GET['pageNum_timeout'])) {
 $startRow_timeout = $pageNum_timeout * $maxRows_timeout;
 
 
-
+<!--设置执行人 %表示不限执行人 -->  
 $colname_Recordset1 = $_SESSION['MM_uid'];
 $_SESSION['ser_touser'] = $colname_Recordset1;
 if (isset($_GET['select4'])) {
@@ -31,13 +36,7 @@ if (isset($_GET['select4'])) {
 }
 
 
-$colfromuser_Recordset1 = "%";
-$_SESSION['ser_fromuser'] = $colfromuser_Recordset1;
-if (isset($_GET['select2'])) {
-  $colfromuser_Recordset1 = $_GET['select2'];
-  $_SESSION['ser_fromuser'] = $colfromuser_Recordset1;
-}
-
+<!--设置创建人 %表示不限创建人--> 
 $colcreate_Recordset1 = "%";
 $_SESSION['ser_createuser'] = $colcreate_Recordset1;
 if (isset($_GET['create_by'])) {
@@ -45,6 +44,7 @@ if (isset($_GET['create_by'])) {
   $_SESSION['ser_createuser'] = $colcreate_Recordset1;
 }
 
+<!--设置创建月份--> 
 $colmonth_Recordset1 = date("m");
 $_SESSION['ser_month'] = $colmonth_Recordset1;
 if (isset($_GET['textfield'])) {
@@ -52,6 +52,7 @@ if (isset($_GET['textfield'])) {
   $_SESSION['ser_month'] = $colmonth_Recordset1;
 }
 
+<!--设置创建年份--> 
 $colyear_Recordset1 = date("Y");
 $_SESSION['ser_year'] = $colyear_Recordset1;
 if (isset($_GET['select_year'])) {
@@ -59,6 +60,8 @@ if (isset($_GET['select_year'])) {
   $_SESSION['ser_year'] = $colyear_Recordset1;
 }
 
+<!--选择月份必须选年份，选年份可以不选月份--> 
+<!--若年份为--，则为查找所有任务；若月份为空，则查找这一年的任务；--> 
 if ($colyear_Recordset1 == "--"){
 $startday = "1975-09-23";
 $endday = "3000-13-31";
@@ -70,6 +73,7 @@ $startday = $colyear_Recordset1."-".$colmonth_Recordset1."-01";
 $endday = $colyear_Recordset1."-".$colmonth_Recordset1."-31";
 }
 
+<!--设置优先级--> 
 $colprt_Recordset1 = "";
 $_SESSION['ser_tkprt'] = $colprt_Recordset1;
 if (isset($_GET['select_prt'])) {
@@ -77,52 +81,17 @@ if (isset($_GET['select_prt'])) {
   $_SESSION['ser_tkprt'] = $colprt_Recordset1;
 }
 
-$coltemp_Recordset1 = "";
-$_SESSION['ser_level'] = $coltemp_Recordset1;
-if (isset($_GET['select_temp'])) {
-  $coltemp_Recordset1 = $_GET['select_temp'];
-  $_SESSION['ser_level'] = $coltemp_Recordset1;
-}
 
-$colexam = "";
-if (isset($_GET['select_exam'])) {
-  $colexam = $_GET['select_exam'];
-}
-
-
-if (isset($_GET['select_st']) && $_GET['select_st'] <> 1) {
+<!--设置任务状态( ""--所有任务； 1--未开始；2--进行中； 3--已完成； 4--已验收； 5--被驳回； 6--已过期)--> 
+if (isset($_GET['select_st'])) {
   $colstatus_Recordset1 = $_GET['select_st'];
   $_SESSION['ser_status'] = $colstatus_Recordset1;
-} else if(isset($_GET['select_st']) && $_GET['select_st'] == 1){
-$colstatus_Recordset1 = ""; 
-$_SESSION['ser_status'] = 1;
-}else {
-$colstatus_Recordset1 = "";
-}
-
-if (isset($_SESSION['ser_status']) && $_SESSION['ser_status'] <> "1"){
-$colstatus_Recordset1 = $_SESSION['ser_status'];
 } else {
-$colstatus_Recordset1 = ""; 
+$colstatus_Recordset1 = "进行中"; 
+$_SESSION['ser_status'] = "进行中";
 }
 
-
-if (isset($_SESSION['ser_status']) && $_SESSION['ser_status']==1){
-  $colstatusf_Recordset1 = $multilingual_dd_status_stfinish;
-  } else if(!isset($_SESSION['ser_status'])) {
-  $colstatusf_Recordset1 = "+";
-  } else  {
-  $colstatusf_Recordset1 = "+";
-  } 
-
-$coltype_Recordset1 = "";
-$_SESSION['ser_tktype'] = $coltype_Recordset1;
-if (isset($_GET['select_type'])) {
-  $coltype_Recordset1 = $_GET['select_type'];
-  $_SESSION['ser_tktype'] = $coltype_Recordset1;
-}
-
-
+<!--选择某一项目--> 
 $colproject_Recordset1 = "";
 $_SESSION['ser_project'] = $colproject_Recordset1;
 if (isset($_GET['select_project'])) {
@@ -130,16 +99,23 @@ if (isset($_GET['select_project'])) {
   $_SESSION['ser_project'] = $colproject_Recordset1;
 }
 
+<!--必须选择一个项目以后才能选择阶段--> 
+<!--选择某一阶段--> 
+$colstage_Recordset1 = "";
+$_SESSION['ser_stage'] = $colstage_Recordset1;
+if (isset($_GET['ser_stage'])) {
+  $colstage_Recordset1 = $_GET['ser_stage'];
+  $_SESSION['ser_stage'] = $colstage_Recordset1;
+}
+
+<!--搜索条件--> 
 $searchby = "";
 $colinputtitle_Recordset1 = "";
-$colinputid_Recordset1 = "";
 $colinputtag_Recordset1 = "";
 if (isset($_GET['searchby'])) {
   $searchby= $_GET['searchby'];
   if($searchby == "tit"){
   $colinputtitle_Recordset1 =  $_GET['inputval'];
-  } else if($searchby == "tid"){
-  $colinputid_Recordset1 = $_GET['inputval'];
   } else if($searchby == "tag"){
   $colinputtag_Recordset1 = $_GET['inputval'];
   }  
@@ -167,89 +143,69 @@ $MONTH = $colmonth_Recordset1;
 }
 
 $coltouser = GetSQLValueString($colname_Recordset1, "int");
-$colfromuser = GetSQLValueString($colfromuser_Recordset1, "int");
 $colcreateuser = GetSQLValueString($colcreate_Recordset1, "int");
 
 $colprt = GetSQLValueString($colprt_Recordset1, "int");
-$coltemp = GetSQLValueString($coltemp_Recordset1, "int");
 $colstatus = GetSQLValueString("%%" . str_replace("%","%%",$colstatus_Recordset1) . "%%", "text");
-$colstatusf = GetSQLValueString("%%" . str_replace("%","%%",$colstatusf_Recordset1) . "%%", "text");
-$coltype = GetSQLValueString($coltype_Recordset1, "int");
 $colproject = GetSQLValueString($colproject_Recordset1, "int");
-$colinputid = GetSQLValueString("%%" . str_replace("%","%%",$colinputid_Recordset1) . "%%", "text");
+$colstage = GetSQLValueString($colstage_Recordset1, "int");
 $colinputtitle = GetSQLValueString("%%" . str_replace("%","%%",$colinputtitle_Recordset1) . "%%", "text");
 $colinputtag = GetSQLValueString("%%" . str_replace("%","%%",$colinputtag_Recordset1) . "%%", "text");
-$colexams = GetSQLValueString("%%" . str_replace("%","%%",$colexam) . "%%", "text");
 $cc_tome = '"uid":"'.$_SESSION['MM_uid'].'"';
 $cc_tome = GetSQLValueString("%%" . str_replace("%","%%",$cc_tome) . "%%", "text");
 
 		$where = "";
 			$where=' WHERE';
 
+			//执行人
 			if($colname_Recordset1 <> '%' )
 			{
 				$where.= " tk_task.csa_to_user = $coltouser AND";
 			}
 			
-			if($colfromuser_Recordset1 <> '%')
-			{
-				$where.= " tk_task.csa_from_user = $colfromuser AND";
-			}
-			
+			//优先级
 			if(!empty($colprt_Recordset1))
 			{
 				$where.= " tk_task.csa_priority = $colprt AND";
 			}
 			
-			if(!empty($coltemp_Recordset1))
-			{
-				$where.= " tk_task.csa_temp = $coltemp AND";
-			}
-			
-			if(!empty($colstatus_Recordset1) && $pagetabs <> "etask")
+			//任务状态
+			if(!empty($colstatus_Recordset1))
 			{
 				$where.= " tk_status.task_status LIKE $colstatus AND";
 			}
 			
-			if($pagetabs == "etask")
-			{
-				$where.= " tk_status.task_status LIKE $colexams AND";
-			}
-			
-			if($colstatusf_Recordset1  <> '+' && $pagetabs <> "etask")
-			{
-				$where.= " tk_status.task_status NOT LIKE $colstatusf AND";
-			}
-			
-			if(!empty($coltype_Recordset1))
-			{
-				$where.= " tk_task.csa_type = $coltype AND";
-			}
-			
+			//所属项目
 			if(!empty($colproject_Recordset1))
 			{
 				$where.= " tk_task.csa_project = $colproject AND";
 			}
 			
-			if(!empty($colinputid_Recordset1))
+			//所属阶段
+			if(!empty($colstage_Recordset1))
 			{
-				$where.= " tk_task.TID LIKE $colinputid AND";
+				$where.= " tk_task.csa_project_stage = $colstage AND";
 			}
 			
+			//任务标题
 			if(!empty($colinputtitle_Recordset1))
 			{
 				$where.= " tk_task.csa_text LIKE $colinputtitle AND";
 			}
 			
+			//任务标签
 			if(!empty($colinputtag_Recordset1))
 			{
-				$where.= " tk_task.test02 LIKE $colinputtag AND";
+				$where.= " tk_task.csa_tag LIKE $colinputtag AND";
 			}
 			
+			//创建人
 			if($colcreate_Recordset1 <> '%')
 			{
-				$where.= " tk_task.csa_create_user = $colcreateuser AND";
+				$where.= " tk_task.csa_from_user = $colcreateuser AND";
 			}
+			
+			//抄送人
 			if($pagetabs == "cctome")
 			{
 				$where.= " tk_task.test01 LIKE $cc_tome AND";
@@ -263,13 +219,14 @@ $query_Recordset1 = sprintf("SELECT *,
 							tk_user2.tk_display_name as tk_display_name2
 							
 							FROM tk_task  
-							inner join tk_task_tpye on tk_task.csa_type=tk_task_tpye.id
 							inner join tk_project on tk_task.csa_project=tk_project.id
+							
+							inner join tk_stage on tk_task.csa_project_stage=tak_stage.stageid
 							
 							inner join tk_user as tk_user1 on tk_task.csa_to_user=tk_user1.uid 
 							inner join tk_user as tk_user2 on tk_task.csa_from_user=tk_user2.uid 
 							
-							inner join tk_status on tk_task.csa_remark2=tk_status.id
+							inner join tk_status on tk_task.csa_status=tk_status.id
 							
 							$where 
 							(tk_task.csa_plan_st <=%s
@@ -476,15 +433,10 @@ $outwhere = "";
 			{
 				$outwhere.= " tk_task.csa_to_user = $coltouser AND";
 			}
-			
-			if($colfromuser_Recordset1 <> '%')
-			{
-				$outwhere.= " tk_task.csa_from_user = $colfromuser AND";
-			}
-						
+									
 			if($colcreate_Recordset1 <> '%')
 			{
-				$outwhere.= " tk_task.csa_create_user = $colcreateuser AND";
+				$outwhere.= " tk_task.csa_from_user = $colcreateuser AND";
 			}
 			if($pagetabs == "cctome")
 			{
@@ -540,18 +492,14 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 }
 $queryString_timeout = sprintf("&totalRows_timeout=%d%s", $totalRows_timeout, $queryString_timeout);
 }
-//搜索条件
+
+//任务状态的所有搜索条件
 mysql_select_db($database_tankdb, $tankdb);
-$query_tkstatus = "SELECT * FROM tk_status ORDER BY task_status_backup1 ASC";
+$query_tkstatus = "SELECT * FROM tk_status ORDER BY id ASC";
 $tkstatus = mysql_query($query_tkstatus, $tankdb) or die(mysql_error());
 $row_tkstatus = mysql_fetch_assoc($tkstatus);
 $totalRows_tkstatus = mysql_num_rows($tkstatus);
 
-mysql_select_db($database_tankdb, $tankdb);
-$query_Recordset_type = "SELECT * FROM tk_task_tpye ORDER BY task_tpye_backup1 ASC";
-$Recordset_type = mysql_query($query_Recordset_type, $tankdb) or die(mysql_error());
-$row_Recordset_type = mysql_fetch_assoc($Recordset_type);
-$totalRows_Recordset_type = mysql_num_rows($Recordset_type);
 
 mysql_select_db($database_tankdb, $tankdb);
 $query_Recordset_project = "SELECT * FROM tk_project inner join tk_status_project on tk_project.project_status=tk_status_project.psid WHERE task_status NOT LIKE '%$multilingual_dd_status_prjfinish%' ORDER BY project_name ASC";
@@ -569,13 +517,35 @@ $totalRows_Recordset2 = mysql_num_rows($Recordset2);
 
 <script type="text/JavaScript">
 
-function GP_popupConfirmMsg(msg) { //v1.0
+function FindStages(projectid){
+/*	<?php do { ?>
+        <option value="<?php echo $row_Recordset_project['id']?>"
+		<?php 
+			if (isset($_SESSION['ser_project'])) {	
+			if (!(strcmp($row_Recordset_project['id'], "{$_SESSION['ser_project']}"))) {
+				echo "selected=\"selected\"";
+				}
+			}
+		?>>
+		<?php echo $row_Recordset_project['project_name']?>
+		</option>
+    <?php
+	} while ($row_Recordset_project = mysql_fetch_assoc($Recordset_project));
+		$rows = mysql_num_rows($Recordset_project);
+		if($rows > 0) {
+		mysql_data_seek($Recordset_project, 0);
+		$row_Recordset_project = mysql_fetch_assoc($Recordset_project);
+	}
+	?>*/
+}
+
+function GP_popupConfirmMsg(msg) { 
   document.MM_returnValue = confirm(msg);
 }
 
 
 
-function MM_goToURL() { //v3.0
+function MM_goToURL() { 
   var i, args=MM_goToURL.arguments; document.MM_returnValue = false;
   for (i=0; i<(args.length-1); i+=2) eval(args[i]+".location='"+args[i+1]+"'");
 }
@@ -635,7 +605,6 @@ echo $strssumbyday;?>
     </table>
    
    
-   
 
    
    <table class="rowcon" border="0" align="center" style="margin:10px; ">
@@ -643,16 +612,24 @@ echo $strssumbyday;?>
 <td>   <table border="0">
         <tr>
           <td><?php if ($pageNum_timeout > 0) { // Show if not first page ?>
+		  
+			<!--第一页 -->
               <a href="<?php printf("%s?pageNum_timeout=%d%s", $currentPage, 0, $queryString_timeout); ?>"><?php echo $multilingual_global_first; ?></a>
               <?php } // Show if not first page ?></td>
           <td><?php if ($pageNum_timeout > 0) { // Show if not first page ?>
-              <a href="<?php printf("%s?pageNum_timeout=%d%s", $currentPage, max(0, $pageNum_timeout - 1), $queryString_timeout); ?>"><?php echo $multilingual_global_previous; ?></a>
+             
+			 <!--上一页 -->
+			 <a href="<?php printf("%s?pageNum_timeout=%d%s", $currentPage, max(0, $pageNum_timeout - 1), $queryString_timeout); ?>"><?php echo $multilingual_global_previous; ?></a>
               <?php } // Show if not first page ?></td>
           <td><?php if ($pageNum_timeout < $totalPages_timeout) { // Show if not last page ?>
-              <a href="<?php printf("%s?pageNum_timeout=%d%s", $currentPage, min($totalPages_timeout, $pageNum_timeout + 1), $queryString_timeout); ?>"><?php echo $multilingual_global_next; ?></a>
+              
+			  <!--下一页 -->
+			  <a href="<?php printf("%s?pageNum_timeout=%d%s", $currentPage, min($totalPages_timeout, $pageNum_timeout + 1), $queryString_timeout); ?>"><?php echo $multilingual_global_next; ?></a>
               <?php } // Show if not last page ?></td>
           <td><?php if ($pageNum_timeout < $totalPages_timeout) { // Show if not last page ?>
-              <a href="<?php printf("%s?pageNum_timeout=%d%s", $currentPage, $totalPages_timeout, $queryString_timeout); ?>"><?php echo $multilingual_global_last; ?></a>
+             
+			<!--最后一页 -->
+			 <a href="<?php printf("%s?pageNum_timeout=%d%s", $currentPage, $totalPages_timeout, $queryString_timeout); ?>"><?php echo $multilingual_global_last; ?></a>
               <?php } // Show if not last page ?></td>
         </tr>
       </table></td>
@@ -702,67 +679,35 @@ else if (!(strcmp($i, date("n")))) {echo "selected=\"selected\"";} ?>><?php echo
 </select>
 
 
-
+//选择任务的状态
 <select class="form-control input-sm" name="select_st" id="select_st">
+		//所有状态
         <option value=""><?php echo $multilingual_taskf_status; ?></option>
-		<option value="1" <?php 
-if (isset($_SESSION['ser_status'])) {	
-		if (!(strcmp(1, "{$_SESSION['ser_status']}"))) {
-			echo "selected=\"selected\"";
-			}
-		}	
-?>><?php echo $multilingual_default_taskstatusf; ?></option>
+		
+		//6种状态 1--未开始；2--进行中； 3--已完成； 4--已验收； 5--被驳回； 6--已过期
         <?php
-do {  
-?>
-        <option value="<?php echo $row_tkstatus['task_status']; ?>" <?php 
-if (isset($_SESSION['ser_status'])) {	
-		if (!(strcmp($row_tkstatus['task_status'], "{$_SESSION['ser_status']}"))) {
-			echo "selected=\"selected\"";
-			}
-		}	
-?>><?php echo $row_tkstatus['task_status']?></option>
-        <?php
-} while ($row_tkstatus = mysql_fetch_assoc($tkstatus));
-  $rows = mysql_num_rows($tkstatus);
-  if($rows > 0) {
-      mysql_data_seek($tkstatus, 0);
-	  $row_tkstatus = mysql_fetch_assoc($tkstatus);
-  }
-?>
+		do {  
+		?>
+			<option value="<?php echo $row_tkstatus['task_status']; ?>" <?php 
+				if (isset($_SESSION['ser_status'])) {	
+					if (!(strcmp($row_tkstatus['task_status'], "{$_SESSION['ser_status']}"))) {
+						echo "selected=\"selected\"";
+					}
+				}	
+			?>><?php echo $row_tkstatus['task_status']?></option>
+		<?php
+		}while ($row_tkstatus = mysql_fetch_assoc($tkstatus));
+			$rows = mysql_num_rows($tkstatus);
+			if($rows > 0) {
+			mysql_data_seek($tkstatus, 0);
+			$row_tkstatus = mysql_fetch_assoc($tkstatus);
+		}
+		?>
       </select>
-
-
-
-	
-	
-	  
-	  
-	  <select class="form-control input-sm" name="select_type" id="select_type">
-        <option value=""><?php echo $multilingual_taskf_type; ?></option>
-        <?php
-do {  
-?>
-        <option value="<?php echo $row_Recordset_type['id']?>"
-		<?php if (isset($_SESSION['ser_tktype'])) {	
-		if (!(strcmp($row_Recordset_type['id'], "{$_SESSION['ser_tktype']}"))) {
-			echo "selected=\"selected\"";
-			}
-		} ?>
-		><?php echo $row_Recordset_type['task_tpye']?></option>
-        <?php
-} while ($row_Recordset_type = mysql_fetch_assoc($Recordset_type));
-  $rows = mysql_num_rows($Recordset_type);
-  if($rows > 0) {
-      mysql_data_seek($Recordset_type, 0);
-	  $row_Recordset_type = mysql_fetch_assoc($Recordset_type);
-  }
-?>
-      </select>
-	  
-	  
+	    
+	  //优先级搜索选项
 	  <select class="form-control input-sm" name="select_prt" id="select_prt">
-        <option value=""><?php echo $multilingual_taskf_priority; ?></option>
+        <option value=""><?php echo $multilingual_taskf_priority; ?></option>//全部优先级
         <option value="<?php echo $multilingual_dd_priority_p5; ?>" <?php if (isset($_SESSION['ser_tkprt'])) {	
 		if (!(strcmp($multilingual_dd_priority_p5, "{$_SESSION['ser_tkprt']}"))) {
 			echo "selected=\"selected\"";
@@ -794,43 +739,9 @@ do {
 		}?>><?php echo $multilingual_dd_priority_p1; ?></option>
       </select>
 	  
-	  
-	  <select class="form-control input-sm hide" name="select_temp" id="select_temp">
-        <option value=""><?php echo $multilingual_taskf_level; ?></option>
-        <option value="<?php echo $multilingual_dd_level_l5; ?>" <?php if (isset($_SESSION['ser_level'])) {	
-		if (!(strcmp($multilingual_dd_level_l5, "{$_SESSION['ser_level']}"))) {
-			echo "selected=\"selected\"";
-			}
-		}?>><?php echo $multilingual_dd_level_l5; ?></option>
-
-        <option value="<?php echo $multilingual_dd_level_l4; ?>" <?php if (isset($_SESSION['ser_level'])) {	
-		if (!(strcmp($multilingual_dd_level_l4, "{$_SESSION['ser_level']}"))) {
-			echo "selected=\"selected\"";
-			}
-		}?>><?php echo $multilingual_dd_level_l4; ?></option>
-
-		<option value="<?php echo $multilingual_dd_level_l3; ?>" <?php if (isset($_SESSION['ser_level'])) {	
-		if (!(strcmp($multilingual_dd_level_l3, "{$_SESSION['ser_level']}"))) {
-			echo "selected=\"selected\"";
-			}
-		}?>><?php echo $multilingual_dd_level_l3; ?></option>
-
-		<option value="<?php echo $multilingual_dd_level_l2; ?>" <?php if (isset($_SESSION['ser_level'])) {	
-		if (!(strcmp($multilingual_dd_level_l2, "{$_SESSION['ser_level']}"))) {
-			echo "selected=\"selected\"";
-			}
-		}?>><?php echo $multilingual_dd_level_l2; ?></option>
-
-		<option value="<?php echo $multilingual_dd_level_l1; ?>" <?php if (isset($_SESSION['ser_level'])) {	
-		if (!(strcmp($multilingual_dd_level_l1, "{$_SESSION['ser_level']}"))) {
-			echo "selected=\"selected\"";
-			}
-		}?>><?php echo $multilingual_dd_level_l1; ?></option>
-      </select>
-	  
-	  
-	  
-	  <select class="form-control input-sm" name="select_project" id="select_project">
+	   
+	   //查找该用户所属的所有项目	  
+	  <select class="form-control input-sm" name="select_project" id="select_project" onclic=>
         <option value=""><?php echo $multilingual_taskf_project; ?></option>
         <?php
 do {  
@@ -854,9 +765,17 @@ do {
       </select>
 	  
 	  
+	  //查找选定项目中的所有阶段  
+	  <select class="form-control input-sm" name="select_stage" id="select_stage">
+        <option value=""><?php echo $multilingual_taskf_stage; ?></option>
+      </select>
+	  
+	  
+	  
 	  <?php if ($pagetabs <> "mtask") {  ?>
 	  <select class="form-control input-sm" id="select4" name="select4">
         <option value="%"><?php echo $multilingual_taskf_touser; ?></option>
+		<!-- 不限执行人 -->
         <?php
 do {  
 ?>
@@ -881,28 +800,6 @@ else if(!(strcmp($row_Recordset2['uid'], "{$_SESSION['MM_uid']}"))) {
       </select>
 	  <?php } ?>
 
-	  <select class="form-control input-sm" id="select2" name="select2" <?php if ($pagetabs <> "alltask") { echo "style='display:none'"; }?>>
-        <option value="%"><?php echo $multilingual_taskf_fromuser; ?></option>
-        <?php
-do {  
-?>
-        <option value="<?php echo $row_Recordset2['uid']?>"
-		<?php 
-		if (isset($_SESSION['ser_fromuser'])) {	
-		if (!(strcmp($row_Recordset2['uid'], "{$_SESSION['ser_fromuser']}"))) {
-			echo "selected=\"selected\"";
-			}
-		}
- ?>><?php echo $row_Recordset2['tk_display_name']?></option>
-        <?php
-} while ($row_Recordset2 = mysql_fetch_assoc($Recordset2));
-  $rows = mysql_num_rows($Recordset2);
-  if($rows > 0) {
-      mysql_data_seek($Recordset2, 0);
-	  $row_Recordset2 = mysql_fetch_assoc($Recordset2);
-  }
-?>
-      </select>
 	  
 	  <select  class="form-control input-sm" name="create_by" id="create_by" <?php if ($pagetabs <> "alltask") { echo "style='display:none'"; }?>>
       <option value="%"><?php echo $multilingual_taskf_createuser; ?></option>
@@ -933,13 +830,14 @@ do {
 	  <?php echo $multilingual_global_filterbtn; ?>
 	  </button>
 	  <button type="button" class="btn btn-link btn-sm" name="export" id="export"  onclick= "return   exportexcel(); " ><?php echo $multilingual_global_excel; ?></button>
-	</form></span>
+	</form>
+	</span>
+	
 	<?php if($pagetabs == "alltask") { // Show searchbox if page is alltask ?>
 	<span>
 <form id="form2" name="myform2" method="get" class="taskform form-inline">
 		  <select class="form-control input-sm"  name="searchby" id="searchby" >
 		    <option value="tit"><?php echo $multilingual_tasks_title; ?></option>
-		    <option value="tid"><?php echo $multilingual_tasks_tid; ?></option>
 		    <option value="tag"><?php echo $multilingual_tasks_tag; ?></option>
 	      </select>
 		  <input class="form-control input-sm" type="text" name="inputval" id="inputval" value="" />
@@ -955,6 +853,7 @@ do {
 </div>
 <?php } // Show search bar ?>
 <?php if ($totalRows_Recordset1 > 0) { // Show task list if recordset not empty ?>
+
 <!--table left -->
 <div class="tbody_bl" id="tbody_bl">
 
@@ -1055,6 +954,7 @@ do {
   </table>
   
 </div>
+
 <!--table right -->
 <div class="tbody_br"  id="tbody_br"  >
   <table  border="0" cellspacing="0" cellpadding="0" align="center"  class="maintable tasktab_br" >
@@ -1195,8 +1095,6 @@ do {
 	  <?php echo $multilingual_global_lastupdate; ?>
 	  </a>
 	  </th>
-      
-      <th colspan="14" class="weekbig_style">
 <?php
 $DAY = date("d");
 $time = $YEAR."-".$MONTH."-".$DAY;
@@ -1226,29 +1124,6 @@ echo $Sun." ".$multilingual_global_to." ".$Sat
 	  </th>
       </tr>
     <tr>
-      <th width="111px" colspan="2"><?php echo $multilingual_global_sun; 
-if($YEAR <> "0000" && $MONTH <> "00"){
-echo date(" m/d", strtotime("last Sunday", $time));}?></th>
-      <th width="111px" colspan="2"><?php echo $multilingual_global_mon; 
-if($YEAR <> "0000" && $MONTH <> "00"){
-echo date(" m/d", strtotime("last Sunday +1 days", $time));}?>
-</th>
-      <th width="111px" colspan="2"><?php echo $multilingual_global_tues; 
-if($YEAR <> "0000" && $MONTH <> "00"){
-echo date(" m/d", strtotime("last Sunday +2 days", $time));}?></th>
-      <th width="111px" colspan="2"><?php echo $multilingual_global_wed; 
-if($YEAR <> "0000" && $MONTH <> "00"){
-echo date(" m/d", strtotime("last Sunday +3 days", $time));}?></th>
-      <th width="111px" colspan="2"><?php echo $multilingual_global_thur; 
-if($YEAR <> "0000" && $MONTH <> "00"){
-echo date(" m/d", strtotime("last Sunday +4 days", $time));}?></th>
-      <th width="111px" colspan="2"><?php echo $multilingual_global_fir; 
-if($YEAR <> "0000" && $MONTH <> "00"){
-echo date(" m/d", strtotime("last Sunday +5 days", $time));}?></th>
-      <th width="111px" colspan="2"><?php echo $multilingual_global_sat; 
-if($YEAR <> "0000" && $MONTH <> "00"){
-echo date(" m/d", strtotime("last Sunday +6 days", $time));}?></th>
-    </tr>
    </thead>     
 <tbody>
      <tr class="fontbold  weekend_style"> 
@@ -1266,103 +1141,7 @@ echo date(" m/d", strtotime("last Sunday +6 days", $time));}?></th>
        <td class="week_style_padtd">&nbsp;</td>
        
         <td class="week_style_padtd">&nbsp;</td>
-       <td  class="week_style week_style_padtd">
-<?php
-$sumbd = date("Ymd", strtotime("last Sunday", $time));
-$out_sumbd = "
-<script type='text/javascript'>
-if (typeof(sumbd$sumbd)!='undefined'){
-document.write(sumbd$sumbd)
-}
-</script>
-";
-echo $out_sumbd;
-?>
-&nbsp;</td>
        <td  class="week_style">&nbsp;</td>
-       <td class="week_style week_style_padtd">
-<?php
-$sumbd = date("Ymd", strtotime("last Sunday +1 days", $time));
-$out_sumbd = "
-<script type='text/javascript'>
-if (typeof(sumbd$sumbd)!='undefined'){
-document.write(sumbd$sumbd)
-}
-</script>
-";
-echo $out_sumbd;
-?>
-&nbsp;</td>
-       <td >&nbsp;</td>
-       <td class="week_style_padtd">
-<?php
-$sumbd = date("Ymd", strtotime("last Sunday +2 days", $time));
-$out_sumbd = "
-<script type='text/javascript'>
-if (typeof(sumbd$sumbd)!='undefined'){
-document.write(sumbd$sumbd)
-}
-</script>
-";
-echo $out_sumbd;
-?>
-&nbsp;</td>
-       <td >&nbsp;</td>
-       <td class="week_style_padtd">
-<?php
-$sumbd = date("Ymd", strtotime("last Sunday +3 days", $time));
-$out_sumbd = "
-<script type='text/javascript'>
-if (typeof(sumbd$sumbd)!='undefined'){
-document.write(sumbd$sumbd)
-}
-</script>
-";
-echo $out_sumbd;
-?>
-&nbsp;</td>
-       <td >&nbsp;</td>
-       <td class="week_style_padtd">
-<?php
-$sumbd = date("Ymd", strtotime("last Sunday +4 days", $time));
-$out_sumbd = "
-<script type='text/javascript'>
-if (typeof(sumbd$sumbd)!='undefined'){
-document.write(sumbd$sumbd)
-}
-</script>
-";
-echo $out_sumbd;
-?>
-&nbsp;</td>
-       <td class="weekend_style" >&nbsp;</td>
-       <td class="week_style_padtd weekend_style">
-<?php
-$sumbd = date("Ymd", strtotime("last Sunday +5 days", $time));
-$out_sumbd = "
-<script type='text/javascript'>
-if (typeof(sumbd$sumbd)!='undefined'){
-document.write(sumbd$sumbd)
-}
-</script>
-";
-echo $out_sumbd;
-?>
-&nbsp;</td>
-       <td class="weekend_style"  >&nbsp;</td>
-       <td class="week_style_padtd weekend_style">
-<?php
-$sumbd = date("Ymd", strtotime("last Sunday +6 days", $time));
-$out_sumbd = "
-<script type='text/javascript'>
-if (typeof(sumbd$sumbd)!='undefined'){
-document.write(sumbd$sumbd)
-}
-</script>
-";
-echo $out_sumbd;
-?>
-&nbsp;</td>
      </tr>
      <?php do { ?>
      <tr>
@@ -1389,7 +1168,7 @@ echo $out_sumlog;
 </td>
 
 
-<td class="week_style_padtd <?php 
+		<td class="week_style_padtd <?php 
 
 		$today = date("Y-m-d");   
 		if($today > $row_Recordset1['csa_plan_et'] && strpos($row_Recordset1['task_status_display'], $multilingual_dd_status_stfinish) == false){
@@ -1411,49 +1190,9 @@ echo $out_sumlog;
 	   <?php echo $row_Recordset1['tk_display_name2']; ?></a>
 	   </td>
        <td class="week_style_padtd" width="70px" align="center">
-	   <?php
-switch ($row_Recordset1['csa_priority'])
-{
-case 5:
-  echo $multilingual_dd_priority_p5;
-  break;
-case 4:
-  echo $multilingual_dd_priority_p4;
-  break;
-case 3:
-  echo $multilingual_dd_priority_p3;
-  break;
-case 2:
-  echo $multilingual_dd_priority_p2;
-  break;
-case 1:
-  echo $multilingual_dd_priority_p1;
-  break;
-}
-?>
+	   <?php $row_Recordset1['csa_priority'];?>
 	   </td>
-       <td class="week_style_padtd hide" width="80px" align="center">
-	   <?php
-switch ($row_Recordset1['csa_temp'])
-{
-case 5:
-  echo $multilingual_dd_level_l5;
-  break;
-case 4:
-  echo $multilingual_dd_level_l4;
-  break;
-case 3:
-  echo $multilingual_dd_level_l3;
-  break;
-case 2:
-  echo $multilingual_dd_level_l2;
-  break;
-case 1:
-  echo $multilingual_dd_level_l1;
-  break;
-}
-?>
-	   </td>
+       
       <td class="week_style_padtd" width="112px"><span 
 	   <?php 
 		$lonelastday = $row_Recordset1['csa_last_update']; 
@@ -1468,319 +1207,8 @@ case 1:
 	   echo $lastday;
 	   ?></span>&nbsp;
        </td>
-       <td width="80px" class="weekend_style week_style" >
-
-<?php
-$row_tid = $row_Recordset1['TID'];
-$row_userid = $row_Recordset1['csa_to_user'];
-$row_pid = $row_Recordset1['csa_project'];
-$row_type = $row_Recordset1['csa_type'];
-$nowuser = $_SESSION['MM_uid'];
-
-$m1day1 = date("Ymd", strtotime("last Sunday", $time));
-$m1day1d = date("Y-m-d", strtotime("last Sunday", $time));
-
-$out_row = "
-<script type='text/javascript'>
-function op$row_tid$m1day1()
-{
-    J.dialog.get({ id: 'test', title: '$multilingual_default_task_section5', page: 'log_add.php?date=$m1day1&taskid=$row_tid&userid=$row_userid&projectid=$row_pid&tasktype=$row_type' });
-}
-
-
-function vi$row_tid$m1day1()
-{
-    J.dialog.get({ id: 'test', title: '$multilingual_default_task_section5', page: 'log_view.php?date=$m1day1&taskid=$row_tid' });
-}
-</script>
-
-<script type='text/javascript'>
-if ($YEAR == '0000' || $MONTH == '00')
-{
-document.write('<div title=\'$multilingual_calendar_donoedit\'>&nbsp;</div></td><td width=\'30px\' class=\'week_style_padtd weekend_style\'>&nbsp;')
-}
-else if (typeof(d$row_tid$m1day1)=='undefined' && '$nowuser' == '$row_userid' )
-{
-document.write('<div onclick=\'op$row_tid$m1day1();\' title=\'$m1day1d $multilingual_calendar_addlog\' class=\'day_mouse_nul\'>&nbsp;</div></td><td width=\'30px\' class=\'week_style_padtd weekend_style\'>&nbsp;')
-}
-else if (typeof(d$row_tid$m1day1)=='undefined')
-{
-document.write('<div title=\'$m1day1d $multilingual_calendar_others\'>&nbsp;</div></td><td width=\'30px\' class=\'week_style_padtd weekend_style\'>&nbsp;')
-}
-else
-{
-document.write('<div onclick=\'vi$row_tid$m1day1();\' title=\'$m1day1d $multilingual_calendar_view\' class=\'day_mouse\'>')
-document.write(d$row_tid$m1day1)
-document.write('</div>')
-}
-</script>
-";
-echo $out_row;
-?>
-	   </td>
-       <td width="80px" class="week_style">
-	   <?php
-$m1day1 = date("Ymd", strtotime("last Sunday +1 days", $time));
-$m1day1d = date("Y-m-d", strtotime("last Sunday +1 days", $time));
-
-$out_row = "
-<script type='text/javascript'>
-function op$row_tid$m1day1()
-{
-    J.dialog.get({ id: 'test', title: '$multilingual_default_task_section5', page: 'log_add.php?date=$m1day1&taskid=$row_tid&userid=$row_userid&projectid=$row_pid&tasktype=$row_type' });
-}
-
-function vi$row_tid$m1day1()
-{
-    J.dialog.get({ id: 'test', title: '$multilingual_default_task_section5', page: 'log_view.php?date=$m1day1&taskid=$row_tid' });
-}
-</script>
-
-<script type='text/javascript'>
-if ($YEAR == '0000' || $MONTH == '00')
-{
-document.write('<div title=\'$multilingual_calendar_donoedit\'>&nbsp;</div></td><td width=\'30px\' class=\'week_style_padtd\'>&nbsp;')
-}
-else if (typeof(d$row_tid$m1day1)=='undefined' && '$nowuser' == '$row_userid' )
-{
-document.write('<div onclick=\'op$row_tid$m1day1();\' title=\'$m1day1d $multilingual_calendar_addlog\' class=\'day_mouse_nul\'>&nbsp;</div></td><td width=\'30px\' class=\'week_style_padtd\'>&nbsp;')
-}
-
-else if (typeof(d$row_tid$m1day1)=='undefined')
-{
-document.write('<div title=\'$m1day1d $multilingual_calendar_others\'>&nbsp;</div></td><td width=\'30px\' class=\'week_style_padtd\'>&nbsp;')
-}
-else
-{
-document.write('<div onclick=\'vi$row_tid$m1day1();\' title=\'$m1day1d $multilingual_calendar_view\' class=\'day_mouse\'>')
-document.write(d$row_tid$m1day1)
-document.write('</div>')
-}
-</script>
-";
-echo $out_row;
-?>
-	   </td>
-       <td width="80px">
-	   <?php
-$m1day1 = date("Ymd", strtotime("last Sunday +2 days", $time));
-$m1day1d = date("Y-m-d", strtotime("last Sunday +2 days", $time));
-
-$out_row = "
-<script type='text/javascript'>
-function op$row_tid$m1day1()
-{
-    J.dialog.get({ id: 'test', title: '$multilingual_default_task_section5', page: 'log_add.php?date=$m1day1&taskid=$row_tid&userid=$row_userid&projectid=$row_pid&tasktype=$row_type' });
-}
-
-
-function vi$row_tid$m1day1()
-{
-    J.dialog.get({ id: 'test', title: '$multilingual_default_task_section5', page: 'log_view.php?date=$m1day1&taskid=$row_tid' });
-}
-</script>
-
-<script type='text/javascript'>
-if ($YEAR == '0000' || $MONTH == '00')
-{
-document.write('<div title=\'$multilingual_calendar_donoedit\'>&nbsp;</div></td><td width=\'30px\' class=\'week_style_padtd\'>&nbsp;')
-}
-else if (typeof(d$row_tid$m1day1)=='undefined' && '$nowuser' == '$row_userid' )
-{
-document.write('<div onclick=\'op$row_tid$m1day1();\' title=\'$m1day1d $multilingual_calendar_addlog\' class=\'day_mouse_nul\'>&nbsp;</div></td><td width=\'30px\' class=\'week_style_padtd\'>&nbsp;')
-}
-
-else if (typeof(d$row_tid$m1day1)=='undefined')
-{
-document.write('<div title=\'$m1day1d $multilingual_calendar_others\'>&nbsp;</div></td><td width=\'30px\' class=\'week_style_padtd\'>&nbsp;')
-}
-else
-{
-document.write('<div onclick=\'vi$row_tid$m1day1();\' title=\'$m1day1d $multilingual_calendar_view\' class=\'day_mouse\'>')
-document.write(d$row_tid$m1day1)
-document.write('</div>')
-}
-</script>
-";
-echo $out_row;
-?>
-       </td>
-       <td width="80px">
-	   <?php
-$m1day1 = date("Ymd", strtotime("last Sunday +3 days", $time));
-$m1day1d = date("Y-m-d", strtotime("last Sunday +3 days", $time));
-
-$out_row = "
-<script type='text/javascript'>
-function op$row_tid$m1day1()
-{
-    J.dialog.get({ id: 'test', title: '$multilingual_default_task_section5', page: 'log_add.php?date=$m1day1&taskid=$row_tid&userid=$row_userid&projectid=$row_pid&tasktype=$row_type' });
-}
-
-
-function vi$row_tid$m1day1()
-{
-    J.dialog.get({ id: 'test', title: '$multilingual_default_task_section5', page: 'log_view.php?date=$m1day1&taskid=$row_tid' });
-}
-</script>
-
-<script type='text/javascript'>
-if ($YEAR == '0000' || $MONTH == '00')
-{
-document.write('<div title=\'$multilingual_calendar_donoedit\'>&nbsp;</div></td><td width=\'30px\' class=\'week_style_padtd\'>&nbsp;')
-}
-else if (typeof(d$row_tid$m1day1)=='undefined' && '$nowuser' == '$row_userid' )
-{
-document.write('<div onclick=\'op$row_tid$m1day1();\' title=\'$m1day1d $multilingual_calendar_addlog\' class=\'day_mouse_nul\'>&nbsp;</div></td><td width=\'30px\' class=\'week_style_padtd\'>&nbsp;')
-}
-
-else if (typeof(d$row_tid$m1day1)=='undefined')
-{
-document.write('<div title=\'$m1day1d $multilingual_calendar_others\'>&nbsp;</div></td><td width=\'30px\' class=\'week_style_padtd\'>&nbsp;')
-}
-else
-{
-document.write('<div onclick=\'vi$row_tid$m1day1();\' title=\'$m1day1d $multilingual_calendar_view\' class=\'day_mouse\'>')
-document.write(d$row_tid$m1day1)
-document.write('</div>')
-}
-</script>
-";
-echo $out_row;
-?>
-       </td>
-       <td width="80px" >
-	   <?php
-$m1day1 = date("Ymd", strtotime("last Sunday +4 days", $time));
-$m1day1d = date("Y-m-d", strtotime("last Sunday +4 days", $time));
-
-$out_row = "
-<script type='text/javascript'>
-function op$row_tid$m1day1()
-{
-    J.dialog.get({ id: 'test', title: '$multilingual_default_task_section5', page: 'log_add.php?date=$m1day1&taskid=$row_tid&userid=$row_userid&projectid=$row_pid&tasktype=$row_type' });
-}
-
-
-function vi$row_tid$m1day1()
-{
-    J.dialog.get({ id: 'test', title: '$multilingual_default_task_section5', page: 'log_view.php?date=$m1day1&taskid=$row_tid' });
-}
-</script>
-
-<script type='text/javascript'>
-if ($YEAR == '0000' || $MONTH == '00')
-{
-document.write('<div title=\'$multilingual_calendar_donoedit\'>&nbsp;</div></td><td width=\'30px\' class=\'week_style_padtd\'>&nbsp;')
-}
-else if (typeof(d$row_tid$m1day1)=='undefined' && '$nowuser' == '$row_userid' )
-{
-document.write('<div onclick=\'op$row_tid$m1day1();\' title=\'$m1day1d $multilingual_calendar_addlog\' class=\'day_mouse_nul\'>&nbsp;</div></td><td width=\'30px\' class=\'week_style_padtd\'>&nbsp;')
-}
-
-else if (typeof(d$row_tid$m1day1)=='undefined')
-{
-document.write('<div title=\'$m1day1d $multilingual_calendar_others\'>&nbsp;</div></td><td width=\'30px\' class=\'week_style_padtd\'>&nbsp;')
-}
-else
-{
-document.write('<div onclick=\'vi$row_tid$m1day1();\' title=\'$m1day1d $multilingual_calendar_view\' class=\'day_mouse\'>')
-document.write(d$row_tid$m1day1)
-document.write('</div>')
-}
-</script>
-";
-echo $out_row;
-?>
-       </td>
-       <td width="80px">
-	   <?php
-$m1day1 = date("Ymd", strtotime("last Sunday +5 days", $time));
-$m1day1d = date("Y-m-d", strtotime("last Sunday +5 days", $time));
-
-$out_row = "
-<script type='text/javascript'>
-function op$row_tid$m1day1()
-{
-    J.dialog.get({ id: 'test', title: '$multilingual_default_task_section5', page: 'log_add.php?date=$m1day1&taskid=$row_tid&userid=$row_userid&projectid=$row_pid&tasktype=$row_type' });
-}
-
-function vi$row_tid$m1day1()
-{
-    J.dialog.get({ id: 'test', title: '$multilingual_default_task_section5', page: 'log_view.php?date=$m1day1&taskid=$row_tid' });
-}
-</script>
-
-<script type='text/javascript'>
-if ($YEAR == '0000' || $MONTH == '00')
-{
-document.write('<div title=\'$multilingual_calendar_donoedit\'>&nbsp;</div></td><td width=\'30px\' class=\'week_style_padtd\'>&nbsp;')
-}
-else if (typeof(d$row_tid$m1day1)=='undefined' && '$nowuser' == '$row_userid' )
-{
-document.write('<div onclick=\'op$row_tid$m1day1();\' title=\'$m1day1d $multilingual_calendar_addlog\' class=\'day_mouse_nul\'>&nbsp;</div></td><td width=\'30px\' class=\'week_style_padtd\'>&nbsp;')
-}
-
-else if (typeof(d$row_tid$m1day1)=='undefined')
-{
-document.write('<div title=\'$m1day1d $multilingual_calendar_others\'>&nbsp;</div></td><td width=\'30px\' class=\'week_style_padtd\'>&nbsp;')
-}
-else
-{
-document.write('<div onclick=\'vi$row_tid$m1day1();\' title=\'$m1day1d $multilingual_calendar_view\' class=\'day_mouse\'>')
-document.write(d$row_tid$m1day1)
-document.write('</div>')
-}
-</script>
-";
-echo $out_row;
-?>
-       </td>
-       <td width="80px" class="weekend_style week_style">
-	   <?php
-$m1day1 = date("Ymd", strtotime("last Sunday +6 days", $time));
-$m1day1d = date("Y-m-d", strtotime("last Sunday +6 days", $time));
-
-$out_row = "
-<script type='text/javascript'>
-function op$row_tid$m1day1()
-{
-    J.dialog.get({ id: 'test', title: '$multilingual_default_task_section5', page: 'log_add.php?date=$m1day1&taskid=$row_tid&userid=$row_userid&projectid=$row_pid&tasktype=$row_type' });
-}
-
-
-function vi$row_tid$m1day1()
-{
-    J.dialog.get({ id: 'test', title: '$multilingual_default_task_section5', page: 'log_view.php?date=$m1day1&taskid=$row_tid' });
-}
-</script>
-
-<script type='text/javascript'>
-if ($YEAR == '0000' || $MONTH == '00')
-{
-document.write('<div title=\'$multilingual_calendar_donoedit\'>&nbsp;</div></td><td width=\'30px\' class=\'week_style_padtd weekend_style\'>&nbsp;')
-}
-else if (typeof(d$row_tid$m1day1)=='undefined' && '$nowuser' == '$row_userid' )
-{
-document.write('<div onclick=\'op$row_tid$m1day1();\' title=\'$m1day1d $multilingual_calendar_addlog\' class=\'day_mouse_nul\'>&nbsp;</div></td><td width=\'30px\' class=\'week_style_padtd weekend_style\'>&nbsp;')
-}
-
-else if (typeof(d$row_tid$m1day1)=='undefined')
-{
-document.write('<div title=\'$m1day1d $multilingual_calendar_others\'>&nbsp;</div></td><td width=\'30px\' class=\'week_style_padtd weekend_style\'>&nbsp;')
-}
-else
-{
-document.write('<div onclick=\'vi$row_tid$m1day1();\' title=\'$m1day1d $multilingual_calendar_view\' class=\'day_mouse\'>')
-document.write(d$row_tid$m1day1)
-document.write('</div>')
-}
-</script>
-";
-echo $out_row;
-?>
-       </td> 
-       </tr>
+	  
+    </tr>
      <?php
 } while ($row_Recordset1 = mysql_fetch_assoc($Recordset1));
   $rows = mysql_num_rows($Recordset1);
