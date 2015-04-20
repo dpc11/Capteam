@@ -363,7 +363,7 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
-	<td width="295px" class="input_task_right_bg" valign="top"><table width="280px" border="0" cellspacing="0" cellpadding="0" align="center">
+      <td width="20%" class="input_task_right_bg" valign="top"><table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
         <tr>
           <td valign="top"><?php
 		  $project_id = $row_DetailRS1['id'];
@@ -373,7 +373,7 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
         </tr>
       
       </table></td>
-      <td valign="top">
+      <td width="80%" valign="top">
          <div style="overflow:auto; " id="main_right"><!-- right main --> 
           <table width="98%" border="0" cellspacing="0" cellpadding="5" align="center">
           <tr>
@@ -390,13 +390,11 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
   <tr>
     <td width="12%" class="info_task_title"><?php echo $multilingual_project_status; ?></td>
     <td  width="40%"><div class="status_view"><?php echo $row_DetailRS1['task_status_display']; ?></div></td>
+<!--
     <td  width="12%" class="info_task_title"><?php echo $multilingual_project_id; ?></td>
     <td><?php echo $row_DetailRS1['id']; ?></td>
-    </tr>
-  <tr>
-    <td class="info_task_title"><?php echo $multilingual_project_touser; ?></td>
-    <td><a href="user_view.php?recordID=<?php echo $row_DetailRS1['project_to_user']; ?>"><?php echo $row_DetailRS1['tk_display_name']; ?></a></td>
-    <td class="info_task_title">
+-->
+    <td width="12%" class="info_task_title">
 		<?php if ($row_DetailRS1['project_start'] <> "0000-00-00") {  ?>
 	<?php echo $multilingual_project_start; ?>
 	<?php } ?>	</td>
@@ -406,9 +404,21 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
 	<?php } ?>		</td>
     </tr>
   <tr>
+<!--
+    <td class="info_task_title"><?php echo $multilingual_project_touser; ?></td>
+    <td><a href="user_view.php?recordID=<?php echo $row_DetailRS1['project_to_user']; ?>"><?php echo $row_DetailRS1['tk_display_name']; ?></a></td>
     <td class="info_task_title"><?php echo $multilingual_tasklog_cost; ?></td>
     <td><?php 
 	  echo $sum_hour;?> <?php echo $multilingual_project_hour; ?></td>
+-->
+    <td class="info_task_title">
+	<?php if ($row_DetailRS1['project_end'] <> "0000-00-00") {  ?>
+	<?php echo $multilingual_project_captain; ?>
+	<?php } ?>	</td>
+    <td>
+	<?php echo $row_DetailRS1['project_to_user']; ?>
+	</td>
+   
     <td class="info_task_title">
 	<?php if ($row_DetailRS1['project_end'] <> "0000-00-00") {  ?>
 	<?php echo $multilingual_project_end; ?>
@@ -426,12 +436,14 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
 		     <tr>
              <?php if($_SESSION['MM_rank'] > "2") { ?>
 			 <td width="12%">
-			 <a href="default_task_add.php?projectID=<?php echo $row_DetailRS1['id']; ?>&formproject=1" >
-			 <span class="glyphicon glyphicon-random"></span> <?php echo $multilingual_project_newtask; ?></a></td>
+			 <a href="stage_add.php?projectID=<?php echo $row_DetailRS1['id']; ?>&formproject=1" >
+			 <span class="glyphicon glyphicon-random"></span> <?php echo $multilingual_project_newstage; ?></a></td>
 			 <?php }  ?>
 			 <?php if($_SESSION['MM_rank'] > "1") { ?>
+<!--
 			 <td width="13%">
 			 <a onClick="addfolder()" class="mouse_hover"><span class="glyphicon glyphicon-folder-open"></span> <?php echo $multilingual_project_file_addfolder; ?></a>			 </td>
+-->
 			 <td width="12%">
 			 <a  target="_blank" href="file_add.php?projectid=<?php echo $row_DetailRS1['id']; ?>&pid=0&pagetab=allfile"><span class="glyphicon glyphicon-file"></span> <?php echo $multilingual_project_file_addfile; ?></a>			 </td>
 			 <td width="12%">
@@ -467,6 +479,25 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
           </tr>
           <tr>
             <td><?php echo $row_DetailRS1['project_text']; ?></td>
+          </tr>
+          <tr>
+              <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td><span class="font_big18 fontbold"><?php echo $multilingual_project_memeber; ?></span></td>
+          </tr>
+          <tr>
+<!--
+            <table class="table table-striped table-hover glink">
+              <tbody>
+                <th>
+                  <td>dpc</td>
+                  <td>dpc</td>
+                  <td>dpc</td>
+                </th>
+              </tbody>
+            </table>
+-->
           </tr>
 		  <?php } // Show if recordset not empty ?>
 		  <?php if ($row_DetailRS1['project_from_contact'] <> "" && $row_DetailRS1['project_from_contact'] <> " ") { // Show if recordset not empty ?>
@@ -591,15 +622,16 @@ echo $editcomment_row;
 
 		  <tr>
             <td>
-			<!-- tab start -->
-			<div class="tab">
+            
+<!-- tab start -->
+<div class="tab">
 <ul class="menu" id="menutitle">
 
 <li id="tab_1"  class="onhover" 
 <?php if ($totalRows_Recordset_task == 0) { echo "style='display:none'"; }?>>
 
 <a href="javascript:void(0)" onClick="tabs('1');" >
-<?php echo $multilingual_default_task_subtask; ?></a></li>
+<?php echo $multilingual_default_task_substage; ?></a></li>
 
 <li id="tab_2" 
 <?php if ($totalRows_Recordset_task == 0 ) { echo "class='onhover'"; }?> 
@@ -613,14 +645,10 @@ echo $editcomment_row;
 <a href="javascript:void(0)" onClick="tabs('3');" >
 <?php echo $multilingual_project_view_log; ?></a></li>
 
-
-
-
 <?php if ($totalRows_Recordset_file <> 0 ||  $totalRows_Recordset_task <> 0) { ?>
 <li >&nbsp;</li><li >&nbsp;</li>
 <?php }?><a name="task"></a>
 </ul>
-
 
 <!-- task start -->
 <div class="tab_b" id="tab_a1" 
@@ -640,28 +668,29 @@ echo "style='display:none'";
 <thead >
         
         <tr>
-          <th><?php echo $multilingual_default_task_id; ?></th>
+<!--          <th><?php echo $multilingual_default_task_id; ?></th>-->
           <th><?php echo $multilingual_default_task_title; ?></th>
-          <th><?php echo $multilingual_default_task_to; ?></th>
-          <th><?php echo $multilingual_default_task_status; ?></th>
+<!--          <th><?php echo $multilingual_default_task_to; ?></th>-->
+<!--          <th><?php echo $multilingual_default_task_status; ?></th>-->
           <th><?php echo $multilingual_default_task_planstart; ?></th>
           <th><?php echo $multilingual_default_task_planend; ?></th>
-          <th><?php echo $multilingual_default_task_priority; ?></th>
-          <th class="hide"><?php echo $multilingual_default_tasklevel; ?></th>
+<!--          <th><?php echo $multilingual_default_task_priority; ?></th>-->
+<!--          <th class="hide"><?php echo $multilingual_default_tasklevel; ?></th>-->
         </tr>
         </thead>
         <tbody>
         <?php do { ?>
           <tr>
-            <td><?php echo $row_Recordset_task['TID']; ?></td>
+<!--            <td><?php echo $row_Recordset_task['TID']; ?></td>-->
             <td class="task_title">
 			<div  class="text_overflow_150 task_title"  title="<?php echo $row_Recordset_task['csa_text']; ?>">
 			<a href="default_task_edit.php?editID=<?php echo $row_Recordset_task['TID']; ?>&pagetab=alltask" >
 			<b>[<?php echo $row_Recordset_task['task_tpye']; ?>]</b> <?php echo $row_Recordset_task['csa_text']; ?>			</a>			</div></td>
-            <td ><a href="user_view.php?recordID=<?php echo $row_Recordset_task['csa_to_user']; ?>"><?php echo $row_Recordset_task['tk_display_name']; ?></a></td>
-            <td><?php echo $row_Recordset_task['task_status_display']; ?></td>
+<!--            <td ><a href="user_view.php?recordID=<?php echo $row_Recordset_task['csa_to_user']; ?>"><?php echo $row_Recordset_task['tk_display_name']; ?></a></td>-->
+<!--            <td><?php echo $row_Recordset_task['task_status_display']; ?></td>-->
             <td><?php echo $row_Recordset_task['csa_plan_st']; ?></td>
             <td><?php echo $row_Recordset_task['csa_plan_et']; ?></td>
+<!--
             <td>
 			<?php
 switch ($row_Recordset_task['csa_priority'])
@@ -683,6 +712,7 @@ case 1:
   break;
 }
 ?>			</td>
+
             <td class="hide">
 			<?php
 switch ($row_Recordset_task['csa_temp'])
@@ -704,6 +734,8 @@ case 1:
   break;
 }
 ?>			</td>
+-->
+         
           </tr>
           <?php } while ($row_Recordset_task = mysql_fetch_assoc($Recordset_task)); ?>
 		  </tbody>

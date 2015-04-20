@@ -102,11 +102,11 @@ window.onload = function()
     J.check.regform('form1');
 }
 
-function option_gourl(str)
-{
-if(str == '-1')window.open('user_add.php');
-if(str == '-2')window.open('project_status.php');
-}
+//function option_gourl(str)
+//{
+//if(str == '-1')window.open('user_add.php');
+//if(str == '-2')window.open('project_status.php');
+//}
 </script>
 <script charset="utf-8" src="editor/kindeditor.js"></script>
 <script charset="utf-8" src="editor/lang/zh_CN.js"></script>
@@ -152,21 +152,22 @@ if(str == '-2')window.open('project_status.php');
 <form action="<?php echo $editFormAction; ?>" method="post" name="myform" id="form1">
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
-      <td width="25%" class="input_task_right_bg" valign="top"><table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
+      <td width="20%" class="input_task_right_bg" valign="top"><table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
           <tr>
             <td valign="top" class="gray2">
-	 <h4 style="margin-top:40px" ><strong><?php echo $multilingual_project_view_nowbs; ?></strong></h4>
+	 <h4 style="margin-top:40px; margin-left: 5px;" ><strong><?php echo $multilingual_project_view_nowbs; ?></strong></h4>
 	 <p >
 	 <?php echo $multilingual_project_add_text; ?></p>
               
               </td>
           </tr>
         </table></td>
-      <td width="75%" valign="top"><table width="98%" border="0" cellspacing="0" cellpadding="5" align="center">
+      <td width="80%" valign="top"><table width="98%" border="0" cellspacing="0" cellpadding="5" align="center">
           <tr>
             <td><div class="col-xs-12">
                 <h3><?php echo $multilingual_projectlist_new; ?></h3>
               </div>
+              
               <div class="form-group col-xs-12">
                 <label for="project_name"><?php echo $multilingual_project_title; ?><span id="projecttitle"></span></label>
                 <div>
@@ -178,26 +179,19 @@ if(str == '-2')window.open('project_status.php');
 			  <div class="form-group  col-xs-12">
                 <label for="select2" ><?php echo $multilingual_project_touser; ?><span id="csa_to_user_msg"></span></label>
                 <div >
-                  <select id="select2" name="project_to_user" onChange="option_gourl(this.value)"  class="form-control">
-					<?php foreach($user_arr as $key => $val){  ?>
-					 <option value='<?php echo $val["uid"]?>' 
-		  ><?php 
-		   $py = substr( pinyin($val["name"]), 0, 1 );
-		  echo $py."-".$val["name"]?></option>
+                  <select id="select2" name="project_to_user" multiple size="3" class="form-control">
+				    <?php foreach($user_arr as $key => $val){  ?>
+					 <option value='<?php echo $val["uid"]?>'><?php echo $val["name"]?></option>
 					 <?php } ?>  
 				
-
+<!--
                     <?php if ($_SESSION['MM_rank'] > "4") { ?>
                     <option value="-1" class="gray" >+<?php echo $multilingual_user_new; ?></option>
                     <?php } ?>
+-->
                   </select>
                 </div>
-                <span class="help-block"><?php echo $multilingual_project_tips2; ?></span> </div>
-				
-				
-				
-				
-			  
+                <span class="help-block"><?php echo $multilingual_project_tips2; ?></span> </div>					  
               <div class="form-group col-xs-12">
                 <label for="project_text"><?php echo $multilingual_project_description; ?></label>
                 <div>
@@ -205,7 +199,8 @@ if(str == '-2')window.open('project_status.php');
                 </div>
               </div>
 
-              <div class="form-group  col-xs-12 hide">
+<!--
+              <div class="form-group  col-xs-12">
                 <label for="project_code"><?php echo $multilingual_project_code; ?></label>
                 <div>
                   <input name="project_code" id="project_code" type="text" value="" class="form-control" placeholder="<?php echo $multilingual_project_code;?>">
@@ -213,7 +208,7 @@ if(str == '-2')window.open('project_status.php');
 				<span class="help-block"><?php echo $multilingual_project_code; ?></span>
               </div>
 
-				 <div class="form-group col-xs-12">
+              <div class="form-group col-xs-12">
                 <label for="project_status"><?php echo $multilingual_project_status; ?></label>
                 <div>
 				<select name="project_status" id="project_status" onChange="option_gourl(this.value)" class="form-control">
@@ -233,15 +228,10 @@ do {
 <option value="-2" class="gray" >+<?php echo $multilingual_projectstatus_new; ?></option>
 <?php } ?>
       </select>
-
-
                 </div>
 				<span class="help-block"><?php echo $multilingual_project_tips; ?></span>
               </div>
-
-
-
-
+-->
 
 				<div class="form-group col-xs-12">
                 <label for="datepicker"><?php echo $multilingual_project_start; ?><span id="datepicker_msg"></span></label>

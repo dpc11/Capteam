@@ -206,6 +206,7 @@ $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recor
 	  }
 	  ?>>
 	<?php echo $multilingual_project_end; ?></a></th>
+<!--
     <th>
 	<a href="<?php echo $pagename; ?>?<?php echo $current_url; ?>&sort=project_to_user&order=<?php 
 	  if ( $sortlist <> "project_to_user"){
@@ -224,6 +225,7 @@ $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recor
 	  }
 	  ?>>
 	<?php echo $multilingual_project_touser; ?></a></th>
+-->
     <th>
 	<a href="<?php echo $pagename; ?>?<?php echo $current_url; ?>&sort=project_status&order=<?php 
 	  if ( $sortlist <> "project_status"){
@@ -270,10 +272,12 @@ $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recor
       <td class="hide"><?php echo $row_Recordset1['project_code']; ?>&nbsp; </td>
       <td><?php echo $row_Recordset1['project_start']; ?>&nbsp; </td>
       <td><?php echo $row_Recordset1['project_end']; ?>&nbsp; </td>
+<!--
       <td>
 	  <a href="user_view.php?recordID=<?php echo $row_Recordset1['project_to_user']; ?>">
 	  <?php echo $row_Recordset1['tk_display_name']; ?></a>
 	  &nbsp; </td>
+-->
       <td><?php echo $row_Recordset1['task_status_display']; ?></td>
       <td><?php echo $row_Recordset1['project_lastupdate']; ?>&nbsp; </td>
       </tr>
