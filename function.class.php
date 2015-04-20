@@ -1186,7 +1186,8 @@ function get_user_select() {
 global $tankdb;
 global $database_tankdb;
   
-$query_user ="SELECT * FROM tk_user WHERE tk_user_rank <> '0' ORDER BY CONVERT(tk_display_name USING gbk )";
+//$query_user ="SELECT * FROM tk_user WHERE tk_user_rank <> '0' ORDER BY CONVERT(tk_display_name USING gbk )";
+$query_user ="SELECT * FROM tk_user ORDER BY CONVERT(tk_display_name USING gbk )";
 $userRS = mysql_query($query_user, $tankdb) or die(mysql_error());
 $row_user = mysql_fetch_assoc($userRS);
  
