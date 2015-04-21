@@ -252,7 +252,6 @@ $row_Recordset1 = mysql_fetch_assoc($Recordset1);
 
 
 
-
 //为什么会初始总行数
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if (isset($_GET['totalRows_Recordset1'])) {
@@ -563,10 +562,6 @@ function   exportexcel()
       
       } 
 	  
-function addtask()
-{
-    J.dialog.get({ id: "taskadd", title: '<?php echo $multilingual_taskadd_selprj; ?>', width: 400, height: 350, page: "task_add_selprj.php?section=1" });
-}
 
 <?php 
 //echo $strssumlog;
@@ -585,8 +580,8 @@ function addtask()
          <?php do { ?>
         <tr>
             <td>
-                <a href="default_task_edit.php?editID=<?php echo $row_timeout['TID']; ?>" target="_parent">
-   <?php echo $row_timeout['TID']; ?> 
+                <a href="default_task_edit.php?editID=<?php echo $row_timeout['tid']; ?>" target="_parent">
+   <?php echo $row_timeout['tid']; ?> 
    [<?php echo $row_timeout['task_tpye']; ?>] <?php echo $row_timeout['csa_text']; ?> 
    </a>
             </td>
@@ -918,8 +913,8 @@ do {
    <tbody>
         <?php do { ?>
         <tr  title="<?php echo $row_Recordset1['csa_text']; ?>" >
-      <td class="week_style_padtd"   ><?php echo $row_Recordset1['TID']; ?></td>
-      <td class="week_style_padtd" ><a href="default_task_edit.php?editID=<?php echo $row_Recordset1['TID']; ?>&pagetab=<?php echo $pagetabs; ?>"  target="_parent"> <?php echo $row_Recordset1['csa_text']; ?></a></td>
+      <td class="week_style_padtd"   ><?php echo $row_Recordset1['tid']; ?></td>
+      <td class="week_style_padtd" ><a href="default_task_edit.php?editID=<?php echo $row_Recordset1['tid']; ?>&pagetab=<?php echo $pagetabs; ?>"  target="_parent"> <?php echo $row_Recordset1['csa_text']; ?></a></td>
       <td class="week_style_padtd" >
 	  <a href="user_view.php?recordID=<?php echo $row_Recordset1['csa_to_user']; ?>" target="_parent">
 	  <?php echo $row_Recordset1['tk_display_name1']; ?></a></td>

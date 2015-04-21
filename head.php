@@ -13,6 +13,7 @@ $totalRows_Recordset_anc = mysql_num_rows($Recordset_anc);
 //$message_count = check_message( $_SESSION['MM_uid'] );
 
 $message_count = 0;
+$totalRows_Recordset_anc=0;
 
 
 
@@ -153,7 +154,7 @@ return [timer, _title];
 
 setInterval(function() {
 
-			
+	/*		
 $.ajax({
 		url:'message_check.php',
 		success:function(resp){
@@ -166,7 +167,7 @@ $.ajax({
 			}
 			
 		}
-	})
+	})*/
 
 }, 120000);
 

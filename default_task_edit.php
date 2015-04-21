@@ -4,27 +4,35 @@
 <?php
 $currentPage = $_SERVER["PHP_SELF"];
  
+ //得到任务id
 $colname_Recordset_task = "-1";
 if (isset($_GET['editID'])) {
   $colname_Recordset_task = $_GET['editID'];
 }
 
-$pagetabs = "mtask";
+$pagetabs = "alltask";
 if (isset($_GET['pagetab'])) {
   $pagetabs = $_GET['pagetab'];
 }
 
+//<!--我参与的任务 -->
 if($pagetabs=="mtask"){
 $tasklisturl = "index.php?select=&select_project=&select_year=".date("Y")."&textfield=".date("m")."&select3=-1&select4=".$_SESSION['MM_uid']."&select_prt=&select_temp=&inputtitle=&select1=-1&select2=%&create_by=%&select_type=&inputid=&inputtag=";
-}else if ($pagetabs=="ftask") {
-$tasklisturl = "index.php?select=&select_project=&select_year=".date("Y")."&textfield=".date("m")."&select3=-1&select4=%&select_prt=&select_temp=&inputtitle=&select1=-1&select2=".$_SESSION['MM_uid']."&create_by=%&select_type=&inputid=&inputtag=&pagetab=ftask";
-}else if ($pagetabs=="ctask"){
+}
+//<!--我创建的任务 -->
+else if ($pagetabs=="ctask"){
 $tasklisturl = "index.php?select=&select_project=&select_year=".date("Y")."&textfield=".date("m")."&select3=-1&select4=%&select_prt=&select_temp=&inputtitle=&select1=-1&select2=%&create_by=".$_SESSION['MM_uid']."&select_type=&inputid=&inputtag=&pagetab=ctask";
-} else if ($pagetabs=="etask"){
+} 
+// <!--待我审核的任务 --> 
+else if ($pagetabs=="etask"){
 $tasklisturl = "index.php?select=&select_project=&select_year=--&textfield=--&select3=-1&select4=%&select_prt=&select_temp=&select_exam=".$multilingual_dd_status_exam."&inputtitle=&select1=-1&select2=".$_SESSION['MM_uid']."&select_type=&inputid=&inputtag=&pagetab=etask";
-}  else if ($pagetabs=="alltask"){
+}  
+//<!--所有任务 --> 
+else if ($pagetabs=="alltask"){
 $tasklisturl = "index.php?select=&select_project=&select_year=".date("Y")."&textfield=".date("m")."&select3=-1&select4=%&select_prt=&select_temp=&inputtitle=&select1=-1&select2=%&create_by=%&select_type=&inputid=&inputtag=&pagetab=alltask";
-}else if ($pagetabs=="cctome"){
+}
+//<!--抄送给我的任务 --> 
+else if ($pagetabs=="cctome"){
 $tasklisturl = "index.php?select=&select_project=&select_year=".date("Y")."&textfield=".date("m")."&select3=-1&select4=%&select_prt=&select_temp=&inputtitle=&select1=-1&select2=%&select_type=&inputid=&inputtag=&pagetab=cctome";
 }
 
