@@ -30,10 +30,14 @@ if (isset($_GET['recordID'])) {
   $colname_DetailRS1 = $_GET['recordID'];
 }
 mysql_select_db($database_tankdb, $tankdb);
+//数据库修改后的SQL语句，查找对应的项目
 $query_DetailRS1 = sprintf("SELECT * FROM tk_project 
 inner join tk_user on tk_project.project_to_user=tk_user.uid 
-inner join tk_status_project on tk_project.project_status=tk_status_project.psid 
 WHERE tk_project.id = %s", GetSQLValueString($colname_DetailRS1, "int"));
+// $query_DetailRS1 = sprintf("SELECT * FROM tk_project 
+// inner join tk_user on tk_project.project_to_user=tk_user.uid 
+// inner join tk_status_project on tk_project.project_status=tk_status_project.psid 
+// WHERE tk_project.id = %s", GetSQLValueString($colname_DetailRS1, "int"));
 $query_limit_DetailRS1 = sprintf("%s LIMIT %d, %d", $query_DetailRS1, $startRow_DetailRS1, $maxRows_DetailRS1);
 $DetailRS1 = mysql_query($query_limit_DetailRS1, $tankdb) or die(mysql_error());
 $row_DetailRS1 = mysql_fetch_assoc($DetailRS1);
@@ -56,6 +60,7 @@ $startRow_Recordset_task = $pageNum_Recordset_task * $maxRows_Recordset_task;
 $colname_Recordset_task = $row_DetailRS1['id'];
 
 mysql_select_db($database_tankdb, $tankdb);
+//修改数据库后的SQL语句，寻找
 $query_Recordset_task = sprintf("SELECT *
 							FROM tk_task 								
 							inner join tk_task_tpye on tk_task.csa_type=tk_task_tpye.id								

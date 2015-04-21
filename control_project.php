@@ -26,16 +26,22 @@ if (isset($_GET['inputtitle'])) {
   $colinputtitle_Recordset1 = $_GET['inputtitle'];
 }
 
+$pagetabs = "allprj";
+if (isset($_GET['pagetab'])) {
+  $pagetabs = $_GET['pagetab'];
+}
 
-if ($pagetabs == "mprj" || $pagetabs == "jprj"){
+// if ($pagetabs == "mprj" || $pagetabs == "jprj"){
+// $prjtouser = $_SESSION['MM_uid'];
+// if (isset($_GET['ptouser'])) {
+//   $prjtouser = $_GET['ptouser'];
+// }
+// }else {
+// $prjtouser = 0;
+// }
+//现在的时间
+$today_date = date('Y-m-d');
 $prjtouser = $_SESSION['MM_uid'];
-if (isset($_GET['ptouser'])) {
-  $prjtouser = $_GET['ptouser'];
-}
-}else {
-$prjtouser = 0;
-}
-
 if($pagetabs == "jprj"){
 //我参与的
 //$where = "tk_task.csa_to_user = $prjtouser AND tk_status_project.task_status NOT LIKE '%%$multilingual_dd_status_prjfinish%%' AND";
@@ -82,8 +88,7 @@ mysql_select_db($database_tankdb, $tankdb);
 // 							GetSQLValueString($sortlist, "defined", $sortlist, "NULL"),
 // 							GetSQLValueString($orderlist, "defined", $orderlist, "NULL"));
 
-//现在的时间
-$today_date = date('Y-m-d');
+
 //修改后的sql语句					
 $query_Recordset1 = sprintf("SELECT p.id,p.project_name,p.project_text,p.project_start,p.project_end,p.project_to_user,p.project_lastupdate,p.project_del_status,p.project_create_time 
 	                        FROM tk_project p, tk_team t WHERE p.id=t.tk_team_pid AND
