@@ -1,4 +1,5 @@
 <?php
+require_once('function.class.php');
 $url_project = $_SERVER["QUERY_STRING"] ;
 $current_url = current(explode("&sort",$url_project));
 
@@ -308,14 +309,27 @@ $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recor
 <!-- 项目列表内容，与上面的表头对应 -->
 <!--      <td><?php echo $row_Recordset1['id']; ?></td>-->
       <td class="task_title">&nbsp;&nbsp;<a href="project_view.php?recordID=<?php echo $row_Recordset1['id']; ?>&pagetab=<?php echo $pagetabs; ?>" ><?php echo $row_Recordset1['project_name']; ?></a>&nbsp; </td>
-      <td>
+      <td> <!-- 显示负责人 -->
 	  <a href="user_view.php?recordID=<?php echo $row_Recordset1['project_to_user']; ?>">
-	  <?php echo $row_Recordset1['tk_display_name']; ?></a>
+	  <?php 
+      $new_user = get_user($row_Recordset1['project_to_user']);
+	  echo $new_user->name; ?></a>
 	  &nbsp; </td>
 <!--      <td class="hide"><?php echo $row_Recordset1['project_code']; ?>&nbsp; </td>-->
       <td><?php echo $row_Recordset1['project_start']; ?>&nbsp; </td>
       <td><?php echo $row_Recordset1['project_end']; ?>&nbsp; </td>
-      <td><?php echo $row_Recordset1['task_status_display']; ?></td>
+      <td><?php //显示项目的状态
+      $today_date = date('Y-m-d');//今天的日期，用于计算项目状态
+      if($today_date < $row_Recordset1['project_start']){
+      	//表示项目还没有开始
+      	echo "<div style='background-color: #FF6666; width:100%; text-align:center;'>项目未开始</div>";
+      }elseif ($today_date > $row_Recordset1['project_end']) {
+      	//表示项目已结结束
+        echo "<div style='background-color: #B3B3B3; width:100%; text-align:center;'>项目已结束</div>";
+      }else{
+      	//表示项目正在进行中
+      	echo "<div style='background-color: #6ABD78; width:100%; text-align:center;'>开发进行中</div>";
+      }?></td>
       <td><?php echo $row_Recordset1['project_lastupdate']; ?>&nbsp; </td>
       </tr>
     <?php } while ($row_Recordset1 = mysql_fetch_assoc($Recordset1)); ?>
