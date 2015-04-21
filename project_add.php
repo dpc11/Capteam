@@ -13,12 +13,6 @@
       $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
     }
 
-    // if ( empty( $_POST['project_code'] ) ){
-    // $project_code = "'',";
-    // }else{
-    // $project_code = sprintf("%s,", GetSQLValueString(str_replace("%","%%",$_POST['project_code']), "text"));
-    // }
-
     if ( empty( $_POST['project_text'] ) ){
     $project_text = "'',";
     }else{
@@ -41,14 +35,8 @@
     $newID =0;
     if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
       //数据库修改后的SQL语句
-      // $insertSQL = sprintf("INSERT INTO tk_project (project_name, project_code, project_text, project_start, project_end, project_to_user, project_status, project_from, project_from_user, project_to_dept, project_remark, project_from_contact) VALUES (%s, $project_code $project_text %s, %s, %s, %s, '', '', '', '', '')",
-      //                      GetSQLValueString($_POST['project_name'], "text"),
-      //                      GetSQLValueString($_POST['project_start'], "date"),
-      //                      GetSQLValueString($_POST['project_end'], "date"),
-      //                      GetSQLValueString($_POST['project_to_user'], "text"),
-      //                      GetSQLValueString($_POST['project_status'], "text"));
         $new_project_createtime = date('Y-m-d');
-        $new_project_lastupdate = date("Y-m-d H:i:s",time()+8*3600);
+        $new_project_lastupdate = date("Y-m-d H:i:s");
         $insertSQL = sprintf("INSERT INTO tk_project (project_name, project_text, project_start, project_end, project_to_user,project_lastupdate,project_create_time)
           VALUES (%s,$project_text %s, %s, %s, '$new_project_lastupdate','$new_project_createtime')",
                            GetSQLValueString($_POST['project_name'], "text"),
@@ -193,10 +181,6 @@
     	
       });
     </script>
-
-
-
-
 
     <form action="<?php echo $editFormAction; ?>" method="post" name="myform" id="form1">
     <table width="100%" border="0" cellspacing="0" cellpadding="0">

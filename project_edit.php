@@ -12,13 +12,6 @@ if (isset($_GET['editID'])) {
   $colname_Recordset1 = $_GET['editID'];
 }
 
-
-if ( empty( $_POST['project_code'] ) ){
-$project_code = "project_code='',";
-}else{
-$project_code = sprintf("project_code=%s,", GetSQLValueString(str_replace("%","%%",$_POST['project_code']), "text"));
-}
-
 if ( empty( $_POST['project_text'] ) ){
 $project_text = "project_text='',";
 }else{
@@ -38,10 +31,14 @@ $project_end = sprintf("project_end=%s,", GetSQLValueString($_POST['project_end'
 }
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
-  $updateSQL = sprintf("UPDATE tk_project SET project_name=%s, $project_code $project_text $project_start $project_end project_to_user=%s, project_status=%s WHERE id=%s",
+  //把当前时间作为最后一次修改时间
+  $update_project_lastupdate = date("Y-m-d H:i:s",time());
+  //更新数据库
+
+  mysql_select_db($database_tankdb, $tankdb);
+  $Result1 = mysql_query($updateProject, $tankdb) or die(mysql_error());
+  $updateSQL = sprintf("UPDATE tk_project SET project_name=%s, $project_text $project_start $project_end  project_lastupdate = '$update_project_lastupdate' WHERE id=%s",
                        GetSQLValueString($_POST['project_name'], "text"),
-                       GetSQLValueString($_POST['project_to_user'], "text"),
-                       GetSQLValueString($_POST['project_status'], "text"),
                        GetSQLValueString($_POST['id'], "int"));
 
   mysql_select_db($database_tankdb, $tankdb);
@@ -74,6 +71,42 @@ $restrictGoTo = "user_error3.php";
 if ($_SESSION['MM_rank'] < "4" && ($row_Recordset1['project_to_user'] <> $_SESSION['MM_uid'] || $_SESSION['MM_rank'] < "2")) {   
   header("Location: ". $restrictGoTo); 
   exit;
+}
+
+
+if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
+//更新team表中的数据
+//删除原有的项目成员
+$deleteMemSQL = sprintf("DELETE from tk_team WHERE tk_team_pid = %s", GetSQLValueString($colname_Recordset1, "int"));
+mysql_select_db($database_tankdb, $tankdb);
+$Result1 = mysql_query($deleteMemSQL, $tankdb) or die(mysql_error());
+//往数据库中插入新成员
+    //插入项目负责人
+    $tk_team_pid= GetSQLValueString($colname_Recordset1, "int");//项目id
+    $tk_team_uid= $_SESSION['MM_uid'];//用户id
+    $tk_team_ulimit=3;//用户权限,组长是3
+    $tk_team_del_status=1;//该用户在该项目中的删除状态
+    $tk_team_jointeamtime=date('Y-m-d H:i:s');//该用户加入该项目的时间，PHP date() 函数会返回服
+    /*开始操作数据库了，insert语句*/
+    $addnewmemSQL="INSERT INTO tk_team (tk_team_pid,tk_team_uid,tk_team_ulimit,tk_team_del_status,tk_team_jointeamtime)
+    VALUES ($tk_team_pid,$tk_team_uid,$tk_team_ulimit,$tk_team_del_status,'$tk_team_jointeamtime')";
+    mysql_select_db($database_tankdb, $tankdb);
+    $Result1 = mysql_query($addnewmemSQL, $tankdb) or die(mysql_error());
+
+//获取选中的项目成员
+$user_list= $_POST['project_to_user'];
+    //往数据库team表中插入各个成员的信息
+    foreach ($user_list as $a_user) {
+        $tk_team_uid= $a_user;//用户id
+        $tk_team_ulimit=1;//用户权限,组长是3，组员是1，副组长是2
+        $tk_team_del_status=1;//该用户在该项目中的删除状态
+        $tk_team_jointeamtime=date('Y-m-d H:i:s');//该用户加入该项目的时间，PHP date() 函数会返回服
+        /*开始操作数据库了，insert语句*/
+        $addnewmemSQL="INSERT INTO tk_team (tk_team_pid,tk_team_uid,tk_team_ulimit,tk_team_del_status,tk_team_jointeamtime)
+        VALUES ($tk_team_pid,$tk_team_uid,$tk_team_ulimit,$tk_team_del_status,'$tk_team_jointeamtime')";
+        mysql_select_db($database_tankdb, $tankdb);
+        $Result1 = mysql_query($addnewmemSQL, $tankdb) or die(mysql_error());
+    }
 }
 
 ?>
@@ -184,17 +217,15 @@ window.onload = function()
 			  <div class="form-group  col-xs-12">
                 <label for="select2" ><?php echo $multilingual_project_touser; ?><span id="csa_to_user_msg"></span></label>
                 <div >
-                  <select id="select2" name="project_to_user" multiple size="3" class="form-control">
-				    <?php foreach($user_arr as $key => $val){  ?>
-					 <option value='<?php echo $val["uid"]?>'><?php echo $val["name"]?></option>
-					 <?php } ?>  
-				
-<!--
-                    <?php if ($_SESSION['MM_rank'] > "4") { ?>
-                    <option value="-1" class="gray" >+<?php echo $multilingual_user_new; ?></option>
-                    <?php } ?>
--->
-                  </select>
+                  <select name="project_to_user[]" id="select2" size="6" multiple class="form-control">
+                      <?php foreach($user_arr as $key => $val){ 
+                              if($val["uid"] <> $_SESSION["MM_uid"]){
+                       ?>
+                          <option value='<?php echo $val["uid"]?>'><?php echo $val["name"]?></option>
+                     <?php
+                     }} ?>  
+          
+                      </select>
                 </div>
                 <span class="help-block"><?php echo $multilingual_project_tips2; ?></span> </div>
 				 
@@ -205,39 +236,6 @@ window.onload = function()
                 </div>
               </div>
               
-<!--
-              <div class="form-group  col-xs-12 <?php if($row_Recordset1['project_code'] == null ||$row_Recordset1['project_code'] == " "){echo "hide";}?>">
-                <label for="project_code"><?php echo $multilingual_project_code; ?></label>
-                <div>
-				<input type="text" name="project_code" id="project_code" value="<?php echo $row_Recordset1['project_code']; ?>" class="form-control"  placeholder="<?php echo $multilingual_project_code;?>" />
-                </div>
-				<span class="help-block"><?php echo $multilingual_project_code; ?></span>
-              </div>
-              
-              <div class="form-group col-xs-12">
-                <label for="project_status"><?php echo $multilingual_project_status; ?></label>
-                <div>
-				<select name="project_status" id="project_status" onChange="option_gourl(this.value)" class="form-control">
-        <?php
-do {  
-?>
-        <option value="<?php echo $row_Recordset2['psid']?>"<?php if (!(strcmp($row_Recordset2['psid'], ($row_Recordset1['project_status'])))) {echo "selected=\"selected\"";} ?>><?php echo $row_Recordset2['task_status']?></option>
-        <?php
-} while ($row_Recordset2 = mysql_fetch_assoc($Recordset2));
-  $rows = mysql_num_rows($Recordset2);
-  if($rows > 0) {
-      mysql_data_seek($Recordset2, 0);
-	  $row_Recordset2 = mysql_fetch_assoc($Recordset2);
-  }
-?>
-<?php if ($_SESSION['MM_rank'] > "4") { ?>
-<option value="-2" class="gray" >+<?php echo $multilingual_projectstatus_new; ?></option>
-<?php } ?>
-      </select>
-                </div>
-				<span class="help-block"><?php echo $multilingual_project_tips; ?></span>
-              </div>
--->
 
 				<div class="form-group col-xs-12">
                 <label for="datepicker"><?php echo $multilingual_project_start; ?><span id="datepicker_msg"></span></label>
