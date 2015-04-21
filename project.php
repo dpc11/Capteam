@@ -56,6 +56,8 @@ if (isset($_GET['pagetab'])) {
 
 <div class="subnav">
 <div class="float_left" style="width:85%">
+
+<!-- 切换按钮 -->
 <div class="btn-group">
 <a type="button" class="btn btn-default btn-sm <?php if($pagetabs == "jprj") { echo "active";} ?>" href="<?php echo $pagename; ?>?pagetab=jprj" >
 <?php echo $multilingual_project_jprj;?>
