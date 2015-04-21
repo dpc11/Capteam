@@ -52,7 +52,7 @@ p {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 350px;
+    width: 200px;
 }
 
 .text_overflow_450 {

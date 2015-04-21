@@ -116,6 +116,7 @@ $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recor
 <table  class="table table-striped table-hover glink" width="98%" >
 <thead>
   <tr>
+<!--
     <th>
 	<a href="<?php echo $pagename; ?>?<?php echo $current_url; ?>&sort=id&order=<?php 
 	  if ( $sortlist <> "id"){
@@ -134,6 +135,7 @@ $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recor
 	  }
 	  ?>>
 	<?php echo $multilingual_project_id; ?></a></th>
+-->
     <th>
 	<a href="<?php echo $pagename; ?>?<?php echo $current_url; ?>&sort=project_name&order=<?php 
 	  if ( $sortlist <> "project_name"){
@@ -152,6 +154,25 @@ $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recor
 	  }
 	  ?>>
 	<?php echo $multilingual_project_title; ?></a></th>
+	<th>
+	<a href="<?php echo $pagename; ?>?<?php echo $current_url; ?>&sort=project_name&order=<?php 
+	  if ( $sortlist <> "project_to_user"){
+	  echo "DESC";
+	  }else if( $sortlist == "project_to_user" && $orderlist == "DESC"){
+	  echo "ASC";
+	  } else {
+	  echo "DESC";
+	  }
+	  ?>" 
+	  <?php 
+	  if($sortlist=="project_to_user" && $orderlist=="ASC"){
+	  echo "class='sort_asc'";
+	  } else if ($sortlist=="project_to_user" && $orderlist=="DESC"){
+	  echo "class='sort_desc'";
+	  }
+	  ?>>
+	<?php echo $multilingual_project_captain; ?></a></th>
+<!--
     <th class="hide">
 	<a href="<?php echo $pagename; ?>?<?php echo $current_url; ?>&sort=project_code&order=<?php 
 	  if ( $sortlist <> "project_code"){
@@ -170,6 +191,7 @@ $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recor
 	  }
 	  ?>>
 	<?php echo $multilingual_project_code; ?></a></th>
+-->
     <th>
 	<a href="<?php echo $pagename; ?>?<?php echo $current_url; ?>&sort=project_start&order=<?php 
 	  if ( $sortlist <> "project_start"){
@@ -267,17 +289,15 @@ $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recor
 <tbody>
   <?php do { ?>
     <tr>
-      <td><?php echo $row_Recordset1['id']; ?></td>
-      <td class="task_title"><a href="project_view.php?recordID=<?php echo $row_Recordset1['id']; ?>&pagetab=<?php echo $pagetabs; ?>" ><?php echo $row_Recordset1['project_name']; ?></a>&nbsp; </td>
-      <td class="hide"><?php echo $row_Recordset1['project_code']; ?>&nbsp; </td>
-      <td><?php echo $row_Recordset1['project_start']; ?>&nbsp; </td>
-      <td><?php echo $row_Recordset1['project_end']; ?>&nbsp; </td>
-<!--
+<!--      <td><?php echo $row_Recordset1['id']; ?></td>-->
+      <td class="task_title">&nbsp;&nbsp;<a href="project_view.php?recordID=<?php echo $row_Recordset1['id']; ?>&pagetab=<?php echo $pagetabs; ?>" ><?php echo $row_Recordset1['project_name']; ?></a>&nbsp; </td>
       <td>
 	  <a href="user_view.php?recordID=<?php echo $row_Recordset1['project_to_user']; ?>">
 	  <?php echo $row_Recordset1['tk_display_name']; ?></a>
 	  &nbsp; </td>
--->
+<!--      <td class="hide"><?php echo $row_Recordset1['project_code']; ?>&nbsp; </td>-->
+      <td><?php echo $row_Recordset1['project_start']; ?>&nbsp; </td>
+      <td><?php echo $row_Recordset1['project_end']; ?>&nbsp; </td>
       <td><?php echo $row_Recordset1['task_status_display']; ?></td>
       <td><?php echo $row_Recordset1['project_lastupdate']; ?>&nbsp; </td>
       </tr>

@@ -405,19 +405,12 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
     </tr>
   <tr>
 <!--
-    <td class="info_task_title"><?php echo $multilingual_project_touser; ?></td>
-    <td><a href="user_view.php?recordID=<?php echo $row_DetailRS1['project_to_user']; ?>"><?php echo $row_DetailRS1['tk_display_name']; ?></a></td>
     <td class="info_task_title"><?php echo $multilingual_tasklog_cost; ?></td>
     <td><?php 
 	  echo $sum_hour;?> <?php echo $multilingual_project_hour; ?></td>
 -->
-    <td class="info_task_title">
-	<?php if ($row_DetailRS1['project_end'] <> "0000-00-00") {  ?>
-	<?php echo $multilingual_project_captain; ?>
-	<?php } ?>	</td>
-    <td>
-	<?php echo $row_DetailRS1['project_to_user']; ?>
-	</td>
+    <td class="info_task_title"><?php echo $multilingual_project_captain; ?></td>
+    <td><a href="user_view.php?recordID=<?php echo $row_DetailRS1['project_to_user']; ?>"><?php echo $row_DetailRS1['tk_display_name']; ?></a></td>
    
     <td class="info_task_title">
 	<?php if ($row_DetailRS1['project_end'] <> "0000-00-00") {  ?>
@@ -487,17 +480,36 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
             <td><span class="font_big18 fontbold"><?php echo $multilingual_project_memeber; ?></span></td>
           </tr>
           <tr>
-<!--
+            <td colspan="2">
             <table class="table table-striped table-hover glink">
               <tbody>
-                <th>
+                <tr>
                   <td>dpc</td>
+                  <td>dpc11@qq.com</td>
+                  <td>13121917761</td>
+                  <td><a type="button" class="btn btn-default btn-sm" href="#" >
+                    <?php echo $multilingual_privilege_grant;?>
+                  </a></td>
+                </tr>
+                <tr>
                   <td>dpc</td>
+                  <td>dpc11@qq.com</td>
+                  <td>13121917761</td>
+                  <td><a type="button" class="btn btn-default btn-sm" href="#" >
+                    <?php echo $multilingual_privilege_remove;?>
+                  </a></td>
+                </tr>
+                <tr>
                   <td>dpc</td>
-                </th>
+                  <td>dpc11@qq.com</td>
+                  <td>13121917761</td>
+                  <td><a type="button" class="btn btn-default btn-sm" href="#" >
+                    <?php echo $multilingual_privilege_remove;?>
+                  </a></td>
+                </tr>
               </tbody>
             </table>
--->
+            </td>
           </tr>
 		  <?php } // Show if recordset not empty ?>
 		  <?php if ($row_DetailRS1['project_from_contact'] <> "" && $row_DetailRS1['project_from_contact'] <> " ") { // Show if recordset not empty ?>

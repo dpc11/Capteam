@@ -409,6 +409,7 @@ $multilingual_projectstatus_titlerequired = "2-32个字符";
 $multilingual_project_taskoverlay = "工时消耗分布";
 $multilingual_project_hour = "小时";
 $multilingual_project_newstage = "分解阶段";
+$multilingual_project_newstage = "下发任务";
 
 $multilingual_projectmem_title = "项目成员管理";
 $multilingual_projectmem_text = "在WSS 扩展功能中，您可以为一个项目组添加固定的成员，所有项目相关的内容，如：任务、文档、日志、项目详情等，只对该项目组的成员开放。";
@@ -423,6 +424,8 @@ $multilingual_project_add_text = "<p>每个项目包含了一个团队。</p><br
 <p>项目创建人就是组长，他／她可以为项目选择若干成员，并且分配不同职责：帮助组长分配任务，或者去完成任务。</p>
 ";
 $multilingual_project_title_tips = "请填写项目名称";
+$multilingual_privilege_grant = "赋予权限";
+$multilingual_privilege_remove = "回收权限";
 
 // *** 文档管理
 $multilingual_project_file = "项目文档";
