@@ -32,7 +32,6 @@ if (isset($_GET['recordID'])) {
 mysql_select_db($database_tankdb, $tankdb);
 $query_DetailRS1 = sprintf("SELECT * FROM tk_project 
 inner join tk_user on tk_project.project_to_user=tk_user.uid 
-inner join tk_status_project on tk_project.project_status=tk_status_project.psid 
 WHERE tk_project.id = %s", GetSQLValueString($colname_DetailRS1, "int"));
 $query_limit_DetailRS1 = sprintf("%s LIMIT %d, %d", $query_DetailRS1, $startRow_DetailRS1, $maxRows_DetailRS1);
 $DetailRS1 = mysql_query($query_limit_DetailRS1, $tankdb) or die(mysql_error());
@@ -58,10 +57,10 @@ $colname_Recordset_task = $row_DetailRS1['id'];
 mysql_select_db($database_tankdb, $tankdb);
 $query_Recordset_task = sprintf("SELECT *
               FROM tk_task                
-              inner join tk_task_tpye on tk_task.csa_type=tk_task_tpye.id               
+                            
               inner join tk_user on tk_task.csa_to_user=tk_user.uid 
-              inner join tk_status on tk_task.csa_remark2=tk_status.id 
-                WHERE csa_project = %s AND csa_remark4 = '-1' ORDER BY csa_last_update DESC", GetSQLValueString($colname_Recordset_task, "text"));
+              inner join tk_status on tk_task.csa_status=tk_status.id 
+                WHERE csa_project = %s ORDER BY csa_last_update DESC", GetSQLValueString($colname_Recordset_task, "text"));
 $query_limit_Recordset_task = sprintf("%s LIMIT %d, %d", $query_Recordset_task, $startRow_Recordset_task, $maxRows_Recordset_task);
 $Recordset_task = mysql_query($query_limit_Recordset_task, $tankdb) or die(mysql_error());
 $row_Recordset_task = mysql_fetch_assoc($Recordset_task);
@@ -93,9 +92,9 @@ $queryString_Recordset_task = sprintf("&totalRows_Recordset_task=%d%s", $totalRo
 
 
 mysql_select_db($database_tankdb, $tankdb);
-$query_Recordset_sumlog =  sprintf("SELECT sum(csa_tb_manhour) as sum_hour FROM tk_task_byday WHERE csa_tb_backup3= %s ", GetSQLValueString($colname_DetailRS1, "text"));
-$Recordset_sumlog = mysql_query($query_Recordset_sumlog, $tankdb) or die(mysql_error());
-$row_Recordset_sumlog = mysql_fetch_assoc($Recordset_sumlog);
+//$query_Recordset_sumlog =  sprintf("SELECT sum(csa_tb_manhour) as sum_hour FROM tk_task_byday WHERE csa_tb_backup3= %s ", GetSQLValueString($colname_DetailRS1, "text"));
+//$Recordset_sumlog = mysql_query($query_Recordset_sumlog, $tankdb) or die(mysql_error());
+//$row_Recordset_sumlog = mysql_fetch_assoc($Recordset_sumlog);
 
 $maxRows_Recordset_comment = 10;
 $pageNum_Recordset_comment = 0;
@@ -150,10 +149,10 @@ $startRow_Recordset_file = $pageNum_Recordset_file * $maxRows_Recordset_file;
 
 mysql_select_db($database_tankdb, $tankdb);
 $query_Recordset_file = sprintf("SELECT * FROM tk_document 
-inner join tk_user on tk_document.tk_doc_edit =tk_user.uid 
-WHERE tk_doc_class1 = %s AND  tk_doc_class2 = 0 
+inner join tk_user on tk_document.tk_doc_create =tk_user.uid 
+WHERE tk_doc_pid = %s AND  tk_doc_class2 = 0 
                 
-                ORDER BY tk_doc_backup1 DESC, tk_doc_edittime DESC", 
+                ORDER BY tk_doc_backup1 DESC, tk_doc_lastupdate DESC", 
                 GetSQLValueString($colname_DetailRS1, "text")
                 );
 $query_limit_Recordset_file = sprintf("%s LIMIT %d, %d", $query_Recordset_file, $startRow_Recordset_file, $maxRows_Recordset_file);
@@ -218,7 +217,7 @@ if (isset($_GET['logday'])) {
 
 $coldate = $colyear_log.$colmonth_log.$colday_log;
 
-mysql_select_db($database_tankdb, $tankdb);
+/*mysql_select_db($database_tankdb, $tankdb);
 $query_Recordset_log = sprintf("SELECT * FROM tk_task_byday 
                 inner join tk_project on tk_task_byday.csa_tb_backup3=tk_project.id 
                 inner join tk_task_tpye on tk_task_byday.csa_tb_backup4=tk_task_tpye.id 
@@ -231,7 +230,7 @@ GetSQLValueString($coldate . "%", "text")
 );
 $query_limit_Recordset_log = sprintf("%s LIMIT %d, %d", $query_Recordset_log, $startRow_Recordset_log, $maxRows_Recordset_log);
 $Recordset_log = mysql_query($query_limit_Recordset_log, $tankdb) or die(mysql_error());
-$row_Recordset_log = mysql_fetch_assoc($Recordset_log);
+$row_Recordset_log = mysql_fetch_assoc($Recordset_log);*/
 
 if (isset($_GET['totalRows_Recordset_log'])) {
   $totalRows_Recordset_log = $_GET['totalRows_Recordset_log'];
