@@ -40,11 +40,26 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
 }
 
 if ((isset($_GET['delID'])) && ($_GET['delID'] != "") && ($_SESSION['MM_Username'] <> $multilingual_dd_user_readonly)) {
-  $deleteSQL = sprintf("DELETE FROM tk_project WHERE id=%s",
-                       GetSQLValueString($_GET['delID'], "int"));
-
+  $del_project_id = GetSQLValueString($_GET['delID'], "int");
+  $del_project_lastupdate = date("Y-m-d H:i:s",time());
+  //将项目中的删除位置为-1
+  $delProject = "DELETE from tk_project WHERE id = $del_project_id";
   mysql_select_db($database_tankdb, $tankdb);
-  $Result1 = mysql_query($deleteSQL, $tankdb) or die(mysql_error());
+  $Result1 = mysql_query($delProject, $tankdb) or die(mysql_error());
+  //删除team表中的数据
+  $delTeam = "DELETE from tk_team WHERE tk_team_pid = $del_project_id"; 
+  mysql_select_db($database_tankdb, $tankdb);
+  $Result2 = mysql_query($delTeam, $tankdb) or die(mysql_error());
+
+  // //将项目中的删除位置为-1
+  // $delProject = "UPDATE tk_project SET project_del_status = -1, project_lastupdate = '$del_project_lastupdate' WHERE id = $del_project_id";
+  // mysql_select_db($database_tankdb, $tankdb);
+  // $Result1 = mysql_query($delProject, $tankdb) or die(mysql_error());
+  // //删除team表中的数据
+  // $delTeam = "UPDATE tk_team SET tk_team_del_status = -1 WHERE tk_team_pid = $del_project_id"; 
+  // mysql_select_db($database_tankdb, $tankdb);
+  // $Result2 = mysql_query($delTeam, $tankdb) or die(mysql_error());
+
 
   $deleteGoTo = "project.php";
   if (isset($_SERVER['QUERY_STRING'])) {
