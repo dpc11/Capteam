@@ -397,8 +397,21 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
 <!-- 项目基本信息 -->		  
 <table width="100%" border="0" cellspacing="0" cellpadding="5"  class="info_task_bg">
     <tr>
-    <td width="12%" class="info_task_title"><?php echo $multilingual_project_status; ?></td>
-    <td  width="40%"><div class="status_view"><?php echo $row_DetailRS1['task_status_display']; ?></div></td>
+    <td width="12%" class="info_task_title"><?php echo $multilingual_project_status; ?></td>   <!-- 显示项目状态的标签 -->
+    <td  width="40%"><div class="status_view">         <!-- 显示项目状态 -->
+    <?php //显示项目的状态
+      $today_date = date('Y-m-d');//今天的日期，用于计算项目状态
+      if($today_date < $row_DetailRS1['project_start']){
+        //表示项目还没有开始
+        echo "<div style='background-color: #FF6666; width:100%; text-align:center;'>项目未开始</div>";
+      }elseif ($today_date > $row_DetailRS1['project_end']) {
+        //表示项目已结结束
+        echo "<div style='background-color: #B3B3B3; width:100%; text-align:center;'>项目已结束</div>";
+      }else{
+        //表示项目正在进行中
+        echo "<div style='background-color: #6ABD78; width:100%; text-align:center;'>开发进行中</div>";
+      }?>
+    </div></td>
 <!--
     <td  width="12%" class="info_task_title"><?php echo $multilingual_project_id; ?></td>
     <td><?php echo $row_DetailRS1['id']; ?></td>
