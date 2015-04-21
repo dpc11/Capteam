@@ -34,10 +34,6 @@ mysql_select_db($database_tankdb, $tankdb);
 $query_DetailRS1 = sprintf("SELECT * FROM tk_project 
 inner join tk_user on tk_project.project_to_user=tk_user.uid 
 WHERE tk_project.id = %s", GetSQLValueString($colname_DetailRS1, "int"));
-// $query_DetailRS1 = sprintf("SELECT * FROM tk_project 
-// inner join tk_user on tk_project.project_to_user=tk_user.uid 
-// inner join tk_status_project on tk_project.project_status=tk_status_project.psid 
-// WHERE tk_project.id = %s", GetSQLValueString($colname_DetailRS1, "int"));
 $query_limit_DetailRS1 = sprintf("%s LIMIT %d, %d", $query_DetailRS1, $startRow_DetailRS1, $maxRows_DetailRS1);
 $DetailRS1 = mysql_query($query_limit_DetailRS1, $tankdb) or die(mysql_error());
 $row_DetailRS1 = mysql_fetch_assoc($DetailRS1);
@@ -59,14 +55,13 @@ $startRow_Recordset_task = $pageNum_Recordset_task * $maxRows_Recordset_task;
 
 $colname_Recordset_task = $row_DetailRS1['id'];
 
+//修改数据库后的SQL语句，寻找相关task
 mysql_select_db($database_tankdb, $tankdb);
-//修改数据库后的SQL语句，寻找
 $query_Recordset_task = sprintf("SELECT *
-							FROM tk_task 								
-							inner join tk_task_tpye on tk_task.csa_type=tk_task_tpye.id								
-							inner join tk_user on tk_task.csa_to_user=tk_user.uid 
-							inner join tk_status on tk_task.csa_remark2=tk_status.id 
-								WHERE csa_project = %s AND csa_remark4 = '-1' ORDER BY csa_last_update DESC", GetSQLValueString($colname_Recordset_task, "text"));
+              FROM tk_task                           
+              inner join tk_user on tk_task.csa_to_user=tk_user.uid 
+              inner join tk_status on tk_task.csa_status=tk_status.id 
+              WHERE csa_project = %s ORDER BY csa_last_update DESC", GetSQLValueString($colname_Recordset_task, "text"));
 $query_limit_Recordset_task = sprintf("%s LIMIT %d, %d", $query_Recordset_task, $startRow_Recordset_task, $maxRows_Recordset_task);
 $Recordset_task = mysql_query($query_limit_Recordset_task, $tankdb) or die(mysql_error());
 $row_Recordset_task = mysql_fetch_assoc($Recordset_task);
@@ -97,18 +92,18 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 $queryString_Recordset_task = sprintf("&totalRows_Recordset_task=%d%s", $totalRows_Recordset_task, $queryString_Recordset_task);
 
 
-mysql_select_db($database_tankdb, $tankdb);
-$query_Recordset_sumlog =  sprintf("SELECT sum(csa_tb_manhour) as sum_hour FROM tk_task_byday WHERE csa_tb_backup3= %s ", GetSQLValueString($colname_DetailRS1, "text"));
-$Recordset_sumlog = mysql_query($query_Recordset_sumlog, $tankdb) or die(mysql_error());
-$row_Recordset_sumlog = mysql_fetch_assoc($Recordset_sumlog);
+// mysql_select_db($database_tankdb, $tankdb);
+// $query_Recordset_sumlog =  sprintf("SELECT sum(csa_tb_manhour) as sum_hour FROM tk_task_byday WHERE csa_tb_backup3= %s ", GetSQLValueString($colname_DetailRS1, "text"));
+// $Recordset_sumlog = mysql_query($query_Recordset_sumlog, $tankdb) or die(mysql_error());
+// $row_Recordset_sumlog = mysql_fetch_assoc($Recordset_sumlog);
 
+//显示评论和对评论的操作
 $maxRows_Recordset_comment = 10;
 $pageNum_Recordset_comment = 0;
 if (isset($_GET['pageNum_Recordset_comment'])) {
   $pageNum_Recordset_comment = $_GET['pageNum_Recordset_comment'];
 }
 $startRow_Recordset_comment = $pageNum_Recordset_comment * $maxRows_Recordset_comment;
-
 mysql_select_db($database_tankdb, $tankdb);
 $query_Recordset_comment = sprintf("SELECT * FROM tk_comment 
 inner join tk_user on tk_comment.tk_comm_user =tk_user.uid 
@@ -146,131 +141,135 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 }
 $queryString_Recordset_comment = sprintf("&totalRows_Recordset_comment=%d%s", $totalRows_Recordset_comment, $queryString_Recordset_comment);
 
-$maxRows_Recordset_file = 15;
-$pageNum_Recordset_file = 0;
-if (isset($_GET['pageNum_Recordset_file'])) {
-  $pageNum_Recordset_file = $_GET['pageNum_Recordset_file'];
-}
-$startRow_Recordset_file = $pageNum_Recordset_file * $maxRows_Recordset_file;
+//对文件进行操作
+// $maxRows_Recordset_file = 15;
+// $pageNum_Recordset_file = 0;
+// if (isset($_GET['pageNum_Recordset_file'])) {
+//   $pageNum_Recordset_file = $_GET['pageNum_Recordset_file'];
+// }
+// $startRow_Recordset_file = $pageNum_Recordset_file * $maxRows_Recordset_file;
 
-mysql_select_db($database_tankdb, $tankdb);
-$query_Recordset_file = sprintf("SELECT * FROM tk_document 
-inner join tk_user on tk_document.tk_doc_edit =tk_user.uid 
-WHERE tk_doc_class1 = %s AND  tk_doc_class2 = 0 
+// mysql_select_db($database_tankdb, $tankdb);
+
+// $query_Recordset_file = sprintf("SELECT * FROM tk_document 
+// inner join tk_user on tk_document.tk_doc_edit =tk_user.uid 
+// WHERE tk_doc_class1 = %s AND  tk_doc_class2 = 0 
 								
-								ORDER BY tk_doc_backup1 DESC, tk_doc_edittime DESC", 
-								GetSQLValueString($colname_DetailRS1, "text")
-								);
-$query_limit_Recordset_file = sprintf("%s LIMIT %d, %d", $query_Recordset_file, $startRow_Recordset_file, $maxRows_Recordset_file);
-$Recordset_file = mysql_query($query_limit_Recordset_file, $tankdb) or die(mysql_error());
-$row_Recordset_file = mysql_fetch_assoc($Recordset_file);
+// 								ORDER BY tk_doc_backup1 DESC, tk_doc_edittime DESC", 
+// 								GetSQLValueString($colname_DetailRS1, "text")
+// 								);
+// $query_limit_Recordset_file = sprintf("%s LIMIT %d, %d", $query_Recordset_file, $startRow_Recordset_file, $maxRows_Recordset_file);
+// $Recordset_file = mysql_query($query_limit_Recordset_file, $tankdb) or die(mysql_error());
+// $row_Recordset_file = mysql_fetch_assoc($Recordset_file);
 
-if (isset($_GET['totalRows_Recordset_file'])) {
-  $totalRows_Recordset_file = $_GET['totalRows_Recordset_file'];
-} else {
-  $all_Recordset_file = mysql_query($query_Recordset_file);
-  $totalRows_Recordset_file = mysql_num_rows($all_Recordset_file);
-}
-$totalPages_Recordset_file = ceil($totalRows_Recordset_file/$maxRows_Recordset_file)-1;
+// if (isset($_GET['totalRows_Recordset_file'])) {
+//   $totalRows_Recordset_file = $_GET['totalRows_Recordset_file'];
+// } else {
+//   $all_Recordset_file = mysql_query($query_Recordset_file);
+//   $totalRows_Recordset_file = mysql_num_rows($all_Recordset_file);
+// }
+// $totalPages_Recordset_file = ceil($totalRows_Recordset_file/$maxRows_Recordset_file)-1;
 
-$queryString_Recordset_file = "";
-if (!empty($_SERVER['QUERY_STRING'])) {
-  $params = explode("&", $_SERVER['QUERY_STRING']);
-  $newParams = array();
-  foreach ($params as $param) {
-    if (stristr($param, "pageNum_Recordset_file") == false && 
-        stristr($param, "totalRows_Recordset_file") == false && 
-        stristr($param, "tab") == false) {
-      array_push($newParams, $param);
-    }
-  }
-  if (count($newParams) != 0) {
-    $queryString_Recordset_file = "&" . htmlentities(implode("&", $newParams));
-  }
-}
-$queryString_Recordset_file = sprintf("&totalRows_Recordset_file=%d%s", $totalRows_Recordset_file, $queryString_Recordset_file);
+// $queryString_Recordset_file = "";
+// if (!empty($_SERVER['QUERY_STRING'])) {
+//   $params = explode("&", $_SERVER['QUERY_STRING']);
+//   $newParams = array();
+//   foreach ($params as $param) {
+//     if (stristr($param, "pageNum_Recordset_file") == false && 
+//         stristr($param, "totalRows_Recordset_file") == false && 
+//         stristr($param, "tab") == false) {
+//       array_push($newParams, $param);
+//     }
+//   }
+//   if (count($newParams) != 0) {
+//     $queryString_Recordset_file = "&" . htmlentities(implode("&", $newParams));
+//   }
+// }
+// $queryString_Recordset_file = sprintf("&totalRows_Recordset_file=%d%s", $totalRows_Recordset_file, $queryString_Recordset_file);
 
 
-$maxRows_Recordset_log = 15;
-$pageNum_Recordset_log = 0;
-if (isset($_GET['pageNum_Recordset_log'])) {
-  $pageNum_Recordset_log = $_GET['pageNum_Recordset_log'];
-}
-$startRow_Recordset_log = $pageNum_Recordset_log * $maxRows_Recordset_log;
 
-$colname_Recordset_log = $colname_DetailRS1;
+//项目日志进行操作
+// $maxRows_Recordset_log = 15;
+// $pageNum_Recordset_log = 0;
+// if (isset($_GET['pageNum_Recordset_log'])) {
+//   $pageNum_Recordset_log = $_GET['pageNum_Recordset_log'];
+// }
+// $startRow_Recordset_log = $pageNum_Recordset_log * $maxRows_Recordset_log;
 
-$colmonth_log = date("m");
-$_SESSION['ser_logmonth'] = $colmonth_log;
-if (isset($_GET['logmonth'])) {
-  $colmonth_log = $_GET['logmonth'];
-  $_SESSION['ser_logmonth'] = $colmonth_log;
-}
+// $colname_Recordset_log = $colname_DetailRS1;
 
-$colyear_log = date("Y");
-$_SESSION['ser_logyear'] = $colyear_log;
-if (isset($_GET['logyear'])) {
-  $colyear_log = $_GET['logyear'];
-  $_SESSION['ser_logyear'] = $colyear_log;
-}
+// $colmonth_log = date("m");
+// $_SESSION['ser_logmonth'] = $colmonth_log;
+// if (isset($_GET['logmonth'])) {
+//   $colmonth_log = $_GET['logmonth'];
+//   $_SESSION['ser_logmonth'] = $colmonth_log;
+// }
 
-$colday_log = "";
-$_SESSION['ser_logday'] = $colday_log;
-if (isset($_GET['logday'])) {
-  $colday_log = $_GET['logday'];
-  $_SESSION['ser_logday'] = $colday_log;
-}
+// $colyear_log = date("Y");
+// $_SESSION['ser_logyear'] = $colyear_log;
+// if (isset($_GET['logyear'])) {
+//   $colyear_log = $_GET['logyear'];
+//   $_SESSION['ser_logyear'] = $colyear_log;
+// }
 
-$coldate = $colyear_log.$colmonth_log.$colday_log;
+// $colday_log = "";
+// $_SESSION['ser_logday'] = $colday_log;
+// if (isset($_GET['logday'])) {
+//   $colday_log = $_GET['logday'];
+//   $_SESSION['ser_logday'] = $colday_log;
+// }
 
-mysql_select_db($database_tankdb, $tankdb);
-$query_Recordset_log = sprintf("SELECT * FROM tk_task_byday 
-								inner join tk_project on tk_task_byday.csa_tb_backup3=tk_project.id 
-								inner join tk_task_tpye on tk_task_byday.csa_tb_backup4=tk_task_tpye.id 
-								inner join tk_status on tk_task_byday.csa_tb_status=tk_status.id 
-								inner join tk_task on tk_task_byday.csa_tb_backup1=tk_task.TID 
-								inner join tk_user on tk_task_byday.csa_tb_backup2=tk_user.uid 
-WHERE csa_tb_backup3 = %s AND csa_tb_year LIKE %s ORDER BY csa_tb_year DESC", 
-GetSQLValueString($colname_Recordset_log, "text"),
-GetSQLValueString($coldate . "%", "text")
-);
-$query_limit_Recordset_log = sprintf("%s LIMIT %d, %d", $query_Recordset_log, $startRow_Recordset_log, $maxRows_Recordset_log);
-$Recordset_log = mysql_query($query_limit_Recordset_log, $tankdb) or die(mysql_error());
-$row_Recordset_log = mysql_fetch_assoc($Recordset_log);
+// $coldate = $colyear_log.$colmonth_log.$colday_log;
 
-if (isset($_GET['totalRows_Recordset_log'])) {
-  $totalRows_Recordset_log = $_GET['totalRows_Recordset_log'];
-} else {
-  $all_Recordset_log = mysql_query($query_Recordset_log);
-  $totalRows_Recordset_log = mysql_num_rows($all_Recordset_log);
-}
-$totalPages_Recordset_log = ceil($totalRows_Recordset_log/$maxRows_Recordset_log)-1;
-$queryString_Recordset_log = "";
-if (!empty($_SERVER['QUERY_STRING'])) {
-  $params = explode("&", $_SERVER['QUERY_STRING']);
-  $newParams = array();
-  foreach ($params as $param) {
-    if (stristr($param, "pageNum_Recordset_log") == false && 
-        stristr($param, "totalRows_Recordset_log") == false && 
-        stristr($param, "tab") == false) {
-      array_push($newParams, $param);
-    }
-  }
-  if (count($newParams) != 0) {
-    $queryString_Recordset_log = "&" . htmlentities(implode("&", $newParams));
-  }
-}
-$queryString_Recordset_log = sprintf("&totalRows_Recordset_log=%d%s", $totalRows_Recordset_log, $queryString_Recordset_log);
+// mysql_select_db($database_tankdb, $tankdb);
+// $query_Recordset_log = sprintf("SELECT * FROM tk_task_byday 
+// 								inner join tk_project on tk_task_byday.csa_tb_backup3=tk_project.id 
+// 								inner join tk_task_tpye on tk_task_byday.csa_tb_backup4=tk_task_tpye.id 
+// 								inner join tk_status on tk_task_byday.csa_tb_status=tk_status.id 
+// 								inner join tk_task on tk_task_byday.csa_tb_backup1=tk_task.TID 
+// 								inner join tk_user on tk_task_byday.csa_tb_backup2=tk_user.uid 
+// WHERE csa_tb_backup3 = %s AND csa_tb_year LIKE %s ORDER BY csa_tb_year DESC", 
+// GetSQLValueString($colname_Recordset_log, "text"),
+// GetSQLValueString($coldate . "%", "text")
+// );
+// $query_limit_Recordset_log = sprintf("%s LIMIT %d, %d", $query_Recordset_log, $startRow_Recordset_log, $maxRows_Recordset_log);
+// $Recordset_log = mysql_query($query_limit_Recordset_log, $tankdb) or die(mysql_error());
+// $row_Recordset_log = mysql_fetch_assoc($Recordset_log);
+
+// if (isset($_GET['totalRows_Recordset_log'])) {
+//   $totalRows_Recordset_log = $_GET['totalRows_Recordset_log'];
+// } else {
+//   $all_Recordset_log = mysql_query($query_Recordset_log);
+//   $totalRows_Recordset_log = mysql_num_rows($all_Recordset_log);
+// }
+// $totalPages_Recordset_log = ceil($totalRows_Recordset_log/$maxRows_Recordset_log)-1;
+// $queryString_Recordset_log = "";
+// if (!empty($_SERVER['QUERY_STRING'])) {
+//   $params = explode("&", $_SERVER['QUERY_STRING']);
+//   $newParams = array();
+//   foreach ($params as $param) {
+//     if (stristr($param, "pageNum_Recordset_log") == false && 
+//         stristr($param, "totalRows_Recordset_log") == false && 
+//         stristr($param, "tab") == false) {
+//       array_push($newParams, $param);
+//     }
+//   }
+//   if (count($newParams) != 0) {
+//     $queryString_Recordset_log = "&" . htmlentities(implode("&", $newParams));
+//   }
+// }
+// $queryString_Recordset_log = sprintf("&totalRows_Recordset_log=%d%s", $totalRows_Recordset_log, $queryString_Recordset_log);
 
 
 $host_url="http://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']."?".$_SERVER["QUERY_STRING"];
 $host_url=strtr($host_url,"&","!");
 
-if($row_Recordset_sumlog["sum_hour"] == null){
-	  $sum_hour = 0;
-	  } else {
-	  $sum_hour = $row_Recordset_sumlog["sum_hour"];
-	  }
+// if($row_Recordset_sumlog["sum_hour"] == null){
+// 	  $sum_hour = 0;
+// 	  } else {
+// 	  $sum_hour = $row_Recordset_sumlog["sum_hour"];
+// 	  }
 ?>
 
 <?php require('head.php'); ?>
@@ -363,9 +362,7 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
 </script>
 
 
-
 <body <?php if($tab <> "-1"){ echo "onload='tabs1();'";}?>>
-
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
      
