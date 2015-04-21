@@ -235,6 +235,7 @@ $FoundTask = mysql_num_rows($Recordset1);
     
 if (!$FoundTask) {
  return 0;   
+ 
 }
 
 $i=0;
