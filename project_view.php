@@ -437,27 +437,39 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
             <td>
 			<table width="100%"  style="line-height:40px;">
 		     <tr>
+            
+<!-- 分解阶段 -->
              <?php if($_SESSION['MM_rank'] > "2") { ?>
 			 <td width="12%">
 			 <a href="stage_add.php?projectID=<?php echo $row_DetailRS1['id']; ?>&formproject=1" >
 			 <span class="glyphicon glyphicon-random"></span> <?php echo $multilingual_project_newstage; ?></a></td>
 			 <?php }  ?>
-			 <?php if($_SESSION['MM_rank'] > "1") { ?>
+
+        <?php if($_SESSION['MM_rank'] > "1") { ?>
+        
+<!-- 分解阶段 -->
 <!--
 			 <td width="13%">
 			 <a onClick="addfolder()" class="mouse_hover"><span class="glyphicon glyphicon-folder-open"></span> <?php echo $multilingual_project_file_addfolder; ?></a>			 </td>
 -->
+         
+<!-- 上传文档 -->
 			 <td width="12%">
 			 <a  target="_blank" href="file_add.php?projectid=<?php echo $row_DetailRS1['id']; ?>&pid=0&pagetab=allfile"><span class="glyphicon glyphicon-file"></span> <?php echo $multilingual_project_file_addfile; ?></a>			 </td>
+			 
+<!-- 增加评论 -->
 			 <td width="12%">
 			 <a onClick="addcomm();" class="mouse_over"><span class="glyphicon glyphicon-comment"></span> <?php echo $multilingual_default_addcom; ?></a>			 </td>
 			 <?php } ?>
-			 
+			
+<!-- 项目修改 -->
 			 <?php if($_SESSION['MM_rank'] > "3" || ($_SESSION['MM_uid'] == $row_DetailRS1['project_to_user'] && $_SESSION['MM_rank'] > "1")) { ?>
 			 <td width="10%">
 			 <a href="project_edit.php?editID=<?php echo $row_DetailRS1['id']; ?>">
 			 <span class="glyphicon glyphicon-pencil"></span> <?php echo $multilingual_global_action_edit; ?>			 </a>			 </td>
 			 <?php }  ?> 
+			 
+<!-- 项目删除 -->
 			 <?php if($_SESSION['MM_rank'] > "3")  {  ?>
 			 <td width="10%">
 			 <a class="mouse_over" onClick="javascript:if(confirm( '<?php 
@@ -466,13 +478,15 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
 	  } else { echo $multilingual_global_action_delconfirm3;} ?>'))self.location='project_del.php?delID=<?php echo $row_DetailRS1['id']; ?>';">
 	  <span class="glyphicon glyphicon-remove"></span> <?php echo $multilingual_global_action_del; ?>	  </a>			 </td>
 			 <?php }  ?> 
+			 
+<!-- 返回 -->
 			 <td>
 			 <a class="mouse_over" href="<?php echo $prjlisturl; ?>">
 			 <span class="glyphicon glyphicon-arrow-left"></span> <?php echo $multilingual_global_action_back; ?></a></td>
-			 <td>			 </td>
 			 </tr>
-			</table>	  </td>
-          </tr>
+            </table>	  
+         </td> 
+        </tr>
           
 <!-- 项目概述 -->
 <?php if ($row_DetailRS1['project_text'] <> "&nbsp;" && $row_DetailRS1['project_text'] <> "") {  ?>
@@ -527,6 +541,23 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
           </tr>
 		  <?php } // Show if recordset not empty ?>
 		  
+		  <tr>
+            <td>&nbsp;</td>
+          </tr>
+		  
+<!-- 工作量饼图 -->
+		  <?php if ($sum_hour > 0.5) {  ?>
+          <tr>
+            <td>&nbsp;</td>
+          </tr>
+          <tr>
+            <td><span class="font_big18 fontbold"><?php echo $multilingual_project_taskoverlay; ?></span></td>
+          </tr>
+          <tr>
+            <td>
+	<div id="chart"></div>		</td>
+          </tr>
+		  <?php }  ?>
 		  <tr>
             <td>&nbsp;</td>
           </tr>
@@ -660,7 +691,7 @@ echo "style='display:none'";
   <tr>
     <td colspan="2">
 
-<!-- 阶段信息部分 -->
+<!-- 阶段详细信息表 -->
     <table class="table table-striped table-hover glink">
 <thead >
         

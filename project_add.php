@@ -152,6 +152,8 @@ window.onload = function()
 <form action="<?php echo $editFormAction; ?>" method="post" name="myform" id="form1">
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
+
+<!-- 左边20%的宽度的树或者说明  -->
       <td width="20%" class="input_task_right_bg" valign="top"><table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
           <tr>
             <td valign="top" class="gray2">
@@ -162,12 +164,15 @@ window.onload = function()
               </td>
           </tr>
         </table></td>
+        
+<!-- 右边80%宽度的主体内容 -->
       <td width="80%" valign="top"><table width="98%" border="0" cellspacing="0" cellpadding="5" align="center">
           <tr>
             <td><div class="col-xs-12">
                 <h3><?php echo $multilingual_projectlist_new; ?></h3>
               </div>
               
+<!-- 项目名称 -->
               <div class="form-group col-xs-12">
                 <label for="project_name"><?php echo $multilingual_project_title; ?><span id="projecttitle"></span></label>
                 <div>
@@ -175,7 +180,7 @@ window.onload = function()
                 </div>
               </div>
 			  
-			  
+<!-- 项目组长为当前用户，此处添加多个项目组员 -->
 			  <div class="form-group  col-xs-12">
                 <label for="select2" ><?php echo $multilingual_project_touser; ?><span id="csa_to_user_msg"></span></label>
                 <div >
@@ -199,6 +204,7 @@ window.onload = function()
                 </div>
               </div>
 
+<!-- 多余的项目信息（已删除） -->
 <!--
               <div class="form-group  col-xs-12">
                 <label for="project_code"><?php echo $multilingual_project_code; ?></label>
@@ -233,13 +239,15 @@ do {
               </div>
 -->
 
+<!-- 起始时间 -->
 				<div class="form-group col-xs-12">
                 <label for="datepicker"><?php echo $multilingual_project_start; ?><span id="datepicker_msg"></span></label>
                 <div>
                   <input type="text" name="project_start" id="datepicker" value="<?php echo date('Y-m-d'); ?>" class="form-control"  />
                 </div>
               </div>
-			  
+
+<!-- 结束时间 -->		  
               <div class="form-group col-xs-12">
                 <label for="datepicker2"><?php echo $multilingual_project_end; ?><span id="datepicker2_msg"></span></label>
                 <div>
@@ -256,6 +264,7 @@ do {
 	<td></td>
       <td height="50px">
 	  
+<!-- 提交按钮 -->
 	  <button type="submit" class="btn btn-primary btn-sm submitbutton" name="cont" ><?php echo $multilingual_global_action_save; ?></button>
           <button type="button" class="btn btn-default btn-sm" onClick="javascript:history.go(-1);"><?php echo $multilingual_global_action_cancel; ?></button>
           

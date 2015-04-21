@@ -363,6 +363,8 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
+    
+<!-- 左边20%的宽度的树或者说明  -->
       <td width="20%" class="input_task_right_bg" valign="top"><table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
         <tr>
           <td valign="top"><?php
@@ -372,6 +374,7 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
  require_once('tree.php'); ?></td>
         </tr>
       
+<!-- 右边80%宽度的主体内容 -->
       </table></td>
       <td width="80%" valign="top">
          <div style="overflow:auto; " id="main_right"><!-- right main --> 
@@ -384,7 +387,9 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
           </tr>
 		  <tr>
 		  <td>
-		  <table width="100%" border="0" cellspacing="0" cellpadding="5"  class="info_task_bg">
+
+<!-- 阶段基本信息 -->		  		  
+<table width="100%" border="0" cellspacing="0" cellpadding="5"  class="info_task_bg">
   <tr>
 
     <td width="12%" class="info_task_title">
@@ -407,28 +412,36 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
 </table>
 		  </td>
 		  </tr>
+		  
+<!-- 阶段基本操作 -->  
 		  <tr>
             <td>
 			<table width="100%"  style="line-height:40px;">
 		     <tr>
             
              <?php if($_SESSION['MM_rank'] > "2") { ?>
+             
+<!-- 下发任务 -->
 			 <td width="12%">
 			 <a href="default_task_add.php?projectID=<?php echo $row_DetailRS1['id']; ?>&formproject=1" >
 			 <span class="glyphicon glyphicon-random"></span> <?php echo $multilingual_project_newtask; ?></a></td>
 			 <?php }  ?>
 			 
 			 <?php if($_SESSION['MM_rank'] > "1") { ?>
+			 
+<!-- 上传文档 -->
 			 <td width="12%">
 			 <a  target="_blank" href="file_add.php?projectid=<?php echo $row_DetailRS1['id']; ?>&pid=0&pagetab=allfile"><span class="glyphicon glyphicon-file"></span> <?php echo $multilingual_project_file_addfile; ?></a>			 </td>
 			 <?php } ?>
 			 
+<!-- 阶段修改 -->
 			 <?php if($_SESSION['MM_rank'] > "3" || ($_SESSION['MM_uid'] == $row_DetailRS1['project_to_user'] && $_SESSION['MM_rank'] > "1")) { ?>
 			 <td width="10%">
 			 <a href="stage_edit.php?editID=<?php echo $row_DetailRS1['id']; ?>">
 			 <span class="glyphicon glyphicon-pencil"></span> <?php echo $multilingual_global_action_edit; ?>			 </a>			 </td>
 			 <?php }  ?> 
 			 
+<!-- 阶段删除 -->
 			 <?php if($_SESSION['MM_rank'] > "3")  {  ?>
 			 <td width="10%">
 			 <a class="mouse_over" onClick="javascript:if(confirm( '<?php 
@@ -438,13 +451,16 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
 	  <span class="glyphicon glyphicon-remove"></span> <?php echo $multilingual_global_action_del; ?>	  </a>			 </td>
 			 <?php }  ?> 
 			 
+<!-- 返回 -->
 			 <td>
 			 <a class="mouse_over" href="<?php echo $prjlisturl; ?>">
 			 <span class="glyphicon glyphicon-arrow-left"></span> <?php echo $multilingual_global_action_back; ?></a></td>
-			 <td>			 </td>
 			 </tr>
-			</table>	  </td>
-          </tr>
+			</table>	  
+         </td>
+        </tr>
+        
+<!-- 阶段概述 -->
 <?php if ($row_DetailRS1['project_text'] <> "&nbsp;" && $row_DetailRS1['project_text'] <> "") {  ?>
           <tr>
             <td>&nbsp;</td>
@@ -460,6 +476,7 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
           </tr>
 		  <?php } // Show if recordset not empty ?>
 
+<!-- 工作量饼图 -->
 		  <?php if ($sum_hour > 0.5) {  ?>
           <tr>
             <td>&nbsp;</td>
@@ -475,7 +492,8 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
 		  <tr>
             <td>&nbsp;</td>
           </tr>
-		  
+	
+<!-- 阶段评论（已删除） -->
 <!--
 		<?php if($totalRows_Recordset_comment > 0){ ?>
 	<tr >
@@ -563,7 +581,7 @@ echo $editcomment_row;
 		  <tr>
             <td>
             
-<!-- tab start -->
+<!-- 阶段详细切换部分 -->
 <div class="tab">
 <ul class="menu" id="menutitle">
 
@@ -590,7 +608,7 @@ echo $editcomment_row;
 <?php }?><a name="task"></a>
 </ul>
 
-<!-- task start -->
+<!-- 阶段的下发任务 -->
 <div class="tab_b" id="tab_a1" 
 
 <?php if ($totalRows_Recordset_task > 0) { 
@@ -604,11 +622,12 @@ echo "style='display:none'";
   <tr>
     <td colspan="2">
 
+<!-- 任务详细信息表 -->
     <table class="table table-striped table-hover glink">
 <thead >
         
         <tr>
-<!--          <th><?php echo $multilingual_default_task_id; ?></th>-->
+<!--          <th><?php echo     $multilingual_default_task_id; ?></th>-->
           <th><?php echo $multilingual_default_task_title; ?></th>
           <th><?php echo $multilingual_default_task_to; ?></th>
           <th><?php echo $multilingual_default_task_status; ?></th>
@@ -707,9 +726,8 @@ case 1:
 </table>
 <?php } // Show if recordset not empty ?>
 </div>
-<!-- task end -->
 
-<!--file start -->
+<!-- 文件管理部分 -->
 <div class="tab_b" id="tab_a2" 
 <?php if ($totalRows_Recordset_task > 0) { 
 echo "style='display:none'";
@@ -832,10 +850,8 @@ function editfolder<?php echo $row_Recordset_file['docid']; ?>()
 </table>
 <?php }  ?>
 </div>
-<!--file end -->
 
-
-<!--log start-->
+<!-- 阶段日志部分 -->
 <div class="tab_b" id="tab_a3" 
 <?php if ($totalRows_Recordset_task == 0 && $totalRows_Recordset_file == 0) { 
 echo "style='display:block'";
@@ -1013,10 +1029,8 @@ function addcomment<?php echo $row_Recordset_log['tbid']; ?>()
 </tr>
 </table>  
 <?php }  ?>
-</div>
-<!-- log end-->
-			<!-- tab end -->			
-                </td>
+</div>		
+          </td>
           </tr>
         </table>
         <?php require('foot.php'); ?>
