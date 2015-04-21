@@ -83,10 +83,10 @@ $multilingual_global_action_publish = "发布";
 $multilingual_global_action_cancel = "取消";
 $multilingual_global_action_back = "返回";
 $multilingual_global_action_close = "关闭";
-$multilingual_global_action_delconfirm = "删除操作不可撤销,是否继续?";
-$multilingual_global_action_delconfirm2 = "该任务已产生日志,强制删除任务将导致该任务的日志永久性的不可删除及查询。是否强制删除该任务?";
-$multilingual_global_action_delconfirm3 = "该项目已产生任务,强制删除项目将导致该项目的任务永久性的不可删除及查询。是否强制删除该项目?";
-$multilingual_global_action_delconfirm4 = "该用户已产生任务或正在负责某个项目,强制删除用户将导致该用户负责的任务和项目永久性的不可删除及查询(工时依然纳入统计)。建议禁用该用户,而非强制删除。依然强制删除该用户?";
+$multilingual_global_action_delconfirm = "删除操作不可撤销，是否继续?";
+$multilingual_global_action_delconfirm2 = "该任务已产生日志，强制删除任务将导致该任务所有日志清空。是否强制删除该任务?";
+$multilingual_global_action_delconfirm3 = "该项目已分解阶段并下发任务，强制删除项目将导致该项目所有数据清空。是否强制删除该项目?";
+$multilingual_global_action_delconfirm4 = "该用户已产生任务或正在负责某个项目，强制删除用户将导致该用户负责的项目和任务失效。建议禁用该用户，而非强制删除。依然强制删除该用户?";
 $multilingual_global_action_delconfirm5 = "您即将删除一个文件夹，请确认该文件夹内没有文档或其他文件夹，否则删除操作将导致该文件夹内的文档或文件夹不可查询及删除，是否继续？";
 $multilingual_global_action_delconfirm6 = "强制删除将导致所有使用了该项的任务/项目不可查询及删除，建议将其修改为需要的名称，而不是删除。是否强制删除？";
 $multilingual_global_required = "必填项";
@@ -130,6 +130,7 @@ $multilingual_head_myhome = "我的首页";
 $multilingual_head_task = "任务";
 $multilingual_head_log = "日志";
 $multilingual_head_project = "项目";
+$multilingual_head_stage = "阶段";
 $multilingual_head_file = "文档";
 $multilingual_head_user = "用户";
 $multilingual_head_announcement = "公告";
@@ -192,7 +193,6 @@ $multilingual_default_createme = "我创建的任务";
 $multilingual_default_shortcut = "快捷方式:";
 $multilingual_default_task_id = "编号";
 $multilingual_default_task_title = "标题";
-$multilingual_default_stage_title = "阶段";
 $multilingual_default_task_description = "描述";
 $multilingual_default_task_to = "指派给";
 $multilingual_default_task_totalhour = "工时汇总";
@@ -322,7 +322,7 @@ $multilingual_default_task_planpv = "工作量";
 
 $multilingual_default_task_tag_tips = "Tag是任务的自定义标签，您可以按Tag来搜索所有具有相同标签的任务";
 $multilingual_default_task_type_tips = "阶段类型是任务的重要属性，您可以根据任务类型来搜索任务，或进行统计";
-$multilingual_default_stage_type_tips = "阶段类型是分解出项目所处于的不同状态";
+$multilingual_default_stage_title_tips = "阶段名称用于标识项目所处的状态";
 
 $multilingual_default_task_cc = "抄送";
 $multilingual_default_task_cc_tips = "您可以将该任务抄送给多个人，当任务创建、状态更新、以及完成时，他们会收到站内消息通知";
@@ -335,6 +335,9 @@ $multilingual_default_task_start_status = "任务初始状态";
 $multilingual_default_task_start_status_tips = "如果任务在创建前已经开始，请设置任务初始状态";
 
 $multilingual_default_task_priority_tips = "供任务执行人参考的任务紧急程度";
+
+$multilingual_default_stage_help_title = "分解项目阶段";
+$multilingual_default_stage_help_text = "项目阶段是一个项目所处的状态，不同的任务应当属于项目不同的阶段，以此来让整个项目的工作过程更加科学、条理。";
 
 $multilingual_default_task_help_title = "快速创建任务";
 $multilingual_default_task_help_text = "您只需要填写任务标题，并选择任务类型与任务执行人，就可以快速创建一个任务。";
@@ -409,7 +412,7 @@ $multilingual_projectstatus_titlerequired = "2-32个字符";
 $multilingual_project_taskoverlay = "工时消耗分布";
 $multilingual_project_hour = "小时";
 $multilingual_project_newstage = "分解阶段";
-$multilingual_project_newstage = "下发任务";
+$multilingual_project_newtask = "下发任务";
 
 $multilingual_projectmem_title = "项目成员管理";
 $multilingual_projectmem_text = "在WSS 扩展功能中，您可以为一个项目组添加固定的成员，所有项目相关的内容，如：任务、文档、日志、项目详情等，只对该项目组的成员开放。";
@@ -464,6 +467,11 @@ $multilingual_project_file_tiptext = "<p>文档是重要的组织过程资产，
 <p>文档可以由多个用户协作完成，任何普通用户都可以修改文档（修改操作将被记录）。</p><br />
 <p>只有文档的创建者和管理员可以删除文档。</p><br />
 ";
+
+// *** 阶段详情页(stage_view.php) 
+// *** 新建阶段页(stage_add.php) 
+// *** 编辑阶段页(stage_edit.php) 
+$multilingual_stage_description = "阶段概述";
 
 // *** 用户列表页(default_user.php)
 // *** 用户详情页(user_view.php)

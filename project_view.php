@@ -379,9 +379,11 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
           <tr>
             <td >
               <div class="breakwords"><h2>[<?php echo $multilingual_head_project; ?>]<?php echo $row_DetailRS1['project_name']; ?></h2></div> 
+<!--
 			  <?php if ($row_DetailRS1['project_code'] <> " " && $row_DetailRS1['project_code'] <> "") {  ?>
 	<div><?php echo $multilingual_project_code; ?><?php echo $row_DetailRS1['project_code']; ?></div>
 	<?php } ?>
+-->
 			  </td>
           </tr>
 		  <tr>
@@ -512,40 +514,7 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
             </td>
           </tr>
 		  <?php } // Show if recordset not empty ?>
-		  <?php if ($row_DetailRS1['project_from_contact'] <> "" && $row_DetailRS1['project_from_contact'] <> " ") { // Show if recordset not empty ?>
-          <tr>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td><span class="font_big18 fontbold"><?php echo $multilingual_project_view_section2; ?></span></td>
-          </tr>
-          <tr>
-            <td>
-			<?php 
-	
-	$row_DetailRS1['project_from_contact']   =   htmlspecialchars($row_DetailRS1['project_from_contact']);  
-	$row_DetailRS1['project_from_contact']   =   str_replace("\n",   "<br>",   $row_DetailRS1['project_from_contact']);  
-	$row_DetailRS1['project_from_contact']   =   str_replace("     ",   "&nbsp;",   $row_DetailRS1['project_from_contact']);   
-	echo $row_DetailRS1['project_from_contact']; 
-	
-	?>			</td>
-          </tr>
-		  <?php } // Show if recordset not empty ?>
-		  <?php 
 		  
-		  
-		  if ($sum_hour > 0.5) {  ?>
-          <tr>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td><span class="font_big18 fontbold"><?php echo $multilingual_project_taskoverlay; ?></span></td>
-          </tr>
-          <tr>
-            <td>
-	<div id="chart"></div>		</td>
-          </tr>
-		  <?php }  ?>
 		  <tr>
             <td>&nbsp;</td>
           </tr>
