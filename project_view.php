@@ -363,6 +363,8 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
+     
+<!-- 左边20%的宽度的树或者说明  -->
       <td width="20%" class="input_task_right_bg" valign="top"><table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
         <tr>
           <td valign="top"><?php
@@ -371,8 +373,9 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
 		  $node_id_task = -1;
  require_once('tree.php'); ?></td>
         </tr>
-      
       </table></td>
+      
+<!-- 右边80%宽度的主体内容 -->
       <td width="80%" valign="top">
          <div style="overflow:auto; " id="main_right"><!-- right main --> 
           <table width="98%" border="0" cellspacing="0" cellpadding="5" align="center">
@@ -388,8 +391,10 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
           </tr>
 		  <tr>
 		  <td>
-		  <table width="100%" border="0" cellspacing="0" cellpadding="5"  class="info_task_bg">
-  <tr>
+
+<!-- 项目基本信息 -->		  
+<table width="100%" border="0" cellspacing="0" cellpadding="5"  class="info_task_bg">
+    <tr>
     <td width="12%" class="info_task_title"><?php echo $multilingual_project_status; ?></td>
     <td  width="40%"><div class="status_view"><?php echo $row_DetailRS1['task_status_display']; ?></div></td>
 <!--
@@ -405,7 +410,8 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
 	<?php echo $row_DetailRS1['project_start']; ?>
 	<?php } ?>		</td>
     </tr>
-  <tr>
+  
+    <tr>
 <!--
     <td class="info_task_title"><?php echo $multilingual_tasklog_cost; ?></td>
     <td><?php 
@@ -425,7 +431,9 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
 </table>
 		  </td>
 		  </tr>
-		  <tr>
+		  
+<!-- 项目基本操作 -->
+          <tr>
             <td>
 			<table width="100%"  style="line-height:40px;">
 		     <tr>
@@ -465,6 +473,8 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
 			 </tr>
 			</table>	  </td>
           </tr>
+          
+<!-- 项目概述 -->
 <?php if ($row_DetailRS1['project_text'] <> "&nbsp;" && $row_DetailRS1['project_text'] <> "") {  ?>
           <tr>
             <td>&nbsp;</td>
@@ -478,6 +488,8 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
           <tr>
               <td>&nbsp;</td>
           </tr>
+          
+<!-- 项目成员 -->
           <tr>
             <td><span class="font_big18 fontbold"><?php echo $multilingual_project_memeber; ?></span></td>
           </tr>
@@ -519,6 +531,7 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
             <td>&nbsp;</td>
           </tr>
 		  
+<!-- 项目评论 -->
 		<?php if($totalRows_Recordset_comment > 0){ ?>
 	<tr >
       <td><span class="font_big18 fontbold"><?php echo $multilingual_default_comment; ?></span><a name="comment"></a></td>
@@ -577,6 +590,8 @@ echo $editcomment_row;
   }
 ?>
 			</table>
+			
+<!-- 项目评论分页？ -->
 			<table class="rowcon" border="0" align="center">
 <tr>
 <td>   <table border="0">
@@ -604,7 +619,7 @@ echo $editcomment_row;
 		  <tr>
             <td>
             
-<!-- tab start -->
+<!-- 项目详细切换部分 -->
 <div class="tab">
 <ul class="menu" id="menutitle">
 
@@ -631,7 +646,7 @@ echo $editcomment_row;
 <?php }?><a name="task"></a>
 </ul>
 
-<!-- task start -->
+<!-- 分解阶段，需要重写填充数据 -->
 <div class="tab_b" id="tab_a1" 
 
 <?php if ($totalRows_Recordset_task > 0) { 
@@ -645,6 +660,7 @@ echo "style='display:none'";
   <tr>
     <td colspan="2">
 
+<!-- 阶段信息部分 -->
     <table class="table table-striped table-hover glink">
 <thead >
         
@@ -722,7 +738,6 @@ case 1:
 		  </tbody>
       </table>
 
-     
       <table class="rowcon" border="0" align="center">
 <tr>
 <td>   <table border="0">
@@ -749,9 +764,8 @@ case 1:
 </table>
 <?php } // Show if recordset not empty ?>
 </div>
-<!-- task end -->
 
-<!--file start -->
+<!-- 文件管理部分 -->
 <div class="tab_b" id="tab_a2" 
 <?php if ($totalRows_Recordset_task > 0) { 
 echo "style='display:none'";
@@ -792,8 +806,6 @@ echo "style='display:block'";
 	  <?php echo $row_Recordset_file['tk_doc_title']; ?></a>
 	  <?php } ?>
 
-	  
-	 
 	  <?php if ($row_Recordset_file['tk_doc_attachment'] <> null && $row_Recordset_file['tk_doc_attachment'] <> " ") {  ?>
 	  <a href="<?php echo $row_Recordset_file['tk_doc_attachment']; ?>" class="icon_atc"><?php echo $multilingual_project_file_download; ?></a>
 	  <?php } ?>	  </td>
@@ -877,7 +889,7 @@ function editfolder<?php echo $row_Recordset_file['docid']; ?>()
 <!--file end -->
 
 
-<!--log start-->
+<!-- 项目日志部分 -->
 <div class="tab_b" id="tab_a3" 
 <?php if ($totalRows_Recordset_task == 0 && $totalRows_Recordset_file == 0) { 
 echo "style='display:block'";
@@ -886,9 +898,6 @@ echo "style='display:none'";
 } ?>
 >
 <?php if ($totalRows_Recordset_task  > 0) {  ?>
-
-
-
 
 <table width="100%" cellpadding="5">
   <tr>
@@ -952,7 +961,6 @@ else if (!(strcmp($i, date("n")))) {echo "selected=\"selected\"";} ?>><?php echo
     <div >
     <table class="table table-striped table-hover"  width="100%" >
 
-
  <thead>
 <tr>
 <th>
@@ -980,8 +988,6 @@ $logyear = str_split($logdate,4);
 $logmonth = str_split($logyear[1],2);
 echo $logyear[0]; ?>-<?php echo $logmonth[0]; ?>-<?php echo $logmonth[1]; ?>	
 
-
-
 	  <?php echo $multilingual_user_view_do; ?>  
 	  <?php echo $row_Recordset_log['task_tpye']; ?> - 
 	  <a href="default_task_edit.php?editID=<?php echo $row_Recordset_log['TID']; ?>" >
@@ -998,7 +1004,6 @@ echo $logyear[0]; ?>-<?php echo $logmonth[0]; ?>-<?php echo $logmonth[1]; ?>
 <td class="glink" width="160px" >
  <a href="project_view.php?recordID=<?php echo $row_Recordset_log['csa_project']; ?>">
   <?php echo $row_Recordset_log['project_name']; ?></a></td>
-
 
   <td class="glink" width="160px" >
 <?php echo $row_Recordset_log['csa_tb_lastupdate']; ?>  </td>
@@ -1056,10 +1061,8 @@ function addcomment<?php echo $row_Recordset_log['tbid']; ?>()
 </table>  
 <?php }  ?>
 </div>
-<!-- log end-->
-			<!-- tab end -->			
-                </td>
-          </tr>
+        </td>
+        </tr>
         </table>
         <?php require('foot.php'); ?>
              </div><!-- right main -->
