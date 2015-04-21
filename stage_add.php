@@ -198,11 +198,11 @@ $totalRows_tkstatus = mysql_num_rows($tkstatus);
 J.check.rules = [
 //	{ name: 'select4', mid: 'csa_to_user_msg', requir: true, type: 'group', noselected: '', warn: '<?php echo $multilingual_default_required1; ?>' },
 //	{ name: 'select2', mid: 'csa_from_user_msg', requir: true, type: 'group', noselected: '', warn: '<?php echo $multilingual_default_required1; ?>' },
-	{ name: 'csa_type', mid: 'csa_type_msg', requir: true, type: 'group', noselected: '', warn: '<?php echo $multilingual_default_required3; ?>' },
+//	{ name: 'csa_type', mid: 'csa_type_msg', requir: true, type: 'group', noselected: '', warn: '<?php echo $multilingual_default_required3; ?>' },
 	{ name: 'datepicker2', mid: 'csa_plan_st_msg', requir: true, type: 'date',  warn: '<?php echo $multilingual_error_date; ?>' },
 	{ name: 'datepicker3', mid: 'csa_plan_et_msg', requir: true, type: 'date',  warn: '<?php echo $multilingual_error_date; ?>' },
 	{ name: 'csa_text', mid: 'csa_text_msg', requir: true, type: '',  warn: '<?php echo $multilingual_default_required4; ?>'},
-	{ name: 'plan_hour', mid: 'plan_hour_msg', type: 'rang', min: -1, warn: '<?php echo $multilingual_default_required5; ?>' }
+//	{ name: 'plan_hour', mid: 'plan_hour_msg', type: 'rang', min: -1, warn: '<?php echo $multilingual_default_required5; ?>' }
    
 ];
 
@@ -285,11 +285,11 @@ function submitform()
 <form action="<?php echo $editFormAction; ?>" method="post" name="myform" id="myform">
   <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
-      <td width="25%" class="input_task_right_bg" valign="top"><table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
+      <td width="20%" class="input_task_right_bg" valign="top"><table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
           <tr>
-            <td valign="top" >
-			<dl style="margin-top:20px;">
-  <dt><h4 class="gray2"><?php echo $multilingual_default_taskproject; ?></h4></dt>
+            <td valign="top">
+			<dl style="margin-top:20px; margin-left: 4px;">
+                <dt><h4 class="gray2"><strong><?php echo $multilingual_default_taskproject; ?></strong></h4></dt>
   <dd><a href="project_view.php?recordID=<?php echo $row_Recordset_project['id']; ?>" ><?php echo $row_Recordset_project['project_name']; ?></a></dd>
 </dl>
 
@@ -299,37 +299,42 @@ function submitform()
   <dd><a href="default_task_edit.php?editID=<?php echo $row_Recordset_task['TID']; ?>" ><?php echo $row_Recordset_task['csa_text']; ?></a></dd>
 </dl><?php } else { ?>
 
+<!--
 <dl>
   <dt><h4 class="gray2"><?php echo $multilingual_subtask_root; ?></h4></dt>	 
 </dl>
-
+-->
 	 <?php  } ?>
 	 
-	 <h4 style="margin-top:40px" class="gray2"><strong><?php echo $multilingual_default_task_help_title; ?></strong></h4>
+	 <h4 style="margin-top:40px; margin-left: 4px;" class="gray2"><strong><?php echo $multilingual_default_stage_help_title; ?></strong></h4>
 	 <p class="gray2">
-	 <?php echo $multilingual_default_task_help_text; ?>
+	 <?php echo $multilingual_default_stage_help_text; ?>
 	 </p>
 	 
+<!--
 	 <h4 style="margin-top:30px" class="gray2"><strong><?php echo $multilingual_default_task_help_title2; ?></strong></h4>
 	 <p class="gray2">
 	 <?php echo $multilingual_default_task_help_text2; ?>
 	 </p>
+-->
               
               </td>
           </tr>
         </table></td>
-      <td width="75%" valign="top"><table width="98%" border="0" cellspacing="0" cellpadding="5" align="center">
+      <td width="80%" valign="top"><table width="98%" border="0" cellspacing="0" cellpadding="5" align="center">
           <tr>
             <td><div class="col-xs-12">
                 <h3><?php echo $multilingual_stageadd_title; ?></h3>
               </div>
               <div class="form-group col-xs-12">
-                <label for="csa_text"><?php echo $multilingual_default_stage_title; ?><span  id="csa_text_msg"></span></label>
+                <label for="csa_text"><?php echo $multilingual_default_task_title; ?><span  id="csa_text_msg"></span></label>
                 <div>
                   <input name="csa_text" id="csa_text" type="text" value="<?php if($copy==1){echo $task_arr['name'];}?>" class="form-control" placeholder="<?php echo $multilingual_stageadd_title_plh;?>">
+                  <span class="help-block"><?php echo $multilingual_default_stage_title_tips; ?></span>
                 </div>
               </div>
-			  
+			 
+<!--
 			  <div class="form-group col-xs-12">
                 <label for="csa_type" ><?php echo $multilingual_default_stage_type; ?><span id="csa_type_msg"></span></label>
                 <div>
@@ -353,15 +358,13 @@ do {
                   </select>
                 </div>
 				<span class="help-block"><?php echo $multilingual_default_stage_type_tips; ?> 
-<!--
+				
 				<abbr  title="<?php echo $multilingual_default_task_catips2; ?>">
 				<span class="glyphicon glyphicon-question-sign"><?php echo $multilingual_default_task_ca; ?></span>
 				</abbr>
--->
 				</span>
               </div>
 			  
-<!--
 			  <div class="form-group  col-xs-6">
                 <label for="select4" ><?php echo $multilingual_default_task_to; ?><span id="csa_to_user_msg"></span></label>
                 <div >
@@ -453,7 +456,7 @@ do {
                 <div>
                   <input type="text" name="plan_start" id="datepicker2" value="<?php if($copy==-1){echo date('Y-m-d');} else if($copy==1){echo $task_arr['start'];} ?>" class="form-control"  />
                 </div>
-				<span class="help-block"><?php echo $multilingual_default_task_starttime_tips; ?></span>
+<!--				<span class="help-block"><?php echo $multilingual_default_task_starttime_tips; ?></span>-->
               </div>
 			  
               <div class="form-group col-xs-12">
@@ -461,7 +464,7 @@ do {
                 <div>
                   <input type="text" name="plan_end" id="datepicker3" value="<?php if($copy==-1){echo date("Y-m-d",strtotime("+1 day"));} else if($copy==1){echo $task_arr['end'];} ?>" class="form-control" />
                 </div>
-				<span class="help-block"><?php echo $multilingual_default_task_endtime_tips; ?></span>
+<!--				<span class="help-block"><?php echo $multilingual_default_task_endtime_tips; ?></span>-->
               </div>
 			  
 <!--
@@ -500,8 +503,7 @@ do {
                   </select>
                 </div>
               </div>
--->
-			  
+              
               <div class="form-group col-xs-12">
                 <label for="csa_remark2"><?php echo $multilingual_default_task_start_status; ?></label>
                 <div>
@@ -522,6 +524,8 @@ do {
                 </div>
 				<span class="help-block"><?php echo $multilingual_default_task_start_status_tips; ?></span>
               </div>
+-->
+            
 				</td>
           </tr>
         </table></td>
