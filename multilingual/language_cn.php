@@ -224,7 +224,7 @@ $multilingual_default_task_section3 = "任务基本信息";
 $multilingual_default_task_section4 = "任务计划";
 $multilingual_default_task_section5 = "工作日志";
 $multilingual_default_task_others = "其他信息";
-$multilingual_default_task_parent = "上级任务";
+$multilingual_default_task_parent = "所属阶段";
 $multilingual_default_task_substage = "分解阶段";
 $multilingual_default_task_subtask = "子任务";
 $multilingual_default_task_ca = "控制帐户";
@@ -641,6 +641,10 @@ $multilingual_set_baseset = "基本设置";
 $multilingual_set_mailset = "邮件设置";
 $multilingual_set_setup = "配置";
 
+// ***提交任务
+$multilingual_submit_task = "提交任务";
+$multilingual_change_submit_task = "更改已提交的任务";
+$multilingual_re_submit_task = "重新提交任务";
 // *** 审核
 $multilingual_exam_title = "审核";
 $multilingual_exam_poptitle = "审核任务";
