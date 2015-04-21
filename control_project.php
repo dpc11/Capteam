@@ -52,7 +52,7 @@ $where = "p.project_to_user = $prjtouser AND p.project_del_status != -1";
 }else{
 //所有项目
 //$where = "tk_status_project.task_status NOT LIKE '%%$multilingual_dd_status_prjfinish%%' AND";	
-$where = "t.tk_team_uid = $tk_user_id";
+$where = "t.tk_team_uid = $prjtouser";
 } 
 
 if($pagetabs == "jprj" ){
