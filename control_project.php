@@ -26,6 +26,7 @@ if (isset($_GET['inputtitle'])) {
   $colinputtitle_Recordset1 = $_GET['inputtitle'];
 }
 
+
 if ($pagetabs == "mprj" || $pagetabs == "jprj"){
 $prjtouser = $_SESSION['MM_uid'];
 if (isset($_GET['ptouser'])) {
@@ -35,8 +36,6 @@ if (isset($_GET['ptouser'])) {
 $prjtouser = 0;
 }
 
-$prjtouser = GetSQLValueString($prjtouser, "int");
-
 if($pagetabs == "jprj"){
 //我参与的
 //$where = "tk_task.csa_to_user = $prjtouser AND tk_status_project.task_status NOT LIKE '%%$multilingual_dd_status_prjfinish%%' AND";
@@ -45,6 +44,14 @@ $where = "t.tk_team_uid = $prjtouser AND p.project_del_status != -1 AND t.tk_tea
 //归档项目
 //$where = "tk_status_project.task_status LIKE '%%$multilingual_dd_status_prjfinish%%' AND";
 $where = "p.project_del_status != -1 AND p.project_end < '$today_date'";
+}else if($pagetabs == "mprj"){
+//我负责的项目
+//$where = "tk_status_project.task_status LIKE '%%$multilingual_dd_status_prjfinish%%' AND";
+$where = "p.project_to_user = $prjtouser AND p.project_del_status != -1";
+}else if($pagetabs == "allprj"){
+//所有项目
+//$where = "tk_status_project.task_status LIKE '%%$multilingual_dd_status_prjfinish%%' AND";
+$where = "t.tk_team_uid = $prjtouser";
 }
 else if($prjtouser <> 0 ) {
 //我负责的项目
@@ -262,14 +269,15 @@ $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recor
 	
 <!-- 项目状态 -->
     <th>
-	<a href="<?php echo $pagename; ?>?<?php echo $current_url; ?>&sort=project_status&order=<?php 
-	  if ( $sortlist <> "project_status"){
-	  echo "DESC";
-	  }else if( $sortlist == "project_status" && $orderlist == "DESC"){
+	<a href="<?php echo $pagename; ?>?<?php echo $current_url; ?>&sort=project_lastupdate&order=<?php 
+	  // if ( $sortlist <> "project_status"){
+	  // echo "DESC";
+	  // }else if( $sortlist == "project_status" && $orderlist == "DESC"){
+	  // echo "ASC";
+	  // } else {
+	  // echo "DESC";
 	  echo "ASC";
-	  } else {
-	  echo "DESC";
-	  }
+	  // }
 	  ?>" 
 	  <?php 
 	  if($sortlist=="project_status" && $orderlist=="ASC"){
