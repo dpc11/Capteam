@@ -37,35 +37,53 @@ $prjtouser = 0;
 $prjtouser = GetSQLValueString($prjtouser, "int");
 
 if($pagetabs == "jprj"){
-$where = "tk_task.csa_to_user = $prjtouser AND tk_status_project.task_status NOT LIKE '%%$multilingual_dd_status_prjfinish%%' AND";
+//我参与的
+//$where = "tk_task.csa_to_user = $prjtouser AND tk_status_project.task_status NOT LIKE '%%$multilingual_dd_status_prjfinish%%' AND";
+$where = "t.tk_team_uid = $prjtouser AND p.project_del_status != -1 AND t.tk_team_ulimit != 3";
 }else if($pagetabs == "closeprj"){
-$where = "tk_status_project.task_status LIKE '%%$multilingual_dd_status_prjfinish%%' AND";
+//归档项目
+//$where = "tk_status_project.task_status LIKE '%%$multilingual_dd_status_prjfinish%%' AND";
+$where = "p.project_del_status != -1 AND p.project_end < '$today_date'";
 }
 else if($prjtouser <> 0 ) {
-$where = "project_to_user = $prjtouser AND tk_status_project.task_status NOT LIKE '%%$multilingual_dd_status_prjfinish%%' AND";
+//我负责的项目
+//$where = "project_to_user = $prjtouser AND tk_status_project.task_status NOT LIKE '%%$multilingual_dd_status_prjfinish%%' AND";
+$where = "p.project_to_user = $prjtouser AND p.project_del_status != -1";
 }else{
-$where = "tk_status_project.task_status NOT LIKE '%%$multilingual_dd_status_prjfinish%%' AND";
+//所有项目
+//$where = "tk_status_project.task_status NOT LIKE '%%$multilingual_dd_status_prjfinish%%' AND";	
+$where = "t.tk_team_uid = $tk_user_id";
 } 
 
 if($pagetabs == "jprj" ){
-$where1 = "inner join tk_task on tk_project.id=tk_task.csa_project";
-$where2 = "GROUP BY tk_project.id";
+//$where1 = "inner join tk_task on tk_project.id=tk_task.csa_project";
+$where2 = "GROUP BY p.id";
 }else{
-$where1 = "";
+//$where1 = "";
 $where2 = "";
 }
 
 mysql_select_db($database_tankdb, $tankdb);
-$query_Recordset1 = sprintf("SELECT * FROM tk_project 
+// $query_Recordset1 = sprintf("SELECT * FROM tk_project 
 							
-							inner join tk_user on tk_project.project_to_user=tk_user.uid 
-							inner join tk_status_project on tk_project.project_status=tk_status_project.psid 
-							$where1 
-							WHERE $where project_name LIKE %s $where2 ORDER BY tk_project.%s %s", 
+// 							inner join tk_user on tk_project.project_to_user=tk_user.uid 
+// 							inner join tk_status_project on tk_project.project_status=tk_status_project.psid 
+// 							$where1 
+// 							WHERE $where project_name LIKE %s $where2 ORDER BY tk_project.%s %s", 
+// 							GetSQLValueString("%" . $colinputtitle_Recordset1 . "%", "text"),
+// 							GetSQLValueString($sortlist, "defined", $sortlist, "NULL"),
+// 							GetSQLValueString($orderlist, "defined", $orderlist, "NULL"));
+
+//现在的时间
+$today_date = date('Y-m-d');
+//修改后的sql语句					
+$query_Recordset1 = sprintf("SELECT p.id,p.project_name,p.project_text,p.project_start,p.project_end,p.project_to_user,p.project_lastupdate,p.project_del_status,p.project_create_time 
+	                        FROM tk_project p, tk_team t WHERE p.id=t.tk_team_pid AND
+								$where AND p.project_name LIKE %s $where2 ORDER BY p.%s %s", 
 							GetSQLValueString("%" . $colinputtitle_Recordset1 . "%", "text"),
 							GetSQLValueString($sortlist, "defined", $sortlist, "NULL"),
 							GetSQLValueString($orderlist, "defined", $orderlist, "NULL"));
-							
+
 $query_limit_Recordset1 = sprintf("%s LIMIT %d, %d", $query_Recordset1, $startRow_Recordset1, $maxRows_Recordset1);
 $Recordset1 = mysql_query($query_limit_Recordset1, $tankdb) or die(mysql_error());
 $row_Recordset1 = mysql_fetch_assoc($Recordset1);
