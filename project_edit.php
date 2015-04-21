@@ -34,8 +34,6 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
   //把当前时间作为最后一次修改时间
   $update_project_lastupdate = date("Y-m-d H:i:s",time());
   //更新数据库
-
-  mysql_select_db($database_tankdb, $tankdb);
   $Result1 = mysql_query($updateProject, $tankdb) or die(mysql_error());
   $updateSQL = sprintf("UPDATE tk_project SET project_name=%s, $project_text $project_start $project_end  project_lastupdate = '$update_project_lastupdate' WHERE id=%s",
                        GetSQLValueString($_POST['project_name'], "text"),
@@ -174,16 +172,12 @@ window.onload = function()
 </script>
 <script type="text/javascript">
   $(document).ready(function() {
-
 					$('#select2').multiselect({
 
 			        	enableCaseInsensitiveFiltering: true,
 						maxHeight: 360,
 						filterPlaceholder: '<?php echo $multilingual_user_filter; ?>'
-                    });
-					
-
-	
+                    });						
   });
 </script>
 
@@ -249,8 +243,7 @@ window.onload = function()
                 <div>
 				<input type="text" name="project_end" value="<?php echo $row_Recordset1['project_end']; ?>" id="datepicker2"  class="form-control" />
                 </div>
-              </div>
-			  
+              </div>	  
              
 				</td>
           </tr>

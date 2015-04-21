@@ -235,41 +235,6 @@
                     </div>
                   </div>
 
-    <!-- 多余的项目信息（已删除） -->
-    <!--
-                  <div class="form-group  col-xs-12">
-                    <label for="project_code"><?php echo $multilingual_project_code; ?></label>
-                    <div>
-                      <input name="project_code" id="project_code" type="text" value="" class="form-control" placeholder="<?php echo $multilingual_project_code;?>">
-                    </div>
-    				<span class="help-block"><?php echo $multilingual_project_code; ?></span>
-                  </div>
-
-                  <div class="form-group col-xs-12">
-                    <label for="project_status"><?php echo $multilingual_project_status; ?></label>
-                    <div>
-    				<select name="project_status" id="project_status" onChange="option_gourl(this.value)" class="form-control">
-            <?php
-    do {  
-    ?>
-            <option value="<?php echo $row_Recordset3['psid']?>"><?php echo $row_Recordset3['task_status']?></option>
-            <?php
-    } while ($row_Recordset3 = mysql_fetch_assoc($Recordset3));
-      $rows = mysql_num_rows($Recordset3);
-      if($rows > 0) {
-          mysql_data_seek($Recordset3, 0);
-    	  $row_Recordset3 = mysql_fetch_assoc($Recordset3);
-      }
-    ?>
-    <?php if ($_SESSION['MM_rank'] > "4") { ?>
-    <option value="-2" class="gray" >+<?php echo $multilingual_projectstatus_new; ?></option>
-    <?php } ?>
-          </select>
-                    </div>
-    				<span class="help-block"><?php echo $multilingual_project_tips; ?></span>
-                  </div>
-    -->
-
     <!-- 起始时间 -->
     				<div class="form-group col-xs-12">
                     <label for="datepicker"><?php echo $multilingual_project_start; ?><span id="datepicker_msg"></span></label>
@@ -298,9 +263,7 @@
     <!-- 提交按钮 -->
     	  <button type="submit" class="btn btn-primary btn-sm submitbutton" name="cont" ><?php echo $multilingual_global_action_save; ?></button>
               <button type="button" class="btn btn-default btn-sm" onClick="javascript:history.go(-1);"><?php echo $multilingual_global_action_cancel; ?></button>
-              
-
-            <input type="hidden" name="MM_insert" value="form1" /></td>
+              <input type="hidden" name="MM_insert" value="form1" /></td>
         </tr>
       </table>
 
