@@ -93,9 +93,9 @@
     $Result1 = mysql_query($addnewmemSQL, $tankdb) or die(mysql_error());
 
     //获取选中的项目成员
-    $user_list= $_POST["project_to_user"];
+    $user_list= $_POST['project_to_user'];
     //往数据库team表中插入各个成员的信息
-    foreach ($a_user as $user_list) {
+    foreach ($user_list as $a_user) {
         $tk_team_pid= $newID;//项目id
         $tk_team_uid= $a_user;//用户id
         $tk_team_ulimit=1;//用户权限,组长是3，组员是1，副组长是2
@@ -233,19 +233,14 @@
     			  <div class="form-group  col-xs-12">
                     <label for="select2" ><?php echo $multilingual_project_touser; ?><span id="csa_to_user_msg"></span></label>
                     <div >
-                      <select id="select2" name="project_to_user[]" <!-- multiple size="3" --> class="form-control">
-    				    <?php foreach($user_arr as $key => $val){ 
-                  if($val["uid"] <> $_SESSION["MM_uid"]){
-                ?>
-    					 <option value='<?php echo $val["uid"]?>'><?php echo $val["name"]?></option>
-    					 <?php
-                }} ?>  
-    				
-    <!--
-                        <?php if ($_SESSION['MM_rank'] > "4") { ?>
-                        <option value="-1" class="gray" >+<?php echo $multilingual_user_new; ?></option>
-                        <?php } ?>
-    -->
+                      <select name="project_to_user[]" id="select2" size="6" multiple class="form-control">
+    				          <?php foreach($user_arr as $key => $val){ 
+                              if($val["uid"] <> $_SESSION["MM_uid"]){
+                       ?>
+    					            <option value='<?php echo $val["uid"]?>'><?php echo $val["name"]?></option>
+    					       <?php
+                     }} ?>  
+    			
                       </select>
                     </div>
                     <span class="help-block"><?php echo $multilingual_project_tips2; ?></span> </div>					  
