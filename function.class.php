@@ -407,42 +407,42 @@ $mail_update = get_item( 'mail_update' );
 $mail_comment = get_item( 'mail_comment' );  
 
 if($type=="newtask"){
-$text = $msg_newtask." <a href='default_task_edit.php?editID=".$id."&pagetab=mtask'>".$title."</a>";
+$text = $msg_newtask." <a href='default_task_edit.php?editID=".$id."&pagetabs=mtask'>".$title."</a>";
 if($mail_create=="on" && $cc==0){
 send_mail($to,$from,$type,$id,$title);
 }
 }
 
 else if($type=="taskcomm"){
-$text = $msg_taskcomm." <a href='default_task_edit.php?editID=".$id."&pagetab=mtask#comment'>".$title."</a>";
+$text = $msg_taskcomm." <a href='default_task_edit.php?editID=".$id."&pagetabs=mtask#comment'>".$title."</a>";
 if($mail_comment=="on" && $cc==0){
 send_mail($to,$from,$type,$id,$title);
 }
 }
 
 else if($type=="logcomm"){
-$text = $msg_taskcomm." <a href='default_task_edit.php?editID=".$id."&pagetab=mtask#log'>".$title."</a>";
+$text = $msg_taskcomm." <a href='default_task_edit.php?editID=".$id."&pagetabs=mtask#log'>".$title."</a>";
 if($mail_comment=="on" && $cc==0){
 send_mail($to,$from,$type,$id,$title);
 }
 }
 
 else if($type=="examtask"){
-$text = $msg_exam." <a href='default_task_edit.php?editID=".$id."&pagetab=mtask'>".$title."</a>";
+$text = $msg_exam." <a href='default_task_edit.php?editID=".$id."&pagetabs=mtask'>".$title."</a>";
 if($mail_create=="on" && $cc==0){
 send_mail($to,$from,$type,$id,$title);
 }
 }
 
 else if($type=="edituser"){
-$text = $msg_edituser." <a href='default_task_edit.php?editID=".$id."&pagetab=mtask'>".$title."</a>";
+$text = $msg_edituser." <a href='default_task_edit.php?editID=".$id."&pagetabs=mtask'>".$title."</a>";
 if($mail_create=="on" && $cc==0){
 send_mail($to,$from,$type,$id,$title);
 }
 }
 
 else if($type=="edittask"){
-$text = $msg_edittask." <a href='default_task_edit.php?editID=".$id."&pagetab=ftask#log'>".$title."</a>";
+$text = $msg_edittask." <a href='default_task_edit.php?editID=".$id."&pagetabs=ftask#log'>".$title."</a>";
 if($mail_update=="on" && $cc==0){
 send_mail($to,$from,$type,$id,$title);
 }
@@ -536,7 +536,7 @@ $loginStrpid  = mysql_result($LoginRS,0,'uid');
 }
 
 //task list
-function task_list( $to = "0", $from = "0", $create = "0", $prt = "", $temp = "", $status = "", $unstatus = "+", $type = "", $project = "", $taskid = "", $tasktitle = "", $tag = "", $exam = "", $years = "--", $months = "--", $sort= "csa_last_update", $order= "DESC", $page="0", $pagetab = "mtask" ) {
+function task_list( $to = "0", $from = "0", $create = "0", $prt = "", $temp = "", $status = "", $unstatus = "+", $type = "", $project = "", $taskid = "", $tasktitle = "", $tag = "", $exam = "", $years = "--", $months = "--", $sort= "csa_last_update", $order= "DESC", $page="0", $pagetabs = "mtask" ) {
 
 global $tankdb;
 global $database_tankdb;
@@ -609,17 +609,17 @@ $colexams = GetSQLValueString("%%" . str_replace("%","%%",$exam) . "%%", "text")
 				$where.= " tk_task.csa_temp = $coltemp AND";
 			}
 			
-			if(!empty($status) && $pagetab <> "etask")
+			if(!empty($status) && $pagetabs <> "etask")
 			{
 				$where.= " tk_status.task_status LIKE $colstatus AND";
 			}
 			
-			if($pagetab == "etask")
+			if($pagetabs == "etask")
 			{
 				$where.= " tk_status.task_status LIKE $colexams AND";
 			}
 			
-			if($unstatus  <> '+' && $pagetab <> "etask")
+			if($unstatus  <> '+' && $pagetabs <> "etask")
 			{
 				$where.= " tk_status.task_status NOT LIKE $colstatusf AND";
 			}

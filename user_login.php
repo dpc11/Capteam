@@ -29,9 +29,7 @@ if (isset($_POST['textfield'])) {
   $loginFoundUser = mysql_num_rows($LoginRS);
   
  
-  if ($loginFoundUser) {
-  
-	
+  if ($loginFoundUser) {	
 
     //$loginStrGroup  = mysql_result($LoginRS,0,'tk_user_status');
     $loginStrGroup  = "管理员";

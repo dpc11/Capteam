@@ -204,6 +204,7 @@ $multilingual_default_task_planhour = "计划用时(PV)";
 $multilingual_default_stage_type = "阶段类型";
 $multilingual_default_task_type = "任务类型";
 $multilingual_default_task_project = "所属项目";
+$multilingual_default_task_stage = "所属阶段";
 $multilingual_default_task_from = "来自";
 $multilingual_default_task_createby = "由谁创建";
 $multilingual_default_task_editby = "由谁修改";
@@ -317,8 +318,7 @@ $multilingual_taskadd_title_plh = "请填写任务标题";
 $multilingual_stageadd_title_plh = "请填写阶段名称";
 $multilingual_taskadd_totip = "任务执行人，任务创建后，执行人会收到通知";
 
-$multilingual_default_task_planpv = "计划用时";
-$multilingual_default_task_hourac = "实际用时";
+$multilingual_default_task_planpv = "工作量";
 
 $multilingual_default_task_tag_tips = "Tag是任务的自定义标签，您可以按Tag来搜索所有具有相同标签的任务";
 $multilingual_default_task_type_tips = "阶段类型是任务的重要属性，您可以根据任务类型来搜索任务，或进行统计";

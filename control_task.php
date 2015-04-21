@@ -1,14 +1,15 @@
-<?php
+<?php 
 $phpself =$_SERVER['PHP_SELF'];
-$pagenames = end(explode("/",$phpself));
+$temp = explode("/",$phpself);
+$pagenames = end($temp);
 
-<!--设置任务标签，初始值为所有的任务 -->
+//<!--设置任务标签，初始值为所有的任务 -->
 $pagetabs = "alltask";
 if (isset($_GET['pagetab'])) {
   $pagetabs = $_GET['pagetab'];
 }
 
-<!--得到设置里的每页显示的任务数 -->
+//<!--得到设置里的每页显示的任务数 -->
 $maxRows_Recordset1 = get_item( 'maxrows_task' );
 $pageNum_Recordset1 = 0;
 if (isset($_GET['pageNum_Recordset1'])) {
@@ -16,8 +17,8 @@ if (isset($_GET['pageNum_Recordset1'])) {
 }
 $startRow_Recordset1 = $pageNum_Recordset1 * $maxRows_Recordset1;
 
-<!--得到设置里的每页显示的任务过期数 -->   
-<!--pageNum_timeout=0 为第一页 -->
+//<!--得到设置里的每页显示的任务过期数 -->   
+//<!--pageNum_timeout=0 为第一页 -->
 
 $maxRows_timeout = get_item( 'maxrows_timeout' );
 $pageNum_timeout = 0;
@@ -27,8 +28,8 @@ if (isset($_GET['pageNum_timeout'])) {
 $startRow_timeout = $pageNum_timeout * $maxRows_timeout;
 
 
-<!--设置执行人 %表示不限执行人 -->  
-$colname_Recordset1 = $_SESSION['MM_uid'];
+//<!--设置执行人 %表示不限执行人 -->  
+$colname_Recordset1 = "%";
 $_SESSION['ser_touser'] = $colname_Recordset1;
 if (isset($_GET['select4'])) {
   $colname_Recordset1 = $_GET['select4'];
@@ -36,7 +37,7 @@ if (isset($_GET['select4'])) {
 }
 
 
-<!--设置创建人 %表示不限创建人--> 
+//<!--设置创建人 %表示不限创建人--> 
 $colcreate_Recordset1 = "%";
 $_SESSION['ser_createuser'] = $colcreate_Recordset1;
 if (isset($_GET['create_by'])) {
@@ -44,7 +45,7 @@ if (isset($_GET['create_by'])) {
   $_SESSION['ser_createuser'] = $colcreate_Recordset1;
 }
 
-<!--设置创建月份--> 
+//<!--设置创建月份--> 
 $colmonth_Recordset1 = date("m");
 $_SESSION['ser_month'] = $colmonth_Recordset1;
 if (isset($_GET['textfield'])) {
@@ -52,16 +53,19 @@ if (isset($_GET['textfield'])) {
   $_SESSION['ser_month'] = $colmonth_Recordset1;
 }
 
-<!--设置创建年份--> 
+//<!--设置创建年份--> 
 $colyear_Recordset1 = date("Y");
 $_SESSION['ser_year'] = $colyear_Recordset1;
 if (isset($_GET['select_year'])) {
   $colyear_Recordset1 = $_GET['select_year'];
   $_SESSION['ser_year'] = $colyear_Recordset1;
 }
+$YEAR = $colyear_Recordset1;
+$MONTH = $colmonth_Recordset1;
 
-<!--选择月份必须选年份，选年份可以不选月份--> 
-<!--若年份为--，则为查找所有任务；若月份为空，则查找这一年的任务；--> 
+
+//<!--选择月份必须选年份，选年份可以不选月份--> 
+//<!--若年份为--，则为查找所有任务；若月份为空，则查找这一年的任务；--> 
 if ($colyear_Recordset1 == "--"){
 $startday = "1975-09-23";
 $endday = "3000-13-31";
@@ -73,7 +77,7 @@ $startday = $colyear_Recordset1."-".$colmonth_Recordset1."-01";
 $endday = $colyear_Recordset1."-".$colmonth_Recordset1."-31";
 }
 
-<!--设置优先级--> 
+//<!--设置优先级--> 
 $colprt_Recordset1 = "";
 $_SESSION['ser_tkprt'] = $colprt_Recordset1;
 if (isset($_GET['select_prt'])) {
@@ -82,7 +86,7 @@ if (isset($_GET['select_prt'])) {
 }
 
 
-<!--设置任务状态( ""--所有任务； 1--未开始；2--进行中； 3--已完成； 4--已验收； 5--被驳回； 6--已过期)--> 
+//<!--设置任务状态( ""--所有任务； 1--未开始；2--进行中； 3--已完成； 4--已验收； 5--被驳回； 6--已过期)--> 
 if (isset($_GET['select_st'])) {
   $colstatus_Recordset1 = $_GET['select_st'];
   $_SESSION['ser_status'] = $colstatus_Recordset1;
@@ -91,7 +95,7 @@ $colstatus_Recordset1 = "进行中";
 $_SESSION['ser_status'] = "进行中";
 }
 
-<!--选择某一项目--> 
+//<!--选择某一项目--> 
 $colproject_Recordset1 = "";
 $_SESSION['ser_project'] = $colproject_Recordset1;
 if (isset($_GET['select_project'])) {
@@ -99,8 +103,8 @@ if (isset($_GET['select_project'])) {
   $_SESSION['ser_project'] = $colproject_Recordset1;
 }
 
-<!--必须选择一个项目以后才能选择阶段--> 
-<!--选择某一阶段--> 
+//<!--必须选择一个项目以后才能选择阶段--> 
+//<!--选择某一阶段--> 
 $colstage_Recordset1 = "";
 $_SESSION['ser_stage'] = $colstage_Recordset1;
 if (isset($_GET['ser_stage'])) {
@@ -108,7 +112,7 @@ if (isset($_GET['ser_stage'])) {
   $_SESSION['ser_stage'] = $colstage_Recordset1;
 }
 
-<!--搜索条件--> 
+//<!--搜索条件--> 
 $searchby = "";
 $colinputtitle_Recordset1 = "";
 $colinputtag_Recordset1 = "";
@@ -121,31 +125,24 @@ if (isset($_GET['searchby'])) {
   }  
 }
 
+//设置排序标准
 $sortlist = "csa_last_update";
 if (isset($_GET['sort'])) {
   $sortlist = $_GET['sort'];
 }
 
+//升序 降序
 $orderlist = "DESC";
 if (isset($_GET['order'])) {
   $orderlist= $_GET['order'];
 }
 
-if($colyear_Recordset1 == "--"){
-$YEAR = "0000";
-} else {
-$YEAR = $colyear_Recordset1;
-}
-if($colmonth_Recordset1 == "--"){
-$MONTH = "00";
-} else {
-$MONTH = $colmonth_Recordset1;
-}
 
 $coltouser = GetSQLValueString($colname_Recordset1, "int");
 $colcreateuser = GetSQLValueString($colcreate_Recordset1, "int");
 
-$colprt = GetSQLValueString($colprt_Recordset1, "int");
+
+$colprt = GetSQLValueString("%%" . str_replace("%","%%",$colprt_Recordset1) . "%%", "text");
 $colstatus = GetSQLValueString("%%" . str_replace("%","%%",$colstatus_Recordset1) . "%%", "text");
 $colproject = GetSQLValueString($colproject_Recordset1, "int");
 $colstage = GetSQLValueString($colstage_Recordset1, "int");
@@ -166,7 +163,7 @@ $cc_tome = GetSQLValueString("%%" . str_replace("%","%%",$cc_tome) . "%%", "text
 			//优先级
 			if(!empty($colprt_Recordset1))
 			{
-				$where.= " tk_task.csa_priority = $colprt AND";
+				$where.= " tk_task.csa_priority LIKE $colprt AND";
 			}
 			
 			//任务状态
@@ -211,29 +208,31 @@ $cc_tome = GetSQLValueString("%%" . str_replace("%","%%",$cc_tome) . "%%", "text
 				$where.= " tk_task.test01 LIKE $cc_tome AND";
 			}
 
+//条件查询结果
 mysql_select_db($database_tankdb, $tankdb);
 $query_Recordset1 = sprintf("SELECT *, 
 							
 							tk_project.project_name as project_name_prt,
+							tk_stage.tk_stage_title as stage_name_prt,
 							tk_user1.tk_display_name as tk_display_name1, 
 							tk_user2.tk_display_name as tk_display_name2
 							
 							FROM tk_task  
-							inner join tk_project on tk_task.csa_project=tk_project.id
+							inner join tk_project on tk_task.csa_project=tk_project.id 
 							
-							inner join tk_stage on tk_task.csa_project_stage=tak_stage.stageid
+							inner join tk_stage on tk_task.csa_project_stage=tk_stage.stageid 
 							
 							inner join tk_user as tk_user1 on tk_task.csa_to_user=tk_user1.uid 
 							inner join tk_user as tk_user2 on tk_task.csa_from_user=tk_user2.uid 
 							
-							inner join tk_status on tk_task.csa_status=tk_status.id
+							inner join tk_status on tk_task.csa_status=tk_status.id 
 							
 							$where 
 							(tk_task.csa_plan_st <=%s
- 							AND tk_task.csa_plan_et >=%s
-							OR tk_task.csa_plan_st <=%s
- 							AND tk_task.csa_plan_et >=%s
-							OR tk_task.csa_plan_st >=%s
+ 							AND tk_task.csa_plan_et >=%s)
+							OR (tk_task.csa_plan_st <=%s
+ 							AND tk_task.csa_plan_et >=%s)
+							OR (tk_task.csa_plan_st >=%s
  							AND tk_task.csa_plan_et <=%s)
 														
 							ORDER BY %s %s", 
@@ -251,6 +250,11 @@ $query_limit_Recordset1 = sprintf("%s LIMIT %d, %d", $query_Recordset1, $startRo
 $Recordset1 = mysql_query($query_limit_Recordset1, $tankdb) or die(mysql_error());
 $row_Recordset1 = mysql_fetch_assoc($Recordset1);
 
+
+
+
+//为什么会初始总行数
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if (isset($_GET['totalRows_Recordset1'])) {
   $totalRows_Recordset1 = $_GET['totalRows_Recordset1'];
 } else {
@@ -275,12 +279,13 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 }
 $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recordset1, $queryString_Recordset1);
 
+/*
 if($YEAR <> "0000" && $MONTH <> "00"){
 mysql_select_db($database_tankdb, $tankdb);
 $query_Reclog = sprintf("SELECT *							
 							FROM tk_task  
 							inner join tk_task_byday on tk_task.TID=tk_task_byday.csa_tb_backup1
-							inner join tk_status on tk_task.csa_remark2=tk_status.id 
+							inner join tk_status on tk_task.csa_status=tk_status.id 
 							inner join tk_status as tk_status1 on tk_task_byday.csa_tb_status=tk_status1.id 
 
 							$where 
@@ -333,9 +338,7 @@ $query_Sumlog = sprintf("SELECT *,
 							sum(csa_tb_manhour) as sumhour							
 							FROM tk_task  
 							
-							inner join tk_task_byday on tk_task.TID=tk_task_byday.csa_tb_backup1 
-							inner join tk_status on tk_task.csa_remark2=tk_status.id 
-							inner join tk_status as tk_status1 on tk_task_byday.csa_tb_status=tk_status1.id
+							inner join tk_status on tk_task.csa_status=tk_status.id 
 
 							$where 
 							(tk_task.csa_plan_st <=%s
@@ -365,9 +368,7 @@ mysql_select_db($database_tankdb, $tankdb);
 $query_Sumtotal = sprintf("SELECT sum(csa_tb_manhour) as sumtotal							
 							FROM tk_task  
 							
-							inner join tk_task_byday on tk_task.TID=tk_task_byday.csa_tb_backup1
-							inner join tk_status on tk_task.csa_remark2=tk_status.id 
-							inner join tk_status as tk_status1 on tk_task_byday.csa_tb_status=tk_status1.id
+							inner join tk_status on tk_task.csa_status=tk_status.id 
 
 							$where 
 							(tk_task.csa_plan_st <=%s
@@ -392,10 +393,8 @@ if($YEAR <> "0000" && $MONTH <> "00"){
 mysql_select_db($database_tankdb, $tankdb);
 $query_Sumbyday = sprintf("SELECT *, sum(csa_tb_manhour) as Sumbyday							
 							FROM tk_task  
-							
-							inner join tk_task_byday on tk_task.TID=tk_task_byday.csa_tb_backup1 
-							inner join tk_status on tk_task.csa_remark2=tk_status.id 
-							inner join tk_status as tk_status1 on tk_task_byday.csa_tb_status=tk_status1.id 
+							 
+							inner join tk_status on tk_task.csa_status=tk_status.id 
 
 							$where 
 							(tk_task.csa_plan_st <=%s
@@ -419,6 +418,7 @@ while($row_Sumbyday=mysql_fetch_array($Sumbyday)){
 $strssumbyday.="var "."sumbd".$row_Sumbyday['csa_tb_year']."='".$row_Sumbyday['Sumbyday']."'; ";
 } 
 } else {$strssumbyday=null;}
+*/
 
 if ($pagetabs <> "etask") {
 $outday = date("Y-m-d");
@@ -453,13 +453,12 @@ $query_timeout = "SELECT *,
 							tk_user2.tk_display_name as tk_display_name2
 							
 							FROM tk_task  
-							inner join tk_task_tpye on tk_task.csa_type=tk_task_tpye.id
 							inner join tk_project on tk_task.csa_project=tk_project.id
 							
 							inner join tk_user as tk_user1 on tk_task.csa_to_user=tk_user1.uid 
 							inner join tk_user as tk_user2 on tk_task.csa_from_user=tk_user2.uid 
 							
-							inner join tk_status on tk_task.csa_remark2=tk_status.id
+							inner join tk_status on tk_task.csa_status=tk_status.id
 							
 							$outwhere 
 														
@@ -495,20 +494,21 @@ $queryString_timeout = sprintf("&totalRows_timeout=%d%s", $totalRows_timeout, $q
 
 //任务状态的所有搜索条件
 mysql_select_db($database_tankdb, $tankdb);
-$query_tkstatus = "SELECT * FROM tk_status ORDER BY id ASC";
+$query_tkstatus = "SELECT id, task_status, task_status_display FROM tk_status ORDER BY id ASC";
 $tkstatus = mysql_query($query_tkstatus, $tankdb) or die(mysql_error());
 $row_tkstatus = mysql_fetch_assoc($tkstatus);
 $totalRows_tkstatus = mysql_num_rows($tkstatus);
 
-
+//查找与自己相关的所有项目
 mysql_select_db($database_tankdb, $tankdb);
-$query_Recordset_project = "SELECT * FROM tk_project inner join tk_status_project on tk_project.project_status=tk_status_project.psid WHERE task_status NOT LIKE '%$multilingual_dd_status_prjfinish%' ORDER BY project_name ASC";
+$query_Recordset_project = sprintf("SELECT id, project_name,project_text, project_start, project_end, project_to_user, project_lastupdate, project_create_time FROM tk_project inner join tk_team on tk_team.tk_team_pid=tk_project.id WHERE tk_team_uid = %s ORDER BY tk_project.project_name ASC",GetSQLValueString($_SESSION['MM_uid'],"int"));
 $Recordset_project = mysql_query($query_Recordset_project, $tankdb) or die(mysql_error());
 $row_Recordset_project = mysql_fetch_assoc($Recordset_project);
 $totalRows_Recordset_project = mysql_num_rows($Recordset_project);
 
+//与自己相关的所有组的组员
 mysql_select_db($database_tankdb, $tankdb);
-$query_Recordset2 = "SELECT * FROM tk_user WHERE tk_user_rank NOT LIKE '0' ORDER BY tk_display_name ASC";
+$query_Recordset2 = sprintf("SELECT * FROM tk_user, tk_team,tk_project WHERE tk_user.uid in ( select distinct tk_team_uid from tk_team,tk_project WHERE tk_team_pid in (SELECT id FROM tk_project inner join tk_team on tk_team.tk_team_pid=tk_project.id WHERE tk_team_uid = %s)) ORDER BY  tk_display_name ASC",GetSQLValueString($_SESSION['MM_uid'],"int"));
 $Recordset2 = mysql_query($query_Recordset2, $tankdb) or die(mysql_error());
 $row_Recordset2 = mysql_fetch_assoc($Recordset2);
 $totalRows_Recordset2 = mysql_num_rows($Recordset2);
@@ -569,9 +569,10 @@ function addtask()
 }
 
 <?php 
-echo $strssumlog;
-echo $strslog; 
-echo $strssumbyday;?>
+//echo $strssumlog;
+//echo $strslog; 
+//echo $strssumbyday;
+?>
 </script>
 <?php if ($pagetabs <> "etask") { // Show outofdate if recordset not empty ?>
 <?php if ($totalRows_timeout > 0 && $outofdate=="on") { // Show outofdate if recordset not empty ?>
@@ -679,12 +680,12 @@ else if (!(strcmp($i, date("n")))) {echo "selected=\"selected\"";} ?>><?php echo
 </select>
 
 
-//选择任务的状态
+<!--选择任务的状态-->
 <select class="form-control input-sm" name="select_st" id="select_st">
-		//所有状态
+		<!--所有状态-->
         <option value=""><?php echo $multilingual_taskf_status; ?></option>
 		
-		//6种状态 1--未开始；2--进行中； 3--已完成； 4--已验收； 5--被驳回； 6--已过期
+		<!--6种状态 1--未开始；2--进行中； 3--已完成； 4--已验收； 5--被驳回； 6--已过期-->
         <?php
 		do {  
 		?>
@@ -705,7 +706,7 @@ else if (!(strcmp($i, date("n")))) {echo "selected=\"selected\"";} ?>><?php echo
 		?>
       </select>
 	    
-	  //优先级搜索选项
+	  <!--//优先级搜索选项-->
 	  <select class="form-control input-sm" name="select_prt" id="select_prt">
         <option value=""><?php echo $multilingual_taskf_priority; ?></option>//全部优先级
         <option value="<?php echo $multilingual_dd_priority_p5; ?>" <?php if (isset($_SESSION['ser_tkprt'])) {	
@@ -737,15 +738,18 @@ else if (!(strcmp($i, date("n")))) {echo "selected=\"selected\"";} ?>><?php echo
 			echo "selected=\"selected\"";
 			}
 		}?>><?php echo $multilingual_dd_priority_p1; ?></option>
-      </select>
+      </select> 
 	  
-	   
-	   //查找该用户所属的所有项目	  
+	  
+	  
+	  
+	  	<!--查找该用户所属的所有项目-->	  
 	  <select class="form-control input-sm" name="select_project" id="select_project" onclic=>
         <option value=""><?php echo $multilingual_taskf_project; ?></option>
         <?php
-do {  
-?>
+		if(mysql_num_rows($Recordset_project)>0){
+		do {  
+		?>
         <option value="<?php echo $row_Recordset_project['id']?>"
 		<?php 
 		if (isset($_SESSION['ser_project'])) {	
@@ -761,17 +765,17 @@ do {
       mysql_data_seek($Recordset_project, 0);
 	  $row_Recordset_project = mysql_fetch_assoc($Recordset_project);
   }
+		}
 ?>
       </select>
 	  
 	  
-	  //查找选定项目中的所有阶段  
+	  <!--查找选定项目中的所有阶段-->  
 	  <select class="form-control input-sm" name="select_stage" id="select_stage">
         <option value=""><?php echo $multilingual_taskf_stage; ?></option>
       </select>
 	  
-	  
-	  
+	  <!--执行人-->  
 	  <?php if ($pagetabs <> "mtask") {  ?>
 	  <select class="form-control input-sm" id="select4" name="select4">
         <option value="%"><?php echo $multilingual_taskf_touser; ?></option>
@@ -800,7 +804,7 @@ else if(!(strcmp($row_Recordset2['uid'], "{$_SESSION['MM_uid']}"))) {
       </select>
 	  <?php } ?>
 
-	  
+	  <!--查找创建人--> 
 	  <select  class="form-control input-sm" name="create_by" id="create_by" <?php if ($pagetabs <> "alltask") { echo "style='display:none'"; }?>>
       <option value="%"><?php echo $multilingual_taskf_createuser; ?></option>
       <?php
@@ -832,7 +836,6 @@ do {
 	  <button type="button" class="btn btn-link btn-sm" name="export" id="export"  onclick= "return   exportexcel(); " ><?php echo $multilingual_global_excel; ?></button>
 	</form>
 	</span>
-	
 	<?php if($pagetabs == "alltask") { // Show searchbox if page is alltask ?>
 	<span>
 <form id="form2" name="myform2" method="get" class="taskform form-inline">
@@ -877,24 +880,7 @@ do {
 	  echo "class='sort_desc'";
 	  }
 	  ?>><?php echo $multilingual_default_task_id; ?></a></th>      
-      <th width="65%;" >
-	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_type&order=<?php 
-	  if ( $sortlist <> "csa_type"){
-	  echo "DESC";
-	  }else if( $sortlist == "csa_type" && $orderlist == "DESC"){
-	  echo "ASC";
-	  } else {
-	  echo "DESC";
-	  }
-	  ?>" 
-	  <?php 
-	  if($sortlist=="csa_type" && $orderlist=="ASC"){
-	  echo "class='sort_asc'";
-	  } else if ($sortlist=="csa_type" && $orderlist=="DESC"){
-	  echo "class='sort_desc'";
-	  }
-	  ?>><?php echo $multilingual_default_task_type; ?></a>&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;
-	  
+      <th width="65%;" >	  
 	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_text&order=<?php 
 	  if ( $sortlist <> "csa_text"){
 	  echo "DESC";
@@ -930,13 +916,10 @@ do {
       </tr>
    </thead>
    <tbody>
-        <tr >
-          <td colspan="3" class="fontbold weekend_style"><?php echo $multilingual_default_task_totalhour; ?></td>
-        </tr>
- <?php do { ?>
+        <?php do { ?>
         <tr  title="<?php echo $row_Recordset1['csa_text']; ?>" >
       <td class="week_style_padtd"   ><?php echo $row_Recordset1['TID']; ?></td>
-      <td class="week_style_padtd" ><div  class="text_overflow_150  task_title"><a href="default_task_edit.php?editID=<?php echo $row_Recordset1['TID']; ?>&pagetab=<?php echo $pagetabs; ?>"  target="_parent">[<?php echo $row_Recordset1['task_tpye']; ?>] <?php echo $row_Recordset1['csa_text']; ?></a></div></td>
+      <td class="week_style_padtd" ><a href="default_task_edit.php?editID=<?php echo $row_Recordset1['TID']; ?>&pagetab=<?php echo $pagetabs; ?>"  target="_parent"> <?php echo $row_Recordset1['csa_text']; ?></a></td>
       <td class="week_style_padtd" >
 	  <a href="user_view.php?recordID=<?php echo $row_Recordset1['csa_to_user']; ?>" target="_parent">
 	  <?php echo $row_Recordset1['tk_display_name1']; ?></a></td>
@@ -960,29 +943,48 @@ do {
   <table  border="0" cellspacing="0" cellpadding="0" align="center"  class="maintable tasktab_br" >
    
      <thead  class="toptable " >
+	 <!--状态-->
     <tr>
-        <th rowspan="2" width="100px">
-	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_remark2&order=<?php 
-	  if ( $sortlist <> "csa_remark2"){
+      <th rowspan="2" width="100px">
+	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_status&order=<?php 
+	  if ( $sortlist <> "csa_status"){
 	  echo "DESC";
-	  }else if( $sortlist == "csa_remark2" && $orderlist == "DESC"){
+	  }else if( $sortlist == "csa_status" && $orderlist == "DESC"){
 	  echo "ASC";
 	  } else {
 	  echo "DESC";
 	  }
 	  ?>" 
 	  <?php 
-	  if($sortlist=="csa_remark2" && $orderlist=="ASC"){
+	  if($sortlist=="csa_status" && $orderlist=="ASC"){
 	  echo "class='sort_asc'";
-	  } else if ($sortlist=="csa_remark2" && $orderlist=="DESC"){
+	  } else if ($sortlist=="csa_status" && $orderlist=="DESC"){
 	  echo "class='sort_desc'";
 	  }
 	  ?>>
 	  <?php echo $multilingual_default_task_status; ?></a></th>
-      <th rowspan="2" width="80px" class="tasktab_height"><?php echo $multilingual_default_task_planpv; ?></th>
-      <th rowspan="2" width="80px" class="tasktab_height"><?php echo $multilingual_default_task_hourac; ?></th>
-      
-	  
+	  <!--工作量-->
+      <th rowspan="2" width="80px" class="tasktab_height"><?php echo $multilingual_default_task_planpv; ?></th>    
+	  <!--计划开始时间-->
+	  <th rowspan="2" width="110px">
+	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_plan_st&order=<?php 
+	  if ( $sortlist <> "csa_plan_st"){
+	  echo "DESC";
+	  }else if( $sortlist == "csa_plan_st" && $orderlist == "DESC"){
+	  echo "ASC";
+	  } else {
+	  echo "DESC";
+	  }
+	  ?>" 
+	  <?php 
+	  if($sortlist=="csa_plan_st" && $orderlist=="ASC"){
+	  echo "class='sort_asc'";
+	  } else if ($sortlist=="csa_plan_st" && $orderlist=="DESC"){
+	  echo "class='sort_desc'";
+	  }
+	  ?>>
+	  <?php echo $multilingual_default_task_planstart; ?></a></th>
+	  <!--计划完成时间-->
       <th rowspan="2" width="110px">
 	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_plan_et&order=<?php 
 	  if ( $sortlist <> "csa_plan_et"){
@@ -1001,7 +1003,7 @@ do {
 	  }
 	  ?>>
 	  <?php echo $multilingual_default_task_planend; ?></a></th>
-	  
+	  <!--所属项目-->
       <th rowspan="2" width="200px">
 	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_project&order=<?php 
 	  if ( $sortlist <> "csa_project"){
@@ -1020,7 +1022,26 @@ do {
 	  }
 	  ?>>
 	  <?php echo $multilingual_default_task_project; ?></a></th>
-
+	  <!--所属阶段-->
+      <th rowspan="2" width="200px">
+	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=ser_stage&order=<?php 
+	  if ( $sortlist <> "ser_stage"){
+	  echo "DESC";
+	  }else if( $sortlist == "ser_stage" && $orderlist == "DESC"){
+	  echo "ASC";
+	  } else {
+	  echo "DESC";
+	  }
+	  ?>" 
+	  <?php 
+	  if($sortlist=="ser_stage" && $orderlist=="ASC"){
+	  echo "class='sort_asc'";
+	  } else if ($sortlist=="ser_stage" && $orderlist=="DESC"){
+	  echo "class='sort_desc'";
+	  }
+	  ?>>
+	  <?php echo $multilingual_default_task_stage; ?></a></th>
+	  <!--来自-->
       <th rowspan="2" width="80px">
 	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_from_user&order=<?php 
 	  if ( $sortlist <> "csa_from_user"){
@@ -1039,6 +1060,7 @@ do {
 	  }
 	  ?>>
 	  <?php echo $multilingual_default_task_from; ?></a></th>
+	  <!--优先级-->
       <th rowspan="2" width="70px">
 	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_priority&order=<?php 
 	  if ( $sortlist <> "csa_priority"){
@@ -1057,25 +1079,11 @@ do {
 	  }
 	  ?>>
 	  <?php echo $multilingual_default_task_priority; ?></a></th>
-      <th rowspan="2" width="80px" class="hide">
-	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_temp&order=<?php 
-	  if ( $sortlist <> "csa_temp"){
-	  echo "DESC";
-	  }else if( $sortlist == "csa_temp" && $orderlist == "DESC"){
-	  echo "ASC";
-	  } else {
-	  echo "DESC";
-	  }
-	  ?>#fromsite" 
-	  <?php 
-	  if($sortlist=="csa_temp" && $orderlist=="ASC"){
-	  echo "class='sort_asc'";
-	  } else if ($sortlist=="csa_temp" && $orderlist=="DESC"){
-	  echo "class='sort_desc'";
-	  }
-	  ?>>
-	  <?php echo $multilingual_default_tasklevel; ?></a></th>
-      <th rowspan="2" width="112px">
+	  
+      </tr>
+    <tr>
+	<!--上次更新时间-->
+      <th rowspan="2" width="70px">
 	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_last_update&order=<?php 
 	  if ( $sortlist <> "csa_last_update"){
 	  echo "DESC";
@@ -1092,108 +1100,50 @@ do {
 	  echo "class='sort_desc'";
 	  }
 	  ?>>
-	  <?php echo $multilingual_global_lastupdate; ?>
-	  </a>
-	  </th>
-<?php
-$DAY = date("d");
-$time = $YEAR."-".$MONTH."-".$DAY;
-if (isset($_GET['getday'])) {
-  $time = $_GET['getday'];
-}
-$time = strtotime( $time);
-?>
-<div class="float_left task_weeklog_right"><a name="fromsite">&nbsp;</a></div>
-<div class="float_left task_weeklog_div">
-<div class="task_weeklog_left">
-<?php if($YEAR <> "0000" && $MONTH <> "00"){ ?><a href="<?php echo $pagenames; ?>?<?php echo $url_this; ?>&getday=<?php echo date("y-m-d", strtotime("-1 weeks", $time)); ?>#logsite" class="fleft">
-<span class="ui-icon month_pre fleft icon_margen"></span><span class="fleft"><?php echo $multilingual_default_task_preweek; ?></span>
-</a><span class="fleft">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<?php
-$Sun = date("Y-m-d", strtotime("last Sunday", $time));
-$Sat = date("Y-m-d", strtotime("last Sunday +6 days", $time));
-echo $Sun." ".$multilingual_global_to." ".$Sat
-?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-<a href="<?php echo $pagenames; ?>?<?php echo $url_this; ?>&getday=<?php echo date("y-m-d", strtotime("+1 weeks", $time)); ?>#logsite"  class="fleft">
-<span class="fleft"><?php echo $multilingual_default_task_nextweek; ?></span><span class="ui-icon month_next fleft icon_margen"></span>
-</a>
-<?php } else { echo $multilingual_calendar_donoedit;} ?>
-</div>
-</div>
-<div class="float_right task_weeklog_right"><a name="logsite">&nbsp;</a></div>
-	  </th>
+	  <?php echo $multilingual_default_task_priority; ?></a></th>
+	  
       </tr>
     <tr>
    </thead>     
 <tbody>
-     <tr class="fontbold  weekend_style"> 
-         <td class="week_style_padtd">&nbsp;</td>
-         <td class="week_style_padtd">&nbsp;</td>
-       <td class="week_style_padtd">
-      <?php echo $row_Sumtotal['sumtotal']; ?>&nbsp;
-       </td>
-       <td class="week_style">&nbsp;</td>
-       <td class="week_style_padtd  task_title" >&nbsp;</td>
-       
-	   <td class="week_style_padtd">&nbsp;</td>
-	   <td class="week_style_padtd">&nbsp;</td>
-       <td class="week_style_padtd hide">&nbsp;</td>
-       <td class="week_style_padtd">&nbsp;</td>
-       
-        <td class="week_style_padtd">&nbsp;</td>
-       <td  class="week_style">&nbsp;</td>
-     </tr>
      <?php do { ?>
      <tr>
-         <td class="week_style_padtd"  width="100px"><?php echo $row_Recordset1['task_status_display']; ?></td>
-         <td class="week_style_padtd" width="80px">
+         <td class="week_style_padtd"  width="100px" align="center"><?php echo $row_Recordset1['task_status_display']; ?></td>
+         <td class="week_style_padtd" width="80px" align="center">
        
        <?php echo $row_Recordset1['csa_plan_hour']; ?>&nbsp;
        </td>
+       <td class="week_style_padtd" width="80px" align="center">
        
-       <td class="week_style_padtd" width="80px">
-<?php
-$sumlog_tid = $row_Recordset1['TID'];
-$out_sumlog = "
-<script type='text/javascript'>
-if (typeof(sum$sumlog_tid)!='undefined'){
-document.write(sum$sumlog_tid)
-} else {
-document.write('0')
-}
-</script>
-";
-echo $out_sumlog;
-?>&nbsp;
-</td>
-
-
+       <?php echo $row_Recordset1['csa_plan_st']; ?>&nbsp;
+       </td>  
 		<td class="week_style_padtd <?php 
 
 		$today = date("Y-m-d");   
 		if($today > $row_Recordset1['csa_plan_et'] && strpos($row_Recordset1['task_status_display'], $multilingual_dd_status_stfinish) == false){
 	   echo "red";
 	   }   
-	   ?>" width="70px" >
+	   ?>" width="70px" align="center">
        
        <?php echo $row_Recordset1['csa_plan_et']; ?>&nbsp;
        </td>
 
-       <td class="week_style_padtd  task_title"  width="200px" >
-         <div  class="text_overflow_180 ">
+       <td class="week_style_padtd" width="200px" >
 		 <a href="project_view.php?recordID=<?php echo $row_Recordset1['csa_project']; ?>" target="_parent" title="<?php echo $row_Recordset1['project_name_prt']; ?>"><?php echo $row_Recordset1['project_name_prt']; ?></a>
-		 </div>
        </td>
-
-       <td class="week_style_padtd"  width="100px">
+		<td class="week_style_padtd "  width="200px">
+		 <a href="stage_view.php?recordID=<?php echo $row_Recordset1['csa_project_stage']; ?>" target="_parent" title="<?php echo $row_Recordset1['stage_name_prt']; ?>"><?php echo $row_Recordset1['stage_name_prt']; ?></a>
+       </td>
+	   
+       <td class="week_style_padtd"  width="100px" align="center">
 	   <a href="user_view.php?recordID=<?php echo $row_Recordset1['csa_from_user']; ?>" target="_parent">
 	   <?php echo $row_Recordset1['tk_display_name2']; ?></a>
 	   </td>
        <td class="week_style_padtd" width="70px" align="center">
-	   <?php $row_Recordset1['csa_priority'];?>
+	   <?php echo $row_Recordset1['csa_priority']; ?>
 	   </td>
        
-      <td class="week_style_padtd" width="112px"><span 
+      <td class="week_style_padtd" width="112px" align="center"><span 
 	   <?php 
 		$lonelastday = $row_Recordset1['csa_last_update']; 
 		$lastday = substr($lonelastday,0,10);   
