@@ -200,7 +200,7 @@ $multilingual_default_task_manhour = "工时";
 $multilingual_default_task_status = "状态";
 $multilingual_default_task_planstart = "计划开始";
 $multilingual_default_task_planend = "计划完成";
-$multilingual_default_task_planhour = "计划用时(PV)";
+$multilingual_default_task_planhour = "工作量";
 $multilingual_default_stage_type = "阶段类型";
 $multilingual_default_task_type = "任务类型";
 $multilingual_default_task_project = "所属项目";
@@ -329,7 +329,7 @@ $multilingual_default_task_cc_tips = "您可以将该任务抄送给多个人，
 
 $multilingual_default_task_starttime_tips = "您希望任务在何时开始，此项适合做计划时填写";
 $multilingual_default_task_endtime_tips = "任务截止日期，超过该日期还未完成的任务，会出现在任务执行人的提醒列表里";
-$multilingual_default_task_pv_tips = "估算该任务所需时间，供任务执行人参考，非必填项";
+$multilingual_default_task_pv_tips = "估算该任务所需时间，以此作为参照计算到该组员在本团队的得分中";
 
 $multilingual_default_task_start_status = "任务初始状态";
 $multilingual_default_task_start_status_tips = "如果任务在创建前已经开始，请设置任务初始状态";
