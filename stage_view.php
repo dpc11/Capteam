@@ -375,7 +375,7 @@ document.getElementById('tab_' + i).className = (i == ".$tabid.") ? 'onhover' : 
                 <table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
                     <tr>
                         <td valign="top">
-                            <?php $project_id=$ row_DetailRS1[ 'stageid']; $project_name=$ row_DetailRS1[ 'project_name']; $node_id_task=- 1; /*require_once( 'tree.php');*/ ?>
+                            <?php $project_id=$row_DetailRS1['stageid']; $project_name=$row_DetailRS1['project_name']; $node_id_task=-1; /*require_once( 'tree.php');*/ ?>
                         </td>
                     </tr>
 
@@ -403,21 +403,21 @@ document.getElementById('tab_' + i).className = (i == ".$tabid.") ? 'onhover' : 
                                     <tr>
 
                                         <td width="12%" class="info_task_title">
-                                            <?php if ($row_DetailRS1[ 'tk_stage_st'] <> "0000-00-00") { ?>
+                                            <?php if ($row_DetailRS1['tk_stage_st'] <> "0000-00-00") { ?>
                                             <?php echo $multilingual_project_start; ?>
                                             <?php } ?> </td>
                                         <td>
-                                            <?php if ($row_DetailRS1[ 'tk_stage_st'] <> "0000-00-00") { ?>
-                                            <?php echo $row_DetailRS1[ 'tk_stage_st']; ?>
+                                            <?php if ($row_DetailRS1['tk_stage_st'] <> "0000-00-00") { ?>
+                                            <?php echo $row_DetailRS1['tk_stage_st']; ?>
                                             <?php } ?> </td>
 
                                         <td class="info_task_title">
-                                            <?php if ($row_DetailRS1[ 'tk_stage_et'] <> "0000-00-00") { ?>
+                                            <?php if ($row_DetailRS1['tk_stage_et'] <> "0000-00-00") { ?>
                                             <?php echo $multilingual_project_end; ?>
                                             <?php } ?> </td>
                                         <td>
-                                            <?php if ($row_DetailRS1[ 'tk_stage_et'] <> "0000-00-00") { ?>
-                                            <?php echo $row_DetailRS1[ 'tk_stage_et']; ?>
+                                            <?php if ($row_DetailRS1['tk_stage_et'] <> "0000-00-00") { ?>
+                                            <?php echo $row_DetailRS1['tk_stage_et']; ?>
                                             <?php } ?>
                                         </td>
                                     </tr>
@@ -432,7 +432,7 @@ document.getElementById('tab_' + i).className = (i == ".$tabid.") ? 'onhover' : 
                                     <tr>
 
                                         <!-- 下发任务 -->
-                                        <?php if($_SESSION[ 'MM_rank']> "2") { ?>
+                                        <?php if($_SESSION['MM_rank']> "2") { ?>
                                         <td width="12%">
                                             <a href="default_task_add.php?projectID=<?php echo $row_DetailRS1['stageid']; ?>&formproject=1">
                                                 <span class="glyphicon glyphicon-random"></span>
@@ -442,13 +442,13 @@ document.getElementById('tab_' + i).className = (i == ".$tabid.") ? 'onhover' : 
                                         <?php } ?>
 
                                         <!-- 上传文档 -->
-                                        <?php if($_SESSION[ 'MM_rank']> "1") { ?>
+                                        <?php if($_SESSION['MM_rank']> "1") { ?>
                                         <td width="12%">
                                             <a target="_blank" href="file_add.php?projectid=<?php echo $row_DetailRS1['stageid']; ?>&pid=0&pagetab=allfile"><span class="glyphicon glyphicon-file"></span> <?php echo $multilingual_project_file_addfile; ?></a> </td>
                                         <?php } ?>
 
                                         <!-- 阶段修改 -->
-                                        <?php if($_SESSION[ 'MM_rank']> "3" ) { ?>
+                                        <?php if($_SESSION['MM_rank']> "3" ) { ?>
                                         <td width="10%">
                                             <a href="stage_edit.php?editID=<?php echo $row_DetailRS1['id']; ?>">
                                                 <span class="glyphicon glyphicon-pencil"></span>
@@ -457,10 +457,10 @@ document.getElementById('tab_' + i).className = (i == ".$tabid.") ? 'onhover' : 
                                         <?php } ?>
 
                                         <!-- 阶段删除 -->
-                                        <?php if($_SESSION[ 'MM_rank']> "3") { ?>
+                                        <?php if($_SESSION['MM_rank']> "3") { ?>
                                         <td width="10%">
                                             <a class="mouse_over" onClick="javascript:if(confirm( '<?php 
-   if($totalRows_Recordset_task == " 0 "){  
+   if($totalRows_Recordset_task == "0"){  
     echo $multilingual_global_action_delconfirm;
     } else { echo $multilingual_global_action_delconfirm3;} ?>'))self.location='stage_del.php?delID=<?php echo $row_DetailRS1['id']; ?>';">
                                                 <span class="glyphicon glyphicon-remove"></span>
@@ -482,7 +482,7 @@ document.getElementById('tab_' + i).className = (i == ".$tabid.") ? 'onhover' : 
                         </tr>
 
                         <!-- 阶段概述 -->
-                        <?php if ($row_DetailRS1[ 'tk_stage_desc'] <> "&nbsp;" && $row_DetailRS1['tk_stage_desc']
+                        <?php if ($row_DetailRS1['tk_stage_desc'] <> "&nbsp;" && $row_DetailRS1['tk_stage_desc']
                         <> "") { ?>
                             <tr>
                                 <td>&nbsp;</td>
@@ -493,7 +493,7 @@ document.getElementById('tab_' + i).className = (i == ".$tabid.") ? 'onhover' : 
                             </tr>
                             <tr>
                                 <td>
-                                    <?php echo $row_DetailRS1[ 'tk_stage_desc']; ?>
+                                    <?php echo $row_DetailRS1['tk_stage_desc']; ?>
                                 </td>
                             </tr>
                             <tr>
@@ -685,19 +685,19 @@ echo $editcomment_row;
                                                                     </td>
                                                                     <td>
                                                                         <a href="user_view.php?recordID=<?php echo $row_Recordset_task['csa_to_user']; ?>">
-                                                                            <?php $SelDisName="SELECT tk_display_name FROM tk_user WHERE uid=$now_uid" ; $Name=m ysql_query($SelDisName, $tankdb) or die(mysql_error()); $row=m ysql_fetch_assoc($Name); echo$row[ 'tk_display_name']; ?>
+                                                                            <?php $SelDisName="SELECT tk_display_name FROM tk_user WHERE uid=$now_uid" ; $Name=mysql_query($SelDisName, $tankdb) or die(mysql_error()); $row=mysql_fetch_assoc($Name); echo$row['tk_display_name']; ?>
                                                                         </a>
                                                                     </td>
                                                                     <td>
-                                                                        <?php $sta=$ row_Recordset_task[ 'csa_status']; $SelStatusName="SELECT task_status FROM tk_status WHERE id = $sta" ; $Status=m ysql_query($SelStatusName, $tankdb) or die(mysql_error()); $row=m ysql_fetch_assoc($Status); echo $row[ 'task_status']; ?>
+                                                                        <?php $sta=$row_Recordset_task['csa_status']; $SelStatusName="SELECT task_status FROM tk_status WHERE id = $sta" ; $Status=mysql_query($SelStatusName, $tankdb) or die(mysql_error()); $row=mysql_fetch_assoc($Status); echo $row['task_status']; ?>
                                                                     </td>
                                                                     <td>
-                                                                        <?php switch ($row_Recordset_task[ 'csa_priority']) { case 5: echo $multilingual_dd_priority_p5; break; case 4: echo $multilingual_dd_priority_p4; break; case 3: echo $multilingual_dd_priority_p3; break; case 2: echo $multilingual_dd_priority_p2; break; case 1: echo $multilingual_dd_priority_p1; break; } ?> </td>
+                                                                        <?php switch ($row_Recordset_task['csa_priority']) { case 5: echo $multilingual_dd_priority_p5; break; case 4: echo $multilingual_dd_priority_p4; break; case 3: echo $multilingual_dd_priority_p3; break; case 2: echo $multilingual_dd_priority_p2; break; case 1: echo $multilingual_dd_priority_p1; break; } ?> </td>
                                                                     <td>
-                                                                        <?php echo $row_Recordset_task[ 'csa_plan_st']; ?>
+                                                                        <?php echo $row_Recordset_task['csa_plan_st']; ?>
                                                                     </td>
                                                                     <td>
-                                                                        <?php echo $row_Recordset_task[ 'csa_plan_et']; ?>
+                                                                        <?php echo $row_Recordset_task['csa_plan_et']; ?>
                                                                     </td>
 
 
@@ -726,7 +726,7 @@ case 1:
 -->
 
                                                                 </tr>
-                                                                <?php } while ($row_Recordset_task=m ysql_fetch_assoc($Recordset_task)); ?>
+                                                                <?php } while ($row_Recordset_task=mysql_fetch_assoc($Recordset_task)); ?>
                                                             </tbody>
                                                         </table>
 
@@ -738,14 +738,14 @@ case 1:
                                                                         <tr>
                                                                             <td>
                                                                                 <?php if ($pageNum_Recordset_task> 0) { // Show if not first page ?>
-                                                                                <a href="<?php printf(" %s?pageNum_Recordset_task=%d%s ", $currentPage, 0, $queryString_Recordset_task); ?>#task">
+                                                                                <a href="<?php printf("%s?pageNum_Recordset_task=%d%s ", $currentPage, 0, $queryString_Recordset_task); ?>#task">
                                                                                     <?php echo $multilingual_global_first; ?>
                                                                                 </a>
                                                                                 <?php } // Show if not first page ?>
                                                                             </td>
                                                                             <td>
                                                                                 <?php if ($pageNum_Recordset_task> 0) { // Show if not first page ?>
-                                                                                <a href="<?php printf(" %s?pageNum_Recordset_task=%d%s ", $currentPage, max(0, $pageNum_Recordset_task - 1), $queryString_Recordset_task); ?>#task">
+                                                                                <a href="<?php printf("%s?pageNum_Recordset_task=%d%s ", $currentPage, max(0, $pageNum_Recordset_task - 1), $queryString_Recordset_task); ?>#task">
                                                                                     <?php echo $multilingual_global_previous; ?>
                                                                                 </a>
                                                                                 <?php } // Show if not first page ?>
@@ -753,13 +753,13 @@ case 1:
                                                                             <td>
                                                                                 <?php if ($pageNum_Recordset_task < $totalPages_Recordset_task) { // Show if not last page ?>
                                                                                 <a href="<?php 
-        printf(" %s?pageNum_Recordset_task=%d%s ", $currentPage, min($totalPages_Recordset_task, $pageNum_Recordset_task + 1), $queryString_Recordset_task); ?>#task">
+        printf("%s?pageNum_Recordset_task=%d%s ", $currentPage, min($totalPages_Recordset_task, $pageNum_Recordset_task + 1), $queryString_Recordset_task); ?>#task">
                                                                                     <?php echo $multilingual_global_next; ?>
                                                                                 </a>
                                                                                 <?php } // Show if not last page ?> </td>
                                                                             <td>
                                                                                 <?php if ($pageNum_Recordset_task < $totalPages_Recordset_task) { // Show if not last page ?>
-                                                                                <a href="<?php printf(" %s?pageNum_Recordset_task=%d%s ", $currentPage, $totalPages_Recordset_task, $queryString_Recordset_task); ?>#task">
+                                                                                <a href="<?php printf("%s?pageNum_Recordset_task=%d%s ", $currentPage, $totalPages_Recordset_task, $queryString_Recordset_task); ?>#task">
                                                                                     <?php echo $multilingual_global_last; ?>
                                                                                 </a>
                                                                                 <?php } // Show if not last page ?>
@@ -804,23 +804,23 @@ case 1:
                                                         <td nowrap="nowrap">
                                                             <?php if($row_Recordset_file[ 'tk_doc_backup1']=="1" ){ ?>
                                                             <a href="file.php?recordID=<?php echo $row_Recordset_file['docid']; ?><?php 
-    if($row_Recordset_file['tk_doc_backup1']==" 1 "){
+    if($row_Recordset_file['tk_doc_backup1']=="1"){
     echo "&folder=".$row_Recordset_file['tk_doc_backup1'];
     } ?>&projectID=<?php echo $colname_DetailRS1; ?>&pagetab=allfile
     " class="icon_folder">
-                                                                <?php echo $row_Recordset_file[ 'tk_doc_title']; ?>
+                                                                <?php echo $row_Recordset_file['tk_doc_title']; ?>
                                                             </a>
                                                             <?php }else{ ?>
 
                                                             <a href="file_view.php?recordID=<?php echo $row_Recordset_file['docid']; ?>&projectID=<?php echo $colname_DetailRS1; ?>&pagetab=allfile
     " class="icon_file" target="_blank">
-                                                                <?php echo $row_Recordset_file[ 'tk_doc_title']; ?>
+                                                                <?php echo $row_Recordset_file['tk_doc_title']; ?>
                                                             </a>
                                                             <?php } ?>
 
 
 
-                                                            <?php if ($row_Recordset_file[ 'tk_doc_attachment'] <> null && $row_Recordset_file['tk_doc_attachment']
+                                                            <?php if ($row_Recordset_file['tk_doc_attachment'] <> null && $row_Recordset_file['tk_doc_attachment']
                                                             <> " ") { ?>
                                                                 <a href="<?php echo $row_Recordset_file['tk_doc_attachment']; ?>" class="icon_atc">
                                                                     <?php echo $multilingual_project_file_download; ?>
@@ -828,18 +828,18 @@ case 1:
                                                                 <?php } ?> </td>
                                                         <td>
                                                             <a href="user_view.php?recordID=<?php echo $row_Recordset_file['tk_doc_edit']; ?>">
-                                                                <?php echo $row_Recordset_file[ 'tk_display_name']; ?> </a>
+                                                                <?php echo $row_Recordset_file['tk_display_name']; ?> </a>
                                                         </td>
                                                         <td>
-                                                            <?php echo $row_Recordset_file[ 'tk_doc_edittime']; ?> </td>
+                                                            <?php echo $row_Recordset_file['tk_doc_edittime']; ?> </td>
                                                         <td>
-                                                            <?php if ($row_Recordset_file[ 'tk_doc_backup1'] <> "1") { ?>
+                                                            <?php if ($row_Recordset_file['tk_doc_backup1'] <> "1") { ?>
                                                             <a href="word.php?fileid=<?php echo $row_Recordset_file['docid']; ?>" class="icon_word">
                                                                 <?php echo $multilingual_project_file_word; ?>
                                                             </a>
                                                             <?php } ?> &nbsp;
 
-                                                            <?php if($_SESSION[ 'MM_rank']> "1") { ?>
+                                                            <?php if($_SESSION['MM_rank']> "1") { ?>
                                                             <?php if ($row_Recordset_file[ 'tk_doc_backup1']=="1" ) { ?>
                                                             <script type="text/javascript">
                                                                 function editfolder <? php echo $row_Recordset_file['docid']; ?> () {
@@ -860,9 +860,9 @@ case 1:
                                                                 <?php echo $multilingual_global_action_edit; ?>
                                                             </a>
                                                             <?php } ?> &nbsp;
-                                                            <?php if ($_SESSION[ 'MM_rank']> "4" || $row_Recordset_file['tk_doc_create'] == $_SESSION['MM_uid']) { ?>
+                                                            <?php if ($_SESSION['MM_rank']> "4" || $row_Recordset_file['tk_doc_create'] == $_SESSION['MM_uid']) { ?>
 
-                                                            <?php if ($_SESSION[ 'MM_Username'] <> $multilingual_dd_user_readonly) { ?>
+                                                            <?php if ($_SESSION['MM_Username'] <> $multilingual_dd_user_readonly) { ?>
                                                             <a class="mouse_hover" onclick="javascript:if(confirm( '<?php 
     if ($row_Recordset_file['tk_doc_backup1'] == 0){
     echo $multilingual_global_action_delconfirm;}
@@ -876,7 +876,7 @@ case 1:
                                                             <?php } ?> </td>
                                                     </tr>
 
-                                                    <?php } while ($row_Recordset_file=m ysql_fetch_assoc($Recordset_file)); $rows=m ysql_num_rows($Recordset_file); if($rows> 0) { mysql_data_seek($Recordset_file, 0); $row_Recordset_file = mysql_fetch_assoc($Recordset_file); } ?>
+                                                    <?php } while ($row_Recordset_file=mysql_fetch_assoc($Recordset_file)); $rows=mysql_num_rows($Recordset_file); if($rows> 0) { mysql_data_seek($Recordset_file, 0); $row_Recordset_file = mysql_fetch_assoc($Recordset_file); } ?>
                                             </table>
                                             <table class="rowcon" border="0" align="center">
                                                 <tr>
@@ -885,28 +885,28 @@ case 1:
                                                             <tr>
                                                                 <td>
                                                                     <?php if ($pageNum_Recordset_file> 0) { // Show if not first page ?>
-                                                                    <a href="<?php printf(" %s?pageNum_Recordset_file=%d%s ", $currentPage, 0, $queryString_Recordset_file); ?>&tab=1#task">
+                                                                    <a href="<?php printf("%s?pageNum_Recordset_file=%d%s ", $currentPage, 0, $queryString_Recordset_file); ?>&tab=1#task">
                                                                         <?php echo $multilingual_global_first; ?>
                                                                     </a>
                                                                     <?php } // Show if not first page ?>
                                                                 </td>
                                                                 <td>
                                                                     <?php if ($pageNum_Recordset_file> 0) { // Show if not first page ?>
-                                                                    <a href="<?php printf(" %s?pageNum_Recordset_file=%d%s ", $currentPage, max(0, $pageNum_Recordset_file - 1), $queryString_Recordset_file); ?>&tab=1#task">
+                                                                    <a href="<?php printf("%s?pageNum_Recordset_file=%d%s ", $currentPage, max(0, $pageNum_Recordset_file - 1), $queryString_Recordset_file); ?>&tab=1#task">
                                                                         <?php echo $multilingual_global_previous; ?>
                                                                     </a>
                                                                     <?php } // Show if not first page ?>
                                                                 </td>
                                                                 <td>
                                                                     <?php if ($pageNum_Recordset_file < $totalPages_Recordset_file) { // Show if not last page ?>
-                                                                    <a href="<?php printf(" %s?pageNum_Recordset_file=%d%s ", $currentPage, min($totalPages_Recordset_file, $pageNum_Recordset_file + 1), $queryString_Recordset_file); ?>&tab=1#task">
+                                                                    <a href="<?php printf("%s?pageNum_Recordset_file=%d%s ", $currentPage, min($totalPages_Recordset_file, $pageNum_Recordset_file + 1), $queryString_Recordset_file); ?>&tab=1#task">
                                                                         <?php echo $multilingual_global_next; ?>
                                                                     </a>
                                                                     <?php } // Show if not last page ?>
                                                                 </td>
                                                                 <td>
                                                                     <?php if ($pageNum_Recordset_file < $totalPages_Recordset_file) { // Show if not last page ?>
-                                                                    <a href="<?php printf(" %s?pageNum_Recordset_file=%d%s ", $currentPage, $totalPages_Recordset_file, $queryString_Recordset_file); ?>&tab=1#task">
+                                                                    <a href="<?php printf("%s?pageNum_Recordset_file=%d%s ", $currentPage, $totalPages_Recordset_file, $queryString_Recordset_file); ?>&tab=1#task">
                                                                         <?php echo $multilingual_global_last; ?>
                                                                     </a>
                                                                     <?php } // Show if not last page ?>
@@ -1106,7 +1106,7 @@ function addcomment<?php echo $row_Recordset_log['tbid']; ?>()
                                 </td>
                             </tr>
                     </table>
-                    <?php require( 'foot.php'); ?>
+                    <?php require('foot.php'); ?>
                     </div>
                     <!-- right main -->
             </td>
