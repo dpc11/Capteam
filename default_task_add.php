@@ -91,13 +91,13 @@ $cc_post= $_POST['user_cc'];
 $cc_post= "[".implode(",",$_POST['user_cc'])."]";
 }
 
-$newID = add_task( $cc_post, $_POST['csa_from_user'],  $to_user_arr['0'],  $project_id, $_POST['csa_type'], $_POST['csa_text'], $_POST['csa_priority'], $_POST['csa_temp'], $_POST['plan_start'], $_POST['plan_end'], $_POST['plan_hour'], $_POST['csa_remark2'], $_POST['csa_create_user'], $_POST['csa_last_user'], $task_id, $wbs, $wbs_id, $_SESSION['MM_uid'], $csa_tag, $csa_remark1 );
+$newID = add_task( $cc_post, $_POST['csa_from_user'],  $to_user_arr['0'],  $project_id, $stage_id, $_POST['csa_text'], $_POST['csa_priority'],  $_POST['plan_start'], $_POST['plan_end'], $_POST['plan_hour'],  $_SESSION['MM_uid'], $csa_tag, $csa_description );
 
 
 $last_use_arr = pushlastuse($to_user_arr["0"], $to_user_arr["1"], $myid);
 
 
-
+/*
 if ($project_url == 1){
 $insertGoTo = "project_view.php?recordID=$project_id";
 } else if ($user_url == 1){
@@ -107,13 +107,13 @@ $insertGoTo = "user_view.php?recordID=$user_id";
 else {
   $insertGoTo = "default_task_edit.php?editID=$newID";
 }
-
-
+*/
+$insertGoTo = "default_task_edit.php?editID=$newID";
   if (isset($_SERVER['QUERY_STRING'])) {
     $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
     $insertGoTo .= $_SERVER['QUERY_STRING'];
   }
-
+/*
 $msg_to = $to_user_arr['0'];
 $msg_from = $_POST['csa_create_user'];
 $msg_type = "newtask";
@@ -130,17 +130,11 @@ send_message( $v['uid'], $msg_from, $msg_type, $msg_id, $msg_title, 1 );
 }
 
 }
-
+*/
   header(sprintf("Location: %s", $insertGoTo));
 }
 
-$user_arr = get_user_select();
-
-mysql_select_db($database_tankdb, $tankdb);
-$query_Recordset_type = "SELECT * FROM tk_task_tpye ORDER BY task_tpye_backup1 ASC";
-$Recordset_type = mysql_query($query_Recordset_type, $tankdb) or die(mysql_error());
-$row_Recordset_type = mysql_fetch_assoc($Recordset_type);
-$totalRows_Recordset_type = mysql_num_rows($Recordset_type);
+$user_arr = get_user_select($project_id);
 
 mysql_select_db($database_tankdb, $tankdb);
 $query_Recordset_project = sprintf("SELECT * FROM tk_project WHERE id = %s",
@@ -186,7 +180,6 @@ $totalRows_tkstatus = mysql_num_rows($tkstatus);
 J.check.rules = [
 	{ name: 'select4', mid: 'csa_to_user_msg', requir: true, type: 'group', noselected: '', warn: '<?php echo $multilingual_default_required1; ?>' },
 	{ name: 'select2', mid: 'csa_from_user_msg', requir: true, type: 'group', noselected: '', warn: '<?php echo $multilingual_default_required1; ?>' },
-	{ name: 'csa_type', mid: 'csa_type_msg', requir: true, type: 'group', noselected: '', warn: '<?php echo $multilingual_default_required3; ?>' },
 	{ name: 'datepicker2', mid: 'csa_plan_st_msg', requir: true, type: 'date',  warn: '<?php echo $multilingual_error_date; ?>' },
 	{ name: 'datepicker3', mid: 'csa_plan_et_msg', requir: true, type: 'date',  warn: '<?php echo $multilingual_error_date; ?>' },
 	{ name: 'csa_text', mid: 'csa_text_msg', requir: true, type: '',  warn: '<?php echo $multilingual_default_required4; ?>'},
@@ -308,71 +301,27 @@ function submitform()
         </table></td>
       <td width="75%" valign="top"><table width="98%" border="0" cellspacing="0" cellpadding="5" align="center">
           <tr>
+		  <!--新建任务-->	
             <td><div class="col-xs-12">
                 <h3><?php echo $multilingual_taskadd_title; ?></h3>
               </div>
               <div class="form-group col-xs-12">
                 <label for="csa_text"><?php echo $multilingual_default_task_title; ?><span  id="csa_text_msg"></span></label>
                 <div>
-                  <input name="csa_text" id="csa_text" type="text" value="<?php if($copy==1){echo $task_arr['name'];}?>" class="form-control" placeholder="<?php echo $multilingual_taskadd_title_plh;?>">
+                  <input name="csa_text" id="csa_text" type="text" value="" class="form-control" placeholder="<?php echo $multilingual_taskadd_title_plh;?>">
                 </div>
               </div>
-			  
-			  <div class="form-group col-xs-12">
-                <label for="csa_type" ><?php echo $multilingual_default_task_type; ?><span id="csa_type_msg"></span></label>
-                <div>
-                  <select name="csa_type" id="csa_type" onChange="option_gourl(this.value)" class="form-control">
-                    <option value=""><?php echo $multilingual_global_select; ?></option>
-                    <?php
-do {  
-?>
-                    <option value="<?php echo $row_Recordset_type['id']?>" <?php if($copy==1){ if (!(strcmp($row_Recordset_type['id'], @$task_arr['type']))) {echo "selected=\"selected\"";}} ?>><?php echo $row_Recordset_type['task_tpye']?></option>
-                    <?php
-} while ($row_Recordset_type = mysql_fetch_assoc($Recordset_type));
-  $rows = mysql_num_rows($Recordset_type);
-  if($rows > 0) {
-      mysql_data_seek($Recordset_type, 0);
-	  $row_Recordset_type = mysql_fetch_assoc($Recordset_type);
-  }
-?>
-                    <?php if ($_SESSION['MM_rank'] > "4") { ?>
-                    <option value="-1" class="gray" >+<?php echo $multilingual_tasktype_new; ?></option>
-                    <?php } ?>
-                  </select>
-                </div>
-				<span class="help-block"><?php echo $multilingual_default_task_type_tips; ?> 
-				<abbr  title="<?php echo $multilingual_default_task_catips2; ?>">
-				<span class="glyphicon glyphicon-question-sign"><?php echo $multilingual_default_task_ca; ?></span>
-				</abbr>
-				</span>
-              </div>
-			  
+			  	<!--指派给-->		  
 			  <div class="form-group  col-xs-6">
                 <label for="select4" ><?php echo $multilingual_default_task_to; ?><span id="csa_to_user_msg"></span></label>
                 <div >
                   <select id="select4" name="csa_to_user" onChange="option_gourl(this.value)"  class="form-control">
-                    <option value="" ><?php echo $multilingual_global_select; ?></option>
-					<?php if($_SESSION['MM_last'] <> null){ $last_arr = json_decode($_SESSION['MM_last'], true); ?>
-					<optgroup label="<?php echo $multilingual_default_task_lastusers;?>">
-					<?php foreach($last_arr as $key => $val){  ?>
-					 <option value='<?php echo $val["uid"]?>, ,<?php echo $val["uname"]?>' ><?php echo $val["uname"]?></option>
-					 <?php } ?>
-					</optgroup>
-					<?php } ?>
-					 
-					 <optgroup label="<?php echo $multilingual_default_task_users;?>">
 					 <?php foreach($user_arr as $key => $val){  ?>
-					 <option value='<?php echo $val["uid"]?>, ,<?php echo $val["name"]?>' 
-		  <?php if (!(strcmp($val["uid"], $user_id)) && $copy==-1) {echo "selected=\"selected\"";} else if ($copy==1){ if(!(strcmp($val["uid"], $task_arr['to']))) {echo "selected=\"selected\"";} }?>
-		  ><?php 
+					 <option value='<?php echo $val["uid"]?>> <!--, ,<?php echo $val["name"]?>' -->
+					 <?php 
 		   $py = substr( pinyin($val["name"]), 0, 1 );
 		  echo $py."-".$val["name"]?></option>
 					 <?php } ?>  
-					 </optgroup>
-
-                    <?php if ($_SESSION['MM_rank'] > "4") { ?>
-                    <option value="-2" class="gray" >+<?php echo $multilingual_user_new; ?></option>
-                    <?php } ?>
                   </select>
                 </div>
                 <span class="help-block"><?php echo $multilingual_taskadd_totip; ?></span> </div>
@@ -460,48 +409,14 @@ do {
                 <label for="csa_priority"><?php echo $multilingual_default_task_priority; ?></label>
                 <div>
                   <select name="csa_priority"  id="csa_priority" class="form-control">
-                    <option value="5" <?php if($copy==1){ if (!(strcmp(5, $task_arr['priority'])) ) {echo "selected=\"selected\"";}} ?>><?php echo $multilingual_dd_priority_p5; ?></option>
-                    <option value="4" <?php if($copy==1){ if (!(strcmp(4, $task_arr['priority'])) ) {echo "selected=\"selected\"";} } ?>><?php echo $multilingual_dd_priority_p4; ?></option>
-                    <option value="3" <?php if ($copy==-1){echo "selected=\"selected\"";}else if($copy==1){if (!(strcmp(3, $task_arr['priority'])) && $copy==1) {echo "selected=\"selected\"";} } ?>><?php echo $multilingual_dd_priority_p3; ?></option>
-                    <option value="2" <?php if($copy==1){ if (!(strcmp(2, $task_arr['priority']))) {echo "selected=\"selected\"";} } ?>><?php echo $multilingual_dd_priority_p2; ?></option>
-                    <option value="1" <?php if($copy==1){ if (!(strcmp(1, $task_arr['priority']))) {echo "selected=\"selected\"";} } ?>><?php echo $multilingual_dd_priority_p1; ?></option>
+                    <option value="<?php echo $multilingual_dd_priority_p5; ?>" ><?php echo $multilingual_dd_priority_p5; ?></option>
+                    <option value="<?php echo $multilingual_dd_priority_p4; ?>" ><?php echo $multilingual_dd_priority_p4; ?></option>
+                    <option value="<?php echo $multilingual_dd_priority_p3; ?>" ><?php echo $multilingual_dd_priority_p3; ?></option>
+                    <option value="<?php echo $multilingual_dd_priority_p2; ?>" ><?php echo $multilingual_dd_priority_p2; ?></option>
+                    <option value="<?php echo $multilingual_dd_priority_p1; ?>" ><?php echo $multilingual_dd_priority_p1; ?></option>
                   </select>
                 </div>
 				<span class="help-block"><?php echo $multilingual_default_task_priority_tips; ?></span>
-              </div>
-			  
-              <div class="form-group col-xs-12 hidden">
-                <label for="csa_temp"><?php echo $multilingual_default_tasklevel; ?></label>
-                <div>
-                  <select name="csa_temp" id="csa_temp" class="form-control">
-                    <option value="5"><?php echo $multilingual_dd_level_l5; ?></option>
-                    <option value="4"><?php echo $multilingual_dd_level_l4; ?></option>
-                    <option value="3" SELECTED=“SELECTED”><?php echo $multilingual_dd_level_l3; ?></option>
-                    <option value="2"><?php echo $multilingual_dd_level_l2; ?></option>
-                    <option value="1"><?php echo $multilingual_dd_level_l1; ?></option>
-                  </select>
-                </div>
-              </div>
-			  
-              <div class="form-group col-xs-12">
-                <label for="csa_remark2"><?php echo $multilingual_default_task_start_status; ?></label>
-                <div>
-                  <select name="csa_remark2" id="csa_remark2"  class="form-control">
-                    <?php
-do {  
-?>
-                    <option value="<?php echo $row_tkstatus['id']?>" <?php if($copy==1){if (!(strcmp($row_tkstatus['id'], $task_arr['status']))) {echo "selected=\"selected\"";} } ?>><?php echo $row_tkstatus['task_status']?></option>
-                    <?php
-} while ($row_tkstatus = mysql_fetch_assoc($tkstatus));
-  $rows = mysql_num_rows($tkstatus);
-  if($rows > 0) {
-      mysql_data_seek($tkstatus, 0);
-	  $row_tkstatus = mysql_fetch_assoc($tkstatus);
-  }
-?>
-                  </select>
-                </div>
-				<span class="help-block"><?php echo $multilingual_default_task_start_status_tips; ?></span>
               </div>
 				</td>
           </tr>
