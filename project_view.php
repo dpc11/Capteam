@@ -29,8 +29,12 @@ $colname_DetailRS1 = "-1";
 if (isset($_GET['recordID'])) {
   $colname_DetailRS1 = $_GET['recordID'];
 }
-mysql_select_db($database_tankdb, $tankdb);
+
+//获得当前项目相关的user
+$user_arr = get_user_select($colname_DetailRS1);
+
 //数据库修改后的SQL语句，查找对应的项目
+mysql_select_db($database_tankdb, $tankdb);
 $query_DetailRS1 = sprintf("SELECT * FROM tk_project 
 inner join tk_user on tk_project.project_to_user=tk_user.uid 
 WHERE tk_project.id = %s", GetSQLValueString($colname_DetailRS1, "int"));
@@ -525,16 +529,21 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
           <tr>
             <td colspan="2">
             <table class="table table-striped table-hover glink">
-              <tbody>
-                <tr>
-                  <td>dpc</td>
-                  <td>dpc11@qq.com</td>
-                  <td>13121917761</td>
+              <tbody>                 
+                 <?php foreach($user_arr as $key => $val){ 
+                              if($val["uid"] <> $_SESSION["MM_uid"]){ ?>
+                  <tr>
+                  <td><?php echo "姓名:".$val["name"]?></td>
+                  <td><?php echo "邮箱:".$val["email"]?></td>
+                  <td><?php echo "电话:".$val["phone_num"]?></td>
                   <td><a type="button" class="btn btn-default btn-sm" href="#" >
                     <?php echo $multilingual_privilege_grant;?>
-                  </a></td>
-                </tr>
-                <tr>
+
+                  </a></td>    
+                  </tr>                      
+                  <?php }} ?>                  
+             
+<!--                 <tr>
                   <td>dpc</td>
                   <td>dpc11@qq.com</td>
                   <td>13121917761</td>
@@ -549,7 +558,7 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
                   <td><a type="button" class="btn btn-default btn-sm" href="#" >
                     <?php echo $multilingual_privilege_remove;?>
                   </a></td>
-                </tr>
+                </tr> -->
               </tbody>
             </table>
             </td>

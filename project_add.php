@@ -57,7 +57,7 @@
       header(sprintf("Location: %s", $insertGoTo));
     }
 
-    $user_arr = get_user_select($newID);
+    $user_arr = get_all_user_select();
 
     mysql_select_db($database_tankdb, $tankdb);
     $query_Recordset3 = "SELECT * FROM tk_status_project ORDER BY task_status_pbackup1 ASC";
