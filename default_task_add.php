@@ -9,7 +9,9 @@ $myid = $_SESSION['MM_uid'];
 $to_user = "-1";
 if (isset($_POST['csa_to_user'])) {
 $to_user_arr = explode(", ,", $_POST['csa_to_user']);
+echo $to_user_arr;
   $to_user= $to_user_arr['0'];
+  echo $to_user;
 }
 
 $title = "-1";
@@ -27,6 +29,7 @@ if (isset($_GET['stageID'])) {
   $stage_id = $_GET['stageID'];
 }
 
+/*
 $project_url = "-1";
 if (isset($_GET['formproject'])) {
   $project_url= $_GET['formproject'];
@@ -41,11 +44,11 @@ $user_id = "-1";
 if (isset($_GET['UID'])) {
   $user_id= $_GET['UID'];
 }
-
 $user_url = "-1";
 if (isset($_GET['touser'])) {
   $user_url= $_GET['touser'];
 }
+*/
 
 if ( empty( $_POST['plan_hour'] ) )
 		$_POST['plan_hour'] = '0.0';
@@ -93,10 +96,6 @@ $cc_post= "[".implode(",",$_POST['user_cc'])."]";
 
 $newID = add_task( $cc_post, $_POST['csa_from_user'],  $to_user_arr['0'],  $project_id, $stage_id, $_POST['csa_text'], $_POST['csa_priority'],  $_POST['plan_start'], $_POST['plan_end'], $_POST['plan_hour'],  $_SESSION['MM_uid'], $csa_tag, $csa_description );
 
-
-$last_use_arr = pushlastuse($to_user_arr["0"], $to_user_arr["1"], $myid);
-
-
 /*
 if ($project_url == 1){
 $insertGoTo = "project_view.php?recordID=$project_id";
@@ -135,20 +134,6 @@ send_message( $v['uid'], $msg_from, $msg_type, $msg_id, $msg_title, 1 );
 }
 
 $user_arr = get_user_select($project_id);
-
-mysql_select_db($database_tankdb, $tankdb);
-$query_Recordset_project = sprintf("SELECT * FROM tk_project WHERE id = %s",
-                       GetSQLValueString($project_id, "int"));  
-$Recordset_project = mysql_query($query_Recordset_project, $tankdb) or die(mysql_error());
-$row_Recordset_project = mysql_fetch_assoc($Recordset_project);
-$totalRows_Recordset_project = mysql_num_rows($Recordset_project);
-
-mysql_select_db($database_tankdb, $tankdb);
-$query_tkstatus = "SELECT * FROM tk_status WHERE task_status_backup2 <>1 ORDER BY task_status_backup1 ASC";
-$tkstatus = mysql_query($query_tkstatus, $tankdb) or die(mysql_error());
-$row_tkstatus = mysql_fetch_assoc($tkstatus);
-$totalRows_tkstatus = mysql_num_rows($tkstatus);
-
 
 ?>
 <?php require('head.php'); ?>
@@ -273,19 +258,10 @@ function submitform()
   <dt><h4 class="gray2"><?php echo $multilingual_default_taskproject; ?></h4></dt>
   <dd><a href="project_view.php?recordID=<?php echo $row_Recordset_project['id']; ?>" ><?php echo $row_Recordset_project['project_name']; ?></a></dd>
 </dl>
-
-<?php if ($task_id <> -1) { ?>
 <dl>
-  <dt><h4 class="gray2"><?php echo $multilingual_default_task_parent; ?></h4></dt>
-  <dd><a href="default_task_edit.php?editID=<?php echo $row_Recordset_task['TID']; ?>" ><?php echo $row_Recordset_task['csa_text']; ?></a></dd>
-</dl><?php } else { ?>
-
-<dl>
-  <dt><h4 class="gray2"><?php echo $multilingual_subtask_root; ?></h4></dt>	 
+  <dt><h4 class="gray2"><?php echo $multilingual_taskadd_title; ?></h4></dt>	 
 </dl>
-
-	 <?php  } ?>
-	 
+ 
 	 <h4 style="margin-top:40px" class="gray2"><strong><?php echo $multilingual_default_task_help_title; ?></strong></h4>
 	 <p class="gray2">
 	 <?php echo $multilingual_default_task_help_text; ?>
@@ -325,86 +301,69 @@ function submitform()
                   </select>
                 </div>
                 <span class="help-block"><?php echo $multilingual_taskadd_totip; ?></span> </div>
-				
+				<!--来自-->	
 				<div class="form-group  col-xs-6">
                 <label for="select2"><?php echo $multilingual_default_task_from; ?><span id="csa_from_user_msg"></span></label>
                 <div>
-                  <select id="select2" name="csa_from_user" onChange="option_gourl(this.value)" >
-				  <?php foreach($user_arr as $key => $val){  ?>
-					 <option value="<?php echo $val["uid"]?>" 
-		  <?php if (!(strcmp($val["uid"], "{$_SESSION['MM_uid']}")) && $copy==-1) {echo "selected=\"selected\"";} else if($copy==1){ if (!(strcmp($val["uid"], $task_arr['from'])) ) {echo "selected=\"selected\"";} } ?>
-		  ><?php 
-		   $py = substr( pinyin($val["name"]), 0, 1 );
-		  echo $py."-".$val["name"]?></option>
-					 <?php } ?>  
-
-                    <?php if ($_SESSION['MM_rank'] > "4") { ?>
-                    <option value="-2" class="gray" >+<?php echo $multilingual_user_new; ?></option>
-                    <?php } ?>
-                  </select>
-                  <input name="csa_create_user" type="text"  id="csa_create_user" value="<?php echo "{$_SESSION['MM_uid']}"; ?>"  style="display:none">
-                  <input name="csa_last_user" type="text"  id="csa_last_user" value="<?php echo "{$_SESSION['MM_uid']}"; ?>" style="display:none">
+                  <input name="csa_from_user" type="text"  id="csa_from_user" value="<?php echo "{$_SESSION['MM_uid']}"; ?>" >
                 </div>
-                <span class="help-block"><?php echo $multilingual_exam_tip; ?></span> </div>
-				
+                <span class="help-block"><?php echo $multilingual_exam_tip; ?></span> </div>			
+				<!--抄送-->	
 				<div class="form-group  col-xs-12">
                 <label for="user_cc"><?php echo $multilingual_default_task_cc; ?></label>
                 <div>
                   <select id="user_cc" name="user_cc[]" multiple="multiple">
 				  
 				  <?php foreach($user_arr as $key => $val){  ?>
-					 <option value='{"uid":"<?php echo $val["uid"]?>", "uname":<?php echo json_encode($val["name"])?> }' <?php if($copy==1){if (in_2array($val["uid"], $ccarr)==1 ) {echo "selected=\"selected\"";} } ?> ><?php 
+					 <option value='{"uid":"<?php echo $val["uid"]?>", "uname":<?php echo json_encode($val["name"])?> }' ><?php 
 		   $py = substr( pinyin($val["name"]), 0, 1 );
 		  echo $py."-".$val["name"]?></option>
 					 <?php } ?> 
-
                   </select>
-                  <input name="csa_create_user" type="text"  id="csa_create_user" value="<?php echo "{$_SESSION['MM_uid']}"; ?>"  style="display:none">
-                  <input name="csa_last_user" type="text"  id="csa_last_user" value="<?php echo "{$_SESSION['MM_uid']}"; ?>" style="display:none">
                 </div>
                 <span class="help-block"><?php echo $multilingual_default_task_cc_tips; ?></span> </div>
 			  
+			  <!--描述-->
               <div class="form-group col-xs-12">
                 <label for="csa_remark1"><?php echo $multilingual_default_task_description; ?><span  id="csa_text_msg"></span></label>
                 <div>
-                  <textarea id="csa_remark1" name="csa_remark1" ><?php if($copy==1){echo $task_arr['text'];}?></textarea>
+                  <textarea id="csa_remark1" name="csa_remark1" ></textarea>
                 </div>
               </div>
+			  <!--标签-->
               <div class="form-group  col-xs-12">
                 <label for="csa_tag"><?php echo $multilingual_default_tasktag; ?><span  id="csa_text_msg"></span></label>
                 <div>
-                  <input name="csa_tag" id="csa_tag" type="text" value="<?php if($copy==1){echo $task_arr['tag'];}?>" class="form-control" placeholder="<?php echo $multilingual_default_tasktag;?>">
+                  <input name="csa_tag" id="csa_tag" type="text" value="" class="form-control" placeholder="<?php echo $multilingual_default_tasktag;?>">
                 </div>
 				<span class="help-block"><?php echo $multilingual_default_task_tag_tips; ?></span>
-              </div>
-
-				
-				
+              </div>				
+				<!--计划开始时间-->
 				<div class="form-group col-xs-12">
                 <label for="datepicker2"><?php echo $multilingual_default_task_planstart; ?><span id="csa_plan_st_msg"></span></label>
                 <div>
-                  <input type="text" name="plan_start" id="datepicker2" value="<?php if($copy==-1){echo date('Y-m-d');} else if($copy==1){echo $task_arr['start'];} ?>" class="form-control"  />
+                  <input type="text" name="plan_start" id="datepicker2" value="<?php echo date('Y-m-d'); ?>" class="form-control"  />
                 </div>
 				<span class="help-block"><?php echo $multilingual_default_task_starttime_tips; ?></span>
               </div>
-			  
+			  <!--计划结束时间-->
               <div class="form-group col-xs-12">
                 <label for="datepicker3"><?php echo $multilingual_default_task_planend; ?><span id="csa_plan_et_msg"></span></label>
                 <div>
-                  <input type="text" name="plan_end" id="datepicker3" value="<?php if($copy==-1){echo date("Y-m-d",strtotime("+1 day"));} else if($copy==1){echo $task_arr['end'];} ?>" class="form-control" />
+                  <input type="text" name="plan_end" id="datepicker3" value="<?php echo date("Y-m-d",strtotime("+1 day")); ?>" class="form-control" />
                 </div>
 				<span class="help-block"><?php echo $multilingual_default_task_endtime_tips; ?></span>
               </div>
-			  
+			  <!--工作量-->
               <div class="form-group col-xs-12">
                 <label for="plan_hour"><?php echo $multilingual_default_task_planhour; ?><span id="plan_hour_msg"></span></label>
                 <div class="input-group">
-                  <input type="text" name="plan_hour" id="plan_hour"  value="<?php if($copy==1){echo $task_arr['hour'];}?>" size="20" class="form-control" />
+                  <input type="text" name="plan_hour" id="plan_hour"  value="" size="20" class="form-control" />
 				  <span class="input-group-addon"><?php echo $multilingual_global_hour; ?></span>
                 </div>
 				<span class="help-block"><?php echo $multilingual_default_task_pv_tips; ?></span>
               </div>
-			  
+			  <!--优先级-->
               <div class="form-group col-xs-12">
                 <label for="csa_priority"><?php echo $multilingual_default_task_priority; ?></label>
                 <div>
