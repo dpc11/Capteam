@@ -45,17 +45,13 @@ if(frm != null && subWeb != null)
 
         for(i=0;i<r.length;i++)
         {
-            d.add(r[i].id,r[i].pid,r[i].name,'<?php  echo $prjurl; ?>');
-            // document.write(r[i].id);
-            // document.write("  ");
-            // document.write(r[i].pid);
-            // document.write("  "+r[i].name+"  ");
-            // document.write("</br>");
-            // if(Number(R[i].id) >100000){//表示是阶段
-            //     d.add(Number(r[i].id),Number(r[i].pid),r[i].name,"stage_view.php?recordID="+(Number(R[i].id)-100000),r[i].title);
-            // }else{//表示是任务
-            //     d.add(Number(r[i].id),Number(r[i].pid),r[i].name,"default_task_edit.php?pagetab=alltask&editID="+r[i].id,r[i].title);
-            // }            
+            if(r[i].id>100000){//表示是阶段
+                var stage_id = r[i].id;
+                stage_id = stage_id - 100000;
+                d.add(r[i].id,r[i].pid,r[i].name,"stage_view.php?sid="+stage_id+"&pid="+<?php echo $project_id;?>,r[i].title);
+            }else{//表示是任务
+                d.add(r[i].id,r[i].pid,r[i].name,"default_task_edit.php?pagetab=alltask&editID="+r[i].id,r[i].title);
+            }                 
         }
         document.write(d);
 
