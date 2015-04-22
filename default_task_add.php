@@ -57,7 +57,7 @@ $csa_description = sprintf("%s", GetSQLValueString(str_replace("%","%%",$_POST['
 }
 
 if ( empty( $_POST['csa_tag'] ) ){
-$csa_tag = "''";
+$csa_tag = "";
 }else{
 $csa_tag = sprintf("%s", GetSQLValueString(str_replace("%","%%",$_POST['csa_tag']), "text"));
 }
@@ -91,7 +91,13 @@ $cc_post= $_POST['user_cc'];
 $cc_post= "[".implode(",",$_POST['user_cc'])."]";
 }
 
-$newID = add_task( $cc_post, $_POST['csa_from_user_name'],  $to_user,  $project_id, $stage_id, $_POST['csa_text'], $_POST['csa_priority'],  $_POST['plan_start'], $_POST['plan_end'], $_POST['plan_hour'],  $_SESSION['MM_uid'], $csa_tag, $csa_description );
+if(date($_POST['plan_start'])>date('Y-m-d')){
+	$status=1;
+}else{
+	$status=2;
+}
+
+$newID = add_task( $cc_post, $_POST['csa_from_user_name'],  $to_user,  $project_id, $stage_id, $_POST['csa_text'], $_POST['csa_priority'],  $_POST['plan_start'], $_POST['plan_end'], $_POST['plan_hour'], $status, $csa_tag, $csa_description );
 
 /*
 if ($project_url == 1){

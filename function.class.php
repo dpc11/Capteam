@@ -144,6 +144,7 @@ function pinyin($zh){
 }    
 
 //add lastuser
+/*
 function pushlastuse($uid, $name, $myid){  
 global $tankdb;
 global $database_tankdb;
@@ -174,31 +175,26 @@ $rs_update_lastuse = mysql_query($update_lastuse, $tankdb) or die(mysql_error())
 $_SESSION['MM_last'] = $last_use_arr;
 
 return $last_use_arr;
-}
+}*/
 
 //add task
-function add_task( $ccuser = 0, $fuser, $tuser, $projectid, $type, $text, $priority, $temp, $start, $end, $hour, $status, $cuser, $luser, $taskid, $wbs, $wbsid, $nowuser, $tag, $remark ) {
+function add_task( $ccuser, $fuser, $tuser, $projectid, $stage_id, $text, $priority, $start, $end, $hour, $status, $tag,$csa_description ) {
 global $tankdb;
 global $database_tankdb;
 global $multilingual_log_addtask;
-$insertSQL = sprintf("INSERT INTO tk_task (test01, test02, csa_remark1, csa_from_user, csa_to_user, csa_project, csa_type, csa_text, csa_priority, csa_temp, csa_plan_st, csa_plan_et, csa_plan_hour, csa_remark2, csa_create_user, csa_last_user, csa_remark4, csa_remark5, csa_remark6, csa_project_sub, csa_remark7, test03, test04) VALUES (%s, $tag $remark %s, %s, %s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, '0', '', '', '')",
+$insertSQL = sprintf("INSERT INTO tk_task (csa_testto, csa_from_user, csa_to_user, csa_project, csa_project_stage, csa_text, csa_priority, csa_plan_st, csa_plan_et, csa_plan_hour, csa_tag,csa_description,csa_status) VALUES (%s, %s, %s, %s, %s,%s, %s, %s, %s, %s, %s, $csa_description, %s)",
                        GetSQLValueString($ccuser, "text"),
-					   GetSQLValueString($fuser, "text"),
-                       GetSQLValueString($tuser, "text"),
-                       GetSQLValueString($projectid, "text"),
-                       GetSQLValueString($type, "text"),
+					   GetSQLValueString($fuser, "int"),
+                       GetSQLValueString($tuser, "int"),
+                       GetSQLValueString($projectid, "int"),
+                       GetSQLValueString($stage_id, "int"),
                        GetSQLValueString($text, "text"),
                        GetSQLValueString($priority, "text"),
-                       GetSQLValueString($temp, "text"),
 					   GetSQLValueString($start, "text"),
 					   GetSQLValueString($end, "text"),
 					   GetSQLValueString($hour, "text"),
-					   GetSQLValueString($status, "text"),
-					   GetSQLValueString($cuser, "text"),
-					   GetSQLValueString($luser, "text"),
-					   GetSQLValueString($taskid, "text"),
-					   GetSQLValueString($wbs, "text"),
-					   GetSQLValueString($wbsid, "text"));
+					   GetSQLValueString($tag, "text"),
+					   GetSQLValueString($status, "int"));
 
 
 
@@ -206,6 +202,7 @@ $insertSQL = sprintf("INSERT INTO tk_task (test01, test02, csa_remark1, csa_from
   $Result1 = mysql_query($insertSQL, $tankdb) or die(mysql_error());
   
   $newID = mysql_insert_id();
+  /*
     $newName = $nowuser;
 
 $insertSQL2 = sprintf("INSERT INTO tk_log (tk_log_user, tk_log_action, tk_log_type, tk_log_class, tk_log_description) VALUES (%s, %s, %s , 1, '' )",
@@ -213,7 +210,7 @@ $insertSQL2 = sprintf("INSERT INTO tk_log (tk_log_user, tk_log_action, tk_log_ty
                        GetSQLValueString($multilingual_log_addtask, "text"),
                        GetSQLValueString($newID, "text"));  
   $Result2 = mysql_query($insertSQL2, $tankdb) or die(mysql_error());
-
+*/
   return $newID;
 }
 
@@ -326,7 +323,7 @@ function get_user($userid, $channel ="default"){
 global $tankdb;
 global $database_tankdb;
 
-$query_touser =  sprintf("SELECT * FROM tk_user WHERE uid = %s",
+$query_touser =  sprintf("SELECT * FROM tk_user WHERE uid = %s AND tk_user_del_status=1",
                        GetSQLValueString($userid, "int"));  
 $touser = mysql_query($query_touser, $tankdb) or die(mysql_error());
 $row_touser = mysql_fetch_assoc($touser);

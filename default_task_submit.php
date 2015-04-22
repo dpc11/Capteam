@@ -2,11 +2,6 @@
 <?php require_once('session_unset.php'); ?>
 <?php require_once('session.php'); ?>
 <?php
-$restrictGoTo = "user_error3.php";
-if ($_SESSION['MM_rank'] < "2") {   
-  header("Location: ". $restrictGoTo); 
-  exit;
-}
 
 $project_id = "-1";
 if (isset($_GET['projectid'])) {
