@@ -4,7 +4,16 @@
 <?php
 $currentPage = $_SERVER["PHP_SELF"];
 
-$pagetabs = "allprj";
+$_SESSION['MM_pid'] = 24;
+//$_SESSION['MM_uid'] = 5;
+$_SESSION['MM_sid'] = 8;
+$now_pid = $_SESSION['MM_pid'];
+$now_uid = $_SESSION['MM_uid'];
+$now_sid = $_SESSION['MM_sid'];
+
+
+
+/*$pagetabs = "allprj";
 if (isset($_GET['pagetab'])) {
   $pagetabs = $_GET['pagetab'];
 }
@@ -16,7 +25,7 @@ $prjlisturl = "project.php?pagetab=mprj";
 $prjlisturl = "project.php?pagetab=jprj";
 }else if ($pagetabs=="allprj"){
 $prjlisturl = "project.php?pagetab=allprj";
-} 
+} */
 
 $maxRows_DetailRS1 = 25;
 $pageNum_DetailRS1 = 0;
@@ -30,11 +39,9 @@ if (isset($_GET['recordID'])) {
   $colname_DetailRS1 = $_GET['recordID'];
 }
 mysql_select_db($database_tankdb, $tankdb);
-$query_DetailRS1 = sprintf("SELECT * FROM tk_project 
-inner join tk_user on tk_project.project_to_user=tk_user.uid 
-WHERE tk_project.id = %s", GetSQLValueString($colname_DetailRS1, "int"));
-$query_limit_DetailRS1 = sprintf("%s LIMIT %d, %d", $query_DetailRS1, $startRow_DetailRS1, $maxRows_DetailRS1);
-$DetailRS1 = mysql_query($query_limit_DetailRS1, $tankdb) or die(mysql_error());
+$query_DetailRS1 = "SELECT * FROM tk_stage WHERE stageid = $now_sid";
+//$query_limit_DetailRS1 = sprintf("%s LIMIT %d, %d", $query_DetailRS1, $startRow_DetailRS1, $maxRows_DetailRS1);
+$DetailRS1 = mysql_query($query_DetailRS1, $tankdb) or die(mysql_error());
 $row_DetailRS1 = mysql_fetch_assoc($DetailRS1);
 
 if (isset($_GET['totalRows_DetailRS1'])) {
@@ -52,17 +59,19 @@ if (isset($_GET['pageNum_Recordset_task'])) {
 }
 $startRow_Recordset_task = $pageNum_Recordset_task * $maxRows_Recordset_task;
 
-$colname_Recordset_task = $row_DetailRS1['id'];
+$colname_Recordset_task = $row_DetailRS1['stageid'];
 
 mysql_select_db($database_tankdb, $tankdb);
-$query_Recordset_task = sprintf("SELECT *
+/*$query_Recordset_task = sprintf("SELECT *
               FROM tk_task                
                             
               inner join tk_user on tk_task.csa_to_user=tk_user.uid 
               inner join tk_status on tk_task.csa_status=tk_status.id 
-                WHERE csa_project = %s ORDER BY csa_last_update DESC", GetSQLValueString($colname_Recordset_task, "text"));
-$query_limit_Recordset_task = sprintf("%s LIMIT %d, %d", $query_Recordset_task, $startRow_Recordset_task, $maxRows_Recordset_task);
-$Recordset_task = mysql_query($query_limit_Recordset_task, $tankdb) or die(mysql_error());
+                WHERE csa_project = %s ORDER BY csa_last_update DESC", GetSQLValueString($colname_Recordset_task, "text"));*/
+$query_Recordset_task = "SELECT * FROM tk_task WHERE csa_project_stage = $now_sid
+AND csa_to_user = $now_uid";
+//$query_limit_Recordset_task = sprintf("%s LIMIT %d, %d", $query_Recordset_task, $startRow_Recordset_task, $maxRows_Recordset_task);
+$Recordset_task = mysql_query($query_Recordset_task, $tankdb) or die(mysql_error());
 $row_Recordset_task = mysql_fetch_assoc($Recordset_task);
 
 if (isset($_GET['totalRows_Recordset_task'])) {
@@ -272,7 +281,7 @@ if($row_Recordset_sumlog["sum_hour"] == null){
 <script type="text/javascript" src="srcipt/lhgdialog.js"></script>
 <script type="text/javascript" src="chart/js/swfobject.js"></script> 
 <script type="text/javascript"> 
-var flashvars = {"data-file":"chart_pie_project.php?recordID=<?php echo $row_DetailRS1['id']; ?>"};  
+var flashvars = {"data-file":"chart_pie_project.php?recordID=<?php echo $row_DetailRS1['stageid']; ?>"};  
 var params = {menu: "false",scale: "noScale",wmode:"opaque"};  
 swfobject.embedSWF("chart/open-flash-chart.swf", "chart", "600px", "230px", 
  "9.0.0","expressInstall.swf", flashvars,params);  
@@ -286,7 +295,7 @@ $(document.body).css({
     
 function addcomm()
 {
-    J.dialog.get({ id: "test1", title: '<?php echo $multilingual_default_addcom; ?>', width: 600, height: 500, page: "comment_add.php?taskid=<?php echo $row_DetailRS1['id']; ?>&projectid=1&type=2" });
+    J.dialog.get({ id: "test1", title: '<?php echo $multilingual_default_addcom; ?>', width: 600, height: 500, page: "comment_add.php?taskid=<?php echo $row_DetailRS1['stageid']; ?>&projectid=1&type=2" });
 }
 
 function   searchtask() 
@@ -316,7 +325,7 @@ function   exportexcel()
 <script type="text/javascript">
 function addfolder()
 {
-    J.dialog.get({ id: "test2", title: '<?php echo $multilingual_project_file_addfolder; ?>', width: 600, height: 500, page: "file_add_folder.php?projectid=<?php echo $row_DetailRS1['id']; ?>&pid=0&folder=1&pagetab=allfile" });
+    J.dialog.get({ id: "test2", title: '<?php echo $multilingual_project_file_addfolder; ?>', width: 600, height: 500, page: "file_add_folder.php?projectid=<?php echo $row_DetailRS1['stageid']; ?>&pid=0&folder=1&pagetab=allfile" });
 }
 </script>
 <?php 
@@ -358,17 +367,18 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
 
 
 
-<body <?php if($tab <> "-1"){ echo "onload='tabs1();'";}?>>
+<!--<body <?php if($tab <> "-1"){ echo "onload='tabs1();'";}?>>-->
+<body style = "">
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
       <td width="20%" class="input_task_right_bg" valign="top"><table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
         <tr>
           <td valign="top"><?php
-      $project_id = $row_DetailRS1['id'];
+      $project_id = $row_DetailRS1['stageid'];
       $project_name = $row_DetailRS1['project_name'];
       $node_id_task = -1;
- require_once('tree.php'); ?></td>
+      /*require_once('tree.php');*/ ?></td>
         </tr>
       
       </table></td>
@@ -377,7 +387,7 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
           <table width="98%" border="0" cellspacing="0" cellpadding="5" align="center">
           <tr>
             <td >
-              <div class="breakwords"><h2>[<?php echo $multilingual_head_stage; ?>]<?php echo $row_DetailRS1['project_name']; ?></h2></div> 
+              <div class="breakwords"><h2>[<?php echo $multilingual_head_stage; ?>]<?php echo $row_DetailRS1['tk_stage_title']; ?></h2></div> 
 
         </td>
           </tr>
@@ -387,20 +397,20 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
   <tr>
 
     <td width="12%" class="info_task_title">
-    <?php if ($row_DetailRS1['project_start'] <> "0000-00-00") {  ?>
+    <?php if ($row_DetailRS1['tk_stage_st'] <> "0000-00-00") {  ?>
   <?php echo $multilingual_project_start; ?>
   <?php } ?>  </td>
     <td>
-  <?php if ($row_DetailRS1['project_start'] <> "0000-00-00") {  ?>
-  <?php echo $row_DetailRS1['project_start']; ?>
+  <?php if ($row_DetailRS1['tk_stage_st'] <> "0000-00-00") {  ?>
+  <?php echo $row_DetailRS1['tk_stage_st']; ?>
   <?php } ?>    </td>
    
     <td class="info_task_title">
-  <?php if ($row_DetailRS1['project_end'] <> "0000-00-00") {  ?>
+  <?php if ($row_DetailRS1['tk_stage_et'] <> "0000-00-00") {  ?>
   <?php echo $multilingual_project_end; ?>
   <?php } ?>  </td>
-    <td><?php if ($row_DetailRS1['project_end'] <> "0000-00-00") {  ?>
-  <?php echo $row_DetailRS1['project_end']; ?>
+    <td><?php if ($row_DetailRS1['tk_stage_et'] <> "0000-00-00") {  ?>
+  <?php echo $row_DetailRS1['tk_stage_et']; ?>
   <?php } ?></td>
     </tr>
 </table>
@@ -413,16 +423,16 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
             
              <?php if($_SESSION['MM_rank'] > "2") { ?>
        <td width="12%">
-       <a href="default_task_add.php?projectID=<?php echo $row_DetailRS1['id']; ?>&formproject=1" >
+       <a href="default_task_add.php?projectID=<?php echo $row_DetailRS1['stageid']; ?>&formproject=1" >
        <span class="glyphicon glyphicon-random"></span> <?php echo $multilingual_project_newtask; ?></a></td>
        <?php }  ?>
        
        <?php if($_SESSION['MM_rank'] > "1") { ?>
        <td width="12%">
-       <a  target="_blank" href="file_add.php?projectid=<?php echo $row_DetailRS1['id']; ?>&pid=0&pagetab=allfile"><span class="glyphicon glyphicon-file"></span> <?php echo $multilingual_project_file_addfile; ?></a>      </td>
+       <a  target="_blank" href="file_add.php?projectid=<?php echo $row_DetailRS1['stageid']; ?>&pid=0&pagetab=allfile"><span class="glyphicon glyphicon-file"></span> <?php echo $multilingual_project_file_addfile; ?></a>      </td>
        <?php } ?>
        
-       <?php if($_SESSION['MM_rank'] > "3" || ($_SESSION['MM_uid'] == $row_DetailRS1['project_to_user'] && $_SESSION['MM_rank'] > "1")) { ?>
+       <?php if($_SESSION['MM_rank'] > "3" ) { ?>
        <td width="10%">
        <a href="stage_edit.php?editID=<?php echo $row_DetailRS1['id']; ?>">
        <span class="glyphicon glyphicon-pencil"></span> <?php echo $multilingual_global_action_edit; ?>      </a>      </td>
@@ -444,7 +454,10 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
        </tr>
       </table>    </td>
           </tr>
-<?php if ($row_DetailRS1['project_text'] <> "&nbsp;" && $row_DetailRS1['project_text'] <> "") {  ?>
+
+          <!--任务概述-->
+
+<?php if ($row_DetailRS1['tk_stage_desc'] <> "&nbsp;" && $row_DetailRS1['tk_stage_desc'] <> "") {  ?>
           <tr>
             <td>&nbsp;</td>
           </tr>
@@ -452,7 +465,7 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
             <td><span class="font_big18 fontbold"><?php echo $multilingual_stage_description; ?></span></td>
           </tr>
           <tr>
-            <td><?php echo $row_DetailRS1['project_text']; ?></td>
+            <td><?php echo $row_DetailRS1['tk_stage_desc']; ?></td>
           </tr>
           <tr>
               <td>&nbsp;</td>
@@ -475,7 +488,7 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
             <td>&nbsp;</td>
           </tr>
       
-<!--
+<!-- 评论部分删除
     <?php if($totalRows_Recordset_comment > 0){ ?>
   <tr >
       <td><span class="font_big18 fontbold"><?php echo $multilingual_default_comment; ?></span><a name="comment"></a></td>
@@ -578,11 +591,11 @@ echo $editcomment_row;
 <a href="javascript:void(0)" onClick="tabs('2');" >
 <?php echo $multilingual_project_file; ?></a></li>
 
-<li id="tab_3" 
+<!--<li id="tab_3" 
 <?php if ($totalRows_Recordset_task == 0 && $totalRows_Recordset_file == 0) { echo "class='onhover'"; }?> 
 <?php if ($totalRows_Recordset_task == 0) { echo "style='display:none'"; }?>>
 <a href="javascript:void(0)" onClick="tabs('3');" >
-<?php echo $multilingual_project_view_log; ?></a></li>
+<?php echo $multilingual_project_view_log; ?></a></li>-->
 
 <?php if ($totalRows_Recordset_file <> 0 ||  $totalRows_Recordset_task <> 0) { ?>
 <li >&nbsp;</li><li >&nbsp;</li>
@@ -623,10 +636,19 @@ echo "style='display:none'";
 <!--            <td><?php echo $row_Recordset_task['TID']; ?></td>-->
             <td class="task_title">
       <div  class="text_overflow_150 task_title"  title="<?php echo $row_Recordset_task['csa_text']; ?>">
-      <a href="default_task_edit.php?editID=<?php echo $row_Recordset_task['TID']; ?>&pagetab=alltask" >
-      <b>[<?php echo $row_Recordset_task['task_tpye']; ?>]</b> <?php echo $row_Recordset_task['csa_text']; ?>     </a>      </div></td>
-            <td ><a href="user_view.php?recordID=<?php echo $row_Recordset_task['csa_to_user']; ?>"><?php echo $row_Recordset_task['tk_display_name']; ?></a></td>
-            <td><?php echo $row_Recordset_task['task_status_display']; ?></td>
+      <a href="default_task_edit.php?editID=<?php echo $row_Recordset_task['tid']; ?>&pagetab=alltask" >
+       <?php echo $row_Recordset_task['csa_text']; ?>     </a>      </div></td>
+            <td ><a href="user_view.php?recordID=<?php echo $row_Recordset_task['csa_to_user']; ?>"><?php  
+            $SelDisName ="SELECT tk_display_name FROM tk_user WHERE uid=$now_uid";
+            $Name= mysql_query($SelDisName, $tankdb) or die(mysql_error());
+            $row = mysql_fetch_assoc($Name);
+            echo$row['tk_display_name']; ?></a></td>
+            <td><?php 
+            $sta = $row_Recordset_task['csa_status'];
+            $SelStatusName = "SELECT task_status FROM tk_status WHERE id = $sta";
+            $Status = mysql_query($SelStatusName, $tankdb) or die(mysql_error());
+            $row = mysql_fetch_assoc($Status);
+            echo $row['task_status']; ?></td>
             <td>
       <?php
 switch ($row_Recordset_task['csa_priority'])
@@ -650,6 +672,8 @@ case 1:
 ?>      </td>
             <td><?php echo $row_Recordset_task['csa_plan_st']; ?></td>
             <td><?php echo $row_Recordset_task['csa_plan_et']; ?></td>
+
+
 <!--
             <td class="hide">
       <?php
@@ -707,8 +731,9 @@ case 1:
 <?php } // Show if recordset not empty ?>
 </div>
 <!-- task end -->
+<!--到这里阶段下的子任务模块结束-->
 
-<!--file start -->
+<!--file start 文件 暂时阶段性的文件还未讨论出来 -->
 <div class="tab_b" id="tab_a2" 
 <?php if ($totalRows_Recordset_task > 0) { 
 echo "style='display:none'";
@@ -834,8 +859,8 @@ function editfolder<?php echo $row_Recordset_file['docid']; ?>()
 <!--file end -->
 
 
-<!--log start-->
-<div class="tab_b" id="tab_a3" 
+<!--log start 没有日志了-->
+<!--<div class="tab_b" id="tab_a3" 
 <?php if ($totalRows_Recordset_task == 0 && $totalRows_Recordset_file == 0) { 
 echo "style='display:block'";
 } else {
@@ -1012,7 +1037,7 @@ function addcomment<?php echo $row_Recordset_log['tbid']; ?>()
 </tr>
 </table>  
 <?php }  ?>
-</div>
+</div>-->
 <!-- log end-->
       <!-- tab end -->      
                 </td>

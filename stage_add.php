@@ -149,10 +149,10 @@ send_message( $v['uid'], $msg_from, $msg_type, $msg_id, $msg_title, 1 );
 $user_arr = get_user_select();
 
 mysql_select_db($database_tankdb, $tankdb);
-$query_Recordset_type = "SELECT * FROM tk_task_tpye ORDER BY task_tpye_backup1 ASC";
-$Recordset_type = mysql_query($query_Recordset_type, $tankdb) or die(mysql_error());
-$row_Recordset_type = mysql_fetch_assoc($Recordset_type);
-$totalRows_Recordset_type = mysql_num_rows($Recordset_type);
+//$query_Recordset_type = "SELECT * FROM tk_task_tpye ORDER BY task_tpye_backup1 ASC";
+//$Recordset_type = mysql_query($query_Recordset_type, $tankdb) or die(mysql_error());
+//$row_Recordset_type = mysql_fetch_assoc($Recordset_type);
+//$totalRows_Recordset_type = mysql_num_rows($Recordset_type);
 
 mysql_select_db($database_tankdb, $tankdb);
 $query_Recordset_project = sprintf("SELECT * FROM tk_project WHERE id = %s",
