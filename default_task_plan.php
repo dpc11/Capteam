@@ -55,7 +55,6 @@ $cc_post= "[".implode(",",$_POST['user_cc'])."]";
 					   GetSQLValueString($cc_post, "text"),
                        GetSQLValueString($_POST['TID'], "int"));
 
-					   echo $updateSQL;
   mysql_select_db($database_tankdb, $tankdb);
   $Result1 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
   

@@ -34,11 +34,10 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
   //把当前时间作为最后一次修改时间
   $update_project_lastupdate = date("Y-m-d H:i:s",time());
   //更新数据库
-  $Result1 = mysql_query($updateProject, $tankdb) or die(mysql_error());
   $updateSQL = sprintf("UPDATE tk_project SET project_name=%s, $project_text $project_start $project_end  project_lastupdate = '$update_project_lastupdate' WHERE id=%s",
                        GetSQLValueString($_POST['project_name'], "text"),
                        GetSQLValueString($_POST['id'], "int"));
-
+echo $updateSQL;
   mysql_select_db($database_tankdb, $tankdb);
   $Result1 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
 
