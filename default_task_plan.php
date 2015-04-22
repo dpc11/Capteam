@@ -222,18 +222,20 @@ window.onload = function()
 <form action="<?php echo $editFormAction; ?>" method="post" name="myform" id="myform">
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
-      <td width="25%" class="input_task_right_bg" valign="top">
+    
+        <!-- 左边20%的宽度的树或者说明  -->
+      <td width="20%" class="input_task_right_bg" valign="top">
 		  <table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
 			  <tr>
 				<td valign="top" >
 					<dl style="margin-top:20px;">
-						<dt><h4 class="gray2"><?php echo $multilingual_default_taskproject; ?></h4></dt>
+						<dt><h4 class="gray2"><strong><?php echo $multilingual_default_taskproject; ?></strong></h4></dt>
 						<dd><a href="project_view.php?recordID=<?php echo $row_Recordset_task['csa_project']; ?>" ><?php echo $row_Recordset_task['proname']; ?></a></dd>
 					</dl>
 
-					<!--改成阶段-->
+					<!-- 改成阶段 -->
 					<dl>
-						<dt><h4 class="gray2"><?php echo $multilingual_default_task_parent; ?></h4></dt>
+						<dt><h4 class="gray2"><strong><?php echo $multilingual_default_task_parent; ?></strong></h4></dt>
 						<dd><a href="default_task_edit.php?editID=<?php echo $row_Recordset_task['csa_project_stage']; ?>" ><?php echo $row_Recordset_task['staname']; ?></a></dd>
 					</dl>
 					<dl class="hide">
@@ -244,20 +246,24 @@ window.onload = function()
 			 </tr>
 		   </table>
 		</td>
-		<td width="75%" valign="top"><table width="98%" border="0" cellspacing="0" cellpadding="5" align="center">
+        
+        <!-- 右边80%宽度的主体内容 -->
+		<td width="80%" valign="top"><table width="98%" border="0" cellspacing="0" cellpadding="5" align="center">
           <tr>
-			<!--编辑任务-->
+			<!-- 编辑任务 -->
             <td><div class="col-xs-12">
 					<h3><?php echo $multilingual_taskedit_title; ?></h3>
 				</div>
-				<!--标题-->
+                
+				<!-- 标题 -->
 				<div class="form-group col-xs-12">
 					<label for="csa_text"><?php echo $multilingual_default_task_title; ?><span  id="csa_text_msg"></span></label>
 					<div>
 						<input name="csa_text" id="csa_text" type="text" value="<?php echo htmlentities($row_Recordset_task['csa_text'], ENT_COMPAT, 'utf-8'); ?>" class="form-control" placeholder="<?php echo $multilingual_taskadd_title_plh;?>">
 					</div>
 				</div>
-				<!--指派给 class="hide"-->
+                
+				<!-- 指派给谁 -->
 				<div class="form-group  col-xs-6">
 					<label for="select4" ><?php echo $multilingual_default_task_to; ?><span id="csa_to_user_msg"></span></label>
 					<div >        
@@ -269,6 +275,7 @@ window.onload = function()
 					</div> 
 				</div>
 				
+<!-- 指派人／审核人 -->
 				<div class="form-group  col-xs-6">
 					<label for="select2"><?php echo $multilingual_default_task_from; ?><span id="csa_from_user_msg"></span></label>
 					<div>
@@ -278,10 +285,11 @@ window.onload = function()
 					<span class="help-block"><?php echo $multilingual_exam_tip; ?></span> 
 				</div>
 				
+<!-- 抄送人 -->
 				<div class="form-group  col-xs-12">
 					<label for="user_cc"><?php echo $multilingual_default_task_cc; ?></label>
 					<div>
-						<select id="user_cc" name="user_cc[]" multiple="multiple">
+						<select id="user_cc" name="user_cc[]" multiple>
 							<?php foreach($user_arr as $key => $val){  ?>
 								<option value='{"uid":"<?php echo $val["uid"]?>", "uname":<?php echo json_encode($val["name"])?> }' 
 								<?php if (in_2array($val["uid"], $ccarr)==1) {echo "selected=\"selected\"";}  ?>>
@@ -293,6 +301,7 @@ window.onload = function()
 					<span class="help-block"><?php echo $multilingual_default_task_cc_tips; ?></span> 
 				</div>	
 				
+<!-- 任务描述 -->
 				<div class="form-group col-xs-12">
 					<label for="csa_remark1"><?php echo $multilingual_default_task_description; ?><span  id="csa_text_msg"></span></label>
 					<div>		  
@@ -300,6 +309,7 @@ window.onload = function()
 					</div>
 				</div>
 			  
+<!-- 任务标签 -->
 				<div class="form-group  col-xs-12">
 					<label for="csa_tag"><?php echo $multilingual_default_tasktag; ?><span  id="csa_text_msg"></span></label>
 					<div>
@@ -347,12 +357,15 @@ window.onload = function()
 					<span class="help-block"><?php echo $multilingual_default_task_priority_tips; ?></span>
 				</div>
 			</td>
-         </tr>
-        </td>
+          </tr>
+        </table>
+      </td>
     </tr>
     <tr class="input_task_bottom_bg">
-		<td></td>
+        <td></td>
 		<td height="50px">
+            
+<!-- 提交按钮 -->
 			<button type="submit" class="btn btn-primary btn-sm submitbutton" name="cont" data-loading-text="<?php echo $multilingual_global_wait; ?>"><?php echo $multilingual_global_action_save; ?></button>
 			<button type="button" class="btn btn-default btn-sm" onClick="javascript:history.go(-1);"><?php echo $multilingual_global_action_cancel; ?></button>
           
