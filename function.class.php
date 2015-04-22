@@ -221,7 +221,7 @@ $insertSQL2 = sprintf("INSERT INTO tk_log (tk_log_user, tk_log_action, tk_log_ty
 function get_tree( $projectid ) {
 global $tankdb;
 global $database_tankdb;
-
+$str = "0"；
 /*开始操作数据库了，select语句*/
 $viewstageSQL1="SELECT * from tk_stage WHERE tk_stage_delestatus=1 AND tk_stage_pid=$projectid";
 //对数据库进行查询
