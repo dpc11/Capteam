@@ -230,54 +230,34 @@ $Result_stage = mysql_query($viewstageSQL1, $tankdb) or die(mysql_error());
 //对查到的数据进行遍历
 while($row_stage = mysql_fetch_array($Result_stage))
   {
-  // echo $row['stageid'] ;
-  // echo "<br />";
-  // echo $row['tk_stage_title'] ;
-  // echo "<br />";
+    $pid = 0;//因为是阶段，所以父节点是0节点
+    $today_date = date('Y-m-d');//今天的日期，用于计算项目状态
+    //计算项目的状态
+      if($today_date < $row_stage['tk_stage_st']){
+        //表示项目还没有开始
+        $str = "<div style='background-color: #FF6666; width:100%; text-align:center;'>阶段未开始</div>";
+        $stage_statues = "阶段未开始";
+      }elseif ($today_date > $row_stage['tk_stage_et']) {
+        //表示项目已结结束
+        $str = "<div style='background-color: #B3B3B3; width:100%; text-align:center;'>阶段已结束</div>";
+        $stage_statues = "阶段已结束";
+      }else{
+        //表示项目正在进行中
+        $str = "<div style='background-color: #6ABD78; width:100%; text-align:center;'>阶段进行中</div>";
+        $stage_statues = "阶段进行中";
+      }
+  $str =  explode('background-color:', $str);
+  $str =  explode('width:', $str[1]);
+  $nodename = "<span style ='color:".$str[0]."'>■</span>"." [阶段]".$row_stage['tk_stage_title'];
+  $nodetitle = $stage_statues;
+  //插入
+  $result[] = array('id'=>(100000+$row_stage['stageid']),'pid'=>$pid,'name'=>$nodename,'title'=>$nodetitle,);
+
+  //这里应该加上项目的操作
  
   }
-
-
-mysql_select_db($database_tankdb, $tankdb);
-$query_Recordset1 = "SELECT * FROM tk_task 
-inner join tk_user on tk_task.csa_to_user=tk_user.uid 
-inner join tk_status on tk_task.csa_status=tk_status.id 
-WHERE csa_project = '$projectid' ORDER BY TID";
-$Recordset1 = mysql_query($query_Recordset1, $tankdb) or die(mysql_error());
-$row_Recordset1 = mysql_fetch_assoc($Recordset1);
-
-$FoundTask = mysql_num_rows($Recordset1);
-    
-if (!$FoundTask) {
- return 0;   
- 
-}
-
-$i=0;
-do{
-  if($row_Recordset1['csa_remark4']=="-1"){
-$pid= 0;
-  } else {
-$pid= $row_Recordset1['csa_remark4'];
-  }
-  
-
-$str = $row_Recordset1['task_status_display'];
-$str =  explode('background-color:', $str);
-$str =  explode('width:', $str[1]);
-
-
-
-$nodename = "<span style ='color:".$str[0]."'>■</span>"." [".$row_Recordset1['task_tpye']."]".$row_Recordset1['csa_text'];
-$nodetitle = $row_Recordset1['task_status']." - ".$row_Recordset1['tk_display_name']." - ".$row_Recordset1['csa_text'];
-
-
-$result[] = array('id'=>$row_Recordset1['TID'],'pid'=>$pid,'name'=>$nodename,'title'=>$nodetitle,);
-$i++;
-} while ($row_Recordset1 = mysql_fetch_assoc($Recordset1)); 
 
 $str=json_encode($result);
-
 return $str;
 // mysql_select_db($database_tankdb, $tankdb);
 // $query_Recordset1 = "SELECT * FROM tk_task 
