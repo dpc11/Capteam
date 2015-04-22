@@ -6,7 +6,7 @@ $currentPage = $_SERVER["PHP_SELF"];
 
 $_SESSION['MM_pid'] = 24;
 //$_SESSION['MM_uid'] = 5;
-$_SESSION['MM_sid'] = 8;
+$_SESSION['MM_sid'] = 12;
 $now_pid = $_SESSION['MM_pid'];
 $now_uid = $_SESSION['MM_uid'];
 $now_sid = $_SESSION['MM_sid'];

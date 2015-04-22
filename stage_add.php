@@ -31,6 +31,21 @@ if (isset($_POST['tk_stage_title'])) {
   $title= $_POST['tk_stage_title'];
 }
 
+$description = "-1";
+if (isset($_POST['tk_stage_desc'])) {
+  $description = $_POST['tk_stage_desc'];
+}
+
+$st_time = "-1";
+if (isset($_POST['stage_start'])) {
+  $st_time= $_POST['stage_start'];
+}
+
+$en_time = "-1";
+if (isset($_POST['stage_end'])) {
+  $en_time= $_POST['stage_end'];
+}
+
 /*$project_id = "-1";
 if (isset($_GET['projectID'])) {
   $project_id = $_GET['projectID'];
@@ -109,58 +124,64 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
       $today_date = date('Y-m-d');
       $now_time = date('Y-m-d H:i:s',time());
 
-      $insertSQL = sprintf("INSERT INTO tk_stage(tk_stage_title,tk_stage_desc,tk_stage_pid,
-        tk_stage_createtime,tk_stage_st,tk_stage_et,tk_stage_lastupdate) 
-        VALUES (%s,%s,$thisProj,'$today_date',%s,%s,'$now_time')",
-          GetSQLValueString($_POST['tk_stage_title'],"text"),
-          GetSQLValueString($_POST['tk_stage_desc'],"text"),
-           GetSQLValueString($_POST['stage_start'],"text"), 
-          GetSQLValueString($_POST['stage_end'],"text"));
-      mysql_select_db($database_tankdb,$tankdb);
-      $Result1 = mysql_query($insertSQL,$tankdb) or die(mysql_error());
+      if('$tk_stage_et'<'$today_date')
+      {
+          echo("illegal");
+      }else if('$tk_stage_et'<'$tk_stage_st')
+      {
+          echo("can't");
+      }else
+      {
+          $insertSQL = sprintf("INSERT INTO tk_stage(tk_stage_title,tk_stage_desc,tk_stage_pid,
+                tk_stage_createtime,tk_stage_st,tk_stage_et,tk_stage_lastupdate) 
+                   VALUES (%s,%s,$thisProj,'$today_date',%s,%s,'$now_time')",
+                        GetSQLValueString($_POST['tk_stage_title'],"text"),
+                        GetSQLValueString($_POST['tk_stage_desc'],"text"),
+                         GetSQLValueString($_POST['stage_start'],"text"), 
+                        GetSQLValueString($_POST['stage_end'],"text"));
+          mysql_select_db($database_tankdb,$tankdb);
+          $Result1 = mysql_query($insertSQL,$tankdb) or die(mysql_error());
       
+          //$newID = add_task( $cc_post, $_POST['csa_from_user'],  $to_user_arr['0'],  $project_id, $_POST['csa_type'], $_POST['tk_stage_title'], $_POST['csa_priority'], $_POST['csa_temp'], $_POST['stage_start'], $_POST['stage_end'], $_POST['plan_hour'], $_POST['csa_remark2'], $_POST['csa_create_user'], $_POST['csa_last_user'], $task_id, $wbs, $wbs_id, $_SESSION['MM_uid'], $csa_tag, $tk_stage_desc );
 
 
+          //$last_use_arr = pushlastuse($to_user_arr["0"], $to_user_arr["1"], $myid);
 
-      //$newID = add_task( $cc_post, $_POST['csa_from_user'],  $to_user_arr['0'],  $project_id, $_POST['csa_type'], $_POST['tk_stage_title'], $_POST['csa_priority'], $_POST['csa_temp'], $_POST['stage_start'], $_POST['stage_end'], $_POST['plan_hour'], $_POST['csa_remark2'], $_POST['csa_create_user'], $_POST['csa_last_user'], $task_id, $wbs, $wbs_id, $_SESSION['MM_uid'], $csa_tag, $tk_stage_desc );
-
-
-      //$last_use_arr = pushlastuse($to_user_arr["0"], $to_user_arr["1"], $myid);
-
-      /*if ($project_url == 1){
-        $insertGoTo = "project_view.php?recordID=$project_id";
-      } else if ($user_url == 1){
-      $insertGoTo = "user_view.php?recordID=$user_id";
-      }
-
-      else {
-        $insertGoTo = "default_task_edit.php?editID=$newID";
-      }*/
-        $insertGoTo = "stage_view.php";
-
-        if (isset($_SERVER['QUERY_STRING'])) {
-          $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-          $insertGoTo .= $_SERVER['QUERY_STRING'];
-        }
-
-      /*$msg_to = $to_user_arr['0'];
-      $msg_from = $_POST['csa_create_user'];
-      $msg_type = "newtask";
-      $msg_id = $newID;
-      $msg_title = $title;
-      $mail = send_message( $msg_to, $msg_from, $msg_type, $msg_id, $msg_title );
-
-      if($_POST['user_cc'] <> null){
-
-          $cc_arr = json_decode($cc_post, true);
-
-          foreach($cc_arr as $k=>$v){
-          send_message( $v['uid'], $msg_from, $msg_type, $msg_id, $msg_title, 1 );
+          /*if ($project_url == 1){
+            $insertGoTo = "project_view.php?recordID=$project_id";
+          } else if ($user_url == 1){
+          $insertGoTo = "user_view.php?recordID=$user_id";
           }
 
-      }*/
+          else {
+            $insertGoTo = "default_task_edit.php?editID=$newID";
+          }*/
+          $insertGoTo = "stage_view.php";
 
-    header(sprintf("Location: %s", $insertGoTo));
+          if (isset($_SERVER['QUERY_STRING'])) {
+            $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
+            $insertGoTo .= $_SERVER['QUERY_STRING'];
+           }
+
+            /*$msg_to = $to_user_arr['0'];
+            $msg_from = $_POST['csa_create_user'];
+            $msg_type = "newtask";
+            $msg_id = $newID;
+            $msg_title = $title;
+            $mail = send_message( $msg_to, $msg_from, $msg_type, $msg_id, $msg_title );
+
+            if($_POST['user_cc'] <> null){
+
+                $cc_arr = json_decode($cc_post, true);
+
+                foreach($cc_arr as $k=>$v){
+                send_message( $v['uid'], $msg_from, $msg_type, $msg_id, $msg_title, 1 );
+                }
+
+            }*/
+
+          header(sprintf("Location: %s", $insertGoTo));
+      }     
 }
 
 //$user_arr = get_user_select();
@@ -353,7 +374,7 @@ function submitform()
               <div class="form-group col-xs-12">
                 <label for="tk_stage_title"><?php echo $multilingual_default_task_title; ?><span  id="tk_stage_title_msg"></span></label>
                 <div>
-                  <input name="tk_stage_title" id="tk_stage_title" type="text" value="<?php if($copy==1){echo $task_arr['name'];}?>" class="form-control" placeholder="<?php echo $multilingual_stageadd_title_plh;?>">
+                  <input name="tk_stage_title" id="tk_stage_title" type="text" value="<?php if($title!=-1){echo $title;}?>" class="form-control" placeholder="<?php echo $multilingual_stageadd_title_plh;?>">
                   <span class="help-block"><?php echo $multilingual_default_stage_title_tips; ?></span>
                 </div>
               </div>
@@ -463,7 +484,7 @@ do {
               <div class="form-group col-xs-12">
                 <label for="tk_stage_desc"><?php echo $multilingual_default_task_description; ?><span  id="tk_stage_title_msg"></span></label>
                 <div>
-                  <textarea id="tk_stage_desc" name="tk_stage_desc" ><?php if($copy==1){echo $task_arr['text'];}?></textarea>
+                  <textarea id="tk_stage_desc" name="tk_stage_desc" ><?php if($description!=-1){echo $description;}?></textarea>
                 </div>
               </div>
               
@@ -481,7 +502,7 @@ do {
 				<div class="form-group col-xs-12">
                 <label for="datepicker2"><?php echo $multilingual_default_task_planstart; ?><span id="csa_plan_st_msg"></span></label>
                 <div>
-                  <input type="text" name="stage_start" id="datepicker2" value="<?php if($copy==-1){echo date('Y-m-d');} else if($copy==1){echo $task_arr['start'];} ?>" class="form-control"  />
+                  <input type="text" name="stage_start" id="datepicker2" value="<?php if($st_time==-1){echo date("Y-m-d");} else {echo $st_time;} ?>" class="form-control"  />
                 </div>
 <!--				<span class="help-block"><?php echo $multilingual_default_task_starttime_tips; ?></span>-->
               </div>
@@ -490,7 +511,7 @@ do {
               <div class="form-group col-xs-12">
                 <label for="datepicker3"><?php echo $multilingual_default_task_planend; ?><span id="csa_plan_et_msg"></span></label>
                 <div>
-                  <input type="text" name="stage_end" id="datepicker3" value="<?php if($copy==-1){echo date("Y-m-d",strtotime("+1 day"));} else if($copy==1){echo $task_arr['end'];} ?>" class="form-control" />
+                  <input type="text" name="stage_end" id="datepicker3" value="<?php if($en_time==-1){echo date("Y-m-d",strtotime("+1 day"));} else {echo $en_time;} ?>" class="form-control" />
                 </div>
 <!--				<span class="help-block"><?php echo $multilingual_default_task_endtime_tips; ?></span>-->
               </div>
