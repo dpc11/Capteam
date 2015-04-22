@@ -267,7 +267,16 @@ window.onload = function()
 				<div class="form-group  col-xs-6">
 					<label for="select4" ><?php echo $multilingual_default_task_to; ?><span id="csa_to_user_msg"></span></label>
 					<div >        
-						<div >
+						<div ><!--选择其他人
+							<select id="select4" name="csa_to_user" onChange="option_gourl(this.value)"  class="form-control">
+					 <?php foreach($user_arr as $key => $val){  ?>
+					 <option value='<?php echo $val["uid"]?>, ,<?php echo $val["name"]?>' 
+		  <?php if (!(strcmp($val["uid"], $user_id))) {echo "selected=\"selected\"";} else if ($copy==1){ if(!(strcmp($val["uid"], $task_arr['to']))) {echo "selected=\"selected\"";} }?>
+		  ><?php 
+		   $py = substr( pinyin($val["name"]), 0, 1 );
+		  echo $py."-".$val["name"]?></option>
+					 <?php } ?> 
+					 </select>-->
 							<select id="select4" name="csa_to_user" >
 								<option value="<?php echo $row_Recordset_task['csa_to_user'] ?>"><?php echo $row_Recordset_task['tk_display_name1'] ?></option>
 							</select>

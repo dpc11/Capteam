@@ -383,7 +383,7 @@ document.getElementById('tab_' + i).className = (i == ".$tabid.") ? 'onhover' : 
                 <table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
                     <tr>
                         <td valign="top">
-                            <?php $project_id=$row_DetailRS1['stageid']; $project_name=$row_DetailRS1['project_name']; $node_id_task=-1; /*require_once( 'tree.php');*/ ?>
+                            <?php $project_id=$row_DetailRS1[ 'stageid']; $project_name=$row_DetailRS1[ 'project_name']; $node_id_task=- 1; /*require_once( 'tree.php');*/ ?>
                         </td>
                     </tr>
 
@@ -442,7 +442,7 @@ document.getElementById('tab_' + i).className = (i == ".$tabid.") ? 'onhover' : 
                                         <!-- 下发任务 -->
                                         <?php if($_SESSION['MM_rank']> "2") { ?>
                                         <td width="12%">
-                                            <a href="default_task_add.php?projectID=<?php echo $row_DetailRS1['stageid']; ?>&formproject=1">
+                                            <a href="default_task_add.php?projectID=$now_pid&stageID=<?php echo $row_DetailRS1['stageid']; ?>">
                                                 <span class="glyphicon glyphicon-random"></span>
                                                 <?php echo $multilingual_project_newtask; ?>
                                             </a>
@@ -693,11 +693,12 @@ echo $editcomment_row;
                                                                     </td>
                                                                     <td>
                                                                         <a href="user_view.php?recordID=<?php echo $row_Recordset_task['csa_to_user']; ?>">
-                                                                            <?php $SelDisName="SELECT tk_display_name FROM tk_user WHERE uid=$now_uid" ; $Name=mysql_query($SelDisName, $tankdb) or die(mysql_error()); $row=mysql_fetch_assoc($Name); echo$row['tk_display_name']; ?>
+                                                                            <?php $SelDisName="SELECT tk_display_name FROM tk_user WHERE uid=$now_uid" ; $Name=mysql_query($SelDisName, $tankdb) or die(mysql_error()); $row=mysql_fetch_assoc($Name); echo$row[ 'tk_display_name']; ?>
+                                                                            <?php $SelDisName="SELECT tk_display_name FROM tk_user WHERE uid=$now_uid" ; $Name=mysql_query($SelDisName, $tankdb) or die(mysql_error()); $row=mysql_fetch_assoc($Name); echo$row[ 'tk_display_name']; ?>
                                                                         </a>
                                                                     </td>
                                                                     <td>
-                                                                        <?php $sta=$row_Recordset_task['csa_status']; $SelStatusName="SELECT task_status FROM tk_status WHERE id = $sta" ; $Status=mysql_query($SelStatusName, $tankdb) or die(mysql_error()); $row=mysql_fetch_assoc($Status); echo $row['task_status']; ?>
+                                                                        <?php $sta=$row_Recordset_task[ 'csa_status']; $SelStatusName="SELECT task_status FROM tk_status WHERE id = $sta" ; $Status=mysql_query($SelStatusName, $tankdb) or die(mysql_error()); $row=mysql_fetch_assoc($Status); echo $row[ 'task_status']; ?>
                                                                     </td>
                                                                     <td>
                                                                         <?php switch ($row_Recordset_task['csa_priority']) { case 5: echo $multilingual_dd_priority_p5; break; case 4: echo $multilingual_dd_priority_p4; break; case 3: echo $multilingual_dd_priority_p3; break; case 2: echo $multilingual_dd_priority_p2; break; case 1: echo $multilingual_dd_priority_p1; break; } ?> </td>
