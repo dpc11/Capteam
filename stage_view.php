@@ -389,7 +389,12 @@ document.getElementById('tab_' + i).className = (i == ".$tabid.") ? 'onhover' : 
                 <table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
                     <tr>
                         <td valign="top">
-                            <?php $project_id=$row_DetailRS1[ 'stageid']; $project_name=$row_DetailRS1[ 'project_name']; $node_id_task=- 1; /*require_once( 'tree.php');*/ ?>
+                            <?php 
+							$project_id=$row_DetailRS1['stageid']; 
+							$project_name=$row_DetailRS1['project_name']; 
+							$node_id_task=-1; 
+							//require_once( 'tree.php'); 
+							?>
                         </td>
                     </tr>
 
