@@ -222,8 +222,8 @@ function get_tree( $projectid ) {
 global $tankdb;
 global $database_tankdb;
 
-/*开始操作数据库了，select语句,这是第一个查询，返回该项目中所有阶段的id号和题目*/
-$viewstageSQL1="SELECT stageid, tk_stage_title from tk_stage WHERE tk_stage_delestatus=1 AND tk_stage_pid=$projectid";
+/*开始操作数据库了，select语句*/
+$viewstageSQL1="SELECT * from tk_stage WHERE tk_stage_delestatus=1 AND tk_stage_pid=$projectid";
 //对数据库进行查询
 mysql_select_db($database_tankdb, $tankdb);
 $Result_stage = mysql_query($viewstageSQL1, $tankdb) or die(mysql_error());
@@ -249,13 +249,28 @@ while($row_stage = mysql_fetch_array($Result_stage))
   $str =  explode('background-color:', $str);
   $str =  explode('width:', $str[1]);
   $nodename = "<span style ='color:".$str[0]."'>■</span>"." [阶段]".$row_stage['tk_stage_title'];
-  $nodetitle = $stage_statues;
+  $nodetitle = $stage_statues;  
+  $stage_id = $row_stage['stageid'];
   //插入
   $result[] = array('id'=>(100000+$row_stage['stageid']),'pid'=>$pid,'name'=>$nodename,'title'=>$nodetitle,);
 
   //这里应该加上项目的操作
- 
+ /*开始操作数据库了，select语句,返回该项目中所有阶段的id号和题目*/
+  $viewtaskSQL1="SELECT * from tk_task,tk_status WHERE tk_task.csa_status = tk_status.id AND tk_task.csa_del_status=1 AND tk_task.csa_project_stage=$stage_id";
+  //对数据库进行查询
+  mysql_select_db($database_tankdb, $tankdb);
+  $Result_task = mysql_query($viewtaskSQL1, $tankdb) or die(mysql_error());
+  while($row_task = mysql_fetch_array($Result_task)){
+      $pid = $stage_id+100000;//父节点是改阶段的menu id
+      $str = $row_task['task_status_display'];
+      $str =  explode('background-color:', $str);
+      $str =  explode('width:', $str[1]);
+
+      $nodename = "<span style ='color:".$str[0]."'>■</span>"." [任务]".$row_task['csa_text'];
+      $nodetitle = $row_task['task_status'];
+      $result[] = array('id'=>$row_task['TID'],'pid'=>$pid,'name'=>$nodename,'title'=>$nodetitle,);
   }
+}
 
 $str=json_encode($result);
 return $str;
