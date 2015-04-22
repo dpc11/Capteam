@@ -362,7 +362,7 @@ function addcomm()
 						<!-- 提交任务-->
 						<?php if ($row_Recordset_task['csa_status']==2) { ?>
 						<td width="10%">
-						<a href="default_task_submit.php?taskid=<?php echo $row_Recordset_task['tid']; ?>"><span class="glyphicon glyphicon-check"></span> <?php echo $multilingual_submit_task; ?></a>
+						<a href="default_task_submit.php?taskid=<?php echo $row_Recordset_task['tid']; ?>&stageid=<?php echo $row_Recordset_task['csa_project_stage']; ?>&projecti=<?php echo $row_Recordset_task['csa_project']; ?>"><span class="glyphicon glyphicon-check"></span> <?php echo $multilingual_submit_task; ?></a>
 						</td>
 						<?php }  ?>			
 						
