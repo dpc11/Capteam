@@ -62,7 +62,7 @@ $Recordset2 = mysql_query($query_Recordset2, $tankdb) or die(mysql_error());
 $row_Recordset2 = mysql_fetch_assoc($Recordset2);
 $totalRows_Recordset2 = mysql_num_rows($Recordset2);
 
-$user_arr = get_all_user_select();
+$user_arr = get_user_select($colname_Recordset1);
 
 $restrictGoTo = "user_error3.php";
 if ($_SESSION['MM_rank'] < "4" && ($row_Recordset1['project_to_user'] <> $_SESSION['MM_uid'] || $_SESSION['MM_rank'] < "2")) {   
