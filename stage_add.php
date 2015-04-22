@@ -8,9 +8,14 @@ if ($_SESSION['MM_rank'] < "3") {
   exit;
 }
 
-$_SESSION['MM_pid'] = 24;
+//$_SESSION['MM_pid'] = 24;
 $myid = $_SESSION['MM_uid'];
-$thisProj = $_SESSION['MM_pid'];
+//$thisProj = $_SESSION['MM_pid'];
+$thisProj = -1;
+//$thisSid = -1;
+if(isset($_GET['pid'])){
+  $thisProj = $_GET['pid'];
+}
 
 /*
 $to_user = "-1";
@@ -124,10 +129,10 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
       $today_date = date('Y-m-d');
       $now_time = date('Y-m-d H:i:s',time());
 
-      if('$tk_stage_et'<'$today_date')
+      if($en_time<$today_date)
       {
           echo("illegal");
-      }else if('$tk_stage_et'<'$tk_stage_st')
+      }else if($en_time<$st_time)
       {
           echo("can't");
       }else
@@ -141,7 +146,18 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
                         GetSQLValueString($_POST['stage_end'],"text"));
           mysql_select_db($database_tankdb,$tankdb);
           $Result1 = mysql_query($insertSQL,$tankdb) or die(mysql_error());
-      
+
+         /* $selSID = sprintf("SELECT stageid FROM tk_stage WHERE tk_stage_title LIKE %s AND tk_stage_desc LIKE %s
+              AND tk_stage_pid=$thisProj",
+                        GetSQLValueString($_POST['tk_stage_title'],"text"),
+                        GetSQLValueString($_POST['tk_stage_desc'],"text"),
+                         GetSQLValueString($_POST['stage_start'],"text"), 
+                        GetSQLValueString($_POST['stage_end'],"text"));*/
+          $selSID = "SELECT stageid FROM tk_stage ORDER BY stageid DESC";
+          mysql_select_db($database_tankdb,$tankdb);
+          $Result2 = mysql_query($selSID,$tankdb) or die(mysql_error());
+          $row = mysql_fetch_array($Result2);
+          $thisSid = $row['stageid'];
           //$newID = add_task( $cc_post, $_POST['csa_from_user'],  $to_user_arr['0'],  $project_id, $_POST['csa_type'], $_POST['tk_stage_title'], $_POST['csa_priority'], $_POST['csa_temp'], $_POST['stage_start'], $_POST['stage_end'], $_POST['plan_hour'], $_POST['csa_remark2'], $_POST['csa_create_user'], $_POST['csa_last_user'], $task_id, $wbs, $wbs_id, $_SESSION['MM_uid'], $csa_tag, $tk_stage_desc );
 
 
@@ -156,12 +172,14 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
           else {
             $insertGoTo = "default_task_edit.php?editID=$newID";
           }*/
-          $insertGoTo = "stage_view.php";
+          $insertGoTo = "stage_view.php?pid=$thisProj&sid=$thisSid";
+          //$insertGoTo = "stage_view.php";
 
           if (isset($_SERVER['QUERY_STRING'])) {
             $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
             $insertGoTo .= $_SERVER['QUERY_STRING'];
            }
+           echo $insertGoTo;
 
             /*$msg_to = $to_user_arr['0'];
             $msg_from = $_POST['csa_create_user'];
