@@ -222,6 +222,21 @@ function get_tree( $projectid ) {
 global $tankdb;
 global $database_tankdb;
 
+/*开始操作数据库了，select语句,这是第一个查询，返回该项目中所有阶段的id号和题目*/
+$viewstageSQL1="SELECT stageid, tk_stage_title from tk_stage WHERE tk_stage_delestatus=1 AND tk_stage_pid=$projectid";
+//对数据库进行查询
+mysql_select_db($database_tankdb, $tankdb);
+$Result_stage = mysql_query($viewstageSQL1, $tankdb) or die(mysql_error());
+//对查到的数据进行遍历
+while($row_stage = mysql_fetch_array($Result_stage))
+  {
+  // echo $row['stageid'] ;
+  // echo "<br />";
+  // echo $row['tk_stage_title'] ;
+  // echo "<br />";
+ 
+  }
+
 
 mysql_select_db($database_tankdb, $tankdb);
 $query_Recordset1 = "SELECT * FROM tk_task 
@@ -240,12 +255,12 @@ if (!$FoundTask) {
 
 $i=0;
 do{
-	if($row_Recordset1['csa_remark4']=="-1"){
+  if($row_Recordset1['csa_remark4']=="-1"){
 $pid= 0;
-	} else {
+  } else {
 $pid= $row_Recordset1['csa_remark4'];
-	}
-	
+  }
+  
 
 $str = $row_Recordset1['task_status_display'];
 $str =  explode('background-color:', $str);
@@ -264,6 +279,47 @@ $i++;
 $str=json_encode($result);
 
 return $str;
+// mysql_select_db($database_tankdb, $tankdb);
+// $query_Recordset1 = "SELECT * FROM tk_task 
+// inner join tk_user on tk_task.csa_to_user=tk_user.uid 
+// inner join tk_status on tk_task.csa_status=tk_status.id 
+// WHERE csa_project = '$projectid' ORDER BY TID";
+// $Recordset1 = mysql_query($query_Recordset1, $tankdb) or die(mysql_error());
+// $row_Recordset1 = mysql_fetch_assoc($Recordset1);
+
+// $FoundTask = mysql_num_rows($Recordset1);
+    
+// if (!$FoundTask) {
+//  return 0;   
+ 
+// }
+
+// $i=0;
+// do{
+// 	if($row_Recordset1['csa_remark4']=="-1"){
+// $pid= 0;
+// 	} else {
+// $pid= $row_Recordset1['csa_remark4'];
+// 	}
+	
+
+// $str = $row_Recordset1['task_status_display'];
+// $str =  explode('background-color:', $str);
+// $str =  explode('width:', $str[1]);
+
+
+
+// $nodename = "<span style ='color:".$str[0]."'>■</span>"." [".$row_Recordset1['task_tpye']."]".$row_Recordset1['csa_text'];
+// $nodetitle = $row_Recordset1['task_status']." - ".$row_Recordset1['tk_display_name']." - ".$row_Recordset1['csa_text'];
+
+
+// $result[] = array('id'=>$row_Recordset1['TID'],'pid'=>$pid,'name'=>$nodename,'title'=>$nodetitle,);
+// $i++;
+// } while ($row_Recordset1 = mysql_fetch_assoc($Recordset1)); 
+
+// $str=json_encode($result);
+
+// return $str;
 }
 
 //get userinfo
