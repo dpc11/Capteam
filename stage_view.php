@@ -4,12 +4,20 @@
 <?php
 $currentPage = $_SERVER["PHP_SELF"];
 
-$_SESSION['MM_pid'] = 24;
+//$_SESSION['MM_pid'] = 24;
 //$_SESSION['MM_uid'] = 5;
-$_SESSION['MM_sid'] = 12;
-$now_pid = $_SESSION['MM_pid'];
+//$_SESSION['MM_sid'] = 12;
+//$now_pid = $_SESSION['MM_pid'];
 $now_uid = $_SESSION['MM_uid'];
-$now_sid = $_SESSION['MM_sid'];
+//$now_sid = $_SESSION['MM_sid'];
+$now_pid = -1;
+$now_sid = -1;
+if(isset($_GET['pid'])){
+  $now_pid = $_GET['pid'];
+}
+if(isset($_GET['sid'])){
+  $now_sid = $_GET['sid'];
+}
 
 
 
