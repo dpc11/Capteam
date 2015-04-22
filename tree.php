@@ -38,20 +38,19 @@ if(frm != null && subWeb != null)
 <script type="text/javascript">
         <!--
 		var r =<?php echo $str; ?>;
-
+        
         d = new dTree('d');
-		d.add(0,-1,'<?php echo "<b>[".$multilingual_head_project."]".$project_name."</b>"; ?>','<?php  echo $prjurl; ?>');
-        for(i=0;i<r.length;i++)
-        {
-            if(Number(R[i].id) >100000){//表示是阶段
-                d.add(Number(r[i].id),Number(r[i].pid),r[i].name,"stage_view.php?recordID="+(Number(R[i].id)-100000),r[i].title);
-            }else{//表示是任务
-                d.add(Number(r[i].id),Number(r[i].pid),r[i].name,"default_task_edit.php?pagetab=alltask&editID="+r[i].id,r[i].title);
-            }
-            
-        }
+        d.add(0,-1,'<?php echo "<b>[".$multilingual_head_project."]".$project_name."</b>"; ?>','<?php  echo $prjurl; ?>');
+        // for(i=0;i<r.length;i++)
+        // {
+        //     if(Number(R[i].id) >100000){//表示是阶段
+        //         d.add(Number(r[i].id),Number(r[i].pid),r[i].name,"stage_view.php?recordID="+(Number(R[i].id)-100000),r[i].title);
+        //     }else{//表示是任务
+        //         d.add(Number(r[i].id),Number(r[i].pid),r[i].name,"default_task_edit.php?pagetab=alltask&editID="+r[i].id,r[i].title);
+        //     }            
+        // }
         document.write(d);
-    //-->
+
 </script>
     <?php } else{ ?>
     <div style="margin:15px">
