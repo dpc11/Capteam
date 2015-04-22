@@ -63,6 +63,8 @@ $row_Recordset2 = mysql_fetch_assoc($Recordset2);
 $totalRows_Recordset2 = mysql_num_rows($Recordset2);
 
 $user_arr = get_all_user_select();
+$user_arr_selected = get_user_select($colname_Recordset1);
+//$user_arr_selected = get_user_select(GetSQLValueString($colname_Recordset1, "int"))；
 
 $restrictGoTo = "user_error3.php";
 if ($_SESSION['MM_rank'] < "4" && ($row_Recordset1['project_to_user'] <> $_SESSION['MM_uid'] || $_SESSION['MM_rank'] < "2")) {   
@@ -211,10 +213,22 @@ window.onload = function()
                 <label for="select2" ><?php echo $multilingual_project_touser; ?><span id="csa_to_user_msg"></span></label>
                 <div >
                   <select name="project_to_user[]" id="select2" size="6" multiple class="form-control">
-                      <?php foreach($user_arr as $key => $val){ 
+                      <?php 
+                      //往数组中添加uid
+                      $user_selected = array();
+                      foreach ($user_arr_selected as $key_selected => $val_selected) {
+                          array_push($user_selected, $val_selected["uid"]);
+                      }
+
+                      foreach($user_arr as $key => $val){ 
                               if($val["uid"] <> $_SESSION["MM_uid"]){
+                                if(in_array($val["uid"], $user_selected)){ ?>
+                                <option value="<?php echo $val["uid"]?>" <?php echo "selected=\"selected\"";?>><?php echo $val["name"]?></option>
+                       <?php         }else{  ?>
+                                <option value='<?php echo $val["uid"]?>'><?php echo $val["name"]?></option>
+                       <?php          }
                        ?>
-                          <option value='<?php echo $val["uid"]?>'><?php echo $val["name"]?></option>
+              
                      <?php
                      }} ?>  
           

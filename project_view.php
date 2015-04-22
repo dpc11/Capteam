@@ -30,6 +30,22 @@ if (isset($_GET['recordID'])) {
   $colname_DetailRS1 = $_GET['recordID'];
 }
 
+//授权的id是否有
+if (isset($_GET['authority_user_id'])&&isset($_GET['authority_ulimit'])) {
+  $authority_user_id = $_GET['authority_user_id'];
+  $authority_ulimit = $_GET['authority_ulimit'];
+
+  $tk_team_pid=$colname_DetailRS1;//项目id
+  $tk_team_uid=$authority_user_id;//用户id
+  if($authority_ulimit == "1"){//当前为组员
+        $modmemSQL="UPDATE tk_team SET tk_team_ulimit=2 WHERE  tk_team_uid=$tk_team_uid and tk_team_pid=$tk_team_pid";//修改权限
+  }else{//当前为副组长
+        $modmemSQL="UPDATE tk_team SET tk_team_ulimit=1 WHERE  tk_team_uid=$tk_team_uid and tk_team_pid=$tk_team_pid";//修改权限
+  }
+  mysql_select_db($database_tankdb, $tankdb);
+  $Result2 = mysql_query($modmemSQL, $tankdb) or die(mysql_error());
+}
+
 //获得当前项目相关的user
 $user_arr = get_user_select($colname_DetailRS1);
 
@@ -536,8 +552,15 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
                   <td><?php echo "姓名:".$val["name"]?></td>
                   <td><?php echo "邮箱:".$val["email"]?></td>
                   <td><?php echo "电话:".$val["phone_num"]?></td>
-                  <td><a type="button" class="btn btn-default btn-sm" href="#" >
-                    <?php echo $multilingual_privilege_grant;?>
+                  <td><a type="button" class="btn btn-default btn-sm" href=<?php echo 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF'].'?recordID='.$colname_DetailRS1.'&authority_user_id='.$val["uid"].'&authority_ulimit='.$val["ulimit"]; ?>>
+                    <?php
+                    if($val["ulimit"] == 1){
+                        echo $multilingual_privilege_grant;
+                    }elseif($val["ulimit"] == 2){
+                        echo $multilingual_privilege_remove;
+                    }                     
+
+                    ?>
 
                   </a></td>    
                   </tr>                      

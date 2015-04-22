@@ -203,25 +203,24 @@ function addcomm()
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-	<td width="295px" class="input_task_right_bg" valign="top">
-      <table width="280px" border="0" cellspacing="0" cellpadding="0" align="center">
+      
+<!-- 左边20%的宽度的树或者说明  -->
+	<td width="20%" class="input_task_right_bg" valign="top">
+      <table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
         <tr>
           <td valign="top"><?php
 		  $project_id = $row_Recordset_task['csa_project'];
 		  $project_name = $row_Recordset_task['project_name'];
 		  $node_id_task = $row_Recordset_task['tid'];
-		  
-		  
-///////////////////////////////////////////////////////////////////////////////////////////		  
-		   //require_once('tree.php'); 
-		   
-		   
+		   //require_once('tree.php'); 		   
 		   ?></td>  	   
         </tr>
       
       </table>
 	</td>
-    <td  valign="top">
+      
+<!-- 右边80%宽度的主体内容 -->
+    <td width="80%" valign="top">
         <div style="overflow:auto; " id="main_right"><!-- right main -->
         <table width="98%" border="0" cellspacing="0" cellpadding="5" align="center">
 		
@@ -291,18 +290,17 @@ function addcomm()
 						<!-- 计划开始时间 -->
 						<td class="info_task_title"><?php echo $multilingual_default_task_planstart; ?></td>
 						<td><?php echo $row_Recordset_task['csa_plan_st']; ?></td>
+                        
+                        <!-- 计划完成 -->
+						<td class="info_task_title"><?php echo $multilingual_default_task_planend; ?></td>
+						<td><?php echo $row_Recordset_task['csa_plan_et']; ?></td>
 					</tr>
 					<tr>
 						<!-- 工作量 -->
 						<td class="info_task_title"><?php echo $multilingual_default_task_planpv; ?></td>
 						<td><?php echo $row_Recordset_task['csa_plan_hour']; ?>
 							<?php echo $multilingual_global_hour; ?></td>
-							
-						<!-- 计划完成 -->
-						<td class="info_task_title"><?php echo $multilingual_default_task_planend; ?></td>
-						<td><?php echo $row_Recordset_task['csa_plan_et']; ?></td>
-					</tr>
-					<tr>
+                        
 						<!-- 据完工日期 -->
 						<td class="info_task_title"><?php 
 						  $live_days = (strtotime($row_Recordset_task['csa_plan_et']) - strtotime(date("Y-m-d")))/86400;
@@ -331,10 +329,11 @@ function addcomm()
 					<tr>
 						<!-- 该用户为任务的创建者-->
 						<?php if ($row_Recordset_task['csa_from_user'] == $_SESSION['MM_uid']) { ?>
-						<!-- 审核-->
+						
+                        <!-- 审核-->
 						<?php if ($row_Recordset_task['csa_status']==3) { ?>
 						<td width="10%">
-						<a data-toggle="modal" href="default_task_exam.php?taskid=<?php echo $row_Recordset_task['tid']; ?>" data-target="#checkModal"><span class="glyphicon glyphicon-check"></span> <?php echo $multilingual_exam_title; ?></a>
+						<a href="default_task_check.php?taskid=<?php echo $row_Recordset_task['tid']; ?>"><span class="glyphicon glyphicon-check"></span> <?php echo $multilingual_exam_title; ?></a>
 						</td>
 						<?php }  ?>						
 						
@@ -360,21 +359,21 @@ function addcomm()
 						<!-- 提交任务-->
 						<?php if ($row_Recordset_task['csa_status']==2) { ?>
 						<td width="10%">
-						<a data-toggle="modal" href="default_task_exam.php?taskid=<?php echo $row_Recordset_task['tid']; ?>" data-target="#checkModal"><span class="glyphicon glyphicon-check"></span> <?php echo $multilingual_submit_task; ?></a>
+						<a href="default_task_submit.php?taskid=<?php echo $row_Recordset_task['tid']; ?>"><span class="glyphicon glyphicon-check"></span> <?php echo $multilingual_submit_task; ?></a>
 						</td>
 						<?php }  ?>			
 						
 						<!-- 替换任务-->
 						<?php if ($row_Recordset_task['csa_status']==3) { ?>
 						<td width="10%">
-						<a data-toggle="modal" href="default_task_exam.php?taskid=<?php echo $row_Recordset_task['tid']; ?>" data-target="#checkModal"><span class="glyphicon glyphicon-check"></span> <?php echo $multilingual_change_submit_task; ?></a>
+						<a href="default_task_submit.php?taskid=<?php echo $row_Recordset_task['tid']; ?>"><span class="glyphicon glyphicon-check"></span> <?php echo $multilingual_change_submit_task; ?></a>
 						</td>
 						<?php }  ?>	
 						
 						<!-- 驳回后重新提交-->
 						<?php if ($row_Recordset_task['csa_status']==5) { ?>
 						<td width="10%">
-						<a data-toggle="modal" href="default_task_exam.php?taskid=<?php echo $row_Recordset_task['tid']; ?>" data-target="#checkModal"><span class="glyphicon glyphicon-check"></span> <?php echo $multilingual_re_submit_task; ?></a>
+						<a href="default_task_submit.php?taskid=<?php echo $row_Recordset_task['tid']; ?>"><span class="glyphicon glyphicon-check"></span> <?php echo $multilingual_re_submit_task; ?></a>
 						</td>
 						<?php }  ?>	
 						<?php }  ?>	
