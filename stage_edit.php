@@ -8,6 +8,7 @@ $colname_Recordset1 = "-1";
 if (isset($_GET['editID'])) {
   $colname_Recordset1 = $_GET['editID'];
 }
+$pid = $_GET['pid'];
 
 $editFormAction = $_SERVER['PHP_SELF'];
 if (isset($_SERVER['QUERY_STRING'])) {
@@ -74,11 +75,11 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
   mysql_select_db($database_tankdb, $tankdb);
   $Result2 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
 
-  $updateGoTo = "stage_view.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
+  $updateGoTo = "stage_view.php?pid=$pid&sid=$colname_Recordset1";
+  /*if (isset($_SERVER['QUERY_STRING'])) {
     $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
     $updateGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  }*/
   header(sprintf("Location: %s", $updateGoTo));
 }
 

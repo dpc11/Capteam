@@ -464,7 +464,7 @@ document.getElementById('tab_' + i).className = (i == ".$tabid.") ? 'onhover' : 
                                         <!-- 阶段修改 -->
                                         <?php if($user_rank > 1 ) { ?>
                                         <td width="10%">
-                                            <a href="stage_edit.php?editID=<?php echo $row_DetailRS1['id']; ?>">
+                                            <a href="stage_edit.php?editID=<?php echo $row_DetailRS1['stageid']; ?>&pid=<?php echo $now_pid;?>">
                                                 <span class="glyphicon glyphicon-pencil"></span>
                                                 <?php echo $multilingual_global_action_edit; ?> </a>
                                         </td>
