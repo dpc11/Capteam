@@ -477,7 +477,7 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
 <!-- 分解阶段 -->
              <?php if($_SESSION['MM_rank'] > "2") { ?>
 			 <td width="12%">
-			 <a href="stage_add.php?projectID=<?php echo $row_DetailRS1['id']; ?>&formproject=1" >
+			 <a href="stage_add.php?pid=<?php echo $row_DetailRS1['id']; ?>&formproject=1" >
 			 <span class="glyphicon glyphicon-random"></span> <?php echo $multilingual_project_newstage; ?></a></td>
 			 <?php }  ?>
 
