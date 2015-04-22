@@ -2,11 +2,7 @@
 <?php require_once('session_unset.php'); ?>
 <?php require_once('session.php'); ?>
 <?php
-$restrictGoTo = "user_error3.php";
-if ($_SESSION['MM_rank'] < "3") {   
-  header("Location: ". $restrictGoTo); 
-  exit;
-}
+
 
 $myid = $_SESSION['MM_uid'];
 
@@ -14,13 +10,6 @@ $to_user = "-1";
 if (isset($_POST['csa_to_user'])) {
 $to_user_arr = explode(", ,", $_POST['csa_to_user']);
   $to_user= $to_user_arr['0'];
-}
-
-$copy = -1;
-if (isset($_GET['copy']) && isset($_SESSION['copytask'])) {
-  $copy = $_GET['copy'];
-  $task_arr = $_SESSION['copytask'];
-  $ccarr = json_decode($task_arr['cc'], true);
 }
 
 $title = "-1";
@@ -33,9 +22,19 @@ if (isset($_GET['projectID'])) {
   $project_id = $_GET['projectID'];
 }
 
+$stage_id = "-1";
+if (isset($_GET['stageID'])) {
+  $stage_id = $_GET['stageID'];
+}
+
 $project_url = "-1";
 if (isset($_GET['formproject'])) {
   $project_url= $_GET['formproject'];
+}
+
+$stage_url = "-1";
+if (isset($_GET['formpstage'])) {
+  $stage_url= $_GET['formpstage'];
 }
 
 $user_id = "-1";
@@ -52,43 +51,32 @@ if ( empty( $_POST['plan_hour'] ) )
 		$_POST['plan_hour'] = '0.0';
 
 if ( empty( $_POST['csa_remark1'] ) ){
-$csa_remark1 = "'',";
+$csa_description = "''";
 }else{
-$csa_remark1 = sprintf("%s,", GetSQLValueString(str_replace("%","%%",$_POST['csa_remark1']), "text"));
+$csa_description = sprintf("%s", GetSQLValueString(str_replace("%","%%",$_POST['csa_remark1']), "text"));
 }
 
 if ( empty( $_POST['csa_tag'] ) ){
-$csa_tag = "'',";
+$csa_tag = "''";
 }else{
-$csa_tag = sprintf("%s,", GetSQLValueString(str_replace("%","%%",$_POST['csa_tag']), "text"));
+$csa_tag = sprintf("%s", GetSQLValueString(str_replace("%","%%",$_POST['csa_tag']), "text"));
 }
-
+/*
 //for wbs!
 $wbs_id = "-1";
 if (isset($_GET['wbsID'])) {
   $wbs_id = $_GET['wbsID'];
 }
-
-$task_id = "-1";
-if (isset($_GET['taskID'])) {
-  $task_id = $_GET['taskID'];
-}
-
+*/
 mysql_select_db($database_tankdb, $tankdb);
 $query_Recordset_task = sprintf("SELECT *, 
 tk_project.id as proid  
 FROM tk_task 
 inner join tk_project on tk_task.csa_project=tk_project.id 
-WHERE TID = %s", GetSQLValueString($task_id, "int"));
+WHERE tid = %s", GetSQLValueString($task_id, "int"));
 $Recordset_task = mysql_query($query_Recordset_task, $tankdb) or die(mysql_error());
 $row_Recordset_task = mysql_fetch_assoc($Recordset_task);
 $totalRows_Recordset_task = mysql_num_rows($Recordset_task);
-
-if ($wbs_id == "2"){
-$wbs = $task_id.">".$wbs_id;
-} else {
-$wbs = $row_Recordset_task['csa_remark5'].">".$row_Recordset_task['TID'].">".$wbs_id; 
-}
 
 
 $editFormAction = $_SERVER['PHP_SELF'];
