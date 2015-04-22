@@ -447,6 +447,8 @@ $multilingual_project_file_download = "下载附件";
 $multilingual_project_file_update = "更新于";
 $multilingual_project_file_update_by = "由谁更新";
 $multilingual_project_file_addfile = "上传文档";
+$multilingual_project_file_submittask = "提交任务";
+$multilingual_project_file_checktask = "审核任务";
 $multilingual_project_file_addfolder = "新建文件夹";
 $multilingual_project_file_editfile = "编辑文档";
 $multilingual_project_file_editfolder = "编辑文件夹";
@@ -656,15 +658,20 @@ $multilingual_change_submit_task = "更改已提交的任务";
 $multilingual_re_submit_task = "重新提交任务";
 // *** 审核
 $multilingual_exam_title = "审核";
+$multilingual_exam_pass = "审核通过";
+$multilingual_exam_deny = "驳回任务";
 $multilingual_exam_poptitle = "审核任务";
 $multilingual_exam_select = "请选择审核结果";
 $multilingual_exam_text = "审核意见";
+$multilingual_exam_score = "任务分数";
 $multilingual_exam_tip = "任务监督人，也是任务审核人，任务状态更新或完成时，会收到通知";
 $multilingual_exam_wait = "待我审核的任务";
 $multilingual_exam_check = "作为审核结果";
 $multilingual_exam_yes = "是";
 
-$multilingual_exam_tip2 = "审核过的任务可以在【来自我的任务】中查询。";
+$multilingual_exam_tip2 = "审核通过的任务可以在【来自我的任务】中查询。";
+
+$multilingual_exam_tip3 = "审核通过的任务请给任务完成情况打分。";
 
 // *** 权限
 $multilingual_rank0 = "禁止登录系统";

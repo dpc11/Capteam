@@ -1172,6 +1172,12 @@ a:focus {
     background: #fff;
     width: 940px;
     border: 1px solid #CCCCCC;
+    margin: 30px auto 20px auto;
+    padding: 55px;
+}
+
+.file_check_div {
+    width: 940px;
     margin: 20px auto 20px auto;
     padding: 55px;
 }

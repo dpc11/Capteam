@@ -95,113 +95,141 @@ $ptab = "&pagetab=".$pagetabs;
 <script type="text/javascript" src="srcipt/lhgcore.js"></script>
 <script type="text/javascript" src="srcipt/lhgcheck.js"></script>
 <script type="text/javascript">
-J.check.rules = [
-    { name: 'tk_doc_title', mid: 'doctitle', type: 'limit', requir: true, min: 2, max: 30, warn: '<?php echo $multilingual_announcement_titlerequired; ?>' }
-	
+    J.check.rules = [
+        {
+            name: 'tk_doc_title',
+            mid: 'doctitle',
+            type: 'limit',
+            requir: true,
+            min: 2,
+            max: 30,
+            warn: '<?php echo $multilingual_announcement_titlerequired; ?>'
+        }
+
 ];
 
-window.onload = function()
-{
-    J.check.regform('form1');
-}
+    window.onload = function () {
+        J.check.regform('form1');
+    }
 </script>
 <script charset="utf-8" src="editor/kindeditor.js"></script>
 <script charset="utf-8" src="editor/lang/zh_CN.js"></script>
 <script>
-        var editor;
-        KindEditor.ready(function(K) {
-                editor = K.create('#tk_doc_description', {
-			width : '100%',
-			height: '500px',
-			items:[
+    var editor;
+    KindEditor.ready(function (K) {
+        editor = K.create('#tk_doc_description', {
+            width: '100%',
+            height: '500px',
+            items: [
         'source', '|', 'undo', 'redo', '|', 'preview', 'print', 'template', 'cut', 'copy', 'paste',
         'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
         'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
         'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/',
         'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
         'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image',
-        'flash', 'media', 'insertfile', 'table', 'hr', 'map', 'code', 'pagebreak', 'anchor', 
+        'flash', 'media', 'insertfile', 'table', 'hr', 'map', 'code', 'pagebreak', 'anchor',
         'link', 'unlink', '|', 'about'
 ]
-});
         });
+    });
 </script>
 
 <form action="<?php echo $editFormAction; ?>" method="post" name="form1" id="form1">
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-    <tr>
-        
-<!-- 左边20%的宽度的树或者说明  -->
-      <td width="20%" class="input_task_right_bg" valign="top"><table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
-          <tr>
-            <td valign="top"  class="gray2">
-	 <h4 style="margin-top:40px" ><strong><?php echo $multilingual_project_file_tiptitle; ?></strong></h4>
-	 <p >
-	 <?php echo $multilingual_project_file_tiptext; ?></p>
-              
-              </td>
-          </tr>
-        </table></td>
-        
-<!-- 右边80%宽度的主体内容 -->
-      <td width="80%" valign="top"><table width="98%" border="0" cellspacing="0" cellpadding="5" align="center">
-          <tr>
-            <td><div class="col-xs-12">
-                <h3><?php echo $multilingual_project_file_addfile; ?></h3>
-              </div>
-              <div class="form-group col-xs-12">
-                <label for="tk_doc_title"><?php echo $multilingual_project_file_title; ?><span id="doctitle"></span></label>
-                <div>
-				<input type="text" name="tk_doc_title" id="tk_doc_title" value="" placeholder="<?php echo $multilingual_project_file_filetitle;?>"  class="form-control" />
-				
-                </div>
-              </div>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
 
-              <div class="form-group col-xs-12">
-                <label for="tk_doc_description"><?php echo $multilingual_project_file_filetext; ?></label>
-                <div>
-				<textarea name="tk_doc_description" id="tk_doc_description" ></textarea>
-                </div>
-              </div>
+            <!-- 左边20%的宽度的树或者说明  -->
+            <td width="20%" class="input_task_right_bg" valign="top">
+                <table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
+                    <tr>
+                        <td valign="top" class="gray2">
+                            <h4 style="margin-top:40px"><strong><?php echo $multilingual_project_file_tiptitle; ?></strong></h4>
+                            <p>
+                                <?php echo $multilingual_project_file_tiptext; ?>
+                            </p>
 
-              <div class="form-group  col-xs-12">
-                <label for="csa_remark1"><?php echo $multilingual_upload_attachment; ?></label>
-				
-				<div class="input-group">
-      <input type="text" name="csa_remark1" id="csa_remark1" value=""placeholder="<?php echo $multilingual_upload_attachment; ?>" class="form-control">
-      <span class="input-group-btn">
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+            <!-- 右边80%宽度的主体内容 -->
+            <td width="80%" valign="top">
+                <table width="98%" border="0" cellspacing="0" cellpadding="5" align="center">
+                    <tr>
+                        <td>
+                            <div class="col-xs-12">
+                                <h3><?php echo $multilingual_project_file_submittask; ?></h3>
+                            </div>
+
+                            <!-- 提交任务标题 -->
+                            <div class="form-group col-xs-12">
+                                <label for="tk_doc_title">
+                                    <?php echo $multilingual_project_file_title; ?><span id="doctitle"></span>
+                                </label>
+                                <div>
+                                    <input type="text" name="tk_doc_title" id="tk_doc_title" value="" placeholder="<?php echo $multilingual_project_file_filetitle;?>" class="form-control" />
+                                </div>
+                            </div>
+
+                            <!-- 提交任务描述 -->
+                            <div class="form-group col-xs-12">
+                                <label for="tk_doc_description">
+                                    <?php echo $multilingual_project_file_filetext; ?>
+                                </label>
+                                <div>
+                                    <textarea name="tk_doc_description" id="tk_doc_description"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- 提交任务附件 -->
+                            <div class="form-group  col-xs-12">
+                                <label for="csa_remark1">
+                                    <?php echo $multilingual_upload_attachment; ?>
+                                </label>
+
+                                <div class="input-group">
+                                    <input type="text" name="csa_remark1" id="csa_remark1" value="" placeholder="<?php echo $multilingual_upload_attachment; ?>" class="form-control">
+                                    <span class="input-group-btn">
         <button class="btn btn-default" type="button" onClick="openBrWindow('upload_file.php','<?php echo $multilingual_global_upload; ?>','width=450,height=235')"><?php echo $multilingual_global_upload; ?></button>
       </span>
-    </div>
-				
+                                </div>
+                                <span class="help-block"><?php echo $multilingual_upload_tip3; ?></span>
+                            </div>
 
-				<span class="help-block"><?php echo $multilingual_upload_tip3; ?></span>
-              </div>
-
-				</td>
-          </tr>
-        </table></td>
-    </tr>
-    <tr class="input_task_bottom_bg" >
-	<td></td>
-      <td height="50px">
-	  <button type="submit" class="btn btn-primary btn-sm submitbutton" name="cont" ><?php echo $multilingual_global_action_save; ?></button>
-          <button type="button" class="btn btn-default btn-sm" onClick="window.close();"><?php echo $multilingual_global_action_cancel; ?></button>
-          
-
-		<input type="hidden" name="tk_doc_class1" id="tk_doc_class1" value="<?php echo $project_id; ?>" />
-		<input type="hidden" name="tk_doc_class2" id="tk_doc_class2" value="<?php echo $p_id; ?>" />
-		<input name="tk_doc_create" type="hidden" value="<?php echo "{$_SESSION['MM_uid']}"; ?>"  />
-		<input name="tk_doc_createtime" type="hidden" value="<?php echo date("Y-m-d H:i:s"); ?>"  />
-		<input name="tk_doc_edit" type="hidden" value="<?php echo "{$_SESSION['MM_uid']}"; ?>" />
-		<input type="hidden" name="tk_doc_backup1" id="tk_doc_backup1" value="<?php echo $fd; ?>"  />
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr class="input_task_bottom_bg">
+            <td></td>
+            <td height="50px">
+                
+                <!-- 提交按钮 -->
+                <button type="submit" class="btn btn-primary btn-sm submitbutton" name="cont">
+                    <?php echo $multilingual_global_action_save; ?>
+                </button>
+                <button type="button" class="btn btn-default btn-sm" onClick="window.close();">
+                    <?php echo $multilingual_global_action_cancel; ?>
+                </button>
 
 
-        <input type="hidden" name="MM_insert" value="form1" /></td>
-    </tr>
-  </table>
+                <input type="hidden" name="tk_doc_class1" id="tk_doc_class1" value="<?php echo $project_id; ?>" />
+                <input type="hidden" name="tk_doc_class2" id="tk_doc_class2" value="<?php echo $p_id; ?>" />
+                <input name="tk_doc_create" type="hidden" value="<?php echo " {$_SESSION[ 'MM_uid']} "; ?>" />
+                <input name="tk_doc_createtime" type="hidden" value="<?php echo date(" Y-m-d H:i:s "); ?>" />
+                <input name="tk_doc_edit" type="hidden" value="<?php echo " {$_SESSION[ 'MM_uid']} "; ?>" />
+                <input type="hidden" name="tk_doc_backup1" id="tk_doc_backup1" value="<?php echo $fd; ?>" />
+
+
+                <input type="hidden" name="MM_insert" value="form1" />
+            </td>
+        </tr>
+    </table>
 
 </form>
-<?php require('foot.php'); ?>
+<?php require( 'foot.php'); ?>
 </body>
+
 </html>
