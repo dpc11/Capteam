@@ -282,9 +282,12 @@ function submitform()
 	
   });
 </script>
+
 <form action="<?php echo $editFormAction; ?>" method="post" name="myform" id="myform">
   <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
+        
+        <!-- 左边20%的宽度的树或者说明  -->
       <td width="20%" class="input_task_right_bg" valign="top"><table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
           <tr>
             <td valign="top">
@@ -321,11 +324,15 @@ function submitform()
               </td>
           </tr>
         </table></td>
+        
+        <!-- 右边80%宽度的主体内容 -->
       <td width="80%" valign="top"><table width="98%" border="0" cellspacing="0" cellpadding="5" align="center">
           <tr>
             <td><div class="col-xs-12">
                 <h3><?php echo $multilingual_stageadd_title; ?></h3>
               </div>
+                
+<!-- 阶段名称 -->
               <div class="form-group col-xs-12">
                 <label for="csa_text"><?php echo $multilingual_default_task_title; ?><span  id="csa_text_msg"></span></label>
                 <div>
@@ -333,7 +340,8 @@ function submitform()
                   <span class="help-block"><?php echo $multilingual_default_stage_title_tips; ?></span>
                 </div>
               </div>
-			 
+                
+<!-- 阶段不需要类型（已删除） -->
 <!--
 			  <div class="form-group col-xs-12">
                 <label for="csa_type" ><?php echo $multilingual_default_stage_type; ?><span id="csa_type_msg"></span></label>
@@ -434,6 +442,7 @@ do {
                 <span class="help-block"><?php echo $multilingual_default_task_cc_tips; ?></span> </div>
 -->
 			  
+<!-- 阶段描述 -->
               <div class="form-group col-xs-12">
                 <label for="csa_remark1"><?php echo $multilingual_default_task_description; ?><span  id="csa_text_msg"></span></label>
                 <div>
@@ -451,6 +460,7 @@ do {
               </div>
 -->
 
+<!-- 起始时间 -->
 				<div class="form-group col-xs-12">
                 <label for="datepicker2"><?php echo $multilingual_default_task_planstart; ?><span id="csa_plan_st_msg"></span></label>
                 <div>
@@ -459,6 +469,7 @@ do {
 <!--				<span class="help-block"><?php echo $multilingual_default_task_starttime_tips; ?></span>-->
               </div>
 			  
+<!-- 结束时间 -->
               <div class="form-group col-xs-12">
                 <label for="datepicker3"><?php echo $multilingual_default_task_planend; ?><span id="csa_plan_et_msg"></span></label>
                 <div>
@@ -466,7 +477,8 @@ do {
                 </div>
 <!--				<span class="help-block"><?php echo $multilingual_default_task_endtime_tips; ?></span>-->
               </div>
-			  
+
+<!-- 计划工时（已删除） -->
 <!--
               <div class="form-group col-xs-12">
                 <label for="plan_hour"><?php echo $multilingual_default_task_planhour; ?><span id="plan_hour_msg"></span></label>
@@ -533,6 +545,8 @@ do {
     <tr  class="input_task_bottom_bg" >
 	<td></td>
       <td height="50px">
+          
+<!-- 提交按钮 -->
           <button type="submit" class="btn btn-primary btn-sm submitbutton" data-loading-text="<?php echo $multilingual_global_wait; ?>"><?php echo $multilingual_global_action_save; ?></button>
 		  
 		  <button type="button" class="btn btn-default btn-sm" onClick="javascript:history.go(-1);"><?php echo $multilingual_global_action_cancel; ?></button>
