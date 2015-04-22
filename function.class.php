@@ -226,6 +226,11 @@ $viewstageSQL1="SELECT * from tk_stage WHERE tk_stage_delestatus=1 AND tk_stage_
 //对数据库进行查询
 mysql_select_db($database_tankdb, $tankdb);
 $Result_stage = mysql_query($viewstageSQL1, $tankdb) or die(mysql_error());
+$FoundTask = mysql_num_rows($Result_stage);
+    
+if (!$FoundTask) {
+ return 0;    
+}
 //对查到的数据进行遍历
 while($row_stage = mysql_fetch_array($Result_stage))
   {
