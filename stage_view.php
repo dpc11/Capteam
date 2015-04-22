@@ -19,6 +19,13 @@ if(isset($_GET['sid'])){
   $now_sid = $_GET['sid'];
 }
 
+$user_rank = 1;
+$selLimit = "SELECT tk_team_ulimit FROM tk_team WHERE tk_team_pid=$now_pid
+    AND tk_team_uid=$now_uid";
+mysql_select_db($database_tankdb,$tankdb);
+$Result1 = mysql_query($selLimit,$tankdb) or die(mysql_error());
+$row = mysql_fetch_array($Result1);
+$user_rank = $row['tk_team_ulimit'];
 
 
 /*$pagetabs = "allprj";
@@ -76,8 +83,7 @@ mysql_select_db($database_tankdb, $tankdb);
               inner join tk_user on tk_task.csa_to_user=tk_user.uid 
               inner join tk_status on tk_task.csa_status=tk_status.id 
                 WHERE csa_project = %s ORDER BY csa_last_update DESC", GetSQLValueString($colname_Recordset_task, "text"));*/
-$query_Recordset_task = "SELECT * FROM tk_task WHERE csa_project_stage = $now_sid
-AND csa_to_user = $now_uid";
+$query_Recordset_task = "SELECT * FROM tk_task WHERE csa_project_stage = $now_sid";
 //$query_limit_Recordset_task = sprintf("%s LIMIT %d, %d", $query_Recordset_task, $startRow_Recordset_task, $maxRows_Recordset_task);
 $Recordset_task = mysql_query($query_Recordset_task, $tankdb) or die(mysql_error());
 $row_Recordset_task = mysql_fetch_assoc($Recordset_task);
@@ -440,9 +446,9 @@ document.getElementById('tab_' + i).className = (i == ".$tabid.") ? 'onhover' : 
                                     <tr>
 
                                         <!-- 下发任务 -->
-                                        <?php if($_SESSION['MM_rank']> "2") { ?>
+                                        <?php if($user_rank > 1) { ?>
                                         <td width="12%">
-                                            <a href="default_task_add.php?projectID=$now_pid&stageID=<?php echo $row_DetailRS1['stageid']; ?>">
+                                            <a href="default_task_add.php?projectID=<?php echo $now_pid?>&stageID=<?php echo $row_DetailRS1['stageid']; ?>">
                                                 <span class="glyphicon glyphicon-random"></span>
                                                 <?php echo $multilingual_project_newtask; ?>
                                             </a>
@@ -450,13 +456,13 @@ document.getElementById('tab_' + i).className = (i == ".$tabid.") ? 'onhover' : 
                                         <?php } ?>
 
                                         <!-- 上传文档 -->
-                                        <?php if($_SESSION['MM_rank']> "1") { ?>
+                                        <?php if($user_rank > 1) { ?>
                                         <td width="12%">
                                             <a target="_blank" href="file_add.php?projectid=<?php echo $row_DetailRS1['stageid']; ?>&pid=0&pagetab=allfile"><span class="glyphicon glyphicon-file"></span> <?php echo $multilingual_project_file_addfile; ?></a> </td>
                                         <?php } ?>
 
                                         <!-- 阶段修改 -->
-                                        <?php if($_SESSION['MM_rank']> "3" ) { ?>
+                                        <?php if($user_rank > 1 ) { ?>
                                         <td width="10%">
                                             <a href="stage_edit.php?editID=<?php echo $row_DetailRS1['id']; ?>">
                                                 <span class="glyphicon glyphicon-pencil"></span>
@@ -465,7 +471,7 @@ document.getElementById('tab_' + i).className = (i == ".$tabid.") ? 'onhover' : 
                                         <?php } ?>
 
                                         <!-- 阶段删除 -->
-                                        <?php if($_SESSION['MM_rank']> "3") { ?>
+                                        <?php if($user_rank > 2) { ?>
                                         <td width="10%">
                                             <a class="mouse_over" onClick="javascript:if(confirm( '<?php 
    if($totalRows_Recordset_task == "0"){  
@@ -693,7 +699,7 @@ echo $editcomment_row;
                                                                     </td>
                                                                     <td>
                                                                         <a href="user_view.php?recordID=<?php echo $row_Recordset_task['csa_to_user']; ?>">
-                                                                            <?php $SelDisName="SELECT tk_display_name FROM tk_user WHERE uid=$now_uid" ; $Name=mysql_query($SelDisName, $tankdb) or die(mysql_error()); $row=mysql_fetch_assoc($Name); echo$row[ 'tk_display_name']; ?>
+                                                                            <!--<?php $SelDisName="SELECT tk_display_name FROM tk_user WHERE uid=$now_uid" ; $Name=mysql_query($SelDisName, $tankdb) or die(mysql_error()); $row=mysql_fetch_assoc($Name); echo$row[ 'tk_display_name']; ?>-->
                                                                             <?php $SelDisName="SELECT tk_display_name FROM tk_user WHERE uid=$now_uid" ; $Name=mysql_query($SelDisName, $tankdb) or die(mysql_error()); $row=mysql_fetch_assoc($Name); echo$row[ 'tk_display_name']; ?>
                                                                         </a>
                                                                     </td>

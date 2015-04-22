@@ -2,18 +2,48 @@
 <?php require_once('session_unset.php'); ?>
 <?php require_once('session.php'); ?>
 <?php
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-}
+
 
 $colname_Recordset1 = "-1";
 if (isset($_GET['editID'])) {
   $colname_Recordset1 = $_GET['editID'];
 }
 
-if ( empty( $_POST['stage_text'] ) ){
-$project_text = "stage_text='',";
+$editFormAction = $_SERVER['PHP_SELF'];
+if (isset($_SERVER['QUERY_STRING'])) {
+  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
+}
+
+$selStage = "SELECT * FROM tk_stage WHERE stageid = $colname_Recordset1";
+  mysql_select_db($database_tankdb, $tankdb);
+  $Result1 = mysql_query($selStage, $tankdb) or die(mysql_error());
+  $row = mysql_fetch_array($Result1);
+  $stage_title = $row['tk_stage_title'];
+  $stage_desc = $row['tk_stage_desc'];
+  $stage_st = $row['tk_stage_st'];
+  $stage_et = $row['tk_stage_et'];
+
+  $title = "-1";
+    if (isset($_POST['tk_stage_title'])) {
+      $title= $_POST['tk_stage_title'];
+    }
+
+    $description = "-1";
+    if (isset($_POST['tk_stage_desc'])) {
+      $description = $_POST['tk_stage_desc'];
+    }
+
+    $st_time = "-1";
+    if (isset($_POST['stage_start'])) {
+      $st_time= $_POST['stage_start'];
+    }
+
+    $en_time = "-1";
+    if (isset($_POST['stage_end'])) {
+      $en_time= $_POST['stage_end'];
+    }
+/*if ( empty( $_POST['stage_text'] ) ){
+$project_text = "$";
 }else{
 $project_text = sprintf("stage_text=%s,", GetSQLValueString(str_replace("%","%%",$_POST['project_text']), "text"));
 }
@@ -28,21 +58,23 @@ if ( empty( $_POST['stage_end'] ) ){
 $project_end = "stage_end='0000-00-00',";
 }else{
 $project_end = sprintf("stage_end=%s,", GetSQLValueString($_POST['stage_end'], "date"));
-}
+}*/
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
   //把当前时间作为最后一次修改时间
-  $update_project_lastupdate = date("Y-m-d H:i:s",time());
+  $update_stage_lastupdate = date("Y-m-d H:i:s",time());
   //更新数据库
-  $Result1 = mysql_query($updateProject, $tankdb) or die(mysql_error());
-  $updateSQL = sprintf("UPDATE tk_project SET project_name=%s, $project_text $project_start $project_end  project_lastupdate = '$update_project_lastupdate' WHERE id=%s",
-                       GetSQLValueString($_POST['project_name'], "text"),
-                       GetSQLValueString($_POST['id'], "int"));
+  $updateSQL = sprintf("UPDATE tk_stage SET tk_stage_title=%s, tk_stage_desc=%s, 
+    tk_stage_st=%s, tk_stage_et=%s,tk_stage_lastupdate='$update_stage_lastupdate' WHERE stageid=$colname_Recordset1",
+            GetSQLValueString($_POST['tk_stage_title'],"text"),
+            GetSQLValueString($_POST['tk_stage_desc'],"text"),
+            GetSQLValueString($_POST['stage_start'],"text"),
+            GetSQLValueString($_POST['stage_end'],"text"));
 
   mysql_select_db($database_tankdb, $tankdb);
-  $Result1 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
+  $Result2 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
 
-  $updateGoTo = "project_view.php?recordID=$colname_Recordset1";
+  $updateGoTo = "stage_view.php";
   if (isset($_SERVER['QUERY_STRING'])) {
     $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
     $updateGoTo .= $_SERVER['QUERY_STRING'];
@@ -51,13 +83,13 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
 }
 
 
-mysql_select_db($database_tankdb, $tankdb);
+/*mysql_select_db($database_tankdb, $tankdb);
 $query_Recordset1 = sprintf("SELECT * FROM tk_project WHERE id = %s", GetSQLValueString($colname_Recordset1, "int"));
 $Recordset1 = mysql_query($query_Recordset1, $tankdb) or die(mysql_error());
 $row_Recordset1 = mysql_fetch_assoc($Recordset1);
 $totalRows_Recordset1 = mysql_num_rows($Recordset1);
 
-$user_arr = get_user_select($colname_Recordset1);
+$user_arr = get_user_select($colname_Recordset1);*/
 
 ?>
 
@@ -90,23 +122,25 @@ $user_arr = get_user_select($colname_Recordset1);
 <script type="text/javascript">
     J.check.rules = [
         {
-            name: 'stage_name',
-            mid: 'stagetitle',
-            type: 'limit',
+            name: 'tk_stage_title',
+            mid: 'tk_stage_title_msg',
+            type: '',
             requir: true,
-            min: 2,
-            max: 32,
+            //min: 2,
+            //max: 32,
             warn: '<?php echo $multilingual_projectstatus_titlerequired; ?>'
         },
         {
             name: 'datepicker',
             mid: 'datepicker_msg',
+            requir: true,
             type: 'date',
             warn: '<?php echo $multilingual_error_date; ?>'
         },
         {
             name: 'datepicker2',
             mid: 'datepicker2_msg',
+            requir: true;
             type: 'date',
             warn: '<?php echo $multilingual_error_date; ?>'
         }
@@ -127,7 +161,7 @@ $user_arr = get_user_select($colname_Recordset1);
 <script>
     var editor;
     KindEditor.ready(function (K) {
-        editor = K.create('#project_text', {
+        editor = K.create('#tk_stage_desc', {
             width: '100%',
             height: '350px',
             items: [
@@ -184,23 +218,34 @@ $user_arr = get_user_select($colname_Recordset1);
 
                             <!-- 阶段名称 -->
                             <div class="form-group col-xs-12">
-                                <label for="csa_text">
-                                    <?php echo $multilingual_stage_title; ?><span id="csa_text_msg"></span>
+                                <label for="tk_stage_title">
+                                    <?php echo $multilingual_stage_title; ?><span id="tk_stage_title_msg"></span>
                                 </label>
                                 <div>
-                                    <input type="text" name="csa_text" id="csa_text" value="<?php echo $row_Recordset1['name']; ?>" class="form-control" placeholder="<?php echo $multilingual_stage_title_tips; ?>" />
-
+                                    <input type="text" name="tk_stage_title" id="tk_stage_title" value="
+                                                <?php if($title!=-1)
+                                                            {echo $title;}
+                                                      else{echo $stage_title;}
+                                                ?>" 
+                                                class="form-control" placeholder="<?php echo $multilingual_stage_title_tips; ?>" >
+                                                <span class="help-block"><?php echo $multilingual_default_stage_title_tips; ?></span>
                                 </div>
                             </div>
 
                             <!-- 阶段描述 -->
                             <div class="form-group col-xs-12">
-                                <label for="csa_remark1">
-                                    <?php echo $multilingual_stage_description; ?>
+                                <label for="tk_stage_desc">
+                                    <?php echo $multilingual_stage_description; ?><span id="tk_stage_title_msg"></span>
                                 </label>
                                 <div>
-                                    <textarea name="csa_remark1" id="csa_remark1">
-                                        <?php echo htmlentities($row_Recordset1[ 'text'], ENT_COMPAT, 'utf-8'); ?>
+                                    <textarea name="tk_stage_desc" id="tk_stage_desc">
+                                        <!--<?php echo htmlentities($row_Recordset1[ 'text'], ENT_COMPAT, 'utf-8'); ?>-->
+                                        <?php  if($description!=-1)
+                                                    {echo $description;}
+                                                else
+                                                    {echo $stage_desc;}
+                                                     //echo $stage_title;
+                                        ?>
                                     </textarea>
                                 </div>
                             </div>
@@ -211,17 +256,27 @@ $user_arr = get_user_select($colname_Recordset1);
                                     <?php echo $multilingual_default_task_planstart; ?><span id="datepicker_msg"></span>
                                 </label>
                                 <div>
-                                    <input type="text" name="plan_start" id="datepicker" value="<?php echo $row_Recordset1['start']; ?>" class="form-control" />
+                                    <input type="text" name="stage_start" id="datepicker" value=
+                                    "<?php if($st_time == -1)
+                                                {echo $stage_st;}
+                                            else 
+                                                {echo $st_time;}
+                                     ?>" class="form-control" />
                                 </div>
                             </div>
 
                             <!-- 结束时间 -->
                             <div class="form-group col-xs-12">
                                 <label for="datepicker2">
-                                    <?php echo $multilingual_default_task_planend; ?><span id="csa_plan_et_msg"></span>
+                                    <?php echo $multilingual_default_task_planend; ?><span id="datepicker2_msg"></span>
                                 </label>
                                 <div>
-                                    <input type="text" name="plan_end" value="<?php echo $row_Recordset1['end']; ?>" id="datepicker2" class="form-control" />
+                                    <input type="text" name="stage_end" value=
+                                    "<?php if($en_time == -1)
+                                                {echo $stage_et;}
+                                            else
+                                                {echo $en_time;}
+                                    ?>" id="datepicker2" class="form-control" />
                                 </div>
                             </div>
 
@@ -244,7 +299,7 @@ $user_arr = get_user_select($colname_Recordset1);
 
 
                 <input type="hidden" name="MM_update" value="form1" />
-                <input type="hidden" name="id" value="<?php echo $row_Recordset1['id']; ?>" />
+                <input type="hidden" name="id" value="<?php echo $colname_Recordset1; ?>" />
             </td>
         </tr>
     </table>
