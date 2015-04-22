@@ -272,7 +272,7 @@ while($row_stage = mysql_fetch_array($Result_stage))
 
       $nodename = "<span style ='color:".$str[0]."'>■</span>"." [任务]".$row_task['csa_text'];
       $nodetitle = $row_task['task_status'];
-      $result[] = array('id'=>$row_task['TID'],'pid'=>$pid,'name'=>$nodename,'title'=>$nodetitle,);
+      $result[] = array('id'=>$row_task['tid'],'pid'=>$pid,'name'=>$nodename,'title'=>$nodetitle,);
   }
 }
 

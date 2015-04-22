@@ -33,7 +33,8 @@ if(frm != null && subWeb != null)
 </script>
 <div class="tree_div" id="main_left">
     <?php if($str <> "0"){ ?>
-    <h5 class="font_big18 fontbold"><?php echo $multilingual_project_view_wbs; ?></h5>
+    <h5 class="font_big1
+    8 fontbold"><?php echo $multilingual_project_view_wbs; ?></h5>
     
 <script type="text/javascript">
         <!--
@@ -41,14 +42,21 @@ if(frm != null && subWeb != null)
         
         d = new dTree('d');
         d.add(0,-1,'<?php echo "<b>[".$multilingual_head_project."]".$project_name."</b>"; ?>','<?php  echo $prjurl; ?>');
-        // for(i=0;i<r.length;i++)
-        // {
-        //     if(Number(R[i].id) >100000){//表示是阶段
-        //         d.add(Number(r[i].id),Number(r[i].pid),r[i].name,"stage_view.php?recordID="+(Number(R[i].id)-100000),r[i].title);
-        //     }else{//表示是任务
-        //         d.add(Number(r[i].id),Number(r[i].pid),r[i].name,"default_task_edit.php?pagetab=alltask&editID="+r[i].id,r[i].title);
-        //     }            
-        // }
+
+        for(i=0;i<r.length;i++)
+        {
+            d.add(r[i].id,r[i].pid,r[i].name,'<?php  echo $prjurl; ?>');
+            // document.write(r[i].id);
+            // document.write("  ");
+            // document.write(r[i].pid);
+            // document.write("  "+r[i].name+"  ");
+            // document.write("</br>");
+            // if(Number(R[i].id) >100000){//表示是阶段
+            //     d.add(Number(r[i].id),Number(r[i].pid),r[i].name,"stage_view.php?recordID="+(Number(R[i].id)-100000),r[i].title);
+            // }else{//表示是任务
+            //     d.add(Number(r[i].id),Number(r[i].pid),r[i].name,"default_task_edit.php?pagetab=alltask&editID="+r[i].id,r[i].title);
+            // }            
+        }
         document.write(d);
 
 </script>
