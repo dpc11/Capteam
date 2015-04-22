@@ -212,7 +212,7 @@ function addcomm()
 		  $project_id = $row_Recordset_task['csa_project'];
 		  $project_name = $row_Recordset_task['project_name'];
 		  $node_id_task = $row_Recordset_task['tid'];
-		   //require_once('tree.php'); 		   
+		   require_once('tree.php'); 		   
 		   ?></td>  	   
         </tr>
       
@@ -233,17 +233,20 @@ function addcomm()
             </ul>	
 			</td>
         </tr>
-		
 		<!-- 任务标题 -->
-        <tr>
-          <td >
-            <span class="breakwords float_left"><h2> <?php echo htmlentities($row_Recordset_task['csa_text'], ENT_COMPAT, 'utf-8'); ?></h2></span> </td>
-        </tr>
-		
-		
+		                <tr>
+                            <td>
+                                <div class="breakwords">
+                                    <h2>[<?php echo $multilingual_head_task; ?>]<?php echo htmlentities($row_Recordset_task['csa_text'], ENT_COMPAT, 'utf-8'); ?></h2>
+                                </div>
+
+                            </td>
+                        </tr>
 		<tr>
 			<td>
 				<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="info_task_bg" style="margin-bottom:10px;">
+                        
+					
   
 					<tr>
 						<!-- 指派给谁 -->
