@@ -387,7 +387,8 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
     <tr>
      
 <!-- 左边20%的宽度的树或者说明  -->
-      <td width="20%" class="input_task_right_bg" valign="top"><table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
+      <td width="20%" class="input_task_right_bg" valign="top">
+	  <table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
         <tr>
           <td valign="top"><?php
 		  $project_id = $row_DetailRS1['id'];
@@ -476,7 +477,7 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
 <!-- 分解阶段 -->
              <?php if($_SESSION['MM_rank'] > "2") { ?>
 			 <td width="12%">
-			 <a href="stage_add.php?projectID=<?php echo $row_DetailRS1['id']; ?>&formproject=1" >
+			 <a href="stage_add.php?pid=<?php echo $row_DetailRS1['id']; ?>&formproject=1" >
 			 <span class="glyphicon glyphicon-random"></span> <?php echo $multilingual_project_newstage; ?></a></td>
 			 <?php }  ?>
 

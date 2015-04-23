@@ -29,7 +29,7 @@ $pagename = end($pagename);
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>WSS</title>
+<title>Capteam</title>
 <link href="skin/themes/base/lhgdialog.css" rel="stylesheet" type="text/css" />
 <link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
 <link href="skin/themes/base/tk_style.css" rel="stylesheet" type="text/css" />
@@ -51,7 +51,8 @@ if(strpos($_SERVER["HTTP_USER_AGENT"],"MSIE 8.0") || strpos($_SERVER["HTTP_USER_
 
   <div class="topbar" id="headerlink" >
 
-    <div class="logo"><a href="index.php" class="logourl" >&nbsp;</a></div>
+	<div style="background-color:#626262;width:102px;height:35px;float:left;margin-top:2px;margin-left:15px;margin-right:20px;"><h4 style="color:white;FONT-FAMILY: Comic Sans MS;">Capteam</h4></div>
+    <!--<div class="logo"><a href="index.php" class="logourl" >&nbsp;</a></div>-->
     <div class="nav_normal2">
     
       <a href="project.php" class="

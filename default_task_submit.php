@@ -2,32 +2,22 @@
 <?php require_once('session_unset.php'); ?>
 <?php require_once('session.php'); ?>
 <?php
-$restrictGoTo = "user_error3.php";
-if ($_SESSION['MM_rank'] < "2") {   
-  header("Location: ". $restrictGoTo); 
-  exit;
-}
 
 $project_id = "-1";
 if (isset($_GET['projectid'])) {
   $project_id = $_GET['projectid'];
 }
-
-$p_id = "-1";
-if (isset($_GET['pid'])) {
-  $p_id = $_GET['pid'];
+$stage_id = "-1";
+if (isset($_GET['stagetid'])) {
+  $stage_id = $_GET['stagetid'];
 }
-
-$fd = "0";
-if (isset($_GET['folder'])) {
-  $fd = $_GET['folder'];
-}
-
+$fd = "0";//文件
+/*
 $pfiles = "-1";
 if (isset($_GET['pfile'])) {
   $pfiles = $_GET['pfile'];
 }
-
+*/
 $editFormAction = $_SERVER['PHP_SELF'];
 if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
@@ -39,16 +29,17 @@ $tk_doc_description = "'',";
 $tk_doc_description = sprintf("%s,", GetSQLValueString(str_replace("%","%%",$_POST['tk_doc_description']), "text"));
 }
 
+//附件
 if ( empty( $_POST['csa_remark1'] ) ){
-$csa_remark1 = "'',";
+$tk_doc_attachment = "'',";
 }else{
-$csa_remark1 = sprintf("%s,", GetSQLValueString(str_replace("%","%%",$_POST['csa_remark1']), "text"));
+$tk_doc_attachment = sprintf("%s,", GetSQLValueString(str_replace("%","%%",$_POST['csa_remark1']), "text"));
 }
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
-  $insertSQL = sprintf("INSERT INTO tk_document (tk_doc_title, tk_doc_description, tk_doc_attachment, tk_doc_class1, tk_doc_class2, tk_doc_create, tk_doc_createtime, tk_doc_edit, tk_doc_backup1, tk_doc_type, tk_doc_backup2) VALUES (%s, $tk_doc_description $csa_remark1 %s, %s, %s, %s, %s, %s, '', '')",
+  $insertSQL = sprintf("INSERT INTO tk_document (tk_doc_title, tk_doc_description, tk_doc_attachment, tk_doc_pid, tk_doc_class2, tk_doc_create, tk_doc_createtime, tk_doc_edit, tk_doc_backup1, tk_doc_type, tk_doc_backup2) VALUES (%s, $tk_doc_description $csa_remark1 %s, %s, %s, %s, %s, %s, '', '')",
                        GetSQLValueString($_POST['tk_doc_title'], "text"),
-                       GetSQLValueString($_POST['tk_doc_class1'], "text"),
+                       GetSQLValueString($_POST['prod'], "text"),
                        GetSQLValueString($_POST['tk_doc_class2'], "text"),
                        GetSQLValueString($_POST['tk_doc_create'], "text"),
                        GetSQLValueString($_POST['tk_doc_createtime'], "text"),
@@ -58,6 +49,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
   mysql_select_db($database_tankdb, $tankdb);
   $Result1 = mysql_query($insertSQL, $tankdb) or die(mysql_error());
 
+  
+  /*
   $newID = mysql_insert_id();
   $docID = $newID;
   $newName = $_SESSION['MM_uid'];
@@ -67,7 +60,7 @@ $insertSQL2 = sprintf("INSERT INTO tk_log (tk_log_user, tk_log_action, tk_log_ty
                        GetSQLValueString($multilingual_log_adddoc, "text"),
                        GetSQLValueString($docID, "text"));  
   $Result2 = mysql_query($insertSQL2, $tankdb) or die(mysql_error());
-
+*/
 if ( $pfiles== "1") {
 	  $pf = "&pfile=1";
 	  } else {
@@ -78,12 +71,12 @@ if (isset($_GET['pagetab'])) {
   $pagetabs = $_GET['pagetab'];
 }
 $ptab = "&pagetab=".$pagetabs;	  
-  $insertGoTo = "file_view.php?recordID=$newID&folder=$fd&projectID=$project_id".$pf.$ptab;
-
-  
-  if (isset($_SERVER['QUERY_STRING'])) {
-   // $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-  //  $insertGoTo .= $_SERVER['QUERY_STRING'];
+//  $insertGoTo = "file_view.php?recordID=$newID&folder=$fd&projectID=$project_id".$pf.$ptab;
+$insertGoTo = "default_task_edit.php";
+ 
+if (isset($_SERVER['QUERY_STRING'])) {
+    $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
+    $insertGoTo .= $_SERVER['QUERY_STRING'];
   }
   header(sprintf("Location: %s", $insertGoTo));
 }
@@ -215,11 +208,10 @@ $ptab = "&pagetab=".$pagetabs;
                 </button>
 
 
-                <input type="hidden" name="tk_doc_class1" id="tk_doc_class1" value="<?php echo $project_id; ?>" />
+                <input type="hidden" name="prod" id="prod" value="<?php echo $project_id; ?>" />
                 <input type="hidden" name="tk_doc_class2" id="tk_doc_class2" value="<?php echo $p_id; ?>" />
                 <input name="tk_doc_create" type="hidden" value="<?php echo " {$_SESSION[ 'MM_uid']} "; ?>" />
                 <input name="tk_doc_createtime" type="hidden" value="<?php echo date(" Y-m-d H:i:s "); ?>" />
-                <input name="tk_doc_edit" type="hidden" value="<?php echo " {$_SESSION[ 'MM_uid']} "; ?>" />
                 <input type="hidden" name="tk_doc_backup1" id="tk_doc_backup1" value="<?php echo $fd; ?>" />
 
 

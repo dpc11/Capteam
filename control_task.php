@@ -234,7 +234,9 @@ $query_Recordset1 = sprintf("SELECT *,
  							AND tk_task.csa_plan_et >=%s)
 							OR (tk_task.csa_plan_st >=%s
  							AND tk_task.csa_plan_et <=%s)
-														
+								
+							 AND csa_del_status=1
+							 
 							ORDER BY %s %s", 
 							
 							GetSQLValueString($startday , "text"),
@@ -442,7 +444,7 @@ $outwhere = "";
 				$outwhere.= " tk_task.test01 LIKE $cc_tome AND";
 			}
 			$outwhere.= " tk_status.task_status NOT LIKE $outstfinish AND";
-			$outwhere.= " tk_task.csa_plan_et <= $outday";
+			$outwhere.= " tk_task.csa_plan_et <= $outday  AND csa_del_status=1";
 
 mysql_select_db($database_tankdb, $tankdb);
 $query_timeout = "SELECT *, 
@@ -500,14 +502,14 @@ $totalRows_tkstatus = mysql_num_rows($tkstatus);
 
 //查找与自己相关的所有项目
 mysql_select_db($database_tankdb, $tankdb);
-$query_Recordset_project = sprintf("SELECT id, project_name,project_text, project_start, project_end, project_to_user, project_lastupdate, project_create_time FROM tk_project inner join tk_team on tk_team.tk_team_pid=tk_project.id WHERE tk_team_uid = %s ORDER BY tk_project.project_name ASC",GetSQLValueString($_SESSION['MM_uid'],"int"));
+$query_Recordset_project = sprintf("SELECT id, project_name,project_text, project_start, project_end, project_to_user, project_lastupdate, project_create_time FROM tk_project inner join tk_team on tk_team.tk_team_pid=tk_project.id WHERE tk_team_uid = %s AND tk_team_del_status=1 ORDER BY tk_project.project_name ASC",GetSQLValueString($_SESSION['MM_uid'],"int"));
 $Recordset_project = mysql_query($query_Recordset_project, $tankdb) or die(mysql_error());
 $row_Recordset_project = mysql_fetch_assoc($Recordset_project);
 $totalRows_Recordset_project = mysql_num_rows($Recordset_project);
 
 //与自己相关的所有组的组员
 mysql_select_db($database_tankdb, $tankdb);
-$query_Recordset2 = sprintf("SELECT * FROM tk_user, tk_team,tk_project WHERE tk_user.uid in ( select distinct tk_team_uid from tk_team,tk_project WHERE tk_team_pid in (SELECT id FROM tk_project inner join tk_team on tk_team.tk_team_pid=tk_project.id WHERE tk_team_uid = %s)) ORDER BY  tk_display_name ASC",GetSQLValueString($_SESSION['MM_uid'],"int"));
+$query_Recordset2 = sprintf("SELECT * FROM tk_user, tk_team,tk_project WHERE tk_user_del_status=1 AND tk_user.uid in ( select distinct tk_team_uid from tk_team,tk_project WHERE tk_team_del_status=1 AND project_del_status=1 AND tk_team_pid in (SELECT id FROM tk_project inner join tk_team on tk_team.tk_team_pid=tk_project.id WHERE tk_team_uid = %s AND project_del_status=1 AND tk_team_del_status=1)) ORDER BY  tk_display_name ASC",GetSQLValueString($_SESSION['MM_uid'],"int"));
 $Recordset2 = mysql_query($query_Recordset2, $tankdb) or die(mysql_error());
 $row_Recordset2 = mysql_fetch_assoc($Recordset2);
 $totalRows_Recordset2 = mysql_num_rows($Recordset2);

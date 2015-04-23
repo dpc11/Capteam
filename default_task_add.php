@@ -8,10 +8,7 @@ $myid = $_SESSION['MM_uid'];
 
 $to_user = "-1";
 if (isset($_POST['csa_to_user'])) {
-$to_user_arr = explode(", ,", $_POST['csa_to_user']);
-echo $to_user_arr;
-  $to_user= $to_user_arr['0'];
-  echo $to_user;
+  $to_user= $_POST['csa_to_user'];
 }
 
 $title = "-1";
@@ -60,7 +57,7 @@ $csa_description = sprintf("%s", GetSQLValueString(str_replace("%","%%",$_POST['
 }
 
 if ( empty( $_POST['csa_tag'] ) ){
-$csa_tag = "''";
+$csa_tag = "";
 }else{
 $csa_tag = sprintf("%s", GetSQLValueString(str_replace("%","%%",$_POST['csa_tag']), "text"));
 }
@@ -94,7 +91,13 @@ $cc_post= $_POST['user_cc'];
 $cc_post= "[".implode(",",$_POST['user_cc'])."]";
 }
 
-$newID = add_task( $cc_post, $_POST['csa_from_user'],  $to_user_arr['0'],  $project_id, $stage_id, $_POST['csa_text'], $_POST['csa_priority'],  $_POST['plan_start'], $_POST['plan_end'], $_POST['plan_hour'],  $_SESSION['MM_uid'], $csa_tag, $csa_description );
+if(date($_POST['plan_start'])>date('Y-m-d')){
+	$status=1;
+}else{
+	$status=2;
+}
+
+$newID = add_task( $cc_post, $_POST['csa_from_user_name'],  $to_user,  $project_id, $stage_id, $_POST['csa_text'], $_POST['csa_priority'],  $_POST['plan_start'], $_POST['plan_end'], $_POST['plan_hour'], $status, $csa_tag, $csa_description );
 
 /*
 if ($project_url == 1){
@@ -164,7 +167,6 @@ $user_arr = get_user_select($project_id);
 <!--
 J.check.rules = [
 	{ name: 'select4', mid: 'csa_to_user_msg', requir: true, type: 'group', noselected: '', warn: '<?php echo $multilingual_default_required1; ?>' },
-	{ name: 'select2', mid: 'csa_from_user_msg', requir: true, type: 'group', noselected: '', warn: '<?php echo $multilingual_default_required1; ?>' },
 	{ name: 'datepicker2', mid: 'csa_plan_st_msg', requir: true, type: 'date',  warn: '<?php echo $multilingual_error_date; ?>' },
 	{ name: 'datepicker3', mid: 'csa_plan_et_msg', requir: true, type: 'date',  warn: '<?php echo $multilingual_error_date; ?>' },
 	{ name: 'csa_text', mid: 'csa_text_msg', requir: true, type: '',  warn: '<?php echo $multilingual_default_required4; ?>'},
@@ -226,12 +228,6 @@ function submitform()
 						filterPlaceholder: '<?php echo $multilingual_user_filter; ?>'
                     });
 					
-					$('#select2').multiselect({
-
-			        	enableCaseInsensitiveFiltering: true,
-						maxHeight: 360,
-						filterPlaceholder: '<?php echo $multilingual_user_filter; ?>'
-                    });
 					
 					$('#user_cc').multiselect({
 					
@@ -251,11 +247,13 @@ function submitform()
 <form action="<?php echo $editFormAction; ?>" method="post" name="myform" id="myform">
   <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
-      <td width="25%" class="input_task_right_bg" valign="top"><table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
+      <td width="25%" class="input_task_right_bg" valign="top">
+	  
+	  <table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
           <tr>
             <td valign="top" >
 			<dl style="margin-top:20px;">
-  <dt><h4 class="gray2"><?php echo $multilingual_default_taskproject; ?></h4></dt>
+  <dt><h4 class="gray2"><strong><?php echo $multilingual_default_taskproject; ?></strong></h4></dt>
   <dd><a href="project_view.php?recordID=<?php echo $row_Recordset_project['id']; ?>" ><?php echo $row_Recordset_project['project_name']; ?></a></dd>
 </dl>
 <dl>
@@ -275,6 +273,8 @@ function submitform()
               </td>
           </tr>
         </table></td>
+
+
       <td width="75%" valign="top"><table width="98%" border="0" cellspacing="0" cellpadding="5" align="center">
           <tr>
 		  <!--新建任务-->	
@@ -303,9 +303,10 @@ function submitform()
                 <span class="help-block"><?php echo $multilingual_taskadd_totip; ?></span> </div>
 				<!--来自-->	
 				<div class="form-group  col-xs-6">
-                <label for="select2"><?php echo $multilingual_default_task_from; ?><span id="csa_from_user_msg"></span></label>
+                <label for="csa_from_user"><?php echo $multilingual_default_task_from; ?><span id="csa_from_user_msg"></span></label>
                 <div>
-                  <input name="csa_from_user" type="text"  id="csa_from_user" value="<?php echo "{$_SESSION['MM_uid']}"; ?>" >
+                  <input name="csa_from_user_name" type="hidden"  id="csa_from_user_name" value="<?php echo "{$_SESSION['MM_uid']}"; ?>" />
+                  <input name="csa_from_user" type="text"  id="csa_from_user" value="<?php echo "{$_SESSION['MM_Displayname']}"; ?>"  class="form-control" width="10px"  />
                 </div>
                 <span class="help-block"><?php echo $multilingual_exam_tip; ?></span> </div>			
 				<!--抄送-->	
