@@ -358,12 +358,13 @@ a:focus {
 }
 
 .logo {
-    background: url(images/logo.gif) no-repeat;
-    width: 102px;
-    height: 25px;
+    background: url(images/logo.png);
+    background-size: contain;
+    width: 150px;
+    height: 30px;
     float: left;
     margin-top: 7px;
-    margin-left: 5px;
+    margin-left: 20px;
     margin-right: 20px;
 }
 
@@ -372,8 +373,8 @@ a:focus {
 }
 
 .logourl {
-    width: 102px;
-    height: 25px;
+    width: 150px;
+    height: 30px;
     display: block;
 }
 
