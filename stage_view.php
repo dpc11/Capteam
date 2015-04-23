@@ -389,7 +389,7 @@ document.getElementById('tab_' + i).className = (i == ".$tabid.") ? 'onhover' : 
                 <table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
                     <tr>
                         <td valign="top">
-                            <?php $project_id=$row_DetailRS1[ 'stageid']; $project_name=$row_DetailRS1[ 'project_name']; $node_id_task=- 1; /*require_once( 'tree.php');*/ ?>
+                            <?php $project_id=$row_DetailRS1[ 'stageid']; $project_name=$row_DetailRS1[ 'project_name']; $node_id_task=- 1; require_once( 'tree.php'); ?>
                         </td>
                     </tr>
 
@@ -484,7 +484,7 @@ document.getElementById('tab_' + i).className = (i == ".$tabid.") ? 'onhover' : 
 
                                         <!-- 返回 -->
                                         <td>
-                                            <a class="mouse_over" href="<?php echo $prjlisturl; ?>">
+                                            <a class="mouse_over" href="project_view.php?recordID=<?php echo $now_pid?>">
                                                 <span class="glyphicon glyphicon-arrow-left"></span>
                                                 <?php echo $multilingual_global_action_back; ?>
                                             </a>
