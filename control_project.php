@@ -92,7 +92,7 @@ mysql_select_db($database_tankdb, $tankdb);
 //修改后的sql语句					
 $query_Recordset1 = sprintf("SELECT p.id,p.project_name,p.project_text,p.project_start,p.project_end,p.project_to_user,p.project_lastupdate,p.project_del_status,p.project_create_time 
 	                        FROM tk_project p, tk_team t WHERE p.id=t.tk_team_pid AND
-								$where AND p.project_name LIKE %s $where2 ORDER BY p.%s %s", 
+								$where AND p.project_name LIKE %s $where2 GROUP BY p.id ORDER BY p.%s %s", 
 							GetSQLValueString("%" . $colinputtitle_Recordset1 . "%", "text"),
 							GetSQLValueString($sortlist, "defined", $sortlist, "NULL"),
 							GetSQLValueString($orderlist, "defined", $orderlist, "NULL"));
