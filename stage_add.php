@@ -17,6 +17,7 @@ if(isset($_GET['pid'])){
   $thisProj = $_GET['pid'];
 }
 
+$dateError = 1;//没有错误
 /*
 $to_user = "-1";
 if (isset($_POST['csa_to_user'])) {
@@ -131,10 +132,12 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 
       if($en_time<$today_date)
       {
-          echo("illegal");
+          //echo("illegal");
+         $dateError = -1;//结束时间小于今天
       }else if($en_time<$st_time)
       {
-          echo("can't");
+          //echo("can't");
+         $dateError = -2;//结束时间小于开始时间
       }else
       {
           $insertSQL = sprintf("INSERT INTO tk_stage(tk_stage_title,tk_stage_desc,tk_stage_pid,
@@ -255,8 +258,8 @@ J.check.rules = [
 //	{ name: 'select4', mid: 'csa_to_user_msg', requir: true, type: 'group', noselected: '', warn: '<?php echo $multilingual_default_required1; ?>' },
 //	{ name: 'select2', mid: 'csa_from_user_msg', requir: true, type: 'group', noselected: '', warn: '<?php echo $multilingual_default_required1; ?>' },
 //	{ name: 'csa_type', mid: 'csa_type_msg', requir: true, type: 'group', noselected: '', warn: '<?php echo $multilingual_default_required3; ?>' },
-	{ name: 'datepicker2', mid: 'csa_plan_st_msg', requir: true, type: 'date',  warn: '<?php echo $multilingual_error_date; ?>' },
-	{ name: 'datepicker3', mid: 'csa_plan_et_msg', requir: true, type: 'date',  warn: '<?php echo $multilingual_error_date; ?>' },
+	//{ name: 'datepicker2', mid: 'csa_plan_st_msg', requir: true, type: 'date',  warn: '<?php echo $multilingual_error_date; ?>' },
+	//{ name: 'datepicker3', mid: 'csa_plan_et_msg', requir: true, type: 'date',  warn: '<?php echo $multilingual_error_date; ?>' },
 	{ name: 'tk_stage_title', mid: 'tk_stage_title_msg', requir: true, type: '',  warn: '<?php echo $multilingual_default_required4; ?>'},
 //	{ name: 'plan_hour', mid: 'plan_hour_msg', type: 'rang', min: -1, warn: '<?php echo $multilingual_default_required5; ?>' }
    
@@ -518,7 +521,11 @@ do {
 
 <!-- 起始时间 -->
 				<div class="form-group col-xs-12">
-                <label for="datepicker2"><?php echo $multilingual_default_task_planstart; ?><span id="csa_plan_st_msg"></span></label>
+                <label for="datepicker2"><?php echo $multilingual_default_task_planstart; ?><!--<span id="csa_plan_st_msg"></span>-->
+                    <lable style="color:#F00;font-size:14px">
+                       <?php if($dateError==-2) { echo ('&nbsp&nbsp&nbsp');echo "结束时间小于开始时间";} ?>
+                    </lable>
+                </label>
                 <div>
                   <input type="text" name="stage_start" id="datepicker2" value="<?php if($st_time==-1){echo date("Y-m-d");} else {echo $st_time;} ?>" class="form-control"  />
                 </div>
@@ -527,7 +534,11 @@ do {
 			  
 <!-- 结束时间 -->
               <div class="form-group col-xs-12">
-                <label for="datepicker3"><?php echo $multilingual_default_task_planend; ?><span id="csa_plan_et_msg"></span></label>
+                <label for="datepicker3"><?php echo $multilingual_default_task_planend; ?><!--<span id="csa_plan_et_msg"></span>-->
+                    <lable style="color:#F00;font-size:14px">
+                       <?php if($dateError==-2) {echo ('&nbsp&nbsp&nbsp');echo "结束时间小于开始时间";} else if ($dateError==-1) {echo ('&nbsp&nbsp&nbsp'); echo "结束时间小于今天";} ?>
+                    </lable>
+                </label>
                 <div>
                   <input type="text" name="stage_end" id="datepicker3" value="<?php if($en_time==-1){echo date("Y-m-d",strtotime("+1 day"));} else {echo $en_time;} ?>" class="form-control" />
                 </div>

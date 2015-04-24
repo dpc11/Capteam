@@ -12,6 +12,7 @@ $now_uid = $_SESSION['MM_uid'];
 //$now_sid = $_SESSION['MM_sid'];
 $now_pid = -1;
 $now_sid = -1;
+$today_date = date('Y-m-d');
 if(isset($_GET['pid'])){
   $now_pid = $_GET['pid'];
 }
@@ -432,7 +433,7 @@ document.getElementById('tab_' + i).className = (i == ".$tabid.") ? 'onhover' : 
                                             <?php echo $row_DetailRS1['tk_stage_st']; ?>
                                             <?php } ?> </td>
 
-                                        <td class="info_task_title">
+                                        <td width="12%" class="info_task_title">
                                             <?php if ($row_DetailRS1['tk_stage_et'] <> "0000-00-00") { ?>
                                             <?php echo $multilingual_project_end; ?>
                                             <?php } ?> </td>
@@ -441,6 +442,37 @@ document.getElementById('tab_' + i).className = (i == ".$tabid.") ? 'onhover' : 
                                             <?php echo $row_DetailRS1['tk_stage_et']; ?>
                                             <?php } ?>
                                         </td>
+                                    </tr>
+                                        <td width="12%" class="info_task_title">
+                                            <?php echo "阶段状态";?>
+                                        </td>
+                                        <td>
+                                            <?php if($row_DetailRS1['tk_stage_st']>$today_date)
+                                                     echo "未开始";
+                                                  else if($row_DetailRS1['tk_stage_et']<$today_date)
+                                                     echo "已结束";
+                                                  else
+                                                     echo "进行中";
+                                            ?>
+
+                                        </td>
+                                        <td width="12%" class="info_task_title">
+                                            <?php echo "剩余时间";?>
+                                        </td>
+                                        <td>
+                                            <?php if($row_DetailRS1['tk_stage_et']<$today_date) 
+                                                     echo "0";
+                                                  else
+                                                    {
+                                                      $minus = strtotime($row_DetailRS1['tk_stage_et']) - strtotime($today_date);
+                                                      $minu_days = round($minus/3600/24);
+                                                      echo $minu_days;
+                                                      echo "天 （包含节假日）";
+                                                    }
+                                            ?>
+                                        </td>
+                                    <tr>
+
                                     </tr>
                                 </table>
                             </td>
