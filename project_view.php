@@ -761,7 +761,7 @@ echo "style='display:none'";
             <td class="task_title">
 			<div  class="text_overflow_150 task_title"  title="<?php echo $row_Recordset_task['csa_text']; ?>">
 			<a href="default_task_edit.php?editID=<?php echo $row_Recordset_task['TID']; ?>&pagetab=alltask" >
-			<b>[<?php echo $row_Recordset_task['task_tpye']; ?>]</b> <?php echo $row_Recordset_task['csa_text']; ?>			</a>			</div></td>
+			 <?php echo $row_Recordset_task['csa_text']; ?>			</a>			</div></td>
 <!--            <td ><a href="user_view.php?recordID=<?php echo $row_Recordset_task['csa_to_user']; ?>"><?php echo $row_Recordset_task['tk_display_name']; ?></a></td>-->
 <!--            <td><?php echo $row_Recordset_task['task_status_display']; ?></td>-->
             <td><?php echo $row_Recordset_task['csa_plan_st']; ?></td>
