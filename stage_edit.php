@@ -23,7 +23,7 @@ $selStage = "SELECT * FROM tk_stage WHERE stageid = $colname_Recordset1";
   $stage_desc = $row['tk_stage_desc'];
   $stage_st = $row['tk_stage_st'];
   $stage_et = $row['tk_stage_et'];
-  echo $stage_title;
+  //echo $stage_title;
 
   $title = "-1";
     if (isset($_POST['tk_stage_title'])) {
