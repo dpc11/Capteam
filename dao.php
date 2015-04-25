@@ -8,27 +8,41 @@ class project_dao
 {
 
     //根据项目id获得项目信息的数据库操作
-public function get_project_by_id($project_id){
-    global $tankdb;
-    global $database_tankdb;
-    mysql_select_db($database_tankdb, $tankdb);
-    $query_project =  sprintf("SELECT * FROM tk_project WHERE id = %s",GetSQLValueString($project_id, "int"));  
-    $project = mysql_query($query_project, $tankdb) or die(mysql_error());
-    $row_project = mysql_fetch_assoc($project);
+    public function get_project_by_id($project_id){
+        global $tankdb;
+        global $database_tankdb;
+        mysql_select_db($database_tankdb, $tankdb);
+        $query_project =  sprintf("SELECT * FROM tk_project WHERE id = %s",GetSQLValueString($project_id, "int"));  
+        $project = mysql_query($query_project, $tankdb) or die(mysql_error());
+        $row_project = mysql_fetch_assoc($project);
           
-    $projectinfo->id = $row_project['id'];
-    $projectinfo->name = $row_project['project_name'];
-    $projectinfo->text = $row_project['project_text'];
-    $projectinfo->start = $row_project['project_start'];
-    $projectinfo->end = $row_project['project_end'];
-    $projectinfo->leader = $row_project['project_to_user'];
-    $projectinfo->lastupdate = $row_project['project_lastupdate'];
-    $projectinfo->del_status = $row_project['project_del_status'];
-    $projectinfo->create_time = $row_project['project_create_time'];
+        $projectinfo->id = $row_project['id'];
+        $projectinfo->name = $row_project['project_name'];
+        $projectinfo->text = $row_project['project_text'];
+        $projectinfo->start = $row_project['project_start'];
+        $projectinfo->end = $row_project['project_end'];
+        $projectinfo->leader = $row_project['project_to_user'];
+        $projectinfo->lastupdate = $row_project['project_lastupdate'];
+        $projectinfo->del_status = $row_project['project_del_status'];
+        $projectinfo->create_time = $row_project['project_create_time'];
 
-    return $projectinfo;
-}
+        return $projectinfo;
+    }
 
+    //获取某个用户负责的项目的数量
+    public function get_my_total_project_num($user_id){
+        global $tankdb;
+        global $database_tankdb;
+        mysql_select_db($database_tankdb, $tankdb);
+        $query_Recordset_sumtotal = sprintf("SELECT COUNT(*) as count_prj   
+                                             FROM tk_project         
+                                             WHERE project_to_user = %s", 
+                                             GetSQLValueString($user_id, "int"));
+        $Recordset_sumtotal = mysql_query($query_Recordset_sumtotal, $tankdb) or die(mysql_error());
+        $row_Recordset_sumtotal = mysql_fetch_assoc($Recordset_sumtotal);
+        $my_totalprj=$row_Recordset_sumtotal['count_prj'];
+        return $my_totalprj;
+    }
 
 
 }
