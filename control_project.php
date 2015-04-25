@@ -36,68 +36,35 @@ if (isset($_GET['pagetab'])) {
   $pagetabs = $_GET['pagetab'];
 }
 
-// if ($pagetabs == "mprj" || $pagetabs == "jprj"){
-// $prjtouser = $_SESSION['MM_uid'];
-// if (isset($_GET['ptouser'])) {
-//   $prjtouser = $_GET['ptouser'];
-// }
-// }else {
-// $prjtouser = 0;
-// }
 //现在的时间
 $today_date = date('Y-m-d');
 $prjtouser = $_SESSION['MM_uid'];
 if($pagetabs == "jprj"){
 //我参与的
-//$where = "tk_task.csa_to_user = $prjtouser AND tk_status_project.task_status NOT LIKE '%%$multilingual_dd_status_prjfinish%%' AND";
 $where = "t.tk_team_uid = $prjtouser AND p.project_del_status != -1 AND t.tk_team_ulimit != 3";
 }else if($pagetabs == "closeprj"){
 //归档项目
-//$where = "tk_status_project.task_status LIKE '%%$multilingual_dd_status_prjfinish%%' AND";
 $where = "p.project_del_status != -1 AND p.project_end < '$today_date'";
 }else if($pagetabs == "mprj"){
 //我负责的项目
-//$where = "tk_status_project.task_status LIKE '%%$multilingual_dd_status_prjfinish%%' AND";
 $where = "p.project_to_user = $prjtouser AND p.project_del_status != -1";
 }else if($pagetabs == "allprj"){
 //所有项目
-//$where = "tk_status_project.task_status LIKE '%%$multilingual_dd_status_prjfinish%%' AND";
 $where = "t.tk_team_uid = $prjtouser";
 }
 else if($prjtouser <> 0 ) {
 //我负责的项目
-//$where = "project_to_user = $prjtouser AND tk_status_project.task_status NOT LIKE '%%$multilingual_dd_status_prjfinish%%' AND";
 $where = "p.project_to_user = $prjtouser AND p.project_del_status != -1";
 }else{
 //所有项目
-//$where = "tk_status_project.task_status NOT LIKE '%%$multilingual_dd_status_prjfinish%%' AND";	
 $where = "t.tk_team_uid = $prjtouser";
 } 
 
-if($pagetabs == "jprj" ){
-//$where1 = "inner join tk_task on tk_project.id=tk_task.csa_project";
-$where2 = "GROUP BY p.id";
-}else{
-//$where1 = "";
-$where2 = "";
-}
-
 mysql_select_db($database_tankdb, $tankdb);
-// $query_Recordset1 = sprintf("SELECT * FROM tk_project 
-							
-// 							inner join tk_user on tk_project.project_to_user=tk_user.uid 
-// 							inner join tk_status_project on tk_project.project_status=tk_status_project.psid 
-// 							$where1 
-// 							WHERE $where project_name LIKE %s $where2 ORDER BY tk_project.%s %s", 
-// 							GetSQLValueString("%" . $colinputtitle_Recordset1 . "%", "text"),
-// 							GetSQLValueString($sortlist, "defined", $sortlist, "NULL"),
-// 							GetSQLValueString($orderlist, "defined", $orderlist, "NULL"));
-
-
 //修改后的sql语句					
 $query_Recordset1 = sprintf("SELECT p.id,p.project_name,p.project_text,p.project_start,p.project_end,p.project_to_user,p.project_lastupdate,p.project_del_status,p.project_create_time 
 	                        FROM tk_project p, tk_team t WHERE p.id=t.tk_team_pid AND
-								$where AND p.project_name LIKE %s $where2 GROUP BY p.id ORDER BY p.%s %s", 
+								$where AND p.project_name LIKE %s GROUP BY p.id ORDER BY p.%s %s", 
 							GetSQLValueString("%" . $colinputtitle_Recordset1 . "%", "text"),
 							GetSQLValueString($sortlist, "defined", $sortlist, "NULL"),
 							GetSQLValueString($orderlist, "defined", $orderlist, "NULL"));
