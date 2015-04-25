@@ -2,7 +2,7 @@
 <?php require_once('session_unset.php'); ?>
 <?php require_once('session.php'); ?>
 <?php
-
+$dateError = 1;
 
 $colname_Recordset1 = "-1";
 if (isset($_GET['editID'])) {

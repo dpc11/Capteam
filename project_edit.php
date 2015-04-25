@@ -33,20 +33,33 @@ $project_end = sprintf("project_end=%s,", GetSQLValueString($_POST['project_end'
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
   //把当前时间作为最后一次修改时间
   $update_project_lastupdate = date("Y-m-d H:i:s",time());
-  //更新数据库
-  $updateSQL = sprintf("UPDATE tk_project SET project_name=%s, $project_text $project_start $project_end  project_lastupdate = '$update_project_lastupdate' WHERE id=%s",
-                       GetSQLValueString($_POST['project_name'], "text"),
-                       GetSQLValueString($_POST['id'], "int"));
-echo $updateSQL;
-  mysql_select_db($database_tankdb, $tankdb);
-  $Result1 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
+  $today_date = date('Y-m-d');
+  $now_time = date('Y-m-d H:i:s',time());
 
-  $updateGoTo = "project_view.php?recordID=$colname_Recordset1";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
-    $updateGoTo .= $_SERVER['QUERY_STRING'];
+  if($_POST['project_end']<$today_date)
+  {
+          //echo("illegal");
+            $dateError = -1;//结束时间小于今天
+  }else if($_POST['project_end'] <$_POST['project_start'])
+  {
+          //echo("can't");
+            $dateError = -2;//结束时间小于开始时间
+  }else{
+      //更新数据库
+      $updateSQL = sprintf("UPDATE tk_project SET project_name=%s, $project_text $project_start $project_end  project_lastupdate = '$update_project_lastupdate' WHERE id=%s",
+                           GetSQLValueString($_POST['project_name'], "text"),
+                           GetSQLValueString($_POST['id'], "int"));
+    echo $updateSQL;
+      mysql_select_db($database_tankdb, $tankdb);
+      $Result1 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
+
+      $updateGoTo = "project_view.php?recordID=$colname_Recordset1";
+      if (isset($_SERVER['QUERY_STRING'])) {
+        $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
+        $updateGoTo .= $_SERVER['QUERY_STRING'];
+      }
+      header(sprintf("Location: %s", $updateGoTo));
   }
-  header(sprintf("Location: %s", $updateGoTo));
 }
 
 
@@ -135,8 +148,8 @@ $user_list= $_POST['project_to_user'];
 <script type="text/javascript">
 J.check.rules = [
     { name: 'project_name', mid: 'projecttitle', type: 'limit', requir: true, min: 2, max: 32, warn: '<?php echo $multilingual_projectstatus_titlerequired; ?>' },
-	{ name: 'datepicker', mid: 'datepicker_msg', type: 'date',  warn: '<?php echo $multilingual_error_date; ?>' },
-	{ name: 'datepicker2', mid: 'datepicker2_msg', type: 'date',  warn: '<?php echo $multilingual_error_date; ?>' }
+	//{ name: 'datepicker', mid: 'datepicker_msg', type: 'date',  warn: '<?php echo $multilingual_error_date; ?>' },
+	//{ name: 'datepicker2', mid: 'datepicker2_msg', type: 'date',  warn: '<?php echo $multilingual_error_date; ?>' }
 	
 ];
 
@@ -245,14 +258,22 @@ window.onload = function()
               
 
 				<div class="form-group col-xs-12">
-                <label for="datepicker"><?php echo $multilingual_project_start; ?><span id="datepicker_msg"></span></label>
+                <label for="datepicker"><?php echo $multilingual_project_start; ?><!--<span id="datepicker_msg"></span>-->
+                      <lable style="color:#F00;font-size:14px">
+                            <?php if($dateError==-2) { echo ('&nbsp&nbsp&nbsp');echo "结束时间小于开始时间";} ?>
+                        </lable>
+                </label>
                 <div>
-				<input type="text" name="project_start" id="datepicker" value="<?php echo $row_Recordset1['project_start']; ?>"  class="form-control" />
+				            <input type="text" name="project_start" id="datepicker" value="<?php echo $row_Recordset1['project_start']; ?>"  class="form-control" />
                 </div>
-              </div>
+        </div>
 			  
               <div class="form-group col-xs-12">
-                <label for="datepicker2"><?php echo $multilingual_project_end; ?><span id="datepicker2_msg"></span></label>
+                <label for="datepicker2"><?php echo $multilingual_project_end; ?><!--<span id="datepicker2_msg"></span>-->
+                    <lable style="color:#F00;font-size:14px">
+                                <?php if($dateError==-2) {echo ('&nbsp&nbsp&nbsp');echo "结束时间小于开始时间";} else if ($dateError==-1) {echo ('&nbsp&nbsp&nbsp'); echo "结束时间小于今天";} ?>
+                       </lable>
+                </label>
                 <div>
 				<input type="text" name="project_end" value="<?php echo $row_Recordset1['project_end']; ?>" id="datepicker2"  class="form-control" />
                 </div>

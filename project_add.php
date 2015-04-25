@@ -3,6 +3,7 @@
     <?php require_once('session.php'); ?>
     <?php
     $restrictGoTo = "user_error3.php";
+    $dateError = 1;//no error
     if ($_SESSION['MM_rank'] < "4") {   
       header("Location: ". $restrictGoTo); 
       exit;
@@ -37,24 +38,39 @@
       //数据库修改后的SQL语句
         $new_project_createtime = date('Y-m-d');
         $new_project_lastupdate = date("Y-m-d H:i:s");
-        $insertSQL = sprintf("INSERT INTO tk_project (project_name, project_text, project_start, project_end, project_to_user,project_lastupdate,project_create_time)
-          VALUES (%s,$project_text %s, %s, %s, '$new_project_lastupdate','$new_project_createtime')",
-                           GetSQLValueString($_POST['project_name'], "text"),
-                           GetSQLValueString($_POST['project_start'], "date"),
-                           GetSQLValueString($_POST['project_end'], "date"),
-                           GetSQLValueString($_SESSION['MM_uid'], "int"));
+
+        $today_date = date('Y-m-d');
+        $now_time = date('Y-m-d H:i:s',time());
+
+        if($_POST['project_end']<$today_date)
+        {
+          //echo("illegal");
+            $dateError = -1;//结束时间小于今天
+        }else if($_POST['project_end'] <$_POST['project_start'])
+        {
+          //echo("can't");
+            $dateError = -2;//结束时间小于开始时间
+        }else{
+
+                $insertSQL = sprintf("INSERT INTO tk_project (project_name, project_text, project_start, project_end, project_to_user,project_lastupdate,project_create_time)
+                  VALUES (%s,$project_text %s, %s, %s, '$new_project_lastupdate','$new_project_createtime')",
+                                   GetSQLValueString($_POST['project_name'], "text"),
+                                   GetSQLValueString($_POST['project_start'], "date"),
+                                   GetSQLValueString($_POST['project_end'], "date"),
+                                   GetSQLValueString($_SESSION['MM_uid'], "int"));
 
 
 
-      mysql_select_db($database_tankdb, $tankdb);
-      $Result1 = mysql_query($insertSQL, $tankdb) or die(mysql_error());
-      $newID = mysql_insert_id();
-      $insertGoTo = "project_view.php?recordID=$newID";
-      if (isset($_SERVER['QUERY_STRING'])) {
-        $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-        $insertGoTo .= $_SERVER['QUERY_STRING'];
-      }
-      header(sprintf("Location: %s", $insertGoTo));
+              mysql_select_db($database_tankdb, $tankdb);
+              $Result1 = mysql_query($insertSQL, $tankdb) or die(mysql_error());
+              $newID = mysql_insert_id();
+              $insertGoTo = "project_view.php?recordID=$newID";
+              if (isset($_SERVER['QUERY_STRING'])) {
+                $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
+                $insertGoTo .= $_SERVER['QUERY_STRING'];
+              }
+              header(sprintf("Location: %s", $insertGoTo));
+        }
     }
 
     $user_arr = get_all_user_select();
@@ -129,8 +145,8 @@
     <script type="text/javascript">
     J.check.rules = [
         { name: 'project_name', mid: 'projecttitle', type: 'limit', requir: true, min: 2, max: 32, warn: '<?php echo $multilingual_projectstatus_titlerequired; ?>' },
-    	{ name: 'datepicker', mid: 'datepicker_msg', type: 'date',  warn: '<?php echo $multilingual_error_date; ?>' },
-    	{ name: 'datepicker2', mid: 'datepicker2_msg', type: 'date',  warn: '<?php echo $multilingual_error_date; ?>' }
+    	//{ name: 'datepicker', mid: 'datepicker_msg', type: 'date',  warn: '<?php echo $multilingual_error_date; ?>' },
+    	//{ name: 'datepicker2', mid: 'datepicker2_msg', type: 'date',  warn: '<?php echo $multilingual_error_date; ?>' }
     	
     ];
 
@@ -227,7 +243,8 @@
     			
                       </select>
                     </div>
-                    <span class="help-block"><?php echo $multilingual_project_tips2; ?></span> </div>					  
+                    <span class="help-block"><?php echo $multilingual_project_tips2; ?></span> 
+                </div>					  
                   <div class="form-group col-xs-12">
                     <label for="project_text"><?php echo $multilingual_project_description; ?></label>
                     <div>
@@ -237,7 +254,11 @@
 
     <!-- 起始时间 -->
     				<div class="form-group col-xs-12">
-                    <label for="datepicker"><?php echo $multilingual_project_start; ?><span id="datepicker_msg"></span></label>
+                    <label for="datepicker"><?php echo $multilingual_project_start; ?><!--<span id="datepicker_msg"></span>-->
+                        <lable style="color:#F00;font-size:14px">
+                            <?php if($dateError==-2) { echo ('&nbsp&nbsp&nbsp');echo "结束时间小于开始时间";} ?>
+                        </lable>
+                    </label>
                     <div>
                       <input type="text" name="project_start" id="datepicker" value="<?php echo date('Y-m-d'); ?>" class="form-control"  />
                     </div>
@@ -245,7 +266,11 @@
 
     <!-- 结束时间 -->		  
                   <div class="form-group col-xs-12">
-                    <label for="datepicker2"><?php echo $multilingual_project_end; ?><span id="datepicker2_msg"></span></label>
+                    <label for="datepicker2"><?php echo $multilingual_project_end; ?><!--<span id="datepicker2_msg"></span>-->
+                       <lable style="color:#F00;font-size:14px">
+                                <?php if($dateError==-2) {echo ('&nbsp&nbsp&nbsp');echo "结束时间小于开始时间";} else if ($dateError==-1) {echo ('&nbsp&nbsp&nbsp'); echo "结束时间小于今天";} ?>
+                       </lable>
+                    </label>
                     <div>
                       <input type="text" name="project_end" id="datepicker2" value="<?php echo date("Y-m-d",strtotime("+7 day")); ?>" class="form-control" />
                     </div>
