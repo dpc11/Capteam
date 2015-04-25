@@ -68,6 +68,18 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
   $today_date = date('Y-m-d');
   $now_time = date('Y-m-d H:i:s',time());
 
+  $selStartTime = "SELECT csa_plan_st FROM tk_task WHERE csa_project_stage=$colname_Recordset1
+   ORDER BY csa_plan_st";
+  mysql_select_db($database_tankdb,$tankdb);
+  $Result3 = mysql_query($selStartTime,$tankdb) or die(mysql_error());
+  $mostEarly = mysql_fetch_array($Result3);
+
+  $selEndTime = "SELECT csa_plan_et FROM tk_task WHERE csa_project_stage=$colname_Recordset1
+   ORDER BY csa_plan_et DESC";
+  mysql_select_db($database_tankdb,$tankdb);
+  $Result4 = mysql_query($selEndTime,$tankdb) or die(mysql_error());
+  $mostLate = mysql_fetch_array($Result4);
+
   if($en_time<$today_date)
   {
           //echo("illegal");
@@ -76,6 +88,12 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
   {
           //echo("can't");
          $dateError = -2;//结束时间小于开始时间
+  }else if($st_time>$mostEarly['csa_plan_st'])
+  {
+         $dateError = -3;//开始时间比已有的任务时间晚
+  }else if($en_time<$mostLate['csa_plan_et'])
+  {
+         $dateError = -4;//结束时间比已有的任务时间早
   }else {
 
   //更新数据库
@@ -310,7 +328,8 @@ $('#datepicker3').datepicker({
                                 </div>-->
                                  <label for="datepicker2"><?php echo $multilingual_default_task_planstart; ?><!--<span id="csa_plan_st_msg"></span>-->
                                         <lable style="color:#F00;font-size:14px">
-                                           <?php if($dateError==-2) { echo ('&nbsp&nbsp&nbsp');echo "结束时间小于开始时间";} ?>
+                                           <?php if($dateError==-2) { echo ('&nbsp&nbsp&nbsp');echo "结束时间小于开始时间";} 
+                                                  else if($dateError==-3) {echo ('&nbsp&nbsp&nbsp');echo "开始时间大于已存在子任务时间开始时间";} ?>
                                         </lable>
                                 </label>
                                 <div>
@@ -335,7 +354,10 @@ $('#datepicker3').datepicker({
                                 </div>-->
                                 <label for="datepicker3"><?php echo $multilingual_default_task_planend; ?><!--<span id="csa_plan_et_msg"></span>-->
                                     <lable style="color:#F00;font-size:14px">
-                                       <?php if($dateError==-2) {echo ('&nbsp&nbsp&nbsp');echo "结束时间小于开始时间";} else if ($dateError==-1) {echo ('&nbsp&nbsp&nbsp'); echo "结束时间小于今天";} ?>
+                                       <?php if($dateError==-2) {echo ('&nbsp&nbsp&nbsp');echo "结束时间小于开始时间";} 
+                                              else if ($dateError==-1) {echo ('&nbsp&nbsp&nbsp'); echo "结束时间小于今天";} 
+                                              else if ($dateError==-4) {echo ('&nbsp&nbsp&nbsp'); echo "结束时间小于已存在子任务时间结束时间";}
+                                       ?>
                                     </lable>
                                 </label>
                                 <div>

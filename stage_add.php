@@ -149,6 +149,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
                         GetSQLValueString($_POST['stage_end'],"text"));
           mysql_select_db($database_tankdb,$tankdb);
           $Result1 = mysql_query($insertSQL,$tankdb) or die(mysql_error());
+          $thisSid = mysql_insert_id();
 
          /* $selSID = sprintf("SELECT stageid FROM tk_stage WHERE tk_stage_title LIKE %s AND tk_stage_desc LIKE %s
               AND tk_stage_pid=$thisProj",
@@ -156,11 +157,11 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
                         GetSQLValueString($_POST['tk_stage_desc'],"text"),
                          GetSQLValueString($_POST['stage_start'],"text"), 
                         GetSQLValueString($_POST['stage_end'],"text"));*/
-          $selSID = "SELECT stageid FROM tk_stage ORDER BY stageid DESC";
+          /*$selSID = "SELECT stageid FROM tk_stage ORDER BY stageid DESC";
           mysql_select_db($database_tankdb,$tankdb);
           $Result2 = mysql_query($selSID,$tankdb) or die(mysql_error());
-          $row = mysql_fetch_array($Result2);
-          $thisSid = $row['stageid'];
+          $row = mysql_fetch_array($Result2);*/
+          //$thisSid = $row['stageid'];
           //$newID = add_task( $cc_post, $_POST['csa_from_user'],  $to_user_arr['0'],  $project_id, $_POST['csa_type'], $_POST['tk_stage_title'], $_POST['csa_priority'], $_POST['csa_temp'], $_POST['stage_start'], $_POST['stage_end'], $_POST['plan_hour'], $_POST['csa_remark2'], $_POST['csa_create_user'], $_POST['csa_last_user'], $task_id, $wbs, $wbs_id, $_SESSION['MM_uid'], $csa_tag, $tk_stage_desc );
 
 
