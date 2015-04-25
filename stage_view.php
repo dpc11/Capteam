@@ -1,6 +1,7 @@
 <?php require_once('config/tank_config.php'); ?>
 <?php require_once('session_unset.php'); ?>
 <?php require_once('session.php'); ?>
+<?php require_once('dao.php');?>
 <?php
 $currentPage = $_SERVER["PHP_SELF"];
 
@@ -389,14 +390,15 @@ document.getElementById('tab_' + i).className = (i == ".$tabid.") ? 'onhover' : 
             <td width="20%" class="input_task_right_bg" valign="top">
                 <table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
                     <tr>
-                        <td valign="top">
-                            <?php $project_id=$row_DetailRS1[ 'stageid']; $project_name=$row_DetailRS1[ 'project_name']; $node_id_task=- 1; require_once( 'tree.php'); ?>
-                            
+                        <td valign="top">                         
                             <?php 
-							$project_id=$row_DetailRS1['stageid']; 
-							$project_name=$row_DetailRS1['project_name']; 
-							$node_id_task=-1; 
-							require_once( 'tree.php'); 
+							$project_id=$now_pid; 
+							//获取项目信息的数据库操作
+							$now_project_dao = new project_dao();
+							$project_now=$now_project_dao->get_project($project_id); 
+							$project_name = $project_now->name;
+							$node_id_task=56; 
+							require_once('tree.php'); 
 							?>
                         </td>
                     </tr>
