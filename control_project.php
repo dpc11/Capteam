@@ -1,5 +1,10 @@
 <?php
+require_once('dao.php'); 
 require_once('function.class.php');
+
+//获取用户信息数据库操作类
+$user_dao_obj = new  user_dao();
+
 $url_project = $_SERVER["QUERY_STRING"] ;
 $current_url = current(explode("&sort",$url_project));
 
@@ -325,7 +330,8 @@ $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recor
       <td> <!-- 显示负责人 -->
 	  <a href="user_view.php?recordID=<?php echo $row_Recordset1['project_to_user']; ?>">
 	  <?php 
-      $new_user = get_user($row_Recordset1['project_to_user']);
+	  //获取项目负责人的信息
+      $new_user = $user_dao_obj->get_user_by_userid($row_Recordset1['project_to_user']);
 	  echo $new_user->name; ?></a>
 	  &nbsp; </td>
 <!--      <td class="hide"><?php echo $row_Recordset1['project_code']; ?>&nbsp; </td>-->
