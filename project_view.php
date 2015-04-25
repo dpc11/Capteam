@@ -538,7 +538,7 @@
             <tr>
                 <td>&nbsp;</td>
             </tr>
-            
+            <?php } // Show if recordset not empty ?>
   <!-- 项目成员 -->
             <tr>
               <td><span class="font_big18 fontbold"><?php echo $multilingual_project_memeber; ?></span></td>
@@ -587,7 +587,7 @@
               </table>
               </td>
             </tr>
-  		  <?php } // Show if recordset not empty ?>
+
   		  
   		  <tr>
               <td>&nbsp;</td>
