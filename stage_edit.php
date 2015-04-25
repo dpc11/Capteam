@@ -23,6 +23,7 @@ $selStage = "SELECT * FROM tk_stage WHERE stageid = $colname_Recordset1";
   $stage_desc = $row['tk_stage_desc'];
   $stage_st = $row['tk_stage_st'];
   $stage_et = $row['tk_stage_et'];
+  echo $stage_title;
 
   $title = "-1";
     if (isset($_POST['tk_stage_title'])) {
@@ -64,23 +65,37 @@ $project_end = sprintf("stage_end=%s,", GetSQLValueString($_POST['stage_end'], "
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
   //把当前时间作为最后一次修改时间
   $update_stage_lastupdate = date("Y-m-d H:i:s",time());
+  $today_date = date('Y-m-d');
+  $now_time = date('Y-m-d H:i:s',time());
+
+  if($en_time<$today_date)
+  {
+          //echo("illegal");
+         $dateError = -1;//结束时间小于今天
+  }else if($en_time<$st_time)
+  {
+          //echo("can't");
+         $dateError = -2;//结束时间小于开始时间
+  }else {
+
   //更新数据库
-  $updateSQL = sprintf("UPDATE tk_stage SET tk_stage_title=%s, tk_stage_desc=%s, 
-    tk_stage_st=%s, tk_stage_et=%s,tk_stage_lastupdate='$update_stage_lastupdate' WHERE stageid=$colname_Recordset1",
-            GetSQLValueString($_POST['tk_stage_title'],"text"),
-            GetSQLValueString($_POST['tk_stage_desc'],"text"),
-            GetSQLValueString($_POST['stage_start'],"text"),
-            GetSQLValueString($_POST['stage_end'],"text"));
+          $updateSQL = sprintf("UPDATE tk_stage SET tk_stage_title=%s, tk_stage_desc=%s, 
+            tk_stage_st=%s, tk_stage_et=%s,tk_stage_lastupdate='$update_stage_lastupdate' WHERE stageid=$colname_Recordset1",
+                    GetSQLValueString($_POST['tk_stage_title'],"text"),
+                    GetSQLValueString($_POST['tk_stage_desc'],"text"),
+                    GetSQLValueString($_POST['stage_start'],"text"),
+                    GetSQLValueString($_POST['stage_end'],"text"));
 
-  mysql_select_db($database_tankdb, $tankdb);
-  $Result2 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
+          mysql_select_db($database_tankdb, $tankdb);
+          $Result2 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
 
-  $updateGoTo = "stage_view.php?pid=$pid&sid=$colname_Recordset1";
-  /*if (isset($_SERVER['QUERY_STRING'])) {
-    $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
-    $updateGoTo .= $_SERVER['QUERY_STRING'];
-  }*/
-  header(sprintf("Location: %s", $updateGoTo));
+          $updateGoTo = "stage_view.php?pid=$pid&sid=$colname_Recordset1";
+          /*if (isset($_SERVER['QUERY_STRING'])) {
+            $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
+            $updateGoTo .= $_SERVER['QUERY_STRING'];
+          }*/
+          header(sprintf("Location: %s", $updateGoTo));
+  }
 }
 
 
@@ -105,8 +120,8 @@ $user_arr = get_user_select($colname_Recordset1);*/
 <script type="text/javascript" src="bootstrap/js/locales/bootstrap-datepicker.zh-CN.js"></script>
 
 <script type="text/javascript">
-    $(function () {
-        $('#datepicker').datepicker({
+  $(function () {
+        /*  $('#datepicker').datepicker({
             format: "yyyy-mm-dd" <? php
             if ($language == "cn") {
                 echo ", language: 'zh-CN'";
@@ -118,19 +133,31 @@ $user_arr = get_user_select($colname_Recordset1);*/
                 echo ", language: 'zh-CN'";
             } ?>
         });
-    });
+    });*/
+ $('#datepicker2').datepicker({
+    format: "yyyy-mm-dd"
+    <?php if ($language=="cn") {echo ", language: 'zh-CN'" ;}?>
+    
+        });
+$('#datepicker3').datepicker({
+        format: "yyyy-mm-dd" 
+    <?php if ($language=="cn") {echo ", language: 'zh-CN'" ;}?>
+        });
+        
+        });
 </script>
 <script type="text/javascript">
     J.check.rules = [
-        {
-            name: 'tk_stage_title',
-            mid: 'tk_stage_title_msg',
-            type: '',
-            requir: true,
+        //{
+           // name: 'tk_stage_title',
+           // mid: 'tk_stage_title_msg',
+           // type: '',
+          //  requir: true,
             //min: 2,
             //max: 32,
-            warn: '<?php echo $multilingual_projectstatus_titlerequired; ?>'
-        },
+         //   warn: '<?php echo $multilingual_default_required4; ?>'
+       // },
+       { name: 'tk_stage_title', mid: 'tk_stage_title_msg', requir: true, type: '',  warn: '<?php echo $multilingual_default_required4; ?>'},
         {
             name: 'datepicker',
             mid: 'datepicker_msg',
@@ -218,42 +245,58 @@ $user_arr = get_user_select($colname_Recordset1);*/
                             </div>
 
                             <!-- 阶段名称 -->
-                            <div class="form-group col-xs-12">
+                            <!--<div class="form-group col-xs-12">
                                 <label for="tk_stage_title">
                                     <?php echo $multilingual_stage_title; ?><span id="tk_stage_title_msg"></span>
                                 </label>
                                 <div>
                                     <input type="text" name="tk_stage_title" id="tk_stage_title" value="
-                                                <?php if($title!=-1)
-                                                            {echo $title;}
-                                                      else{echo $stage_title;}
+                                                <?php //if($title!=-1)
+                                                            //{echo $title;}
+                                                      //else{}
+                                                echo $row['tk_stage_title'];
                                                 ?>" 
-                                                class="form-control" placeholder="<?php echo $multilingual_stage_title_tips; ?>" >
+                                                class="form-control" placeholder="<?php echo $multilingual_stageadd_title_plh; ?>" >
                                                 <span class="help-block"><?php echo $multilingual_default_stage_title_tips; ?></span>
                                 </div>
-                            </div>
+                            </div>-->
+                            <div class="form-group col-xs-12">
+                                <label for="tk_stage_title"><?php echo $multilingual_default_task_title; ?><span  id="tk_stage_title_msg"></span></label>
+                                <div>
+                                  <input name="tk_stage_title" id="tk_stage_title" type="text" value="<?php if($title!=-1){echo $title;} else{echo $stage_title;}?>" class="form-control" placeholder="<?php echo $multilingual_stageadd_title_plh;?>">
+                                  <span class="help-block"><?php echo $multilingual_default_stage_title_tips; ?></span>
+                                </div>
+                              </div>
 
                             <!-- 阶段描述 -->
                             <div class="form-group col-xs-12">
-                                <label for="tk_stage_desc">
+                                <!--<label for="tk_stage_desc">
                                     <?php echo $multilingual_stage_description; ?><span id="tk_stage_title_msg"></span>
                                 </label>
                                 <div>
-                                    <textarea name="tk_stage_desc" id="tk_stage_desc">
+                                    <textarea name="tk_stage_desc" id="tk_stage_desc">-->
                                         <!--<?php echo htmlentities($row_Recordset1[ 'text'], ENT_COMPAT, 'utf-8'); ?>-->
-                                        <?php  if($description!=-1)
+                                        <!--<?php  if($description!=-1)
                                                     {echo $description;}
                                                 else
                                                     {echo $stage_desc;}
                                                      //echo $stage_title;
                                         ?>
                                     </textarea>
+                                </div>-->
+                                <label for="tk_stage_desc"><?php echo $multilingual_default_task_description; ?><span  id="tk_stage_title_msg"></span></label>
+                                <div>
+                                  <textarea id="tk_stage_desc" name="tk_stage_desc" >
+                                    <?php if($description!=-1){echo $description;}
+                                            else {echo $stage_desc;}
+                                    ?>
+                                  </textarea>
                                 </div>
                             </div>
 
                             <!-- 起始时间 -->
                             <div class="form-group col-xs-12">
-                                <label for="datepicker">
+                               <!-- <label for="datepicker">
                                     <?php echo $multilingual_default_task_planstart; ?><span id="datepicker_msg"></span>
                                 </label>
                                 <div>
@@ -263,12 +306,23 @@ $user_arr = get_user_select($colname_Recordset1);*/
                                             else 
                                                 {echo $st_time;}
                                      ?>" class="form-control" />
+
+                                </div>-->
+                                 <label for="datepicker2"><?php echo $multilingual_default_task_planstart; ?><!--<span id="csa_plan_st_msg"></span>-->
+                                        <lable style="color:#F00;font-size:14px">
+                                           <?php if($dateError==-2) { echo ('&nbsp&nbsp&nbsp');echo "结束时间小于开始时间";} ?>
+                                        </lable>
+                                </label>
+                                <div>
+                                      <input type="text" name="stage_start" id="datepicker2" value=
+                                      "<?php if($st_time==-1){echo $stage_st;} else {echo $st_time;} ?>" 
+                                      class="form-control"  />
                                 </div>
                             </div>
 
                             <!-- 结束时间 -->
                             <div class="form-group col-xs-12">
-                                <label for="datepicker2">
+                                <!--<label for="datepicker2">
                                     <?php echo $multilingual_default_task_planend; ?><span id="datepicker2_msg"></span>
                                 </label>
                                 <div>
@@ -278,6 +332,16 @@ $user_arr = get_user_select($colname_Recordset1);*/
                                             else
                                                 {echo $en_time;}
                                     ?>" id="datepicker2" class="form-control" />
+                                </div>-->
+                                <label for="datepicker3"><?php echo $multilingual_default_task_planend; ?><!--<span id="csa_plan_et_msg"></span>-->
+                                    <lable style="color:#F00;font-size:14px">
+                                       <?php if($dateError==-2) {echo ('&nbsp&nbsp&nbsp');echo "结束时间小于开始时间";} else if ($dateError==-1) {echo ('&nbsp&nbsp&nbsp'); echo "结束时间小于今天";} ?>
+                                    </lable>
+                                </label>
+                                <div>
+                                  <input type="text" name="stage_end" id="datepicker3" value=
+                                  "<?php if($en_time==-1){echo $stage_et;} else {echo $en_time;} ?>" 
+                                  class="form-control" />
                                 </div>
                             </div>
 
