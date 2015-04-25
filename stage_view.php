@@ -395,7 +395,7 @@ document.getElementById('tab_' + i).className = (i == ".$tabid.") ? 'onhover' : 
 							$project_id=$now_pid; 
 							//获取项目信息的数据库操作
 							$now_project_dao = new project_dao();
-							$project_now=$now_project_dao->get_project($project_id); 
+							$project_now=$now_project_dao->get_project_by_id($project_id); 
 							$project_name = $project_now->name;
 							$node_id_task=56; 
 							require_once('tree.php'); 
