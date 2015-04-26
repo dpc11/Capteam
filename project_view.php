@@ -1,8 +1,14 @@
   <?php require_once('config/tank_config.php'); ?>
   <?php require_once('session_unset.php'); ?>
   <?php require_once('session.php'); ?>
+  <?php require_once('dao.php'); ?>
   <?php
   $currentPage = $_SERVER["PHP_SELF"];
+   
+  //初始化team数据库操作类
+  $team_dao_obj = new team_dao();
+  //初始化user数据库操作类
+  $user_dao_obj = new user_dao();
 
   $pagetabs = "allprj";
   if (isset($_GET['pagetab'])) {
@@ -24,13 +30,14 @@
     $pageNum_DetailRS1 = $_GET['pageNum_DetailRS1'];
   }
   $startRow_DetailRS1 = $pageNum_DetailRS1 * $maxRows_DetailRS1;
-
+  
+  //获得项目id
   $colname_DetailRS1 = "-1";
   if (isset($_GET['recordID'])) {
     $colname_DetailRS1 = $_GET['recordID'];
   }
 
-  //授权的id是否有
+  //授权的id是否有权限
   if (isset($_GET['authority_user_id'])&&isset($_GET['authority_ulimit'])) {
     $authority_user_id = $_GET['authority_user_id'];
     $authority_ulimit = $_GET['authority_ulimit'];
@@ -38,16 +45,15 @@
     $tk_team_pid=$colname_DetailRS1;//项目id
     $tk_team_uid=$authority_user_id;//用户id
     if($authority_ulimit == "1"){//当前为组员
-          $modmemSQL="UPDATE tk_team SET tk_team_ulimit=2 WHERE  tk_team_uid=$tk_team_uid and tk_team_pid=$tk_team_pid";//修改权限
+        $team_dao_obj->set_user_authority($tk_team_uid,$tk_team_pid,2);//将权限修改为副组长
     }else{//当前为副组长
-          $modmemSQL="UPDATE tk_team SET tk_team_ulimit=1 WHERE  tk_team_uid=$tk_team_uid and tk_team_pid=$tk_team_pid";//修改权限
+        $team_dao_obj->set_user_authority($tk_team_uid,$tk_team_pid,1);//将权限修改为组员
     }
-    mysql_select_db($database_tankdb, $tankdb);
-    $Result2 = mysql_query($modmemSQL, $tankdb) or die(mysql_error());
   }
 
   //获得当前项目相关的user
-  $user_arr = get_user_select($colname_DetailRS1);
+  $user_arr = $user_dao_obj->get_user_select_by_project($colname_DetailRS1);
+
 
   //数据库修改后的SQL语句，查找对应的项目
   mysql_select_db($database_tankdb, $tankdb);
@@ -475,7 +481,7 @@
   		     <tr>
               
   <!-- 分解阶段 -->
-               <?php if($_SESSION['MM_rank'] > "2") { ?>
+         <?php if($_SESSION['MM_rank'] > 1) { ?>
   			 <td width="12%">
   			 <a href="stage_add.php?pid=<?php echo $row_DetailRS1['id']; ?>&formproject=1" >
   			 <span class="glyphicon glyphicon-random"></span> <?php echo $multilingual_project_newstage; ?></a></td>
