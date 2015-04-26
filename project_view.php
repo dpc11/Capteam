@@ -481,7 +481,12 @@
   		     <tr>
               
   <!-- 分解阶段 -->
-         <?php if($_SESSION['MM_rank'] > 1) { ?>
+         <?php 
+         // $tk_team_pid=$colname_DetailRS1;//项目id
+         // $tk_team_uid=$authority_user_id;//用户id
+         // $user_authority = $team_dao_obj->get_get_user_authority($tk_team_uid,$tk_team_pid);
+
+         if($_SESSION['MM_rank'] > "1") { ?>
   			 <td width="12%">
   			 <a href="stage_add.php?pid=<?php echo $row_DetailRS1['id']; ?>&formproject=1" >
   			 <span class="glyphicon glyphicon-random"></span> <?php echo $multilingual_project_newstage; ?></a></td>
