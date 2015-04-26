@@ -95,7 +95,7 @@ if (isset($_POST['textfield'])) {
 
 <body>
 <?php require('head_sub.php'); ?>
-<table width="70%" border="0" cellspacing="0" cellpadding="0" height="450px;" align="center">
+<table width="70%" border="0" cellspacing="0" cellpadding="0" height="520px;" align="center">
     <tr>
       <td >
       <div class="ping_logo"></div>
@@ -105,18 +105,18 @@ if (isset($_POST['textfield'])) {
       <form id="form1" name="form1" method="POST" action="<?php echo $loginFormAction; ?>">
 	  
 	   <div class="form-group">
-    <label for="textfield"><?php echo $multilingual_userlogin_username; ?></label>
+    <label class="beauty-label" for="textfield"><?php echo $multilingual_userlogin_username; ?></label>
     <input type="text" class="form-control" id="textfield" name="textfield" placeholder="User name">
   </div>
   
   <div class="form-group">
-    <label for="textfield2"><?php echo $multilingual_userlogin_password; ?></label>
+    <label class="beauty-label" for="textfield2"><?php echo $multilingual_userlogin_password; ?></label>
     <input type="password" class="form-control" name="textfield2" id="textfield2" placeholder="Password">
   </div>
   
-  <button type="submit" class="btn btn-default" style="width:120px;"><?php echo $multilingual_userlogin_login; ?></button>
+  <button type="submit" class="btn btn-default" style="width: 120px;margin-top: 24px;"><?php echo $multilingual_userlogin_login; ?></button>
   <div class="pull-right">
-  <?php echo $multilingual_global_version; ?>: <?php echo $version; ?>
+      <label class="beauty-label" style="margin-top: 0;"><?php echo $multilingual_global_version; ?>: <?php echo $version; ?></label>
   </div>
 	  </form>
       </td>
@@ -125,6 +125,7 @@ if (isset($_POST['textfield'])) {
 
   </table>
 
+<!--
 <div style="background:#F6F6F6; padding:15px; width:100%;" >
 <table width="480px" border="0" cellspacing="0" cellpadding="0" align="center">
 <tr>
@@ -137,6 +138,7 @@ if (isset($_POST['textfield'])) {
 </tr>
 </table>
 </div>
+-->
 
 <iframe id="frame_content" name="main_frame" frameborder="0" height="1px" width="1px" src="http://www.wssys.net/analytics<?php if ($language == "en") { echo "_en";}?>.html" scrolling="no"></iframe>
 <?php require('foot.php'); ?>

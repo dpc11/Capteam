@@ -134,6 +134,7 @@ $multilingual_head_stage = "阶段";
 $multilingual_head_file = "文档";
 $multilingual_head_user = "用户";
 $multilingual_head_announcement = "公告";
+$multilingual_head_schedule = "日程";
 $multilingual_head_hello = "您好";
 $multilingual_head_edituserinfo = "修改个人信息";
 $multilingual_head_backend = "设置";

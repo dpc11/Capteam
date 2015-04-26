@@ -317,8 +317,8 @@ a:focus {
     background: #7C7C7C!important;
     color: #F5F5F5!important;
     display: block;
-    height: 40px!important;
-    line-height: 40px!important;
+    height: 42px!important;
+    line-height: 42px!important;
 }
 
 .nav_select a:hover {
@@ -354,7 +354,7 @@ a:focus {
 
 .topbar {
     background: #626262;
-    height: 40px;
+    height: 42px;
 }
 
 .logo {
@@ -384,10 +384,12 @@ a:focus {
     width: 100px;
     float: left;
     text-align: center;
-    height: 40px;
-    line-height: 40px;
+    height: 42px;
+    line-height: 42px;
     text-decoration: none;
     color: #E4E4E4;
+    font-size: 1.2em;
+    padding-top: 1px;
 }
 
 .nav_normal2 a:hover {
@@ -399,8 +401,8 @@ a:focus {
     float: right;
     font-weight: normal;
     color: #F5F5F5;
-    margin: 10px 15px auto auto;
-    font-size: 12px;
+    margin: 12px 30px auto auto;
+    font-size: 14px;
 }
 
 .logininfo2 a {
@@ -456,8 +458,9 @@ a:focus {
 
 .wss_title {
     margin: 0px auto auto auto;
-    width: 460px;
+    width: 500px;
     color: #666;
+    font-size: 1.2em;
 }
 
 .wss_logo {
@@ -1314,4 +1317,11 @@ a:focus {
 
 .gray2 {
     color: #666666;
+}
+
+
+.beauty-label {
+    font-weight: 500;
+    font-size: 1.2em;
+    margin: 6px auto 4px auto;
 }
