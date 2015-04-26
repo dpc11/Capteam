@@ -12,7 +12,7 @@ function editfolder()
 	  if ( $pfiles== "1" || $colname_DetailRS1 == "-1") { 
 	  echo $project_id;
 	  } else {
-	  echo $row_DetailRS1['tk_doc_class1'];
+	  echo $row_DetailRS1['tk_doc_pid'];
 	  } ?>&pid=<?php echo $row_DetailRS1['docid']; ?>&folder=<?php echo $row_Recordset_file['tk_doc_backup1']; ?><?php if ( $pfiles== "1") {
 	  echo "&pfile=1";
 	  }?>&pagetab=<?php echo $pagetabs;?>" });
@@ -48,10 +48,10 @@ function editfolder()
 	  
 	  
 	  
-	  <?php if($row_DetailRS1['tk_doc_class2'] > "0") {?>
+	  <?php if($row_DetailRS1['tk_doc_parentdocid'] > "0") {?>
 	  <li>
 	   
-	  ... <a href="file.php?recordID=<?php echo $row_DetailRS1['tk_doc_class2']; ?>&folder=1&projectID=<?php echo $project_id; ?>&pfile=1&pagetab=allfile"><?php echo $row_Recordset_pfilename['tk_doc_title']; ?></a>
+	  ... <a href="file.php?recordID=<?php echo $row_DetailRS1['tk_doc_parentdocid']; ?>&folder=1&projectID=<?php echo $project_id; ?>&pfile=1&pagetab=allfile"><?php echo $row_Recordset_pfilename['tk_doc_title']; ?></a>
 	  </li>
 	  <?php } ?>
 	  
@@ -80,14 +80,14 @@ function editfolder()
    <?php if ($project_id <> "-1") {  //返回项目详情的面包屑 ?>
    <li>
 	  
-	  <a href="project_view.php?recordID=<?php echo $row_DetailRS1['tk_doc_class1']; ?>"><?php echo $row_DetailRS1['project_name']; ?></a>
+	  <a href="project_view.php?recordID=<?php echo $row_DetailRS1['tk_doc_pid']; ?>"><?php echo $row_DetailRS1['project_name']; ?></a>
 	  </li>
 	  <?php } ?>
 	  
-	  <?php if($row_DetailRS1['tk_doc_class2'] > "0") {?>
+	  <?php if($row_DetailRS1['tk_doc_parentdocid'] > "0") {?>
 	  <li>
 	  
-	  ... <a href="file.php?recordID=<?php echo $row_DetailRS1['tk_doc_class2']; ?>&folder=1&projectID=<?php echo $project_id; ?>&pagetab=allfile"><?php echo $row_Recordset_pfilename['tk_doc_title']; ?></a>
+	  ... <a href="file.php?recordID=<?php echo $row_DetailRS1['tk_doc_parentdocid']; ?>&folder=1&projectID=<?php echo $project_id; ?>&pagetab=allfile"><?php echo $row_Recordset_pfilename['tk_doc_title']; ?></a>
 	  </li>
 	  <?php } ?>
 	  
@@ -286,7 +286,7 @@ function editfolder<?php echo $row_Recordset_file['docid']; ?>()
 	  if ( $pfiles== "1" || $colname_DetailRS1 == "-1") { 
 	  echo $project_id;
 	  } else {
-	  echo $row_DetailRS1['tk_doc_class1'];
+	  echo $row_DetailRS1['tk_doc_pid'];
 	  } ?>&pid=<?php echo $row_DetailRS1['docid']; ?>&folder=<?php echo $row_Recordset_file['tk_doc_backup1']; ?><?php if ( $pfiles== "1") {
 	  echo "&pfile=1";
 	  }?>&pagetab=<?php echo $pagetabs;?>" });
@@ -299,7 +299,7 @@ function editfolder<?php echo $row_Recordset_file['docid']; ?>()
 	  if ( $pfiles== "1" || $colname_DetailRS1 == "-1") { 
 	  echo $project_id;
 	  } else {
-	  echo $row_DetailRS1['tk_doc_class1'];
+	  echo $row_DetailRS1['tk_doc_pid'];
 	  } ?>&pid=<?php echo $row_DetailRS1['docid']; ?>&folder=<?php echo $row_Recordset_file['tk_doc_backup1']; ?><?php if ( $pfiles== "1") {
 	  echo "&pfile=1";
 	  }?>&pagetab=<?php echo $pagetabs;?>" target="_blank">
@@ -315,7 +315,7 @@ function editfolder<?php echo $row_Recordset_file['docid']; ?>()
 	   if ($row_Recordset_file['tk_doc_backup1'] == 0){
 	  echo $multilingual_global_action_delconfirm;}
 	  else {
-	  echo $multilingual_global_action_delconfirm5;} ?>'))self.location='file_del.php?delID=<?php echo $row_Recordset_file['docid']; ?>&projectID=<?php echo $row_DetailRS1['tk_doc_class1']; ?>&pid=<?php echo $row_DetailRS1['docid']; ?>&url=<?php echo $host_url; ?>';"
+	  echo $multilingual_global_action_delconfirm5;} ?>'))self.location='file_del.php?delID=<?php echo $row_Recordset_file['docid']; ?>&projectID=<?php echo $row_DetailRS1['tk_doc_pid']; ?>&pid=<?php echo $row_DetailRS1['docid']; ?>&url=<?php echo $host_url; ?>';"
 	  ><?php echo $multilingual_global_action_del; ?></a>
 	  <?php } else {  
 	   echo $multilingual_global_action_del; 

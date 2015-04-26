@@ -38,7 +38,7 @@ if (isset($_GET['search'])) {
 }
 
 if ($project_id <> "-1") {
-  $inproject = " inner join tk_project on tk_document.tk_doc_class1=tk_project.id ";
+  $inproject = " inner join tk_project on tk_document.tk_doc_pid=tk_project.id ";
 } else { $inproject = " ";}
 
 $filenames = "";
@@ -71,18 +71,15 @@ $startRow_DetailRS1 = $pageNum_DetailRS1 * $maxRows_DetailRS1;
 
 if($pagetabs=="mcfile"){
 $multilingual_breadcrumb_filelist = $multilingual_project_file_myfile;
-}else if ($pagetabs=="mefile") {
-$multilingual_breadcrumb_filelist = $multilingual_project_file_myeditfile;
 }else if ($pagetabs=="allfile")  {
 $multilingual_breadcrumb_filelist = $multilingual_project_file_allfile;
 }
 
 mysql_select_db($database_tankdb, $tankdb);
 $query_DetailRS1 = sprintf("SELECT *, 
-tk_user1.tk_display_name as tk_display_name1, 
-tk_user2.tk_display_name as tk_display_name2 FROM tk_document 
+tk_user1.tk_display_name as tk_display_name1
+FROM tk_document 
 inner join tk_user as tk_user1 on tk_document.tk_doc_create=tk_user1.uid  
-inner join tk_user as tk_user2 on tk_document.tk_doc_edit=tk_user2.uid 
 $inproject 
 WHERE tk_document.docid = %s", GetSQLValueString($colname_DetailRS1, "int"));
 $query_limit_DetailRS1 = sprintf("%s LIMIT %d, %d", $query_DetailRS1, $startRow_DetailRS1, $maxRows_DetailRS1);
@@ -104,7 +101,7 @@ WHERE tk_project.id = %s", GetSQLValueString($project_id, "int"));
 $projectname = mysql_query($query_projectname, $tankdb) or die(mysql_error());
 $row_projectname = mysql_fetch_assoc($projectname);
 
-$fileid = $row_DetailRS1['tk_doc_class2'];
+$fileid = $row_DetailRS1['tk_doc_parentdocid'];
 mysql_select_db($database_tankdb, $tankdb);
 $query_Recordset_pfilename = sprintf("SELECT * FROM tk_document WHERE docid = %s", GetSQLValueString($fileid, "int"));
 $Recordset_pfilename = mysql_query($query_Recordset_pfilename, $tankdb) or die(mysql_error());
@@ -120,40 +117,22 @@ $startRow_Recordset_file = $pageNum_Recordset_file * $maxRows_Recordset_file;
 
 
 if ($searchf == "1"){
-$inprolist = "tk_doc_title LIKE %s AND tk_doc_backup1 <> 1";
+$inprolist = " where tk_doc_title LIKE %s AND tk_doc_backup1 <> 1";
 $inprolists = "%" . $filenames . "%";
 }else if ($colname_DetailRS1=="-1" && $project_id <> "-1" && $pagetabs == "allfile") {
-  $inprolist = " tk_doc_class1 = %s  AND  tk_doc_class2 = 0 ";
+  $inprolist = " where tk_doc_pid = %s  AND  tk_doc_parentdocid = 0 ";
   $inprolists = $project_id;
   
 } else if ($pagetabs == "mcfile"){
-$inprolist = " tk_doc_create = %s AND tk_doc_backup1 = 0 ";
+$inprolist = " where tk_doc_create = %s AND tk_doc_backup1 = 0 ";
 $inprolists = $_SESSION['MM_uid'];
 } 
- else if ($pagetabs == "mefile"){
-$inprolist = " tk_log.tk_log_user = %s AND tk_log.tk_log_class = 2 AND tk_doc_backup1 = 0 ";
-$inprolists = $_SESSION['MM_uid'];
-} else { 
-  $inprolist = " tk_doc_class2 = %s  ";
-  $inprolists = $colname_DetailRS1;
-} 
-if($pagetabs == "mefile" ){
-$where1 = "inner join tk_log on tk_document.docid=tk_log.tk_log_type";
-$where2 = "GROUP BY tk_document.docid";
-}else{
-$where1 = "";
-$where2 = "";
-}
 
 mysql_select_db($database_tankdb, $tankdb);
 $query_Recordset_file = sprintf("SELECT * FROM tk_document 
-inner join tk_user on tk_document.tk_doc_edit =tk_user.uid 
-$where1 
-WHERE $inprolist
-								
-								$where2 ORDER BY tk_doc_backup1 DESC, tk_doc_edittime DESC", 
-								GetSQLValueString($inprolists, "text")
-								);
+inner join tk_user on tk_document.tk_doc_create =tk_user.uid 
+$inprolist
+ORDER BY tk_doc_lastupdate DESC ", GetSQLValueString($inprolists, "text"));
 $query_limit_Recordset_file = sprintf("%s LIMIT %d, %d", $query_Recordset_file, $startRow_Recordset_file, $maxRows_Recordset_file);
 $Recordset_file = mysql_query($query_limit_Recordset_file, $tankdb) or die(mysql_error());
 $row_Recordset_file = mysql_fetch_assoc($Recordset_file);
@@ -182,6 +161,7 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 }
 $queryString_Recordset_file = sprintf("&totalRows_Recordset_file=%d%s", $totalRows_Recordset_file, $queryString_Recordset_file);
 
+/*
 $docid = $colname_DetailRS1;
 $maxRows_Recordset_actlog = 10;
 $pageNum_Recordset_actlog = 0;
@@ -225,14 +205,14 @@ if (!empty($_SERVER['QUERY_STRING'])) {
   }
 }
 $queryString_Recordset_actlog = sprintf("&totalRows_Recordset_actlog=%d%s", $totalRows_Recordset_actlog, $queryString_Recordset_actlog);
-
+*/
 
 if($pfiles==1){
 $filepro=$project_id;
 }else{
 $filepro = "-1";
-if (isset($row_DetailRS1['tk_doc_class1'])) {
-  $filepro = $row_DetailRS1['tk_doc_class1'];
+if (isset($row_DetailRS1['tk_doc_pid'])) {
+  $filepro = $row_DetailRS1['tk_doc_pid'];
 }
 }
 
@@ -312,11 +292,6 @@ $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recor
 <a type="button" class="btn btn-default btn-sm <?php if($pagetabs == "mcfile") { echo "active";} ?>" href="<?php echo $pagename; ?>?pagetab=mcfile" >
 <?php echo $multilingual_project_file_myfile;?>
 </a>
-
-<a type="button" class="btn btn-default btn-sm <?php if($pagetabs == "mefile") { echo "active";} ?>" href="<?php echo $pagename; ?>?pagetab=mefile" >
-<?php echo $multilingual_project_file_myeditfile;?>
-</a>
-
 
 </div>
 </div>
