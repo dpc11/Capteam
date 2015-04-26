@@ -123,6 +123,38 @@ class user_dao
 }
 
 
+/**
+* 对团队的数据库操作
+*/
+class team_dao 
+{
+    //获得某一个用户在这个项目里的权限
+    public function get_user_authority($uid,$pid){
+        global $tankdb;
+        global $database_tankdb;
+        $query_str = "SELECT * from tk_team where tk_team_uid=$uid and tk_team_pid=$pid";
+        $team = mysql_query($query_str, $tankdb) or die(mysql_error());
+        $row_team = mysql_fetch_assoc($team);
+
+        $authority_ulimit = $row_team['tk_team_ulimit'];
+        return $authority_ulimit;           
+    }
+
+    //设置某一个用户在某一个项目中的权限
+    public function set_user_authority($uid,$pid,$ulimit){
+        global $tankdb;
+        global $database_tankdb;
+        $modmemSQL="UPDATE tk_team SET tk_team_ulimit=$ulimit WHERE  tk_team_uid=$uid and tk_team_pid=$pid";//修改权限
+        mysql_select_db($database_tankdb, $tankdb);
+        $Result2 = mysql_query($modmemSQL, $tankdb) or die(mysql_error());
+    }
+
+
+
+
+}
+
+
 
 
 
