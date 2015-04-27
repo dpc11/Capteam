@@ -67,7 +67,7 @@
 			  
 			  $CurDate = date("Y-m-d H:i:s");
 			  $tk_doc_description="'本文件夹用于存放【".str_replace("'","",$projectNAME)."】团队的所有资料。'";
-			  $insertSQLFolder = sprintf("INSERT INTO tk_document (tk_doc_title, tk_doc_description,tk_doc_pid, tk_doc_parentdocid, tk_doc_create, tk_doc_lastupdate,tk_doc_backup1, tk_doc_type) VALUES ($projectNAME, $tk_doc_description,$newID, 0, 0,'$CurDate',1,1)");
+			  $insertSQLFolder = sprintf("INSERT INTO tk_document (tk_doc_title, tk_doc_description,tk_doc_pid, tk_doc_parentdocid, tk_doc_create, tk_doc_lastupdate,tk_doc_backup1, tk_doc_type) VALUES ($projectNAME, $tk_doc_description,$newID, -1, 0,'$CurDate',1,1)");
 
 				  mysql_select_db($database_tankdb, $tankdb);
 				  $Result_folder = mysql_query($insertSQLFolder, $tankdb) or die(mysql_error());

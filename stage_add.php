@@ -3,10 +3,6 @@
 <?php require_once('session.php'); ?>
 <?php
 $restrictGoTo = "user_error3.php";
-if ($_SESSION['MM_rank'] < "3") {   
-  header("Location: ". $restrictGoTo); 
-  exit;
-}
 
 //$_SESSION['MM_pid'] = 24;
 $myid = $_SESSION['MM_uid'];
