@@ -336,7 +336,6 @@ $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recor
 </div>
 <div class="clearboth"></div>
 <div class="pagemargin">
-
 <?php require('control_file.php'); ?>
 </div>
 <?php require('foot.php'); ?>
