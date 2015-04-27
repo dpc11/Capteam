@@ -171,7 +171,7 @@ if (isset($_GET['pageNum_Recordset_file'])) {
   $pageNum_Recordset_file = $_GET['pageNum_Recordset_file'];
 }
 $startRow_Recordset_file = $pageNum_Recordset_file * $maxRows_Recordset_file;
-
+/*
 mysql_select_db($database_tankdb, $tankdb);
 $query_Recordset_file = sprintf("SELECT * FROM tk_document 
 inner join tk_user on tk_document.tk_doc_create =tk_user.uid 
@@ -191,7 +191,7 @@ if (isset($_GET['totalRows_Recordset_file'])) {
   $totalRows_Recordset_file = mysql_num_rows($all_Recordset_file);
 }
 $totalPages_Recordset_file = ceil($totalRows_Recordset_file/$maxRows_Recordset_file)-1;
-
+*/
 $queryString_Recordset_file = "";
 if (!empty($_SERVER['QUERY_STRING'])) {
   $params = explode("&", $_SERVER['QUERY_STRING']);

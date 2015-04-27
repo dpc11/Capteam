@@ -283,6 +283,8 @@ $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recor
 <script type="text/javascript" src="srcipt/js.js"></script>
 <script type="text/javascript" src="srcipt/jqueryd.js"></script>
 <div class="subnav">
+
+<!--所有文件，我创建的文件-->
 <div class="float_left" style="width:50%">
 <div class="btn-group">
 <a type="button" class="btn btn-default btn-sm <?php if($pagetabs == "allfile") { echo "active";} ?>" href="<?php echo $pagename; ?>?pagetab=allfile" >

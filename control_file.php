@@ -267,7 +267,7 @@ function editfolder()
 	  </a>
 	  </td>
 	  <td>
-	  <?php echo $row_Recordset_file['tk_doc_edittime']; ?>
+	  <?php echo $row_Recordset_file['tk_doc_lastupdate']; ?>
 	  </td>
 	  <td>
 	  <?php if ($row_Recordset_file['tk_doc_backup1'] <> "1") {  ?>

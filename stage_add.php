@@ -140,10 +140,11 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
          $dateError = -2;//结束时间小于开始时间
       }else
       {
+		  $stageNAME = GetSQLValueString($_POST['tk_stage_title'], "text");
+		  
           $insertSQL = sprintf("INSERT INTO tk_stage(tk_stage_title,tk_stage_desc,tk_stage_pid,
                 tk_stage_createtime,tk_stage_st,tk_stage_et,tk_stage_lastupdate) 
-                   VALUES (%s,%s,$thisProj,'$today_date',%s,%s,'$now_time')",
-                        GetSQLValueString($_POST['tk_stage_title'],"text"),
+                   VALUES ($stageNAME,%s,$thisProj,'$today_date',%s,%s,'$now_time')",
                         GetSQLValueString($_POST['tk_stage_desc'],"text"),
                          GetSQLValueString($_POST['stage_start'],"text"), 
                         GetSQLValueString($_POST['stage_end'],"text"));
@@ -151,6 +152,20 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
           $Result1 = mysql_query($insertSQL,$tankdb) or die(mysql_error());
           $thisSid = mysql_insert_id();
 
+		  $CurDate = date("Y-m-d H:i:s");
+		  $tk_doc_description="'本文件夹用于存放【".str_replace("'","",$stageNAME)."】阶段的所有资料。'";
+			  $insertSQLFolder = sprintf("INSERT INTO tk_document (tk_doc_title, tk_doc_description,tk_doc_pid, tk_doc_parentdocid, tk_doc_create, tk_doc_lastupdate,tk_doc_backup1, tk_doc_type) VALUES ($stageNAME, $tk_doc_description,$thisProj, $thisSid, 0,'$CurDate',1,1)");
+
+				  mysql_select_db($database_tankdb, $tankdb);
+				  $Result_folder = mysql_query($insertSQLFolder, $tankdb) or die(mysql_error());
+
+				  $folderID = mysql_insert_id();
+				
+				$insertSQL = sprintf("UPDATE tk_stage SET tk_stage_folder_id = $folderID WHERE stageid=$thisSid");
+              mysql_select_db($database_tankdb, $tankdb);
+              $Result1 = mysql_query($insertSQL, $tankdb) or die(mysql_error());
+			  
+			  
          /* $selSID = sprintf("SELECT stageid FROM tk_stage WHERE tk_stage_title LIKE %s AND tk_stage_desc LIKE %s
               AND tk_stage_pid=$thisProj",
                         GetSQLValueString($_POST['tk_stage_title'],"text"),

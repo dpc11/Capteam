@@ -2,10 +2,6 @@
 <?php require_once('session.php'); ?>
 <?php
 $restrictGoTo = "user_error3.php";
-if ($_SESSION['MM_rank'] < "2") {   
-  header("Location: ". $restrictGoTo); 
-  exit;
-}
 
 $project_id = "-1";
 if (isset($_GET['projectid'])) {
@@ -45,13 +41,12 @@ $csa_remark1 = sprintf("%s,", GetSQLValueString(str_replace("%","%%",$_POST['csa
 }
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
-  $insertSQL = sprintf("INSERT INTO tk_document (tk_doc_title, tk_doc_description, tk_doc_attachment, tk_doc_class1, tk_doc_class2, tk_doc_create, tk_doc_createtime, tk_doc_edit, tk_doc_backup1, tk_doc_type, tk_doc_backup2) VALUES (%s, $tk_doc_description $csa_remark1 %s, %s, %s, %s, %s, %s, '', '')",
+  $insertSQL = sprintf("INSERT INTO tk_document (tk_doc_title, tk_doc_description, tk_doc_attachment, tk_doc_pid, tk_doc_parentdocid, tk_doc_create, tk_doc_createtime,tk_doc_backup1, tk_doc_type) VALUES (%s, $tk_doc_description $csa_remark1 %s, %s, %s, %s, %s, %s, 1)",
                        GetSQLValueString($_POST['tk_doc_title'], "text"),
-                       GetSQLValueString($_POST['tk_doc_class1'], "text"),
-                       GetSQLValueString($_POST['tk_doc_class2'], "text"),
+                       GetSQLValueString($_POST['tk_doc_pid'], "text"),
+                       GetSQLValueString($_POST['tk_doc_parentdocid'], "text"),
                        GetSQLValueString($_POST['tk_doc_create'], "text"),
                        GetSQLValueString($_POST['tk_doc_createtime'], "text"),
-                       GetSQLValueString($_POST['tk_doc_edit'], "text"),
                        GetSQLValueString($_POST['tk_doc_backup1'], "text"));
 
   mysql_select_db($database_tankdb, $tankdb);
@@ -182,9 +177,9 @@ window.onload = function()
 
         <button type="submit" class="btn btn-primary btn-sm" data-loading-text="<?php echo $multilingual_global_wait; ?>" ><?php echo $multilingual_global_action_save; ?></button>
 		
-		<input type="hidden" name="tk_doc_class1" id="tk_doc_class1" value="<?php echo $project_id; ?>"  /> 
+		<input type="hidden" name="tk_doc_pid" id="tk_doc_pid" value="<?php echo $project_id; ?>"  /> 
 		
-		<input type="hidden" name="tk_doc_class2" id="tk_doc_class2" value="<?php echo $p_id; ?>"  />
+		<input type="hidden" name="tk_doc_parentdocid" id="tk_doc_parentdocid" value="<?php echo $p_id; ?>"  />
 		
 		<input name="tk_doc_create" type="hidden" value="<?php echo "{$_SESSION['MM_uid']}"; ?>" />
 		

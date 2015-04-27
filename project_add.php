@@ -34,6 +34,7 @@
     		$_POST['project_end'] = '0000-00-00';
 
     $newID =0;
+	
     if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
       //数据库修改后的SQL语句
         $new_project_createtime = date('Y-m-d');
@@ -50,20 +51,33 @@
         {
           //echo("can't");
             $dateError = -2;//结束时间小于开始时间
-        }else{
+        }else{					
+  
+				$projectNAME = GetSQLValueString($_POST['project_name'], "text");
 
                 $insertSQL = sprintf("INSERT INTO tk_project (project_name, project_text, project_start, project_end, project_to_user,project_lastupdate,project_create_time)
-                  VALUES (%s,$project_text %s, %s, %s, '$new_project_lastupdate','$new_project_createtime')",
-                                   GetSQLValueString($_POST['project_name'], "text"),
+                  VALUES ($projectNAME, $project_text %s, %s, %s, '$new_project_lastupdate','$new_project_createtime')",
                                    GetSQLValueString($_POST['project_start'], "date"),
                                    GetSQLValueString($_POST['project_end'], "date"),
                                    GetSQLValueString($_SESSION['MM_uid'], "int"));
 
-
-
               mysql_select_db($database_tankdb, $tankdb);
               $Result1 = mysql_query($insertSQL, $tankdb) or die(mysql_error());
               $newID = mysql_insert_id();
+			  
+			  $CurDate = date("Y-m-d H:i:s");
+			  $tk_doc_description="'本文件夹用于存放【".str_replace("'","",$projectNAME)."】团队的所有资料。'";
+			  $insertSQLFolder = sprintf("INSERT INTO tk_document (tk_doc_title, tk_doc_description,tk_doc_pid, tk_doc_parentdocid, tk_doc_create, tk_doc_lastupdate,tk_doc_backup1, tk_doc_type) VALUES ($projectNAME, $tk_doc_description,$newID, 0, 0,'$CurDate',1,1)");
+
+				  mysql_select_db($database_tankdb, $tankdb);
+				  $Result_folder = mysql_query($insertSQLFolder, $tankdb) or die(mysql_error());
+
+				  $folderID = mysql_insert_id();
+				
+				$insertSQL = sprintf("UPDATE tk_project SET project_folder_id = $folderID WHERE id=$newID");
+              mysql_select_db($database_tankdb, $tankdb);
+              $Result1 = mysql_query($insertSQL, $tankdb) or die(mysql_error());
+			  
               $insertGoTo = "project_view.php?recordID=$newID";
               if (isset($_SERVER['QUERY_STRING'])) {
                 $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
@@ -233,7 +247,7 @@
     			  <div class="form-group  col-xs-12">
                     <label for="select2" ><?php echo $multilingual_project_touser; ?><span id="csa_to_user_msg"></span></label>
                     <div >
-                      <select name="project_to_user[]" id="select2" size="6" multiple class="form-control">
+                      <select name="project_to_user" id="select2" size="6" multiple class="form-control">
     				          <?php foreach($user_arr as $key => $val){ 
                               if($val["uid"] <> $_SESSION["MM_uid"]){
                        ?>
