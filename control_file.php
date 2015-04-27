@@ -18,6 +18,7 @@ function editfolder()
 	  }?>&pagetab=<?php echo $pagetabs;?>" });
 }
 </script>
+
 <table align="center" class="fontsize-s glink" width="100%">
 
 <!--面包屑 即文件路径 -->
@@ -32,7 +33,7 @@ function editfolder()
  <span class="ui-icon month_next float_left"></span>
  <span class="float_left"><?php echo $multilingual_project_file_searchr; ?>:<?php echo $filenames; ?></span>
 	 
-<?php } else{ // 项目文档面包屑 ?>
+<?php } else{// 项目文档面包屑 ?>
 
 	<li><a href="file.php?pagetab=<?php echo $pagetabs;?>"><?php echo $multilingual_project_file_allfile; ?></a> </li>
 	<?php if(get_parent_folder_id($colname_DetailRS1)>0){
@@ -72,12 +73,12 @@ function editfolder()
 		<li>
 		<a href="file.php?pagetab=<?php echo $pagetabs;?>&projectID=<?php get_projectID($colname_DetailRS1) ?>&recordID=$colname_DetailRS1"><?php echo get_document_name($colname_DetailRS1) ?></a>
 		</li>
-	<?php}?>	
+	<?php}?>
+<?php } ?>	
 	
 	</ul>
 	  </td>
 	  </tr>
-<?php } ?>
 <?php } //如果是一级页面不显示任何面包屑 ?>	
 <!--面包屑结束 -->
 <tr>
@@ -155,12 +156,11 @@ function editfolder()
 	</td>
 	</tr>
 	<?php } //显示操作记录，如果有?>
-	</tbody>
-	</table>
 	
-  <!--file start -->DetailRS1    row_DetailRS1    totalRows_DetailRS1      totalPages_DetailRS1
-
+  <!--file start -->
 <?php if($totalRows_DetailRS1> "0"){  //文档列表 ?>
+<tr>
+<td>
 <table  class="table table-striped table-hover glink" width="98%" >
 <thead>
   <tr>
@@ -201,7 +201,7 @@ function editfolder()
 	
 	  </td>
 	  <td>
-	  <?php if($row_DetailRS1['tk_doc_create']<>=0){ ?>
+	  <?php if($row_DetailRS1['tk_doc_create']<>0){ ?>
 		  <a href="user_view.php?recordID=<?php echo $row_DetailRS1['tk_doc_create']; ?>">
 		  <?php echo $row_DetailRS1['tk_display_name']; ?>
 		  </a>
@@ -219,7 +219,6 @@ function editfolder()
 	  &nbsp;
 	  
 	  
-		//作者
 	  <?php if($_SESSION['MM_uid'] == $row_DetailRS1['tk_doc_create']) { ?>
 	  <?php if($row_DetailRS1['tk_doc_backup1']=="1"){ //如果是文件夹?>
 		<script type="text/javascript">
@@ -230,20 +229,20 @@ function editfolder()
 				  echo $project_id;
 				  } else {
 				  echo $row_DetailRS1['tk_doc_pid'];
-				  } ?>&pid=<?php echo $row_DetailRS1['docid']; ?>&folder=<?php echo $row_Recordset_file['tk_doc_backup1']; ?><?php if ( $pfiles== "1") {
+				  } ?>&pid=<?php echo $row_DetailRS1['docid']; ?>&folder=<?php echo $row_DetailRS1['tk_doc_backup1']; ?><?php if ( $pfiles== "1") {
 				  echo "&pfile=1";
 				  }?>&pagetab=<?php echo $pagetabs;?>" });
 			}
 		</script>
-	  <a onclick="editfolder<?php echo $row_Recordset_file['docid']; ?>()" class="mouse_hover">
+	  <a onclick="editfolder<?php echo $row_DetailRS1['docid']; ?>()" class="mouse_hover">
 	  <?php echo $multilingual_global_action_edit; ?></a> 
 	  <?php } else{ //如果是文件?>
-	  <a href="file_edit.php?editID=<?php echo $row_Recordset_file['docid']; ?>&projectID=<?php 
+	  <a href="file_edit.php?editID=<?php echo $row_DetailRS1['docid']; ?>&projectID=<?php 
 	  if ( $pfiles== "1" || $colname_DetailRS1 == "-1") { 
 	  echo $project_id;
 	  } else {
 	  echo $row_DetailRS1['tk_doc_pid'];
-	  } ?>&pid=<?php echo $row_DetailRS1['docid']; ?>&folder=<?php echo $row_Recordset_file['tk_doc_backup1']; ?><?php if ( $pfiles== "1") {
+	  } ?>&pid=<?php echo $row_DetailRS1['docid']; ?>&folder=<?php echo $row_DetailRS1['tk_doc_backup1']; ?><?php if ( $pfiles== "1") {
 	  echo "&pfile=1";
 	  }?>&pagetab=<?php echo $pagetabs;?>" target="_blank">
 	  <?php echo $multilingual_global_action_edit; ?></a> 
@@ -251,34 +250,31 @@ function editfolder()
 	  &nbsp;
 	  
 	  
-	  <?php if ($_SESSION['MM_rank'] > "4" || $row_Recordset_file['tk_doc_create'] == $_SESSION['MM_uid']) {  ?>
-	  <?php if ($_SESSION['MM_Username'] <> $multilingual_dd_user_readonly) {  ?>
+	  <?php if ($_SESSION['MM_rank'] > "4" || $row_DetailRS1['tk_doc_create'] == $_SESSION['MM_uid']) {  ?>
 	   <a  class="mouse_hover" 
 	  onclick="javascript:if(confirm( '<?php 
-	   if ($row_Recordset_file['tk_doc_backup1'] == 0){
-	  echo $multilingual_global_action_delconfirm;}
-	  else {
-	  echo $multilingual_global_action_delconfirm5;} ?>'))self.location='file_del.php?delID=<?php echo $row_Recordset_file['docid']; ?>&projectID=<?php echo $row_DetailRS1['tk_doc_pid']; ?>&pid=<?php echo $row_DetailRS1['docid']; ?>&url=<?php echo $host_url; ?>';"
-	  ><?php echo $multilingual_global_action_del; ?></a>
-	  <?php } else {  
-	   echo $multilingual_global_action_del; 
-	    }  ?>
-	  <?php }  ?>
+	   if ($row_DetailRS1['tk_doc_backup1'] == 0){
+			echo $multilingual_global_action_delconfirm;
+		} else {
+			echo $multilingual_global_action_delconfirm5;} ?>'))self.location='file_del.php?delID=<?php echo $row_DetailRS1['docid']; ?>&url=<?php echo $host_url; ?>';"><?php echo $multilingual_global_action_del; ?></a>
+		<?php } ?>
+		
 	  <?php } ?>
 	  </td>
     </tr>
     
 	<?php
-} while ($row_Recordset_file = mysql_fetch_assoc($Recordset_file));
+} while ($row_DetailRS1 = mysql_fetch_assoc($Recordset_file));
   $rows = mysql_num_rows($Recordset_file);
   if($rows > 0) {
       mysql_data_seek($Recordset_file, 0);
-	  $row_Recordset_file = mysql_fetch_assoc($Recordset_file);
+	  $row_DetailRS1 = mysql_fetch_assoc($Recordset_file);
   } //文档列表循环结束
 ?>
-<?php } //显示项目文档以外的文档 ?>
-<tbody>
+<?php } ?>
+</tbody>
 </table>
+
 </td>
 </tr>
 	<tr valign="baseline">
@@ -306,45 +302,22 @@ function editfolder()
 </td>
 </tr>
 </table>
-	</td>
-    </tr>
-
-<?php  } else if($colname_DetailRS1=="-1" && $project_id == "-1" && $totalRows_Recordset_file == "0"){ //文档列表结束?>
-<tr>
-<td colspan="2">
-<div class="alert alert-warning" style="margin:6px;">
-    <?php echo $multilingual_project_file_nofile; ?>
-</div>
 </td>
 </tr>
-<?php } else {?>
-<tr>
-<td colspan="2">
-<div class="alert alert-warning" style="margin:6px;">
-    <?php echo $multilingual_project_file_nofile; ?>
-</div>
-</td>
-</tr>
-<?php } ?>
-	
-  <tr>
-    <td colspan="2">&nbsp;</td>
-  </tr> 
-<!--file end -->	
-<?php } ?>
+<?php  } else {?>
 
-
-<tr>
-	<td>
-		<div class="alert alert-warning">
-		<?php echo $multilingual_project_file_nofile; ?></div>
-	</td>
-</tr>
-
-<?php } ?>
+	<tr>
+		<td colspan="2">
+		<table>
+			<div class="alert alert-warning" style="margin:6px;">
+				<?php echo $multilingual_project_file_nofile; ?>
+			</div>
 </table>
+<?php } ?>
 <p>&nbsp;</p>
+</td>
+</tr>
+</tbody>
+</table>
 
-<?php
-mysql_free_result($DetailRS1);
-?>
+<?php mysql_free_result($row_DetailRS1); ?>
