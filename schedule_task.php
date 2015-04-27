@@ -18,28 +18,15 @@ $(function() {
 			right: 'month,agendaWeek,agendaDay'
 		},
 		events: 'calendar_json.php',
-//		dayClick: function(date, allDay, jsEvent, view) {
-//			var selDate =$.fullCalendar.formatDate(date,'yyyy-MM-dd');
-//			$.fancybox({
-//				'type':'ajax',
-//				'href':'schedule_view_event.php?action=add&date='+selDate
-//			});
-//    	},
 
-        // 查看所有日程中的详细日程
 		eventClick: function(calEvent, jsEvent, view) {
 			$.fancybox({
 				'type':'ajax',
-				'href':'schedule_view_event.php?&id='+calEvent.id
+                
+                // 查看任务日程的详细日程
+				'href':'schedule_task_event.php?&id='+calEvent.id
 			});
-    	},
-    
-//        eventClick: function(calEvent, jsEvent, view) {
-//			$.fancybox({
-//				'type':'ajax',
-//				'href':'schedule_view_event.php?action=edit&id='+calEvent.id
-//			});
-//    	}
+    	}
 	});
 	
 });
@@ -49,10 +36,10 @@ $(function() {
 
         <!-- 切换按钮 -->
         <div class="btn-group">
-            <a type="button" class="btn btn-default btn-sm active" href="schedule_view.php">
+            <a type="button" class="btn btn-default btn-sm" href="schedule_view.php">
                 <?php echo $multilingual_schedule_view;?>
             </a>    
-            <a type="button" class="btn btn-default btn-sm" href="schedule_task.php">
+            <a type="button" class="btn btn-default btn-sm active" href="schedule_task.php">
                 <?php echo $multilingual_schedule_task;?>
             </a>
             <a type="button" class="btn btn-default btn-sm" href="schedule_person.php">
@@ -67,7 +54,7 @@ $(function() {
 <div class="clearboth"></div>
 <div class="pagemargin">
     
-    <!-- 所有日程表主体部分 -->
+    <!-- 任务日程表主体部分 -->
     <div>
         <div id='calendar'>
         </div>

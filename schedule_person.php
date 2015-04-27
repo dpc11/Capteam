@@ -18,28 +18,23 @@ $(function() {
 			right: 'month,agendaWeek,agendaDay'
 		},
 		events: 'calendar_json.php',
-//		dayClick: function(date, allDay, jsEvent, view) {
-//			var selDate =$.fullCalendar.formatDate(date,'yyyy-MM-dd');
-//			$.fancybox({
-//				'type':'ajax',
-//				'href':'schedule_view_event.php?action=add&date='+selDate
-//			});
-//    	},
-
-        // 查看所有日程中的详细日程
-		eventClick: function(calEvent, jsEvent, view) {
+        
+        // 在个人日程中新增日程
+		dayClick: function(date, allDay, jsEvent, view) {
+			var selDate =$.fullCalendar.formatDate(date,'yyyy-MM-dd');
 			$.fancybox({
 				'type':'ajax',
-				'href':'schedule_view_event.php?&id='+calEvent.id
+				'href':'schedule_person_event.php?action=add&date='+selDate
 			});
     	},
     
-//        eventClick: function(calEvent, jsEvent, view) {
-//			$.fancybox({
-//				'type':'ajax',
-//				'href':'schedule_view_event.php?action=edit&id='+calEvent.id
-//			});
-//    	}
+        // 修改个人日程中的日程
+        eventClick: function(calEvent, jsEvent, view) {
+			$.fancybox({
+				'type':'ajax',
+				'href':'schedule_person_event.php?action=edit&id='+calEvent.id
+			});
+    	}
 	});
 	
 });

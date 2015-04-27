@@ -35,7 +35,7 @@ $pagename = end($pagename);
 <link href="skin/themes/base/tk_style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="srcipt/jquery.js"></script>
 <script type="text/javascript" src="srcipt/js.js"></script>
-<script src="bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
 <script type="text/javascript" src="srcipt/lhgcore.js"></script>
 <script type="text/javascript" src="srcipt/lhgdialog.js"></script>
 
@@ -50,8 +50,6 @@ if(strpos($_SERVER["HTTP_USER_AGENT"],"MSIE 8.0") || strpos($_SERVER["HTTP_USER_
 <?php exit;} ?>
 
   <div class="topbar" id="headerlink" >
-
-<!--	<div style="background-color:#626262;width:102px;height:35px;float:left;margin-top:2px;margin-left:15px;margin-right:20px;"><h4 style="color:white;FONT-FAMILY: Comic Sans MS;">Capteam</h4></div>-->
     <div class="logo"><a href="index.php" class="logourl" >&nbsp;</a></div>
     <div class="nav_normal2">
     
