@@ -151,7 +151,12 @@ p{ margin:5px;}
 .glink a{  text-decoration:none;  color:#0076AE;  }
 .glink a:hover{ text-decoration:underline; color:#0076AE}
 
-.calendar_main{ width:100%; background: #DFDFDF; }
+.calendar_main{
+    width: 100%;
+    background: #DFDFDF; 
+    border-spacing: 2px;
+    border-collapse: separate;
+}
 
 .day_border{ border:1px #B0B0B0 solid; }
 

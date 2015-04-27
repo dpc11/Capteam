@@ -647,6 +647,12 @@ $multilingual_log_mylog = "我的日志";
 $multilingual_log_newlog = "最近更新的日志";
 $multilingual_log_comment = "评论";
 
+// *** 日程
+$multilingual_schedule_view = "所有日程";
+$multilingual_schedule_task = "任务日程";
+$multilingual_schedule_person = "个人日程";
+$multilingual_schedule_course = "课业日程";
+
 // *** 设置
 $multilingual_set_title = "设置";
 $multilingual_set_baseset = "基本设置";

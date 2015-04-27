@@ -450,14 +450,14 @@ a:focus {
 /* foot */
 
 .foot {
-    background: url(images/foot_bg.jpg) repeat-x;
+/*    background: url(images/foot_bg.jpg) repeat-x;*/
     border-top: 1px solid #ccc;
     bottom: 0px;
     height: 36px;
 }
 
 .wss_title {
-    margin: 0px auto auto auto;
+    margin: 0px auto 12px auto;
     width: 500px;
     color: #666;
     font-size: 1.2em;
@@ -470,7 +470,7 @@ a:focus {
 
 .wss_ver {
     margin-left: 5px;
-    margin-top: 12px;
+    margin-top: 8px;
 }
 
 .wss_ver a {
