@@ -42,36 +42,36 @@ function editfolder()
 								$Pid2=get_parent_folder_id($Pid1);
 								if(get_parent_folder_id($Pid2)>0){//超过3层?>
 									<li>
-									......<a href="file.php?pagetab=<?php echo $pagetabs;?>&projectID=<?php get_projectID($Pid2) ?>&recordID=$colname_DetailRS1"><?php echo get_document_name($Pid2) ?></a>
+									......<a href="file.php?pagetab=<?php echo $pagetabs;?>&projectID=<?php get_projectID($Pid2); ?>&recordID=$colname_DetailRS1"><?php echo get_document_name($Pid2); ?></a>
 									</li>
 									<li>
-									<a href="file.php?pagetab=<?php echo $pagetabs;?>&projectID=<?php get_projectID($Pid1) ?>&recordID=$colname_DetailRS1"><?php echo get_document_name($Pid1) ?></a>
+									<a href="file.php?pagetab=<?php echo $pagetabs;?>&projectID=<?php get_projectID($Pid1); ?>&recordID=$colname_DetailRS1"><?php echo get_document_name($Pid1); ?></a>
 									</li>
 									<li>
-									<a href="file.php?pagetab=<?php echo $pagetabs;?>&projectID=<?php get_projectID($colname_DetailRS1) ?>&recordID=$colname_DetailRS1"><?php echo get_document_name($colname_DetailRS1) ?></a>
+									<a href="file.php?pagetab=<?php echo $pagetabs;?>&projectID=<?php get_projectID($colname_DetailRS1); ?>&recordID=$colname_DetailRS1"><?php echo get_document_name($colname_DetailRS1); ?></a>
 									</li>
 								<?php}else{//3层?>
 									<li>
-									<a href="file.php?pagetab=<?php echo $pagetabs;?>&projectID=<?php get_projectID($Pid2) ?>&recordID=$colname_DetailRS1"><?php echo get_document_name($Pid2) ?></a>
+									<a href="file.php?pagetab=<?php echo $pagetabs;?>&projectID=<?php get_projectID($Pid2); ?>&recordID=$colname_DetailRS1"><?php echo get_document_name($Pid2); ?></a>
 									</li>
 									<li>
-									<a href="file.php?pagetab=<?php echo $pagetabs;?>&projectID=<?php get_projectID($Pid1) ?>&recordID=$colname_DetailRS1"><?php echo get_document_name($Pid1) ?></a>
+									<a href="file.php?pagetab=<?php echo $pagetabs;?>&projectID=<?php get_projectID($Pid1); ?>&recordID=$colname_DetailRS1"><?php echo get_document_name($Pid1); ?></a>
 									</li>
 									<li>
-									<a href="file.php?pagetab=<?php echo $pagetabs;?>&projectID=<?php get_projectID($colname_DetailRS1) ?>&recordID=$colname_DetailRS1"><?php echo get_document_name($colname_DetailRS1) ?></a>
+									<a href="file.php?pagetab=<?php echo $pagetabs;?>&projectID=<?php get_projectID($colname_DetailRS1); ?>&recordID=$colname_DetailRS1"><?php echo get_document_name($colname_DetailRS1); ?></a>
 									</li>
 								<?php}
 							}else{//2层?>
 								<li>
-								<a href="file.php?pagetab=<?php echo $pagetabs;?>&projectID=<?php get_projectID($Pid1) ?>&recordID=$colname_DetailRS1"><?php echo get_document_name($Pid1) ?></a>
+								<a href="file.php?pagetab=<?php echo $pagetabs;?>&projectID=<?php get_projectID($Pid1); ?>&recordID=$colname_DetailRS1"><?php echo get_document_name($Pid1); ?></a>
 								</li>
 								<li>
-								<a href="file.php?pagetab=<?php echo $pagetabs;?>&projectID=<?php get_projectID($colname_DetailRS1) ?>&recordID=$colname_DetailRS1"><?php echo get_document_name($colname_DetailRS1) ?></a>
+								<a href="file.php?pagetab=<?php echo $pagetabs;?>&projectID=<?php get_projectID($colname_DetailRS1); ?>&recordID=$colname_DetailRS1"><?php echo get_document_name($colname_DetailRS1); ?></a>
 								</li>
 							<?php}			
 						}else{//1层?>
 							<li>
-							<a href="file.php?pagetab=<?php echo $pagetabs;?>&projectID=<?php get_projectID($colname_DetailRS1) ?>&recordID=$colname_DetailRS1"><?php echo get_document_name($colname_DetailRS1) ?></a>
+							<a href="file.php?pagetab=<?php echo $pagetabs;?>&projectID=<?php get_projectID($colname_DetailRS1); ?>&recordID=$colname_DetailRS1"><?php echo get_document_name($colname_DetailRS1); ?></a>
 							</li>
 						<?php}?>
 				<?php } ?>	
@@ -100,7 +100,7 @@ function editfolder()
 
 		<tr valign="baseline">
 			<td colspan="2" style="padding-left:10px; padding-bottom:15px ">
-				<span  style="font-family:Arial;line-height:normal;"><?php echo get_doc_description($colname_DetailRS1) ?></span>
+				<span  style="font-family:Arial;line-height:normal;"><?php echo get_doc_description($colname_DetailRS1); ?></span>
 			</td>
 		</tr>
 	<?php }?>
@@ -125,10 +125,10 @@ function editfolder()
 					<?php
 					} while ($row_Recordset_actlog = mysql_fetch_assoc($Recordset_actlog));
 							$rows = mysql_num_rows($Recordset_actlog);
-					if($rows > 0) {
-						mysql_data_seek($Recordset_actlog, 0);
-						$row_Recordset_actlog = mysql_fetch_assoc($Recordset_actlog);
-					}
+						if($rows > 0) {
+							mysql_data_seek($Recordset_actlog, 0);
+							$row_Recordset_actlog = mysql_fetch_assoc($Recordset_actlog);
+						}
 					?>	
 			
 				</table>
@@ -179,7 +179,7 @@ function editfolder()
 	
 							</th>
 						</tr>
-						<a href="file.php?pagetab=<?php echo $pagetabs;?>&projectID=<?php get_projectID($Pid2) ?>&recordID=$colname_DetailRS1"><?php echo get_document_name($Pid2) ?></a>
+						<a href="file.php?pagetab=<?php echo $pagetabs; ?>&projectID=<?php get_projectID($Pid2); ?>&recordID=$colname_DetailRS1"><?php echo get_document_name($Pid2); ?></a>
 					</thead>
 					<tbody>
 					<?php if($totalRows_DetailRS1 > "0" ){  //显示所有的文档 ?>
@@ -187,7 +187,7 @@ function editfolder()
 							<tr>
 								<td>
 						  
-									<?php if($row_DetailRS1['tk_doc_backup1']=="1"){ //如果是文件夹?>
+									<?php if($row_DetailRS1['tk_doc_backup1']=="1"){ //如果是文件夹 ?>
 										<a href="file.php?pagetab=<?php echo $pagetabs;?>&projectID=<?php echo $project_id; ?>&recordID=<?php echo $row_DetailRS1['docid']; ?>" class="icon_folder"><?php echo $row_DetailRS1['tk_doc_title']; ?></a>
 						  
 									<?php } else { //如果是文件?>
@@ -235,8 +235,8 @@ function editfolder()
 														} ?>&pid=<?php echo $row_DetailRS1['docid']; ?>&folder=<?php echo $row_DetailRS1['tk_doc_backup1']; ?>
 														<?php if ( $pfiles== "1") {
 															echo "&pfile=1";
-														}?>&pagetab=<?php echo $pagetabs;?>" });
-													}
+														} ?>&pagetab=<?php echo $pagetabs; ?>" 
+													});
 												}
 											</script>
 											<a onclick="editfolder<?php echo $row_DetailRS1['docid']; ?>()" class="mouse_hover"><?php echo $multilingual_global_action_edit; ?></a> 
@@ -249,7 +249,7 @@ function editfolder()
 												} ?>&pid=<?php echo $row_DetailRS1['docid']; ?>&folder=<?php echo $row_DetailRS1['tk_doc_backup1']; ?>
 												<?php if ( $pfiles== "1") {
 													echo "&pfile=1";
-												}?>&pagetab=<?php echo $pagetabs;?>" target="_blank">
+												} ?>&pagetab=<?php echo $pagetabs; ?>" target="_blank">
 												<?php echo $multilingual_global_action_edit; ?></a> 
 										<?php } ?>
 										&nbsp;
@@ -276,8 +276,7 @@ function editfolder()
 								mysql_data_seek($Recordset_file, 0);
 								$row_DetailRS1 = mysql_fetch_assoc($Recordset_file);
 							} //文档列表循环结束
-						?>
-					<?php } ?>
+					} ?>
 					</tbody>
 				</table>
 
@@ -311,7 +310,7 @@ function editfolder()
 				</table>
 			</td>
 		</tr>
-	<?php  } else {?>
+	<?php  }else{ ?>
 		<tr>
 			<td colspan="2">
 				<table>
