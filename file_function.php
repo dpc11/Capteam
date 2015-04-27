@@ -37,7 +37,7 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
 function get_parent_folder_id($id){
 
 	global $tankdb;
-	$query_Recordset_pfilename = sprintf("SELECT * FROM tk_document WHERE docid = %s", GetSQLValueString($fileid, "int"));
+	$query_Recordset_pfilename = sprintf("SELECT * FROM tk_document WHERE docid = %s", GetSQLValueString($id, "int"));
 	$Recordset_pfilename = mysql_query($query_Recordset_pfilename, $tankdb) or die(mysql_error());
 	$row_Recordset_pfilename = mysql_fetch_assoc($Recordset_pfilename);
 	$totalRows_Recordset_pfilename = mysql_num_rows($Recordset_pfilename);
@@ -58,7 +58,7 @@ function get_document_name($id){
 function get_projectID($id){
 
 	global $tankdb;
-	$query_Recordset_pfilename = sprintf("SELECT * FROM tk_document WHERE docid = %s", GetSQLValueString($fileid, "int"));
+	$query_Recordset_pfilename = sprintf("SELECT * FROM tk_document WHERE docid = %s", GetSQLValueString($id, "int"));
 	$Recordset_pfilename = mysql_query($query_Recordset_pfilename, $tankdb) or die(mysql_error());
 	$row_Recordset_pfilename = mysql_fetch_assoc($Recordset_pfilename);
 	$totalRows_Recordset_pfilename = mysql_num_rows($Recordset_pfilename);
@@ -67,10 +67,23 @@ function get_projectID($id){
 
 }
 
+function get_project_document_ID($id){
+
+	global $tankdb;
+	$query_Recordset_pfilename = sprintf("SELECT * FROM tk_document WHERE tk_doc_pid = %s and tk_doc_parentdocid=-1", GetSQLValueString($id, "int"));
+	$Recordset_pfilename = mysql_query($query_Recordset_pfilename, $tankdb) or die(mysql_error());
+	$row_Recordset_pfilename = mysql_fetch_assoc($Recordset_pfilename);
+	$totalRows_Recordset_pfilename = mysql_num_rows($Recordset_pfilename);
+	
+	return $row_Recordset_pfilename['docid'];
+
+}
+
+
 function get_doc_description($id){
 
 	global $tankdb;
-	$query_Recordset_pfilename = sprintf("SELECT * FROM tk_document WHERE docid = %s", GetSQLValueString($fileid, "int"));
+	$query_Recordset_pfilename = sprintf("SELECT * FROM tk_document WHERE docid = %s", GetSQLValueString($id, "int"));
 	$Recordset_pfilename = mysql_query($query_Recordset_pfilename, $tankdb) or die(mysql_error());
 	$row_Recordset_pfilename = mysql_fetch_assoc($Recordset_pfilename);
 	$totalRows_Recordset_pfilename = mysql_num_rows($Recordset_pfilename);

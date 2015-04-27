@@ -13,16 +13,6 @@ if (isset($_GET['pid'])) {
   $p_id = $_GET['pid'];
 }
 
-$fd = null;
-if (isset($_GET['folder'])) {
-  $fd = $_GET['folder'];
-}
-
-$pfiles = "-1";
-if (isset($_GET['pfile'])) {
-  $pfiles = $_GET['pfile'];
-}
-
 $editFormAction = $_SERVER['PHP_SELF'];
 if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
@@ -33,11 +23,6 @@ if (isset($_GET['editID'])) {
   $colname_Recordset1 = $_GET['editID'];
 }
 
-if ( $pfiles== "1") {
-	  $pf = "&pfile=1";
-	  } else {
-	  $pf = "";
-	  }
 $pagetabs = "mcfile";
 if (isset($_GET['pagetab'])) {
   $pagetabs = $_GET['pagetab'];
@@ -50,17 +35,10 @@ $tk_doc_description = "tk_doc_description='',";
 $tk_doc_description = sprintf("tk_doc_description=%s,", GetSQLValueString(str_replace("%","%%",$_POST['tk_doc_description']), "text"));
 }
 
-if ( empty( $_POST['csa_remark1'] ) ){
-$tk_doc_attachment = "tk_doc_attachment='',";
-}else{
-$tk_doc_attachment = sprintf("tk_doc_attachment=%s,", GetSQLValueString(str_replace("%","%%",$_POST['csa_remark1']), "text"));
-}
-
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
-  $updateSQL = sprintf("UPDATE tk_document SET tk_doc_title=%s, $tk_doc_description $tk_doc_attachment tk_doc_class2=%s, tk_doc_edit=%s WHERE docid=%s",
+  $updateSQL = sprintf("UPDATE tk_document SET tk_doc_title=%s, $tk_doc_description  tk_doc_lastupdate=%s WHERE docid=%s and tk_doc_del_status=1",
                        GetSQLValueString($_POST['tk_doc_title'], "text"),
-					   GetSQLValueString($_POST['tk_doc_class2'], "text"),
-					   GetSQLValueString($_POST['tk_doc_edit'], "text"),
+					   GetSQLValueString($_POST['tk_doc_lastupdate'], "text"),
                        GetSQLValueString($_POST['docid'], "int"));
 
   mysql_select_db($database_tankdb, $tankdb);
@@ -68,13 +46,13 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
 
   $newID = $colname_Recordset1;
   $newName = $_SESSION['MM_uid'];
-
+/*
 $insertSQL2 = sprintf("INSERT INTO tk_log (tk_log_user, tk_log_action, tk_log_type, tk_log_class, tk_log_description) VALUES (%s, %s, %s, 2, '')",
                        GetSQLValueString($newName, "text"),
                        GetSQLValueString($multilingual_log_editdoc, "text"),
                        GetSQLValueString($newID, "text"));  
 $Result2 = mysql_query($insertSQL2, $tankdb) or die(mysql_error());
-
+*/
 
 
 
@@ -89,7 +67,7 @@ $Result2 = mysql_query($insertSQL2, $tankdb) or die(mysql_error());
 }
 
 mysql_select_db($database_tankdb, $tankdb);
-$query_Recordset1 = sprintf("SELECT * FROM tk_document WHERE docid = %s", GetSQLValueString($colname_Recordset1, "int"));
+$query_Recordset1 = sprintf("SELECT * FROM tk_document WHERE docid = %s  and tk_doc_del_status=1 ", GetSQLValueString($colname_Recordset1, "int"));
 $Recordset1 = mysql_query($query_Recordset1, $tankdb) or die(mysql_error());
 $row_Recordset1 = mysql_fetch_assoc($Recordset1);
 $totalRows_Recordset1 = mysql_num_rows($Recordset1);
@@ -184,9 +162,8 @@ window.onload = function()
 
         <button type="submit" class="btn btn-primary btn-sm" data-loading-text="<?php echo $multilingual_global_wait; ?>" id="b02"><?php echo $multilingual_global_action_save; ?></button>
 		
-		<input type="hidden" name="tk_doc_class2" id="tk_doc_class2" value="<?php echo $row_Recordset1['tk_doc_class2']; ?>" />
 		<input type="hidden" name="docid" id="docid" value="<?php echo $row_Recordset1['docid']; ?>" /> 
-		<input name="tk_doc_edit" type="hidden" value="<?php echo "{$_SESSION['MM_uid']}"; ?>"  />
+		<input type="hidden" name="tk_doc_lastupdate" id="tk_doc_lastupdate" value="<?php echo date("Y-m-d H:i:s"); ?>" />
 		
 		<input type="hidden" name="MM_update" value="form1" />
 	

@@ -72,7 +72,7 @@ $multilingual_breadcrumb_filelist = $multilingual_project_file_allfile;
 }
 
 if ($searchf == "1"){	
-	$inprolists = "%" . $filenames . "%";
+	$inprolists = "'%" . $filenames . "%'";
 	mysql_select_db($database_tankdb, $tankdb);
 	if ($pagetabs == "allfile"){
 		//对应文件下的所有文件夹和文件  -1表示没有选中
@@ -81,16 +81,16 @@ if ($searchf == "1"){
 		FROM tk_document 
 		inner join tk_user as tk_user1 on tk_document.tk_doc_create=tk_user1.uid  
 		$inproject 
-		WHERE tk_document.tk_doc_parentdocid = %s and tk_doc_title LIKE %s 
-		$inprojects", GetSQLValueString($colname_DetailRS1, "int"),$inprolists);
+		WHERE tk_document.tk_doc_parentdocid = %s and tk_doc_title LIKE %s  and tk_doc_del_status=1 ", 
+		GetSQLValueString($colname_DetailRS1, "int"),$inprolists);
 	}else{
 		$query_DetailRS1 = sprintf("SELECT *, 
 		tk_user1.tk_display_name as tk_display_name1
 		FROM tk_document 
 		inner join tk_user as tk_user1 on tk_document.tk_doc_create=tk_user1.uid  
 		$inproject 
-		WHERE tk_document.tk_doc_parentdocid = %s and tk_doc_title LIKE %s and (tk_doc_create = %s or tk_doc_backup1=1) 
-		$inprojects", GetSQLValueString($colname_DetailRS1, "int"),$inprolists,$_SESSION['MM_uid']);
+		WHERE tk_document.tk_doc_parentdocid = %s and tk_doc_title LIKE %s and (tk_doc_create = %s or tk_doc_backup1=1)  and tk_doc_del_status=1 ",
+		GetSQLValueString($colname_DetailRS1, "int"),$inprolists,$_SESSION['MM_uid']);
 	
 	}
 	$query_limit_DetailRS1 = sprintf("%s LIMIT %d, %d", $query_DetailRS1, $startRow_DetailRS1, $maxRows_DetailRS1);
@@ -112,7 +112,7 @@ if ($searchf == "1"){
 	FROM tk_document 
 	inner join tk_user as tk_user1 on tk_document.tk_doc_create=tk_user1.uid  
 	$inproject 
-	WHERE tk_document.tk_doc_parentdocid = %s
+	WHERE tk_document.tk_doc_parentdocid = %s  and tk_doc_del_status=1 
 	$inprojects", GetSQLValueString($colname_DetailRS1, "int"));
 	$query_limit_DetailRS1 = sprintf("%s LIMIT %d, %d", $query_DetailRS1, $startRow_DetailRS1, $maxRows_DetailRS1);
 	$DetailRS1 = mysql_query($query_limit_DetailRS1, $tankdb) or die(mysql_error());
@@ -133,7 +133,7 @@ if ($searchf == "1"){
 	FROM tk_document 
 	inner join tk_user as tk_user1 on tk_document.tk_doc_create=tk_user1.uid  
 	$inproject 
-	WHERE tk_document.tk_doc_parentdocid = %s
+	WHERE tk_document.tk_doc_parentdocid = %s  and tk_doc_del_status=1 
 	$inprojects
 	and (tk_doc_create = %s or tk_doc_backup1=1)", 
 	GetSQLValueString($colname_DetailRS1, "int"),
@@ -322,16 +322,17 @@ $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recor
 </div>
 
 <!--新建文档、文件夹-->
+<?php if ( $colname_DetailRS1 <> "-1" && $project_id <> "-1" ) { // 如果是一级页面不显示 ?>
 <div class="float_right" >
 <button type="button" class="btn btn-default btn-sm" name="addfolder" id="addfolder" onclick="addfolder();">
 <span class="glyphicon glyphicon-folder-open"></span> <?php echo $multilingual_project_file_addfolder; ?>
 </button>
 
-<button type="button" class="btn btn-default btn-sm" name="addfile" id="addfile" onclick="window.open('file_add.php?projectid=<?php echo $filepro; ?>&pid=<?php echo $filepid; ?>&pagetab=<?php echo $pagetabs;?>')" >
+<button type="button" class="btn btn-default btn-sm" name="addfile" id="addfile" onclick="window.open('file_add.php?projectid=<?php echo $project_id; ?>&pid=<?php echo $colname_DetailRS1; ?>&pagetab=<?php echo $pagetabs;?>')" >
 <span class="glyphicon glyphicon-file"></span> <?php echo $multilingual_project_file_addfile; ?>
 </button>
 </div>
-
+<?php } ?>
 
 </div>
 <div class="clearboth"></div>

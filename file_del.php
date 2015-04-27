@@ -2,10 +2,6 @@
 <?php require_once('session.php'); ?>
 <?php
 $restrictGoTo = "user_error3.php";
-if ($_SESSION['MM_rank'] < "2") {   
-  header("Location: ". $restrictGoTo); 
-  exit;
-}
 
 if (!function_exists("GetSQLValueString")) {
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
@@ -53,8 +49,8 @@ if (isset($_GET['url'])) {
 
 $pageurl =strtr($pageurl,"!","&");
 
-if ((isset($_GET['delID'])) && ($_GET['delID'] != "") && ($_SESSION['MM_Username'] <> $multilingual_dd_user_readonly)) {
-  $deleteSQL = sprintf("DELETE FROM tk_document WHERE docid=%s",
+if ((isset($_GET['delID'])) && ($_GET['delID'] != "")) {
+  $deleteSQL = sprintf("UPDATE tk_document SET tk_doc_del_status=-1 WHERE docid=%s",
                        GetSQLValueString($_GET['delID'], "int"));
 
   mysql_select_db($database_tankdb, $tankdb);

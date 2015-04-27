@@ -1,6 +1,7 @@
 <?php require_once('config/tank_config.php'); ?>
 <?php require_once('session_unset.php'); ?>
 <?php require_once('session.php'); ?>
+<?php require_once('file_function.php'); ?>
 <?php
 $restrictGoTo = "user_error3.php";
 
@@ -148,9 +149,10 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
           $Result1 = mysql_query($insertSQL,$tankdb) or die(mysql_error());
           $thisSid = mysql_insert_id();
 
+		  $parentID = get_project_document_ID($thisProj);
 		  $CurDate = date("Y-m-d H:i:s");
 		  $tk_doc_description="'本文件夹用于存放【".str_replace("'","",$stageNAME)."】阶段的所有资料。'";
-			  $insertSQLFolder = sprintf("INSERT INTO tk_document (tk_doc_title, tk_doc_description,tk_doc_pid, tk_doc_parentdocid, tk_doc_create, tk_doc_lastupdate,tk_doc_backup1, tk_doc_type) VALUES ($stageNAME, $tk_doc_description,$thisProj, $thisSid, 0,'$CurDate',1,1)");
+			  $insertSQLFolder = sprintf("INSERT INTO tk_document (tk_doc_title, tk_doc_description,tk_doc_pid, tk_doc_parentdocid, tk_doc_create, tk_doc_lastupdate,tk_doc_backup1, tk_doc_type) VALUES ($stageNAME, $tk_doc_description,$thisProj, $parentID, 0,'$CurDate',1,1)");
 
 				  mysql_select_db($database_tankdb, $tankdb);
 				  $Result_folder = mysql_query($insertSQLFolder, $tankdb) or die(mysql_error());
