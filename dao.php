@@ -138,7 +138,7 @@ class team_dao
     }
 
     //获得某一个用户在这个项目里的权限
-    public function get_user_authority($uid,$pid,$ulimit){
+    public function get_user_authority($uid,$pid){
         global $tankdb;
         global $database_tankdb;
         $user_authority =1; 

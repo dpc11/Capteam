@@ -5,6 +5,7 @@
 <?php
 $currentPage = $_SERVER["PHP_SELF"];
 
+$team_dao = new team_dao();
 //$_SESSION['MM_pid'] = 24;
 //$_SESSION['MM_uid'] = 5;
 //$_SESSION['MM_sid'] = 12;
@@ -21,7 +22,7 @@ if(isset($_GET['sid'])){
   $now_sid = $_GET['sid'];
 }
 
-$user_rank = 1;
+$user_rank = $team_dao->get_user_authority($now_uid,$now_pid);
 $selLimit = "SELECT tk_team_ulimit FROM tk_team WHERE tk_team_pid=$now_pid
     AND tk_team_uid=$now_uid";
 mysql_select_db($database_tankdb,$tankdb);
