@@ -563,6 +563,12 @@
                     <td><?php echo "姓名:".$val["name"]?></td>
                     <td><?php echo "邮箱:".$val["email"]?></td>
                     <td><?php echo "电话:".$val["phone_num"]?></td>
+                    <?php 
+                    $tk_team_pid=$colname_DetailRS1;//项目id
+                    $tk_team_uid=$_SESSION['MM_uid'];//用户id
+                    $user_authority = $team_dao_obj->get_user_authority($tk_team_uid,$tk_team_pid);//获得当前用户的权限
+
+                    if($user_authority > 2){ //只有组长才能分配权限?>
                     <td><a type="button" class="btn btn-default btn-sm" href=<?php echo 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF'].'?recordID='.$colname_DetailRS1.'&authority_user_id='.$val["uid"].'&authority_ulimit='.$val["ulimit"]; ?>>
                       <?php
                       if($val["ulimit"] == 1){
@@ -573,7 +579,8 @@
 
                       ?>
 
-                    </a></td>    
+                    </a></td>  
+                    <?php } ?>  
                     </tr>                      
                     <?php } }?>                                 
                 </tbody>
