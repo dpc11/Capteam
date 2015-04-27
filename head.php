@@ -55,7 +55,7 @@ if(strpos($_SERVER["HTTP_USER_AGENT"],"MSIE 8.0") || strpos($_SERVER["HTTP_USER_
     <div class="logo"><a href="index.php" class="logourl" >&nbsp;</a></div>
     <div class="nav_normal2">
     
-      <a href="project.php" class="
+      <a href="project.php?pagetab=jprj" class="
 	  <?php if($pagename == "project.php" || $pagename == "project_add.php" || $pagename == "project_view.php" || $pagename == "project_edit.php"){
 	  echo "nav_select";} ?>
 	  "><?php echo $multilingual_head_project; ?></a>
