@@ -482,11 +482,10 @@
               
   <!-- 分解阶段 -->
          <?php 
-         // $tk_team_pid=$colname_DetailRS1;//项目id
-         // $tk_team_uid=$authority_user_id;//用户id
-         // $user_authority = $team_dao_obj->get_get_user_authority($tk_team_uid,$tk_team_pid);
-
-         if($_SESSION['MM_rank'] > "1") { ?>
+          $tk_team_pid=$colname_DetailRS1;//项目id
+          $tk_team_uid=$_SESSION['MM_uid'];//用户id
+          $user_authority = $team_dao_obj->get_user_authority($tk_team_uid,$tk_team_pid);//获得当前用户的权限
+         if($user_authority > 2) { //只有组长才能分解阶段?>
   			 <td width="12%">
   			 <a href="stage_add.php?pid=<?php echo $row_DetailRS1['id']; ?>&formproject=1" >
   			 <span class="glyphicon glyphicon-random"></span> <?php echo $multilingual_project_newstage; ?></a></td>
@@ -576,24 +575,7 @@
 
                     </a></td>    
                     </tr>                      
-                    <?php } }?>                  
-               
-  <!--                 <tr>
-                    <td>dpc</td>
-                    <td>dpc11@qq.com</td>
-                    <td>13121917761</td>
-                    <td><a type="button" class="btn btn-default btn-sm" href="#" >
-                      <?php echo $multilingual_privilege_remove;?>
-                    </a></td>
-                  </tr>
-                  <tr>
-                    <td>dpc</td>
-                    <td>dpc11@qq.com</td>
-                    <td>13121917761</td>
-                    <td><a type="button" class="btn btn-default btn-sm" href="#" >
-                      <?php echo $multilingual_privilege_remove;?>
-                    </a></td>
-                  </tr> -->
+                    <?php } }?>                                 
                 </tbody>
               </table>
               </td>
