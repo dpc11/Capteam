@@ -44,13 +44,13 @@ $(function() {
 
         <!-- 切换按钮 -->
         <div class="btn-group">
-            <a type="button" class="btn btn-default btn-sm active" href="schedule_view.php">
+            <a type="button" class="btn btn-default btn-sm" href="schedule_view.php">
                 <?php echo $multilingual_schedule_view;?>
             </a>    
             <a type="button" class="btn btn-default btn-sm" href="schedule_task.php">
                 <?php echo $multilingual_schedule_task;?>
             </a>
-            <a type="button" class="btn btn-default btn-sm" href="schedule_person.php">
+            <a type="button" class="btn btn-default btn-sm active" href="schedule_person.php">
                 <?php echo $multilingual_schedule_person;?>
             </a>
             <a type="button" class="btn btn-default btn-sm" href="schedule_course.php">

@@ -661,7 +661,7 @@ $multilingual_set_setup = "配置";
 
 // ***提交任务
 $multilingual_submit_task = "提交任务";
-$multilingual_change_submit_task = "更改已提交的任务";
+$multilingual_change_submit_task = "修改提交任务";
 $multilingual_re_submit_task = "重新提交任务";
 // *** 审核
 $multilingual_exam_title = "审核";
