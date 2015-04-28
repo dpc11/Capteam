@@ -509,14 +509,24 @@
   			 <?php } ?>
   			
   <!-- 项目修改 -->
-  			 <?php if($_SESSION['MM_rank'] > "3" || ($_SESSION['MM_uid'] == $row_DetailRS1['project_to_user'] && $_SESSION['MM_rank'] > "1")) { ?>
+  			 <?php 
+         $tk_team_pid=$colname_DetailRS1;//项目id
+         $tk_team_uid=$_SESSION['MM_uid'];//用户id
+         $user_authority = $team_dao_obj->get_user_authority($tk_team_uid,$tk_team_pid);//获得当前用户的权限
+           
+         if($user_authority > 2 || ($_SESSION['MM_uid'] == $row_DetailRS1['project_to_user'])) { //只有组长才可以修改?>
   			 <td width="10%">
   			 <a href="project_edit.php?editID=<?php echo $row_DetailRS1['id']; ?>">
   			 <span class="glyphicon glyphicon-pencil"></span> <?php echo $multilingual_global_action_edit; ?>			 </a>			 </td>
   			 <?php }  ?> 
   			 
   <!-- 项目删除 -->
-  			 <?php if($_SESSION['MM_rank'] > "3")  {  ?>
+  			 <?php 
+         $tk_team_pid=$colname_DetailRS1;//项目id
+         $tk_team_uid=$_SESSION['MM_uid'];//用户id
+         $user_authority = $team_dao_obj->get_user_authority($tk_team_uid,$tk_team_pid);//获得当前用户的权限
+
+         if($user_authority > 2 || ($_SESSION['MM_uid'] == $row_DetailRS1['project_to_user'])) {//只有组长才可以删除项目 ?>
   			 <td width="10%">
   			 <a class="mouse_over" onClick="javascript:if(confirm( '<?php 
   	 if($totalRows_Recordset_task == "0"){  
