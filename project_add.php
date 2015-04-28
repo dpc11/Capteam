@@ -112,9 +112,9 @@
 
     //获取选中的项目成员
     $user_list= $_POST['project_to_user'];
+
     //往数据库team表中插入各个成员的信息
     foreach ($user_list as $a_user) {
-        $tk_team_pid= $newID;//项目id
         $tk_team_uid= $a_user;//用户id
         $tk_team_ulimit=1;//用户权限,组长是3，组员是1，副组长是2
         $tk_team_del_status=1;//该用户在该项目中的删除状态
@@ -125,7 +125,6 @@
         mysql_select_db($database_tankdb, $tankdb);
         $Result1 = mysql_query($addnewmemSQL, $tankdb) or die(mysql_error());
     }
-
 
     }
 
@@ -247,7 +246,7 @@
     			  <div class="form-group  col-xs-12">
                     <label for="select2" ><?php echo $multilingual_project_touser; ?><span id="csa_to_user_msg"></span></label>
                     <div >
-                      <select name="project_to_user" id="select2" size="6" multiple class="form-control">
+                      <select name="project_to_user[]" id="select2" size="6" multiple class="form-control">
     				          <?php foreach($user_arr as $key => $val){ 
                               if($val["uid"] <> $_SESSION["MM_uid"]){
                        ?>
