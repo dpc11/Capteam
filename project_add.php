@@ -300,8 +300,8 @@
     	  
     <!-- 提交按钮 -->
     	  <button type="submit" class="btn btn-primary btn-sm submitbutton" name="cont" ><?php echo $multilingual_global_action_save; ?></button>
-              <button type="button" class="btn btn-default btn-sm" onClick="javascript:history.go(-1);"><?php echo $multilingual_global_action_cancel; ?></button>
-              <input type="hidden" name="MM_insert" value="form1" /></td>
+          <button type="button" class="btn btn-default btn-sm" onClick="javascript:history.go(-1);"><?php echo $multilingual_global_action_cancel; ?></button>
+          <input type="hidden" name="MM_insert" value="form1" /></td>
         </tr>
       </table>
 

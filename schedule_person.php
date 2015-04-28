@@ -17,7 +17,7 @@ $(function() {
 			center: 'title',
 			right: 'month,agendaWeek,agendaDay'
 		},
-		events: 'calendar_json.php',
+		events: 'calendar_person_schedule.php',
         
         // 在个人日程中新增日程
 		dayClick: function(date, allDay, jsEvent, view) {

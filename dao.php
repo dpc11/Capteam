@@ -156,6 +156,15 @@ class team_dao
 }
 
 
+/**
+* 对个人日程的数据库操作
+*/
+class schedule_dao
+{
+    
+
+}
+
 
 
 
