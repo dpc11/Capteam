@@ -8,9 +8,55 @@ if (isset($_GET['projectid'])) {
   $project_id = $_GET['projectid'];
 }
 $stage_id = "-1";
-if (isset($_GET['stagetid'])) {
-  $stage_id = $_GET['stagetid'];
+if (isset($_GET['stageid'])) {
+  $stage_id = $_GET['stageid'];
 }
+$task_id = "-1";
+if (isset($_GET['taskid'])) {
+  $task_id = $_GET['taskid'];
+}
+
+$myid = $_SESSION['MM_uid'];//当前用户
+
+$SELtaskinfo = "SELECT * FROM tk_task WHERE tid=$task_id";
+  mysql_select_db($database_tankdb,$tankdb);
+  $Result1 = mysql_query($SELtaskinfo,$tankdb) or die(mysql_error());
+  $taskinfo = mysql_fetch_array($Result1);
+
+$SELuserinfo = "SELECT * FROM tk_user WHERE uid=$myid";
+  mysql_select_db($database_tankdb,$tankdb);
+  $Result2 = mysql_query($SELuserinfo,$tankdb) or die(mysql_error());
+  $userinfo = mysql_fetch_array($Result2);
+
+$SELstageinfo = "SELECT * FROM tk_stage WHERE stageid=$stage_id";
+  mysql_select_db($database_tankdb,$tankdb);
+  $Result3 = mysql_query($SELstageinfo,$tankdb) or die(mysql_error());
+  $stageinfo = mysql_fetch_array($Result3);
+
+$taskName = $taskinfo['csa_text'];
+echo $taskName;
+$userName = $userinfo['tk_user_login'];
+echo $userName;
+$stageFolder = $stageinfo['tk_stage_folder_id'];
+echo $stageFolder;
+
+$doc_title = "-1";
+$doc_description = "-1";
+$doc_attac = "-1";
+
+//标题
+if (isset($_POST['tk_doc_title'])) {
+  $doc_title= $_POST['tk_doc_title'];
+}
+//描述
+if (isset($_POST['tk_doc_description'])) {
+  $doc_description= $_POST['tk_doc_description'];
+}
+//附件
+if (isset($_POST['csa_remark1'])) {
+  $doc_attac= $_POST['csa_remark1'];
+}
+
 $fd = "0";//文件
 /*
 $pfiles = "-1";
@@ -23,7 +69,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
 
-if ( empty( $_POST['tk_doc_description'] ) ){
+/*if ( empty( $_POST['tk_doc_description'] ) ){
 $tk_doc_description = "'',";
 }else{
 $tk_doc_description = sprintf("%s,", GetSQLValueString(str_replace("%","%%",$_POST['tk_doc_description']), "text"));
@@ -34,20 +80,29 @@ if ( empty( $_POST['csa_remark1'] ) ){
 $tk_doc_attachment = "'',";
 }else{
 $tk_doc_attachment = sprintf("%s,", GetSQLValueString(str_replace("%","%%",$_POST['csa_remark1']), "text"));
-}
+}*/
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
-  $insertSQL = sprintf("INSERT INTO tk_document (tk_doc_title, tk_doc_description, tk_doc_attachment, tk_doc_pid, tk_doc_class2, tk_doc_create, tk_doc_createtime, tk_doc_edit, tk_doc_backup1, tk_doc_type, tk_doc_backup2) VALUES (%s, $tk_doc_description $csa_remark1 %s, %s, %s, %s, %s, %s, '', '')",
+    $today_date = date('Y-m-d');
+      $now_time = date('Y-m-d H:i:s',time());
+
+  $insertSQL = sprintf("INSERT INTO tk_document (tk_doc_title, tk_doc_description, tk_doc_attachment, 
+            tk_doc_pid, tk_doc_parentdocid, tk_doc_type,tk_doc_create, tk_doc_lastupdate, 
+            tk_doc_backup1, tk_doc_del_status)
+     VALUES (%s, %s, %s, $project_id,$stageFolder,2,$myid,'$now_time',0,1)",
                        GetSQLValueString($_POST['tk_doc_title'], "text"),
-                       GetSQLValueString($_POST['prod'], "text"),
-                       GetSQLValueString($_POST['tk_doc_class2'], "text"),
-                       GetSQLValueString($_POST['tk_doc_create'], "text"),
-                       GetSQLValueString($_POST['tk_doc_createtime'], "text"),
-                       GetSQLValueString($_POST['tk_doc_edit'], "text"),
-                       GetSQLValueString($_POST['tk_doc_backup1'], "text"));
+                       GetSQLValueString($_POST['tk_doc_description'], "text"),
+                       GetSQLValueString($_POST['csa_remark1'], "text"));
 
   mysql_select_db($database_tankdb, $tankdb);
-  $Result1 = mysql_query($insertSQL, $tankdb) or die(mysql_error());
+  $Result4 = mysql_query($insertSQL, $tankdb) or die(mysql_error());
+  $thisDid = mysql_insert_id();
+
+  $updateSQL = "UPDATE tk_task SET csa_document_id=$thisDid,csa_commit_time='$today_date',
+                csa_status=3 WHERE tid=$task_id";
+
+                mysql_select_db($database_tankdb, $tankdb);
+          $Result5 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
 
   
   /*
@@ -72,7 +127,7 @@ if (isset($_GET['pagetab'])) {
 }
 $ptab = "&pagetab=".$pagetabs;	  
 //  $insertGoTo = "file_view.php?recordID=$newID&folder=$fd&projectID=$project_id".$pf.$ptab;
-$insertGoTo = "default_task_edit.php";
+$insertGoTo = "default_task_edit.php?editID=$task_id";
  
 if (isset($_SERVER['QUERY_STRING'])) {
     $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
@@ -161,7 +216,9 @@ if (isset($_SERVER['QUERY_STRING'])) {
                                     <?php echo $multilingual_project_file_title; ?><span id="doctitle"></span>
                                 </label>
                                 <div>
-                                    <input type="text" name="tk_doc_title" id="tk_doc_title" value="" placeholder="<?php echo $multilingual_project_file_filetitle;?>" class="form-control" />
+                                    <input type="text" name="tk_doc_title" id="tk_doc_title" 
+                                    value="<?php echo $taskName?>——<?php echo $userName?>" 
+                                    placeholder="<?php echo $multilingual_project_file_filetitle;?>" class="form-control" readonly="true"/>
                                 </div>
                             </div>
 
@@ -171,7 +228,8 @@ if (isset($_SERVER['QUERY_STRING'])) {
                                     <?php echo $multilingual_project_file_filetext; ?>
                                 </label>
                                 <div>
-                                    <textarea name="tk_doc_description" id="tk_doc_description"></textarea>
+                                    <textarea name="tk_doc_description" id="tk_doc_description">
+                                        <?php if($doc_description!=-1){echo $doc_description;}?></textarea>
                                 </div>
                             </div>
 
@@ -182,7 +240,9 @@ if (isset($_SERVER['QUERY_STRING'])) {
                                 </label>
 
                                 <div class="input-group">
-                                    <input type="text" name="csa_remark1" id="csa_remark1" value="" placeholder="<?php echo $multilingual_upload_attachment; ?>" class="form-control">
+                                    <input type="text" name="csa_remark1" id="csa_remark1" 
+                                    value="<?php if($doc_attac!=-1){echo $doc_attac;}?>" 
+                                    placeholder="<?php echo $multilingual_upload_attachment; ?>" class="form-control">
                                     <span class="input-group-btn">
         <button class="btn btn-default" type="button" onClick="openBrWindow('upload_file.php','<?php echo $multilingual_global_upload; ?>','width=450,height=235')"><?php echo $multilingual_global_upload; ?></button>
       </span>
@@ -203,7 +263,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
                 <button type="submit" class="btn btn-primary btn-sm submitbutton" name="cont">
                     <?php echo $multilingual_global_action_save; ?>
                 </button>
-                <button type="button" class="btn btn-default btn-sm" onClick="window.close();">
+                <button type="button" class="btn btn-default btn-sm" onClick="javascript:history.go(-1);">
                     <?php echo $multilingual_global_action_cancel; ?>
                 </button>
 
