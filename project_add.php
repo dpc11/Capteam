@@ -251,7 +251,6 @@
     				          <?php foreach($user_arr as $key => $val){ 
                               if($val["uid"] <> $_SESSION["MM_uid"]){
                        ?>
-    					            <option value='<?php echo $val["uid"]?>'><?php echo $val["uid"]?></option>
     					       <?php
                      }} ?>  
     			

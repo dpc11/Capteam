@@ -236,9 +236,9 @@ window.onload = function()
                       foreach($user_arr as $key => $val){ 
                               if($val["uid"] <> $_SESSION["MM_uid"]){
                                 if(in_array($val["uid"], $user_selected)){ ?>
-                                <option value="<?php echo $val["uid"]?>" <?php echo "selected=\"selected\"";?>><?php echo $val["uid"]?></option>
+                                <option value="<?php echo $val["uid"]?>" <?php echo "selected=\"selected\"";?>><?php echo $val["uid"]."  ".$val["name"];?></option>
                        <?php         }else{  ?>
-                                <option value='<?php echo $val["uid"]?>'><?php echo $val["uid"]?></option>
+                                <option value='<?php echo $val["uid"]?>'><?php echo $val["uid"]."  ".$val["name"];?></option>
                        <?php          }
                        ?>
               
