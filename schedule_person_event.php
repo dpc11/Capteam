@@ -111,19 +111,19 @@ $date = $_GET['date'];
 <?php }
 
 function editform($id){
-	$query = mysql_query("select * from calendar where id='$id'");
+	$query = mysql_query("select * from tk_schedule where id='$id'");
 	$row = mysql_fetch_array($query);
 	if($row){
 		$id = $row['id'];
-		$title = $row['title'];
-		$starttime = $row['starttime'];
+		$title = $row['name'];
+		$starttime = $row['start_time'];
 		$start_d = date("Y-m-d",$starttime);
 		$start_h = date("H",$starttime);
 		$start_m = date("i",$starttime);
 		//$start = date("Y-m-d H:i:s",$starttime);
 		//echo $start_m;
 		
-		$endtime = $row['endtime'];
+		$endtime = $row['end_time'];
 		if($endtime==0){
 			$end_d = $startdate;
 			$end_chk = '';
