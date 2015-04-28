@@ -9,24 +9,25 @@ if (isset($_GET['pageNum_DetailRS1'])) {
 }
 $startRow_DetailRS1 = $pageNum_DetailRS1 * $maxRows_DetailRS1;
 $currentPage = $_SERVER["PHP_SELF"];
+
 $pagetabs = "mcfile";
 if (isset($_GET['pagetab'])) {
   $pagetabs = $_GET['pagetab'];
 }
 
-$colname_DetailRS1 = "-1";
+/*$colname_DetailRS1 = "-1";
 if (isset($_GET['recordID'])) {
   $colname_DetailRS1 = $_GET['recordID'];
+}*/
+
+$task_id= "-1";
+if (isset($_GET['taskid'])) {
+  $task_id = $_GET['taskid'];
 }
 
-$project_id= "-1";
-if (isset($_GET['projectID'])) {
-  $project_id = $_GET['projectID'];
-}
-
-if ($project_id <> "-1") {
+/*if ($project_id <> "-1") {
   $inproject = " inner join tk_project on tk_document.tk_doc_class1=tk_project.id ";
-} else { $inproject = " ";}
+} else { $inproject = " ";}*/
 
 $filenames = "";
 if (isset($_GET['filetitle'])) {
@@ -38,16 +39,36 @@ if (isset($_GET['pfile'])) {
   $pfiles = $_GET['pfile'];
 }
 
+$check_result="-1";
+$check_opinion="-1";
+$check_score="-1";
+//结果
+if (isset($_POST['csa_to_user'])) {
+  $check_result= $_POST['csa_to_user'];
+}
+//意见
+if (isset($_POST['examtext'])) {
+  $check_opinion= $_POST['examtext'];
+}
+//分数
+if (isset($_POST['examscore'])) {
+  $check_score= $_POST['examscore'];
+}
+
+
 mysql_select_db($database_tankdb, $tankdb);
-$query_DetailRS1 = sprintf("SELECT *, 
+/*$query_DetailRS1 = sprintf("SELECT *, 
 tk_user1.tk_display_name as tk_display_name1, 
-tk_user2.tk_display_name as tk_display_name2 FROM tk_document 
-inner join tk_user as tk_user1 on tk_document.tk_doc_create=tk_user1.uid  
-inner join tk_user as tk_user2 on tk_document.tk_doc_edit=tk_user2.uid 
+FROM tk_document 
+inner join tk_user as tk_user1 on tk_document.tk_doc_create=tk_user1.uid   
 $inproject 
 WHERE tk_document.docid = %s", GetSQLValueString($colname_DetailRS1, "int"));
 $query_limit_DetailRS1 = sprintf("%s LIMIT %d, %d", $query_DetailRS1, $startRow_DetailRS1, $maxRows_DetailRS1);
 $DetailRS1 = mysql_query($query_limit_DetailRS1, $tankdb) or die(mysql_error());
+$row_DetailRS1 = mysql_fetch_assoc($DetailRS1);*/
+$SELdocument="SELECT * FROM tk_document,tk_task 
+WHERE tid=$task_id AND csa_document_id=docid";
+$DetailRS1 = mysql_query($SELdocument, $tankdb) or die(mysql_error());
 $row_DetailRS1 = mysql_fetch_assoc($DetailRS1);
 
 if (isset($_GET['totalRows_DetailRS1'])) {
@@ -59,8 +80,8 @@ if (isset($_GET['totalRows_DetailRS1'])) {
 $totalPages_DetailRS1 = ceil($totalRows_DetailRS1/$maxRows_DetailRS1)-1;
 
 
-$docid = $colname_DetailRS1;
-$maxRows_Recordset_actlog = 10;
+$docid = $row_DetailRS1['csa_document_id'];
+/*$maxRows_Recordset_actlog = 10;
 $pageNum_Recordset_actlog = 0;
 if (isset($_GET['pageNum_Recordset_actlog'])) {
   $pageNum_Recordset_actlog = $_GET['pageNum_Recordset_actlog'];
@@ -101,7 +122,49 @@ if (!empty($_SERVER['QUERY_STRING'])) {
     $queryString_Recordset_actlog = "&" . htmlentities(implode("&", $newParams));
   }
 }
-$queryString_Recordset_actlog = sprintf("&totalRows_Recordset_actlog=%d%s", $totalRows_Recordset_actlog, $queryString_Recordset_actlog);
+$queryString_Recordset_actlog = sprintf("&totalRows_Recordset_actlog=%d%s", $totalRows_Recordset_actlog, $queryString_Recordset_actlog);*/
+      echo "hihihi";
+
+      $editFormAction = $_SERVER['PHP_SELF'];
+if (isset($_SERVER['QUERY_STRING'])) {
+  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
+}
+
+if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
+    $today_date = date('Y-m-d');
+      $now_time = date('Y-m-d H:i:s',time());
+      $minus = strtotime($today_date) - strtotime($row_DetailRS1['csa_plan_et']);
+
+      echo "nonno";
+
+
+      if($minus <= 0)//未截止
+        $date_score = 100;
+      else 
+        $date_score = 100 - $minus;
+
+      if($check_result == -1)//驳回
+        {$task_status = 5;$leader_score = 0;$final_score=0;}
+      else if($check_result == 1)//验收
+        {$task_stauts = 4;$leader_score = $check_score;     
+          $final_score = $check_score*0.7+$date_score*0.3;}
+
+      $updateSQL = sprintf("UPDATE tk_task SET csa_leader_grade=$leader_score,
+        csa_final_grade=$final_score,csa_check_time='$now_time',csa_check_context=%s,
+        csa_status=$task_status WHERE tid=task_id",
+        GetSQLValueString($_POST['examtext'],"text"));
+
+      mysql_select_db($database_tankdb, $tankdb);
+      $Result4 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
+
+      $insertGoTo = "default_task_edit.php?editID=$task_id";
+       
+      if (isset($_SERVER['QUERY_STRING'])) {
+          $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
+          $insertGoTo .= $_SERVER['QUERY_STRING'];
+        }
+        header(sprintf("Location: %s", $insertGoTo));
+  }
 ?>
 
 
@@ -194,8 +257,8 @@ $queryString_Recordset_actlog = sprintf("&totalRows_Recordset_actlog=%d%s", $tot
 	</td>
   </tr>
   
-<!-- 任务文档操作记录 -->
-  <?php if($totalRows_Recordset_actlog > 0){ //显示操作记录，如果有 ?>
+<!-- 任务文档操作记录 暂时还没有-->
+  <!--<?php if($totalRows_Recordset_actlog > 0){ //显示操作记录，如果有 ?>
   <tr>
           <td class="file_text_bg">
 		  <table style="width:940px;" align="center">
@@ -247,7 +310,7 @@ $queryString_Recordset_actlog = sprintf("&totalRows_Recordset_actlog=%d%s", $tot
       </table>
 	</td>
   </tr>
-  <?php } ?>
+  <?php } ?>-->
     
     <!-- 审核意见部分 -->
     <tr>
@@ -287,12 +350,17 @@ $queryString_Recordset_actlog = sprintf("&totalRows_Recordset_actlog=%d%s", $tot
     <td height="50px">
             
 <!-- 提交按钮 -->
-          <button type="submit" class="btn btn-primary btn-sm submitbutton" data-loading-text="<?php echo $multilingual_global_wait; ?>"><?php echo $multilingual_global_action_save; ?></button>
-		  
-		  <button type="button" class="btn btn-default btn-sm" onClick="javascript:history.go(-1);"><?php echo $multilingual_global_action_cancel; ?></button>
-          <input type="submit"  id="btn5" value="<?php echo $multilingual_global_action_save; ?>"  style="display:none" />
-      
-        <input type="hidden" name="MM_insert" value="form1" /></td>
+          <!-- 提交按钮 -->
+                <button type="submit" class="btn btn-primary btn-sm submitbutton" name="cont">
+                    <?php echo $multilingual_global_action_save; ?>
+                </button>
+                <button type="button" class="btn btn-default btn-sm" onClick="javascript:history.go(-1);">
+                    <?php echo $multilingual_global_action_cancel; ?>
+                </button>
+                <input type="submit"  id="btn5" value="<?php echo $multilingual_global_action_save; ?>"  style="display:none" />
+
+                <input type="hidden" name="MM_update" value="form1" />
+
     </tr>
 </table>
 <?php require('foot.php'); ?>
