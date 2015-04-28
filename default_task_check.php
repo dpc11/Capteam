@@ -46,6 +46,7 @@ $check_score="-1";
 if (isset($_POST['csa_to_user'])) {
   $check_result= $_POST['csa_to_user'];
 }
+
 //意见
 if (isset($_POST['examtext'])) {
   $check_opinion= $_POST['examtext'];
@@ -123,7 +124,6 @@ if (!empty($_SERVER['QUERY_STRING'])) {
   }
 }
 $queryString_Recordset_actlog = sprintf("&totalRows_Recordset_actlog=%d%s", $totalRows_Recordset_actlog, $queryString_Recordset_actlog);*/
-      echo "hihihi";
 
       $editFormAction = $_SERVER['PHP_SELF'];
 if (isset($_SERVER['QUERY_STRING'])) {
@@ -135,34 +135,39 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
       $now_time = date('Y-m-d H:i:s',time());
       $minus = strtotime($today_date) - strtotime($row_DetailRS1['csa_plan_et']);
 
-      echo "nonno";
-
-
       if($minus <= 0)//未截止
         $date_score = 100;
       else 
         $date_score = 100 - $minus;
 
-      if($check_result == -1)//驳回
-        {$task_status = 5;$leader_score = 0;$final_score=0;}
-      else if($check_result == 1)//验收
-        {$task_stauts = 4;$leader_score = $check_score;     
-          $final_score = $check_score*0.7+$date_score*0.3;}
+      if($check_result == '-1')//驳回
+        {
+          $task_status = 5;
+          $leader_score = 0;
+          $final_score=0;
+          echo $leader_score;
+        }
+      else if($check_result == '1')//验收
+        {
+          $task_status = 4;
+          $leader_score = $check_score;     
+          $final_score = $check_score*0.7+$date_score*0.3;
+          echo $final_score;
+        }
 
-      $updateSQL = sprintf("UPDATE tk_task SET csa_leader_grade=$leader_score,
-        csa_final_grade=$final_score,csa_check_time='$now_time',csa_check_context=%s,
-        csa_status=$task_status WHERE tid=task_id",
-        GetSQLValueString($_POST['examtext'],"text"));
+      echo $check_result;
+         
+      echo $task_status;
+
+      $updateSQL = "UPDATE tk_task SET csa_leader_grade=$leader_score,
+        csa_final_grade=$final_score,csa_check_time='$now_time',csa_check_context='$check_opinion',
+        csa_status=$task_status WHERE tid=$task_id";
 
       mysql_select_db($database_tankdb, $tankdb);
       $Result4 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
 
       $insertGoTo = "default_task_edit.php?editID=$task_id";
        
-      if (isset($_SERVER['QUERY_STRING'])) {
-          $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-          $insertGoTo .= $_SERVER['QUERY_STRING'];
-        }
         header(sprintf("Location: %s", $insertGoTo));
   }
 ?>
@@ -171,6 +176,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
 <?php require('head.php'); ?>
 <script type="text/javascript" src="srcipt/lhgcore.js"></script>
 <script type="text/javascript" src="srcipt/lhgdialog.js"></script>
+<script type="text/javascript" src="srcipt/lhgcheck.js"></script>
 <script type="text/javascript">
     
     // 通过审核结果选项控制是否显示任务分数框
@@ -184,7 +190,10 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
         
     };
 </script>
+<script charset="utf-8" src="editor/kindeditor.js"></script>
+<script charset="utf-8" src="editor/lang/zh_CN.js"></script>
 
+<form action="<?php echo $editFormAction; ?>" method="post" name="myform" id="myform">
 <table width="100%">
   <tr>
     <td class="file_text_bg">
@@ -360,9 +369,10 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
                 <input type="submit"  id="btn5" value="<?php echo $multilingual_global_action_save; ?>"  style="display:none" />
 
                 <input type="hidden" name="MM_update" value="form1" />
-
+              </td>
     </tr>
 </table>
+</form>
 <?php require('foot.php'); ?>
 </body>
 </html>
