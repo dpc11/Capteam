@@ -161,7 +161,22 @@ class team_dao
 */
 class schedule_dao
 {
-    
+    //获取个人事件的数据
+    public function get_person_events($userid){
+        $sql = "select * from tk_schedule where uid='$userid'";
+        $query = mysql_query($sql);
+        while($row=mysql_fetch_array($query)){
+            $data[] = array(
+            'id' => $row['id'],
+            'title' => $row['name'],
+            'start' => $row['start_time'],
+            'end' => $row['end_time'],
+            'url' => $row['url'],
+            'color' => '#008573'
+            );
+        }
+        return $data;
+    }
 
 }
 
