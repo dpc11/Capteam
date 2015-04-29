@@ -7,9 +7,25 @@ $action = $_GET['action'];
 if($action=='add'){
 	$uid = $_POST['uid'];//用户Id
 	$event = $_POST['event'];//事件名称    
-	$startdate = $_POST['startdate'];//开始日期
-	echo 'startdate'.$startdate;
-	$enddate = $_POST['enddate'];//结束日期
+	
+    $d1=$_POST['startdate'];;
+    $a1=explode('/',$d1);
+    if(count($a1)>2){
+        $startdate="$a1[2]-$a1[0]-$a1[1]";
+    }else{
+    	$startdate = $_POST['startdate'];//开始日期
+    }
+
+    $d2=$_POST['enddate'];;
+    $a2=explode('/',$d2);
+    if(count($a2)>2){
+        $enddate="$a2[2]-$a2[0]-$a2[1]";
+    }else{
+    	$enddate = $_POST['enddate'];//开始日期
+    }
+    
+
+
 	$s_time = $_POST['s_hour'].':'.$_POST['s_minute'].':00';//开始时间
 	$e_time = $_POST['e_hour'].':'.$_POST['e_minute'].':00';//结束时间
 
@@ -32,8 +48,25 @@ elseif($action=="edit"){
 		exit;	
 	}
 	$event = $_POST['event'];//事件内容
-	$startdate = $_POST['startdate'];//开始日期
-	$enddate = $_POST['enddate'];//结束日期
+
+	
+    $d1=$_POST['startdate'];;
+    $a1=explode('/',$d1);
+    if(count($a1)>2){
+        $startdate="$a1[2]-$a1[0]-$a1[1]";
+    }else{
+    	$startdate = $_POST['startdate'];//开始日期
+    }
+
+    $d2=$_POST['enddate'];;
+    $a2=explode('/',$d2);
+    if(count($a2)>2){
+        $enddate="$a2[2]-$a2[0]-$a2[1]";
+    }else{
+    	$enddate = $_POST['enddate'];//开始日期
+    }
+
+
 	$s_time = $_POST['s_hour'].':'.$_POST['s_minute'].':00';//开始时间
 	
 	$e_time = $_POST['e_hour'].':'.$_POST['e_minute'].':00';//结束时间
