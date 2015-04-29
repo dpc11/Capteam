@@ -34,7 +34,7 @@ $(function() {
 			var selDate =$.fullCalendar.formatDate(date,'yyyy-MM-dd');
 			$.fancybox({
 				'type':'ajax',
-				'href':'schedule_person_event.php?action=add&date='+selDate
+				'href':'schedule_person_event.php?action=add&uid='+<?php echo $userid; ?>+'&date='+selDate
 			});
     	},
     
@@ -42,7 +42,7 @@ $(function() {
         eventClick: function(calEvent, jsEvent, view) {
 			$.fancybox({
 				'type':'ajax',
-				'href':'schedule_person_event.php?action=edit&id='+calEvent.id
+				'href':'schedule_person_event.php?action=edit&uid='+<?php echo $userid; ?>+'&id='+calEvent.id
 			});
     	}
 	});

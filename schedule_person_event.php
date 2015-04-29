@@ -2,16 +2,18 @@
 require_once('config/tank_config.php'); 
 $action = $_GET['action'];
 $id = (int)$_GET['id'];
+$uid = (int)$_GET['uid'];
+
 switch($action){
 	case 'add':
-		addform();
+		addform($uid);
 		break;
 	case 'edit':
 		editform($id);
 		break;
 }
 
-function addform(){
+function addform($uid){
 $date = $_GET['date'];
 ?>
 <link rel="stylesheet" type="text/css" href="calendar/css/jquery-ui.css">
@@ -20,6 +22,7 @@ $date = $_GET['date'];
     <form id="add_form" action="schedule_person_opt.php?action=add" method="post">
     <p>日程内容：<input type="text" class="input" name="event" id="event" style="width:320px" placeholder="记录你将要做的一件事..."></p>
     <p>开始时间：<input type="text" class="input datepicker" name="startdate" id="startdate" value="<?php echo $date;?>" readonly>
+    <input type="hidden" name="uid" value=<?php echo $uid; ?> />
     <span id="sel_start"><select name="s_hour">
     	<option value="00">00</option>
         <option value="01">01</option>
