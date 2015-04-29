@@ -1,7 +1,9 @@
 <?php
 //include_once('connect.php');
 require_once('config/tank_config.php');
-$userid=1;
+require_once('session_unset.php'); 
+require_once('session.php'); 
+$userid=$_SESSION['MM_uid'];
 $sql = "select * from tk_task where csa_to_user='$userid'";
 $query = mysql_query($sql);
 while($row=mysql_fetch_array($query)){

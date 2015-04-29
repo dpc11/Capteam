@@ -38,11 +38,11 @@ $startRow_Recordset_prj = $pageNum_Recordset_prj * $maxRows_Recordset_prj;
 
 $colname_Recordset_prj = $row_DetailRS1['uid'];
 
-mysql_select_db($database_tankdb, $tankdb);
+/*mysql_select_db($database_tankdb, $tankdb);
 $query_Recordset_prj = sprintf("SELECT * FROM tk_project inner join tk_status_project on tk_project.project_status=tk_status_project.psid WHERE project_to_user = %s ORDER BY project_lastupdate DESC", GetSQLValueString($colname_Recordset_prj, "text"));
-$query_limit_Recordset_prj = sprintf("%s LIMIT %d, %d", $query_Recordset_prj, $startRow_Recordset_prj, $maxRows_Recordset_prj);
+$query_limit_Recordset_prj =  sprintf("%s LIMIT %d, %d", $query_Recordset_prj, $startRow_Recordset_prj, $maxRows_Recordset_prj);
 $Recordset_prj = mysql_query($query_limit_Recordset_prj, $tankdb) or die(mysql_error());
-$row_Recordset_prj = mysql_fetch_assoc($Recordset_prj);
+$row_Recordset_prj = mysql_fetch_assoc($Recordset_prj);*/
 
 if (isset($_GET['totalRows_Recordset_prj'])) {
   $totalRows_Recordset_prj = $_GET['totalRows_Recordset_prj'];
@@ -100,117 +100,6 @@ if (isset($_GET['logday'])) {
 
 $coldate = $colyear_log.$colmonth_log.$colday_log;
 
-mysql_select_db($database_tankdb, $tankdb);
-$query_Recordset_log = sprintf("SELECT * FROM tk_task_byday 
-								inner join tk_project on tk_task_byday.csa_tb_backup3=tk_project.id 
-								inner join tk_task_tpye on tk_task_byday.csa_tb_backup4=tk_task_tpye.id 
-								inner join tk_status on tk_task_byday.csa_tb_status=tk_status.id 
-								inner join tk_task on tk_task_byday.csa_tb_backup1=tk_task.TID 
-WHERE csa_tb_backup2 = %s AND csa_tb_year LIKE %s ORDER BY csa_tb_year DESC", 
-GetSQLValueString($colname_Recordset_log, "text"),
-GetSQLValueString($coldate . "%", "text")
-);
-$query_limit_Recordset_log = sprintf("%s LIMIT %d, %d", $query_Recordset_log, $startRow_Recordset_log, $maxRows_Recordset_log);
-$Recordset_log = mysql_query($query_limit_Recordset_log, $tankdb) or die(mysql_error());
-$row_Recordset_log = mysql_fetch_assoc($Recordset_log);
-
-if (isset($_GET['totalRows_Recordset_log'])) {
-  $totalRows_Recordset_log = $_GET['totalRows_Recordset_log'];
-} else {
-  $all_Recordset_log = mysql_query($query_Recordset_log);
-  $totalRows_Recordset_log = mysql_num_rows($all_Recordset_log);
-}
-$totalPages_Recordset_log = ceil($totalRows_Recordset_log/$maxRows_Recordset_log)-1;
-$queryString_Recordset_log = "";
-if (!empty($_SERVER['QUERY_STRING'])) {
-  $params = explode("&", $_SERVER['QUERY_STRING']);
-  $newParams = array();
-  foreach ($params as $param) {
-    if (stristr($param, "pageNum_Recordset_log") == false && 
-        stristr($param, "totalRows_Recordset_log") == false && 
-        stristr($param, "tab") == false) {
-      array_push($newParams, $param);
-    }
-  }
-  if (count($newParams) != 0) {
-    $queryString_Recordset_log = "&" . htmlentities(implode("&", $newParams));
-  }
-}
-$queryString_Recordset_log = sprintf("&totalRows_Recordset_log=%d%s", $totalRows_Recordset_log, $queryString_Recordset_log);
-
-
-$maxRows_Recordset_task = 15;
-$pageNum_Recordset_task = 0;
-if (isset($_GET['pageNum_Recordset_task'])) {
-  $pageNum_Recordset_task = $_GET['pageNum_Recordset_task'];
-}
-$startRow_Recordset_task = $pageNum_Recordset_task * $maxRows_Recordset_task;
-
-$colname_Recordset_task = $row_DetailRS1['uid'];
-
-mysql_select_db($database_tankdb, $tankdb);
-$query_Recordset_task = sprintf("SELECT *, 
-							
-							tk_project.project_name as project_name_prt 
-							FROM tk_task 
-								inner join tk_project on tk_task.csa_project=tk_project.id 
-								inner join tk_task_tpye on tk_task.csa_type=tk_task_tpye.id 
-								inner join tk_user on tk_task.csa_from_user=tk_user.uid 
-								inner join tk_status on tk_task.csa_remark2=tk_status.id 
-								
-								WHERE tk_task.csa_to_user = %s 
-								
-								ORDER BY csa_last_update DESC", 
-								GetSQLValueString($colname_Recordset_task, "text")
-								);
-$query_limit_Recordset_task = sprintf("%s LIMIT %d, %d", $query_Recordset_task, $startRow_Recordset_task, $maxRows_Recordset_task);
-$Recordset_task = mysql_query($query_limit_Recordset_task, $tankdb) or die(mysql_error());
-$row_Recordset_task = mysql_fetch_assoc($Recordset_task);
-
-if (isset($_GET['totalRows_Recordset_task'])) {
-  $totalRows_Recordset_task = $_GET['totalRows_Recordset_task'];
-} else {
-  $all_Recordset_task = mysql_query($query_Recordset_task);
-  $totalRows_Recordset_task = mysql_num_rows($all_Recordset_task);
-}
-$totalPages_Recordset_task = ceil($totalRows_Recordset_task/$maxRows_Recordset_task)-1;
-
-$queryString_Recordset_task = "";
-if (!empty($_SERVER['QUERY_STRING'])) {
-  $params = explode("&", $_SERVER['QUERY_STRING']);
-  $newParams = array();
-  foreach ($params as $param) {
-    if (stristr($param, "pageNum_Recordset_task") == false && 
-        stristr($param, "totalRows_Recordset_task") == false && 
-        stristr($param, "tab") == false) {
-      array_push($newParams, $param);
-    }
-  }
-  if (count($newParams) != 0) {
-    $queryString_Recordset_task = "&" . htmlentities(implode("&", $newParams));
-  }
-}
-$queryString_Recordset_task = sprintf("&totalRows_Recordset_task=%d%s", $totalRows_Recordset_task, $queryString_Recordset_task);
-
-mysql_select_db($database_tankdb, $tankdb);
-$query_Recordset_sumtotal = sprintf("SELECT 
-							sum(csa_tb_manhour) as sum_hour, 
-							COUNT(*) as count_user_log   
-							FROM tk_task_byday 								
-							
-							WHERE csa_tb_backup2 = %s", 
-								GetSQLValueString($colname_Recordset_task, "text")
-								);
-$Recordset_sumtotal = mysql_query($query_Recordset_sumtotal, $tankdb) or die(mysql_error());
-$row_Recordset_sumtotal = mysql_fetch_assoc($Recordset_sumtotal);
-$user_totalhour=$row_Recordset_sumtotal['sum_hour']; 
-$user_totallog=$row_Recordset_sumtotal['count_user_log'];
-
-mysql_select_db($database_tankdb, $tankdb);
-$query_Recordset_countuser = "SELECT COUNT(*) as count_user FROM tk_user WHERE tk_user_rank NOT LIKE '0'";
-$Recordset_countuser = mysql_query($query_Recordset_countuser, $tankdb) or die(mysql_error());
-$row_Recordset_countuser = mysql_fetch_assoc($Recordset_countuser);
-
 ?>
 <?php require('head.php'); ?>
 <script type="text/javascript" src="chart/js/swfobject.js"></script> 
@@ -233,13 +122,7 @@ function   exportexcel()
         return   false; 
       
       } 
-	  
-function addtask()
-{
-    J.dialog.get({ id: "taskadd", title: '<?php echo $multilingual_taskadd_selprj; ?>', width: 400, height: 350, page: "task_add_selprj.php?section=1&UID=<?php echo $row_DetailRS1['uid']; ?>&touser=1" });
-}
-</script>
-
+	 
 <?php 
 $tab = "-1";
 if (isset($_GET['tab'])) {
@@ -299,46 +182,11 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
       <td width="25%" class="input_task_right_bg" valign="top"><table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
           <tr>
             <td valign="top"  class="gray2">
-	 <h4 style="margin-top:40px"><strong><?php echo $multilingual_user_level; ?></strong></h4>
-
-<?php if($row_DetailRS1['tk_user_rank']==0){ ?>
-<p><span class="glyphicon glyphicon-ban-circle"></span> <?php echo $multilingual_rank0; ?></p>
-<?php }?>
-
-<?php if($row_DetailRS1['tk_user_rank']>0){ ?>
-<p><span class="glyphicon glyphicon-ok"></span> <?php echo $multilingual_rank1; ?></p>
-<?php }?>
-
-<?php if($row_DetailRS1['tk_user_rank']>1){ ?>
-<p><span class="glyphicon glyphicon-ok"></span> <?php echo $multilingual_rank2; ?></p>
-<p><span class="glyphicon glyphicon-ok"></span> <?php echo $multilingual_rank3; ?></p>
-<p><span class="glyphicon glyphicon-ok"></span> <?php echo $multilingual_rank4; ?></p>
-<?php }?>
-
-<?php if($row_DetailRS1['tk_user_rank']>2){ ?>
-<p><span class="glyphicon glyphicon-ok"></span> <?php echo $multilingual_rank5; ?></p>
-<?php }?>
-
-<?php if($row_DetailRS1['tk_user_rank']>3){ ?>
-<p><span class="glyphicon glyphicon-ok"></span> <?php echo $multilingual_rank6; ?></p>
-<?php }?>
-
-<?php if($row_DetailRS1['tk_user_rank']>4){ ?>
-<p><span class="glyphicon glyphicon-ok"></span> <?php echo $multilingual_rank7; ?></p>
-<p><span class="glyphicon glyphicon-ok"></span> <?php echo $multilingual_rank8; ?></p>
-<p><span class="glyphicon glyphicon-ok"></span> <?php echo $multilingual_rank9; ?></p>
-<?php }?>
+	 <h4 style="margin-top:40px"><strong><?php echo "查看个人信息"; ?></strong></h4>
 
 
-		  
-
-	 
-	 
-	 
-	 
-	 
-
-              
+<?php ?>
+          
               </td>
           </tr>
         </table></td>
@@ -360,41 +208,20 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
 			 
 			 <td>
 			 <table width="100%" border="0" cellspacing="0" cellpadding="5"  class="info_task_bg">
+
+	 <?php if($row_DetailRS1['tk_user_login'] <> null && $row_DetailRS1['tk_user_login'] <> " ") { ?>
   <tr>
-    <td width="12%" class="info_task_title"><?php echo $multilingual_user_role; ?></td>
-    <td  width="40%"><?php
-switch ($row_DetailRS1['tk_user_rank'])
-{
-case 0:
-  echo $multilingual_dd_role_disabled;
-  break;
-case 1:
-  echo $multilingual_dd_role_readonly;
-  break;
-case 2:
-  echo $multilingual_dd_role_guest;
-  break;
-case 3:
-  echo $multilingual_dd_role_general;
-  break;
-case 4:
-  echo $multilingual_dd_role_pm;
-  break;
-case 5:
-  echo $multilingual_dd_role_admin;
-  break;
-}
-?></td>
-    <td  width="12%" class="info_task_title">&nbsp;</td>
+  
+    <td class="info_task_title"><?php echo $multilingual_user_account; ?></td>
+    <td><a href="mailto:<?php echo $row_DetailRS1['tk_user_login']; ?>"><?php echo $row_DetailRS1['tk_user_login']; ?></a></td>
+    <td class="info_task_title">&nbsp;</td>
     <td>&nbsp;</td>
     </tr>
-	
+  
+   <?php } ?>
+
 	 <?php if($row_DetailRS1['tk_user_email'] <> null && $row_DetailRS1['tk_user_email'] <> " ") { ?>
   <tr>
-  
- 
-
-  
   
     <td class="info_task_title"><?php echo $multilingual_user_email; ?></td>
     <td><a href="mailto:<?php echo $row_DetailRS1['tk_user_email']; ?>"><?php echo $row_DetailRS1['tk_user_email']; ?></a></td>
@@ -423,9 +250,7 @@ case 5:
 		  <table width="100%" style="line-height:40px;">
 		  <tr>
 		  <?php if($_SESSION['MM_rank'] > "2") { ?>
-		  <td width="12%">
-		  <a onClick="addtask();" class="mouse_hover" ><span class="glyphicon glyphicon-random"></span> <?php echo $multilingual_project_newtask; ?></a>
-		  </td>
+		
 		  <?php }  ?> 
 		  <?php if ($_SESSION['MM_rank'] > "1"){ ?>
 		  <?php if ($_SESSION['MM_rank'] > "4" || $_SESSION['MM_uid'] == $row_DetailRS1['uid']) { ?>

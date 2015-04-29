@@ -54,8 +54,8 @@ if (isset($_GET['inputtitle'])) {
   $colinputtitle_Recordset1 = $_GET['inputtitle'];
 }
 
-mysql_select_db($database_tankdb, $tankdb);
-$query_Recordset1 = sprintf("SELECT * FROM tk_user WHERE tk_user_rank LIKE %s AND tk_user_rank $where %s AND tk_display_name LIKE %s $order %s", GetSQLValueString("%" . $colrole_Recordset1 . "%", "text"),
+/*mysql_select_db($database_tankdb, $tankdb);
+$query_Recordset1 = sprintf("SELECT * FROM tk_user WHERE tk_display_name LIKE %s $order %s", GetSQLValueString("%" . $colrole_Recordset1 . "%", "text"),
 GetSQLValueString("%" . $colrole_dis . "%", "text"), 
 GetSQLValueString("%" . $colinputtitle_Recordset1 . "%", "text"),
 							GetSQLValueString($orderlist, "defined", $orderlist, "NULL"));
@@ -86,6 +86,7 @@ if (!empty($_SERVER['QUERY_STRING'])) {
   }
 }
 $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recordset1, $queryString_Recordset1);
+?>*/
 ?>
 <?php require('head.php'); ?>
 <script type="text/JavaScript">
@@ -161,22 +162,10 @@ function GP_popupConfirmMsg(msg) { //v1.0
 	  ?>>
 		<?php echo $multilingual_user_title; ?></a></th>
         <th>
-		<a href="default_user.php?<?php echo $current_url; ?>&sort=tk_user_rank&order=<?php 
-	  if ( $sortlist <> "tk_user_rank"){
-	  echo "DESC";
-	  }else if( $sortlist == "tk_user_rank" && $orderlist == "DESC"){
-	  echo "ASC";
-	  } else {
-	  echo "DESC";
-	  }
+		
+	  
 	  ?>" 
-	  <?php 
-	  if($sortlist=="tk_user_rank" && $orderlist=="ASC"){
-	  echo "class='sort_asc'";
-	  } else if ($sortlist=="tk_user_rank" && $orderlist=="DESC"){
-	  echo "class='sort_desc'";
-	  }
-	  ?>>
+	
 		<?php echo $multilingual_user_role; ?></a></th>
 		
 		<th>
@@ -241,27 +230,7 @@ function GP_popupConfirmMsg(msg) { //v1.0
         <td><a href="user_view.php?recordID=<?php echo $row_Recordset1['uid']; ?>"><?php echo $row_Recordset1['tk_display_name']; ?></a></td>
         <td>
 		<?php
-switch ($row_Recordset1['tk_user_rank'])
-{
-case 0:
-  echo $multilingual_dd_role_disabled;
-  break;
-case 1:
-  echo $multilingual_dd_role_readonly;
-  break;
-case 2:
-  echo $multilingual_dd_role_guest;
-  break;
-case 3:
-  echo $multilingual_dd_role_general;
-  break;
-case 4:
-  echo $multilingual_dd_role_pm;
-  break;
-case 5:
-  echo $multilingual_dd_role_admin;
-  break;
-}
+
 ?>
 		</td>
 		<td><?php echo $row_Recordset1['tk_user_contact']; ?>&nbsp;</td>
