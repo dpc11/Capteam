@@ -38,7 +38,7 @@ mysql_query($sql);
 
 if(mysql_insert_id()){//写入成功，发邮件
   include_once("smtp.class.php");
-  $smtpserver = "smtp.qq.com"; //SMTP服务器
+    $smtpserver = "smtp.qq.com"; //SMTP服务器
     $smtpserverport = 25; //SMTP服务器端口
     $smtpusermail = "1152352921@qq.com"; //SMTP服务器的用户邮箱
     $smtpuser = "1152352921@qq.com"; //SMTP服务器的用户帐号
@@ -51,15 +51,28 @@ if(mysql_insert_id()){//写入成功，发邮件
     $emailbody = "亲爱的".$username."：<br/>感谢您在我站注册了新帐号。<br/>请点击链接激活您的帐号。<br/><a href='http://localhost//Capteam/active.php?verify=".$token."' target='_blank'>http://localhost//Capteam/active.php?verify=".$token."</a><br/>如果以上链接无法点击，请将它复制到你的浏览器地址栏中进入访问，该链接24小时内有效。<br/>如果此次激活请求非你本人所发，请忽略本邮件。<br/><p style='text-align:right'>-------- Hellwoeba.com 敬上</p>";
    // $emailbody="哇哈哈";
     $rs = $smtp->sendmail($smtpemailto, $smtpemailfrom, $emailsubject, $emailbody, $emailtype);
-    echo "$rs";
+   // echo "$rs";
   if($rs==1){
-    //$msg = '去邮箱查看邮件吧'; 
-    echo '<script>alert("去邮箱查看邮件吧");window.history.go(-1);</script>';
-  }else{
+    $mailstyle = explode('@',$email); 
+    $url='http://mail.'.$mailstyle[1];
+   // echo $mailstyle[1];echo "</br>"; 
+   // echo $url;
+   //header("location:registerToMail.php?url="+$url);
+
+   $msg ='为您转到邮箱，点击激活您的账号……';
+  //$url = "http://localhost//Capteam/user_login.php";   
+?> 
+<html>     
+<head>     
+<meta http-equiv="refresh" content="2;url=<?php echo $url; ?>">     
+</head>     
+
+</html> 
+
+  <?php }else{
     $msg = $rs; 
     echo $msg;
   }
 }
 echo $msg;
 ?>
-

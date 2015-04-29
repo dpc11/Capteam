@@ -25,8 +25,7 @@ while($row = mysql_fetch_array($ResultTaskCalendar))
   $pagename='default_task_edit.php';
   $tid=$id;
   $url=$pagename.'?pagetab=alltask&editID='.(int)$_GET['id'];
-  //$current_url=default_task_edit.php?pagetab=alltask&editID=28'>;
-  //echo "<div class='b'><a href="<?php echo $pagename; ?
+
   echo "<div class='b'><a href='$url'>$task</a></div>";
 
 
