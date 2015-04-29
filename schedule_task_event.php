@@ -18,8 +18,18 @@ $ResultTaskCalendar = mysql_query($ViewCalendarTaskSQL1, $tankdb) or die(mysql_e
 
 while($row = mysql_fetch_array($ResultTaskCalendar))
   {
-  echo "您今天（截止日期）的要完成的任务是： ";
-  echo $row['csa_text'] ;
+  echo "您今天（截止日期）要完成的任务是： ";
+  //echo $row['csa_text'] ;
+  $task=$row['csa_text'];
+
+  $pagename='default_task_edit.php';
+  $tid=$id;
+  $url=$pagename.'?pagetab=alltask&editID='.(int)$_GET['id'];
+  //$current_url=default_task_edit.php?pagetab=alltask&editID=28'>;
+  //echo "<div class='b'><a href="<?php echo $pagename; ?
+  echo "<div class='b'><a href='$url'>$task</a></div>";
+
+
   echo "<br />";
   echo "<br />";
   echo "所属项目：";

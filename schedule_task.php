@@ -24,6 +24,7 @@ $(function() {
 				'type':'ajax',
                 
                 // 查看任务日程的详细日程
+
 				'href':'schedule_task_event.php?&id='+calEvent.id
 			});
     	}
