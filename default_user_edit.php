@@ -51,7 +51,6 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
   $Result1 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
  
   //alert("您已成功修改用户个人信息!");
-  $updateGoTo = "default_user_edit.php?";//recordID=$colname_Recordset1
   if (isset($_SERVER['QUERY_STRING'])) {
     $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
     $updateGoTo .= $_SERVER['QUERY_STRING'];
