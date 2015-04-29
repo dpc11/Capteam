@@ -125,8 +125,6 @@ function editform($id){
         $end_d = date("Y-m-d",$endtime);
         $end_h = date("H",$endtime);
         $end_m = date("i",$endtime);
-
-
 	}
 ?>
 <link rel="stylesheet" type="text/css" href="calendar/css/jquery-ui.css">
@@ -222,25 +220,7 @@ function editform($id){
 <script type="text/javascript">
 $(function(){
 	$(".datepicker").datepicker({minDate: -3,maxDate: 3});
-    
-//    全天和结束时间选择框（不需要）
-//	$("#isallday").click(function(){
-//		if($("#sel_start").css("display")=="none"){
-//			$("#sel_start,#sel_end").show();
-//		}else{
-//			$("#sel_start,#sel_end").hide();
-//		}
-//	});
-//	
-//	$("#isend").click(function(){
-//		if($("#p_endtime").css("display")=="none"){
-//			$("#p_endtime").show();
-//		}else{
-//			$("#p_endtime").hide();
-//		}
-//		$.fancybox.resize();//调整高度自适应
-//	});
-	
+    	
 	//提交表单
 	$('#add_form').ajaxForm({
 		beforeSubmit: showRequest, //表单验证
@@ -275,7 +255,7 @@ function showRequest(){
 
 function showResponse(responseText, statusText, xhr, $form){
 	if(statusText=="success"){	
-		if(responseText==1){
+		if(responseText==1){//1表示成功
 			$.fancybox.close();
             location.reload();
 			// $('#calendar').fullCalendar('refetchEvents'); //重新获取所有事件数据
