@@ -172,7 +172,8 @@ class schedule_dao
             'start' => $row['start_time'],
             'end' => $row['end_time'],
             'url' => $row['url'],
-            'color' => '#008573'
+            'color' => '#008573',
+            'allDay' => FALSE
             );
         }
         return $data;
