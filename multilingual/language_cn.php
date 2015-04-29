@@ -1,4 +1,4 @@
-<?php 
+﻿<?php 
 // *您可以通过该文件集中管理系统中的界面文字，让WSS更加适合您的企业。修改方法：找到相应的界面文字，修改引号“”之间的内容即可。
 
 // *** 数据字典开始(系统正式运行后禁止修改数据字典)********************
@@ -507,6 +507,7 @@ $multilingual_user_updatetask = "更新了任务";
 $multilingual_user_updatetask2 = "的执行人";
 $multilingual_user_newtask1 = "有新的任务";
 $multilingual_user_newtask2 = "指派给您";
+$multilingual_user_register = "注册";
 
 $multilingual_user_list_title = "用户管理";
 $multilingual_user_list_showdis = "禁用用户";
