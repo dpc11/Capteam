@@ -1,4 +1,4 @@
-﻿<?php 
+<?php 
 // *您可以通过该文件集中管理系统中的界面文字，让WSS更加适合您的企业。修改方法：找到相应的界面文字，修改引号“”之间的内容即可。
 
 // *** 数据字典开始(系统正式运行后禁止修改数据字典)********************
@@ -653,6 +653,18 @@ $multilingual_schedule_view = "所有日程";
 $multilingual_schedule_task = "任务日程";
 $multilingual_schedule_person = "个人日程";
 $multilingual_schedule_course = "课业日程";
+
+$multilingual_schedule_view_tip = "<p>所有日程提供了一个综合性的日程视图</p><br />
+<p>所有日程是用来查看本月或者本周的任务、个人、课程安排的综合视图，点击事件标签即可查看详细，切换右上角的标签可分别查看概要和详细日程安排</p><br /><p>若需修改日程请前往对应分类视图。</p>
+";
+
+$multilingual_schedule_task_tip = "<p>任务日程展示了本月的所有任务视图</p><br />
+<p>任务日程是由系统根据用户所负责的所有任务自动生成而来的，所以用户只能查看而无法做任何修改，而且任务是精确到天所以无需详细视图。</p>
+";
+
+$multilingual_schedule_person_tip = "<p>个人日程可修改并展示个人安排视图</p><br />
+<p>个人日程由用户自己填写，精确到小时，点击日历空白处即可快速添加当日的日程安排，点击事件标签可查看并编辑已有的日程安排。</p>
+";
 
 // *** 设置
 $multilingual_set_title = "设置";

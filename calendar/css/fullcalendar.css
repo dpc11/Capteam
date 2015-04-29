@@ -17,7 +17,7 @@
 	
 html .fc,
 .fc table {
-	font-size: 1em;
+	font-size: 1.05em;
 	}
 	
 .fc td,
@@ -55,7 +55,8 @@ html .fc,
 	}
 	
 .fc-header-title h2 {
-	margin-top: 0; font-size:16px;
+	margin-top: 0;
+    font-size: 22px;
 	white-space: nowrap;
 	}
 	
@@ -66,12 +67,13 @@ html .fc,
 .fc-header .fc-button {
 	margin-bottom: 1em;
 	vertical-align: top;
+    padding: 3px 10px;
 	}
 	
 /* buttons edges butting together */
 
 .fc-header .fc-button {
-	margin-right: -1px;
+	margin-right: -2px;
 	}
 	
 .fc-header .fc-corner-right,  /* non-theme */
@@ -142,7 +144,7 @@ html .fc,
 	padding: 0 .6em;
 	overflow: hidden;
 	height: 1.9em;
-	line-height: 1.9em;
+	line-height: 1.5em;
 	white-space: nowrap;
 	cursor: pointer;
 	}
@@ -278,6 +280,7 @@ a.fc-event,
 .fc-event-inner {
 	width: 100%;
 	overflow: hidden;
+    cursor: pointer;
 	}
 	
 .fc-event-time,

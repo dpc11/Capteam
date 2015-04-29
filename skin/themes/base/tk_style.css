@@ -419,7 +419,7 @@ a:focus {
 }
 
 .subnav {
-    width: 99%;
+    width: 98%;
     padding-left: 15px;
     margin: 15px auto 8px 0px;
 }
@@ -1327,7 +1327,7 @@ a:focus {
 }
 
 #calendar {
-    width: 90%;
+    width: 98%;
     margin: 20px auto 10px auto
 }
 
@@ -1399,4 +1399,7 @@ a:focus {
 .sub_btn .del {
     position: absolute;
     left: 2px
+}
+.btn-sm {
+    font-size: 1em; !important
 }

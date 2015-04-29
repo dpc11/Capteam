@@ -34,7 +34,6 @@ $pagename = end($pagename);
 <link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
 <link href="skin/themes/base/tk_style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="srcipt/jquery.js"></script>
-<script type="text/javascript" src="srcipt/js.js"></script>
 <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
 <script type="text/javascript" src="srcipt/lhgcore.js"></script>
 <script type="text/javascript" src="srcipt/lhgdialog.js"></script>
