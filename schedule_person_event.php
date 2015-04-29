@@ -102,12 +102,6 @@ $date = $_GET['date'];
     </select>
     </span>
     </p>
-    <p>
-<!--
-    <label><input type="checkbox" value="1" id="isallday" name="isallday" checked> 全天</label>
-    <label><input type="checkbox" value="1" id="isend" name="isend"> 结束时间</label>
--->
-    </p>
     <div class="sub_btn"><input type="submit" class="btn btn_ok" value="确定"> <input type="button" class="btn btn_cancel" value="取消" onClick="$.fancybox.close()"></div>
     </form>
 </div>
@@ -119,35 +113,20 @@ function editform($id){
 	if($row){
 		$id = $row['id'];
 		$title = $row['name'];
-		$starttime = $row['start_time'];
+		$starttime1 = $row['start_time'];
+        $starttime = strtotime($starttime1);//转换为date类型
 		$start_d = date("Y-m-d",$starttime);
 		$start_h = date("H",$starttime);
 		$start_m = date("i",$starttime);
-		//$start = date("Y-m-d H:i:s",$starttime);
-		//echo $start_m;
+
 		
-		$endtime = $row['end_time'];
-		if($endtime==0){
-			$end_d = $startdate;
-			$end_chk = '';
-			$end_display = "style='display:none'";
-		}else{
-			$end_d = date("Y-m-d",$endtime);
-			$end_h = date("H",$endtime);
-			$end_m = date("i",$endtime);
-			$end_chk = "checked";
-			$end_display = "style=''";
-		}
-		
-		$allday = $row['allday'];
-		if($allday==1){
-			$display = "style='display:none'";
-			$allday_chk = "checked";
-		}else{
-			$display = "style=''";
-			$allday_chk = '';
-		}
-		//$display = $allday==1?"style='display:none'":"style=''";
+		$endtime1 = $row['end_time'];
+        $endtime = strtotime($endtime1);//转换为date类型
+        $end_d = date("Y-m-d",$endtime);
+        $end_h = date("H",$endtime);
+        $end_m = date("i",$endtime);
+
+
 	}
 ?>
 <link rel="stylesheet" type="text/css" href="calendar/css/jquery-ui.css">
@@ -272,10 +251,11 @@ $(function(){
 	$("#del_event").click(function(){
 		if(confirm("您确定要删除吗？")){
 			var eventid = $("#eventid").val();
-			$.post("do.php?action=del",{id:eventid},function(msg){
+			$.post("schedule_person_opt.php?action=del",{id:eventid},function(msg){
 				if(msg==1){//删除成功
 					$.fancybox.close();
-					$('#calendar').fullCalendar('refetchEvents'); //重新获取所有事件数据
+                    location.reload();
+					// $('#calendar').fullCalendar('refetchEvents'); //重新获取所有事件数据
 				}else{
 					alert(msg);	
 				}
@@ -297,7 +277,8 @@ function showResponse(responseText, statusText, xhr, $form){
 	if(statusText=="success"){	
 		if(responseText==1){
 			$.fancybox.close();
-			$('#calendar').fullCalendar('refetchEvents'); //重新获取所有事件数据
+            location.reload();
+			// $('#calendar').fullCalendar('refetchEvents'); //重新获取所有事件数据
 		}else{
 			alert(responseText);
 		}

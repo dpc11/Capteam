@@ -17,7 +17,7 @@ if($action=='add'){
 
 	$query = mysql_query("insert into `tk_schedule` (`name`,`start_time`,`end_time`,`id`,`uid`) values ('$event','$starttime','$endtime','$id','$uid')");
 	if(mysql_insert_id()>0){//插入成功刷新日程页面
-		echo '添加成功！';
+		echo '1';
 		// $insertGoTo .= "schedule_person.php";
 		// header(sprintf("Location: %s", $insertGoTo));
 	}else{
@@ -34,10 +34,10 @@ elseif($action=="edit"){
 	$startdate = $_POST['startdate'];//开始日期
 	$enddate = $_POST['enddate'];//结束日期
 	$s_time = $_POST['s_hour'].':'.$_POST['s_minute'].':00';//开始时间
+	
 	$e_time = $_POST['e_hour'].':'.$_POST['e_minute'].':00';//结束时间
 	$starttime = $startdate.' '.$s_time;//开始时间
 	$endtime = $enddate.' '.$e_time;//结束时间
-
 
 	mysql_query("update `tk_schedule` set `name`='$event',`start_time`='$starttime',`end_time`='$endtime' where `id`='$id'");
 	if(mysql_affected_rows()==1){
