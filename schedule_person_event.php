@@ -155,8 +155,8 @@ function editform($id){
 	<h3>编辑事件</h3>
     <form id="add_form" action="schedule_person_opt.php?action=edit" method="post">
     <input type="hidden" name="id" id="eventid" value="<?php echo $id;?>">
-    <p>日程内容：<input type="text" class="input" name="event" id="event" style="width:320px" placeholder="记录你将要做的一件事..." value="<?php echo $title;?>"></p>
-    <p>开始时间：<input type="text" class="input datepicker" name="startdate" id="startdate" value="<?php echo $start_d;?>" readonly>
+    <p>日程内容：<input type="text" class="input" name="event" id="event" style="width:320px" placeholder="记录你将要做的一件事..." value="<?php echo $title; ?>"></p>
+    <p>开始时间：<input type="text" class="input datepicker" name="startdate" id="startdate" value="<?php echo $start_d; ?>" readonly>
     <span id="sel_start" <?php echo $display;?>><select name="s_hour">
     	<option value="<?php echo $start_h;?>" selected><?php echo $start_h;?></option>
     	<option value="00">00</option>
@@ -233,12 +233,6 @@ function editform($id){
         <option value="50">50</option>
     </select>
     </span>
-    </p>
-    <p>
-<!--
-    <label><input type="checkbox" value="1" id="isallday" name="isallday" <?php echo $allday_chk;?>> 全天</label>
-    <label><input type="checkbox" value="1" id="isend" name="isend" <?php echo $end_chk;?>> 结束时间</label>
--->
     </p>
     <div class="sub_btn"><span class="del"><input type="button" class="btn btn_del" id="del_event" value="删除"></span><input type="submit" class="btn btn_ok" value="确定"> <input type="button" class="btn btn_cancel" value="取消" onClick="$.fancybox.close()"></div>
     </form>
