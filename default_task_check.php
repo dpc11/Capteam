@@ -153,6 +153,9 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
           //$final_score=0;
           $updateSQL = "UPDATE tk_task SET csa_check_time='$now_time',csa_check_context='$check_opinion',
             csa_status=$task_status WHERE tid=$task_id";
+
+            mysql_select_db($database_tankdb, $tankdb);
+          $Result4 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
       }
       else if($check_result == '1')//验收
       {
@@ -167,11 +170,35 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
         csa_final_grade=$final_score,csa_check_time='$now_time',csa_check_context='$check_opinion',
         csa_status=$task_status WHERE tid=$task_id";
           
+          mysql_select_db($database_tankdb, $tankdb);
+           $Result4 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
+      
+          $project_id = $row_DetailRS1['tk_doc_pid'];
+          $task_to_user = $row_DetailRS1['csa_to_user'];
+        
+              $user_team_score = 0;
+
+          $CountSum = "SELECT SUM(csa_plan_hour) as sum_hour FROM tk_task 
+               WHERE csa_status=4 AND csa_to_user=$task_to_user AND csa_project=$project_id";
+          mysql_select_db($database_tankdb, $tankdb);
+           $SUMResult = mysql_query($CountSum, $tankdb) or die(mysql_error());
+           $row2 = mysql_fetch_array($SUMResult);
+           $user_SumScore=$row2['sum_hour'];//求出该用户已有的工时总和
+
+           $everyScore = "SELECT csa_plan_hour,csa_final_grade FROM tk_task
+               WHERE csa_status=4 AND csa_to_user=$task_to_user AND csa_project=$project_id";
+           mysql_select_db($database_tankdb, $tankdb);
+           $everyResult = mysql_query($everyScore, $tankdb) or die(mysql_error());
+           while ($row3 = mysql_fetch_array($everyResult))
+           {
+               $user_team_score += $row3['csa_plan_hour']/$user_SumScore*$row3['csa_final_grade'];
+           }
+
+           $updateTeam = "UPDATE tk_team SET tk_team_score=$user_team_score
+               WHERE tk_team_pid=$project_id AND tk_team_uid=$task_to_user";
+           mysql_select_db($database_tankdb, $tankdb);
+           $updateResult = mysql_query($updateTeam, $tankdb) or die(mysql_error()); 
       }
-
-      mysql_select_db($database_tankdb, $tankdb);
-      $Result4 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
-
       $insertGoTo = "default_task_edit.php?editID=$task_id";
        
         header(sprintf("Location: %s", $insertGoTo));
