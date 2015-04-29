@@ -72,14 +72,26 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
    ORDER BY csa_plan_st";
   mysql_select_db($database_tankdb,$tankdb);
   $Result3 = mysql_query($selStartTime,$tankdb) or die(mysql_error());
-  $mostEarly = mysql_fetch_array($Result3);
+  $plan_st = mysql_fetch_array($Result3);
+  if($plan_st) //有子任务
+    $mostEarly = $plan_st['csa_plan_st'];
+  else
+    $mostEarly = "4000-12-30";
+
+  echo $mostEarly;
 
   $selEndTime = "SELECT csa_plan_et FROM tk_task WHERE csa_project_stage=$colname_Recordset1
    ORDER BY csa_plan_et DESC";
   mysql_select_db($database_tankdb,$tankdb);
   $Result4 = mysql_query($selEndTime,$tankdb) or die(mysql_error());
-  $mostLate = mysql_fetch_array($Result4);
+  $plan_et = mysql_fetch_array($Result4);
 
+  if($plan_et)//有子任务
+    $mostLate = $plan_et['csa_plan_et'];
+  else
+    $mostLate = "1000-01-01";
+
+  echo $mostLate;
   if($en_time<$today_date)
   {
           //echo("illegal");
@@ -88,10 +100,10 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
   {
           //echo("can't");
          $dateError = -2;//结束时间小于开始时间
-  }else if($st_time>$mostEarly['csa_plan_st'])
+  }else if($st_time>$mostEarly)
   {
          $dateError = -3;//开始时间比已有的任务时间晚
-  }else if($en_time<$mostLate['csa_plan_et'])
+  }else if($en_time<$mostLate)
   {
          $dateError = -4;//结束时间比已有的任务时间早
   }else {
