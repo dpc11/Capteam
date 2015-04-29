@@ -39,6 +39,14 @@ $userName = $userinfo['tk_user_login'];
 echo $userName;
 $stageFolder = $stageinfo['tk_stage_folder_id'];
 echo $stageFolder;
+$docIsExist = $taskinfo['csa_document_id'];
+if($docIsExist)//如果已经提交过
+{
+  $SELdocinfo = "SELECT * FROM tk_document WHERE docid=$docIsExist";
+  mysql_select_db($database_tankdb,$tankdb);
+  $Result6 = mysql_query($SELdocinfo,$tankdb) or die(mysql_error());
+  $docinfo = mysql_fetch_array($Result6);
+}
 
 $doc_title = "-1";
 $doc_description = "-1";
@@ -86,13 +94,25 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
     $today_date = date('Y-m-d');
       $now_time = date('Y-m-d H:i:s',time());
 
-  $insertSQL = sprintf("INSERT INTO tk_document (tk_doc_title, tk_doc_description, tk_doc_attachment, 
+  if($doc_attac)
+  {
+    $insertSQL = sprintf("INSERT INTO tk_document (tk_doc_title, tk_doc_description, tk_doc_attachment, 
             tk_doc_pid, tk_doc_parentdocid, tk_doc_type,tk_doc_create, tk_doc_lastupdate, 
             tk_doc_backup1, tk_doc_del_status)
      VALUES (%s, %s, %s, $project_id,$stageFolder,2,$myid,'$now_time',0,1)",
                        GetSQLValueString($_POST['tk_doc_title'], "text"),
                        GetSQLValueString($_POST['tk_doc_description'], "text"),
                        GetSQLValueString($_POST['csa_remark1'], "text"));
+  }
+  else 
+  {
+    $insertSQL = sprintf("INSERT INTO tk_document (tk_doc_title, tk_doc_description, tk_doc_attachment, 
+            tk_doc_pid, tk_doc_parentdocid, tk_doc_type,tk_doc_create, tk_doc_lastupdate, 
+            tk_doc_backup1, tk_doc_del_status)
+     VALUES (%s, %s,'', $project_id,$stageFolder,2,$myid,'$now_time',0,1)",
+                       GetSQLValueString($_POST['tk_doc_title'], "text"),
+                       GetSQLValueString($_POST['tk_doc_description'], "text"));
+  }
 
   mysql_select_db($database_tankdb, $tankdb);
   $Result4 = mysql_query($insertSQL, $tankdb) or die(mysql_error());
@@ -229,7 +249,18 @@ if (isset($_SERVER['QUERY_STRING'])) {
                                 </label>
                                 <div>
                                     <textarea name="tk_doc_description" id="tk_doc_description">
-                                        <?php if($doc_description!=-1){echo $doc_description;}?></textarea>
+                                        <?php 
+                                          if($doc_description!=-1)
+                                          {
+                                            echo $doc_description;
+                                          }
+                                          else
+                                          {
+                                            if($docIsExist)
+                                              echo $docinfo['tk_doc_description'];
+                                          }
+                                        ?>
+                                    </textarea>
                                 </div>
                             </div>
 
@@ -241,7 +272,17 @@ if (isset($_SERVER['QUERY_STRING'])) {
 
                                 <div class="input-group">
                                     <input type="text" name="csa_remark1" id="csa_remark1" 
-                                    value="<?php if($doc_attac!=-1){echo $doc_attac;}?>" 
+                                    value="<?php 
+                                      if($doc_attac!=-1)
+                                        {
+                                          echo $doc_attac;
+                                        }
+                                      else
+                                          {
+                                            if($docIsExist)
+                                              echo $docinfo['tk_doc_attachment'];
+                                          }
+                                    ?>" 
                                     placeholder="<?php echo $multilingual_upload_attachment; ?>" class="form-control">
                                     <span class="input-group-btn">
         <button class="btn btn-default" type="button" onClick="openBrWindow('upload_file.php','<?php echo $multilingual_global_upload; ?>','width=450,height=235')"><?php echo $multilingual_global_upload; ?></button>
