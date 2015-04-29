@@ -4,6 +4,7 @@
 <?php
 $maxRows_DetailRS1 = 10;
 $pageNum_DetailRS1 = 0;
+$score_error = 0;
 if (isset($_GET['pageNum_DetailRS1'])) {
   $pageNum_DetailRS1 = $_GET['pageNum_DetailRS1'];
 }
@@ -51,6 +52,7 @@ if (isset($_POST['csa_to_user'])) {
 if (isset($_POST['examtext'])) {
   $check_opinion= $_POST['examtext'];
 }
+echo $check_opinion;
 //分数
 if (isset($_POST['examscore'])) {
   $check_score= $_POST['examscore'];
@@ -131,37 +133,40 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
-    $today_date = date('Y-m-d');
+  if($check_result==1 &&($check_score<0 || $check_score>100 || !$check_score) )
+    $score_error = 1;
+  else
+  {
+      $today_date = date('Y-m-d');
       $now_time = date('Y-m-d H:i:s',time());
       $minus = strtotime($today_date) - strtotime($row_DetailRS1['csa_plan_et']);
 
       if($minus <= 0)//未截止
-        $date_score = 100;
-      else 
-        $date_score = 100 - $minus;
+        $date_minus = 0;
+      else //截止了
+        $date_minus = $minus;
 
       if($check_result == '-1')//驳回
-        {
+      {
           $task_status = 5;
-          $leader_score = 0;
-          $final_score=0;
-          echo $leader_score;
-        }
+          //$leader_score = 0;
+          //$final_score=0;
+          $updateSQL = "UPDATE tk_task SET csa_check_time='$now_time',csa_check_context='$check_opinion',
+            csa_status=$task_status WHERE tid=$task_id";
+      }
       else if($check_result == '1')//验收
-        {
+      {
           $task_status = 4;
           $leader_score = $check_score;     
-          $final_score = $check_score*0.7+$date_score*0.3;
-          echo $final_score;
-        }
-
-      echo $check_result;
-         
-      echo $task_status;
-
-      $updateSQL = "UPDATE tk_task SET csa_leader_grade=$leader_score,
+          $final_score = $check_score-$date_minus;
+          if($final_score < 0)//最低零分
+          {
+            $final_score = 0;
+          }
+          $updateSQL = "UPDATE tk_task SET csa_leader_grade=$leader_score,
         csa_final_grade=$final_score,csa_check_time='$now_time',csa_check_context='$check_opinion',
         csa_status=$task_status WHERE tid=$task_id";
+      }
 
       mysql_select_db($database_tankdb, $tankdb);
       $Result4 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
@@ -169,6 +174,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
       $insertGoTo = "default_task_edit.php?editID=$task_id";
        
         header(sprintf("Location: %s", $insertGoTo));
+    }
   }
 ?>
 
@@ -329,22 +335,30 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
             <label for="tk_user_pass"><?php echo $multilingual_exam_select; ?></label>
             <div>
                 <select id="select4" onchange="showScore();" name="csa_to_user" class="form-control">
-                <option value="1"><?php echo $multilingual_exam_pass; ?></option>
-                <option value="-1" selected><?php echo $multilingual_exam_deny; ?></option>
+                <option value="1" selected><?php echo $multilingual_exam_pass; ?></option>
+                <option value="-1" ><?php echo $multilingual_exam_deny; ?></option>
                 </select>
             </div>      
         </div>
 			  
         <div class="form-group col-xs-12">
             <label for="examtext"><?php echo $multilingual_exam_text; ?></label>
-                <div>
-				<textarea name="examtext" id="examtext" class="form-control" rows="5"></textarea>
-                </div>
+            <div>
+				      <textarea name="examtext" id="examtext" class="form-control" rows="5"><?php if($check_opinion!= -1)  echo $check_opinion;?></textarea>
+            </div>
 				<span class="help-block"><?php echo $multilingual_exam_tip2; ?></span>
         </div>
         
-        <div id="score" class="form-group col-xs-12 hide">
-            <label for="examtext"><?php echo $multilingual_exam_score; ?></label>
+        <!-- 打分 -->
+        <div id="score" class="form-group col-xs-12">
+            <label for="examtext"><?php echo $multilingual_exam_score; ?>
+              <lable style="color:#F00;font-size:14px">
+                    <?php if($score_error==1) 
+                      {echo ('&nbsp&nbsp&nbsp');
+                      echo "请在[1,100]范围内打分";} 
+                    ?>
+              </lable>
+            </label>
                 <div>
 				<input name="examscore" id="examscore" class="form-control" />
                 </div>

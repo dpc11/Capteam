@@ -34,11 +34,11 @@ $SELstageinfo = "SELECT * FROM tk_stage WHERE stageid=$stage_id";
   $stageinfo = mysql_fetch_array($Result3);
 
 $taskName = $taskinfo['csa_text'];
-echo $taskName;
+//echo $taskName;
 $userName = $userinfo['tk_user_login'];
-echo $userName;
+//echo $userName;
 $stageFolder = $stageinfo['tk_stage_folder_id'];
-echo $stageFolder;
+//echo $stageFolder;
 $docIsExist = $taskinfo['csa_document_id'];
 if($docIsExist)//如果已经提交过
 {
@@ -93,30 +93,54 @@ $tk_doc_attachment = sprintf("%s,", GetSQLValueString(str_replace("%","%%",$_POS
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
     $today_date = date('Y-m-d');
       $now_time = date('Y-m-d H:i:s',time());
-
-  if($doc_attac)
+      mysql_select_db($database_tankdb, $tankdb);
+  if($doc_attac)//有附件
   {
-    $insertSQL = sprintf("INSERT INTO tk_document (tk_doc_title, tk_doc_description, tk_doc_attachment, 
+      if($docIsExist)//之前提交过
+      {
+          $insertSQL = "UPDATE tk_document SET tk_doc_description='$doc_description',
+           tk_doc_attachment='$doc_attac' WHERE docid=$docIsExist";
+
+          $Result4 = mysql_query($insertSQL, $tankdb) or die(mysql_error());
+          $thisDid = $docIsExist;
+      }
+      else
+      {
+            $insertSQL = sprintf("INSERT INTO tk_document (tk_doc_title, tk_doc_description, tk_doc_attachment, 
             tk_doc_pid, tk_doc_parentdocid, tk_doc_type,tk_doc_create, tk_doc_lastupdate, 
             tk_doc_backup1, tk_doc_del_status)
      VALUES (%s, %s, %s, $project_id,$stageFolder,2,$myid,'$now_time',0,1)",
                        GetSQLValueString($_POST['tk_doc_title'], "text"),
                        GetSQLValueString($_POST['tk_doc_description'], "text"),
                        GetSQLValueString($_POST['csa_remark1'], "text"));
+
+          $Result4 = mysql_query($insertSQL, $tankdb) or die(mysql_error());
+          $thisDid = mysql_insert_id();
+      }
   }
-  else 
+  else //没有附件
   {
-    $insertSQL = sprintf("INSERT INTO tk_document (tk_doc_title, tk_doc_description, tk_doc_attachment, 
+    if($docIsExist)//之前提交过
+    {
+          $insertSQL = "UPDATE tk_document SET tk_doc_description='$doc_description',
+           tk_doc_attachment= null WHERE docid=$docIsExist";
+
+           $Result4 = mysql_query($insertSQL, $tankdb) or die(mysql_error());
+          $thisDid = $docIsExist;
+    }
+    else
+    {
+      $insertSQL = sprintf("INSERT INTO tk_document (tk_doc_title, tk_doc_description,  
             tk_doc_pid, tk_doc_parentdocid, tk_doc_type,tk_doc_create, tk_doc_lastupdate, 
             tk_doc_backup1, tk_doc_del_status)
-     VALUES (%s, %s,'', $project_id,$stageFolder,2,$myid,'$now_time',0,1)",
+       VALUES (%s, %s, $project_id,$stageFolder,2,$myid,'$now_time',0,1)",
                        GetSQLValueString($_POST['tk_doc_title'], "text"),
                        GetSQLValueString($_POST['tk_doc_description'], "text"));
-  }
 
-  mysql_select_db($database_tankdb, $tankdb);
-  $Result4 = mysql_query($insertSQL, $tankdb) or die(mysql_error());
-  $thisDid = mysql_insert_id();
+      $Result4 = mysql_query($insertSQL, $tankdb) or die(mysql_error());
+          $thisDid = mysql_insert_id();
+    }
+  }
 
   $updateSQL = "UPDATE tk_task SET csa_document_id=$thisDid,csa_commit_time='$today_date',
                 csa_status=3 WHERE tid=$task_id";

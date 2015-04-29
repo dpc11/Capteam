@@ -369,14 +369,14 @@ function addcomm()
 						<!-- 替换任务-->
 						<?php if ($row_Recordset_task['csa_status']==3) { ?>
 						<td width="10%">
-						<a href="default_task_submit.php?taskid=<?php echo $row_Recordset_task['tid']; ?>"><span class="glyphicon glyphicon-check"></span> <?php echo $multilingual_change_submit_task; ?></a>
+						<a href="default_task_submit.php?taskid=<?php echo $row_Recordset_task['tid']; ?>&stageid=<?php echo $row_Recordset_task['csa_project_stage']; ?>&projectid=<?php echo $row_Recordset_task['csa_project']; ?>"><span class="glyphicon glyphicon-check"></span> <?php echo $multilingual_change_submit_task; ?></a>
 						</td>
 						<?php }  ?>	
 						
 						<!-- 驳回后重新提交-->
 						<?php if ($row_Recordset_task['csa_status']==5) { ?>
 						<td width="10%">
-						<a href="default_task_submit.php?taskid=<?php echo $row_Recordset_task['tid']; ?>"><span class="glyphicon glyphicon-check"></span> <?php echo $multilingual_re_submit_task; ?></a>
+						<a href="default_task_submit.php?taskid=<?php echo $row_Recordset_task['tid']; ?>&stageid=<?php echo $row_Recordset_task['csa_project_stage']; ?>&projectid=<?php echo $row_Recordset_task['csa_project']; ?>"><span class="glyphicon glyphicon-check"></span> <?php echo $multilingual_re_submit_task; ?></a>
 						</td>
 						<?php }  ?>	
 						<?php }  ?>	
