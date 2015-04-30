@@ -1,4 +1,5 @@
-<?php require_once('file_function.php'); ?>
+<?php require_once('function/file_function.php'); ?>
+
 <script type="text/javascript">
 function addfolder()
 {
@@ -221,10 +222,12 @@ function addfolder()
 								</td>
 								<?php if($searchf == "1"){ ?>
 									<td style="text-align:center;" >
-										<?php echo stripslashes(getPATH($row_DetailRS1['tk_doc_parentdocid'],"")); ?>
+										<?php echo getPATH($row_DetailRS1['tk_doc_parentdocid'],""); ?>
 									</td>
 									<td style="text-align:center;" >
-										<?php echo get_projectNAME($row_DetailRS1['tk_doc_pid']); ?>
+										<a href="project_view.php?recordID=<?php echo $row_DetailRS1['tk_doc_pid']; ?>">
+											<?php echo get_projectNAME($row_DetailRS1['tk_doc_pid']); ?>
+										</a>
 									</td>
 								<?php  } ?>
 								<td style="text-align:center;" >
@@ -262,8 +265,9 @@ function addfolder()
 										<?php } ?>
 										&nbsp;
 								  
+									<?php } ?>
 	  
-										<?php if ($row_DetailRS1['tk_doc_create'] == $_SESSION['MM_uid']) {  ?>
+										<?php  if (($row_DetailRS1['tk_doc_create'] == $_SESSION['MM_uid'])||(get_leader_id($row_DetailRS1['docid'])==$_SESSION['MM_uid']&&$row_DetailRS1['tk_doc_create']>0)){  ?>
 											<a  class="mouse_hover" 
 												onclick="javascript:if(confirm( '<?php 
 													if ($row_DetailRS1['tk_doc_backup1'] == 0){
@@ -272,8 +276,6 @@ function addfolder()
 														echo $multilingual_global_action_delconfirm5;
 													} ?>'))self.location='file_del.php?delID=<?php echo $row_DetailRS1['docid']; ?>&url=<?php echo $host_url; ?>';"><?php echo $multilingual_global_action_del; ?></a>
 										<?php } ?>
-		
-									<?php } ?>
 								</td>
 								<td>
 								</td>

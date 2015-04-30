@@ -178,4 +178,17 @@ function check_folder_num($id){
 	
 }
 
+//得到文档对应的团队的leader的id
+function get_leader_id($id){
+
+	global $tankdb;
+	$query_Recordset_pfilename = sprintf("SELECT * FROM tk_project 
+	inner join tk_document on tk_document.tk_doc_pid=tk_project.id  
+	WHERE tk_document.docid = %s", GetSQLValueString($id, "int"));
+	$Recordset_pfilename = mysql_query($query_Recordset_pfilename, $tankdb) or die(mysql_error());
+	$row_Recordset_pfilename = mysql_fetch_assoc($Recordset_pfilename);
+
+	return $row_Recordset_pfilename['project_to_user'];
+}
+
 ?>

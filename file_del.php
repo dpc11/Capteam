@@ -1,6 +1,6 @@
 <?php require_once('config/tank_config.php'); ?>
 <?php require_once('session.php'); ?>
-<?php require_once('file_function.php'); ?>
+<?php require_once('function/file_function.php'); ?>
 <?php
 $restrictGoTo = "user_error3.php";
 

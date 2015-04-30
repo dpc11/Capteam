@@ -47,7 +47,7 @@ $searchf = "-1"; //判断是否点击了搜索
 if (isset($_GET['search'])) {
   $searchf = $_GET['search'];
 }
-
+/*
 if ($project_id <> "-1") {
   $inproject = " inner join tk_project on tk_document.tk_doc_pid=tk_project.id ";
   $inprojects = " and tk_document.tk_doc_pid=tk_project.id ";
@@ -55,7 +55,7 @@ if ($project_id <> "-1") {
 	$inproject = "";
 	$inprojects = "";
 }
-
+*/
 
 $currentPage = $_SERVER["PHP_SELF"];
 $maxRows_DetailRS1 = 10;//每页多少行记录
@@ -78,19 +78,17 @@ if ($searchf == "1"){
 		//对应文件下的所有文件夹和文件  -1表示没有选中
 		$query_DetailRS1 = sprintf("SELECT *, 
 		tk_user1.tk_display_name as tk_display_name1
-		FROM tk_document 
-		inner join tk_user as tk_user1 on tk_document.tk_doc_create=tk_user1.uid  
-		$inproject 
-		WHERE tk_document.tk_doc_parentdocid = %s and tk_doc_title LIKE %s  and tk_doc_del_status=1 ", 
-		GetSQLValueString($colname_DetailRS1, "int"),$inprolists);
+		FROM (select * from tk_document where FIND_IN_SET(docid, getChildLst(%s)) and docid != %s and tk_doc_del_status=1) as A
+		inner join tk_user as tk_user1 on A.tk_doc_create=tk_user1.uid  
+		WHERE  tk_doc_title LIKE %s   ", 
+		GetSQLValueString($colname_DetailRS1, "int"),GetSQLValueString($colname_DetailRS1, "int"),$inprolists);
 	}else{
 		$query_DetailRS1 = sprintf("SELECT *, 
 		tk_user1.tk_display_name as tk_display_name1
-		FROM tk_document 
-		inner join tk_user as tk_user1 on tk_document.tk_doc_create=tk_user1.uid  
-		$inproject 
-		WHERE tk_document.tk_doc_parentdocid = %s and tk_doc_title LIKE %s and (tk_doc_create = %s or tk_doc_backup1=1)  and tk_doc_del_status=1 ",
-		GetSQLValueString($colname_DetailRS1, "int"),$inprolists,$_SESSION['MM_uid']);
+		FROM (select * from tk_document where FIND_IN_SET(docid, getChildLst(%s)) and docid != %s and tk_doc_del_status=1) as A
+		inner join tk_user as tk_user1 on A.tk_doc_create=tk_user1.uid  
+		WHERE  tk_doc_title LIKE %s  and (tk_doc_create = %s or tk_doc_backup1=1) ", 
+		GetSQLValueString($colname_DetailRS1, "int"),GetSQLValueString($colname_DetailRS1, "int"),$inprolists,$_SESSION['MM_uid']);
 	}
 	$query_limit_DetailRS1 = sprintf("%s LIMIT %d, %d", $query_DetailRS1, $startRow_DetailRS1, $maxRows_DetailRS1);
 	$DetailRS1 = mysql_query($query_limit_DetailRS1, $tankdb) or die(mysql_error());
@@ -110,13 +108,13 @@ if ($searchf == "1"){
 	tk_user1.tk_display_name as tk_display_name1
 	FROM tk_document 
 	inner join tk_user as tk_user1 on tk_document.tk_doc_create=tk_user1.uid  
-	$inproject 
+ 
 	WHERE tk_document.tk_doc_parentdocid = %s  and tk_doc_del_status=1 
-	$inprojects", GetSQLValueString($colname_DetailRS1, "int"));
+	", GetSQLValueString($colname_DetailRS1, "int"));
 	$query_limit_DetailRS1 = sprintf("%s LIMIT %d, %d", $query_DetailRS1, $startRow_DetailRS1, $maxRows_DetailRS1);
 	$DetailRS1 = mysql_query($query_limit_DetailRS1, $tankdb) or die(mysql_error());
 	$row_DetailRS1 = mysql_fetch_assoc($DetailRS1);
-
+	//$inproject  $inprojects
 	if (isset($_GET['totalRows_DetailRS1'])) {
 	  $totalRows_DetailRS1 = $_GET['totalRows_DetailRS1'];
 	} else {
@@ -131,12 +129,13 @@ if ($searchf == "1"){
 	tk_user1.tk_display_name as tk_display_name1
 	FROM tk_document 
 	inner join tk_user as tk_user1 on tk_document.tk_doc_create=tk_user1.uid  
-	$inproject 
+	
 	WHERE tk_document.tk_doc_parentdocid = %s  and tk_doc_del_status=1 
-	$inprojects
+	
 	and (tk_doc_create = %s or tk_doc_backup1=1)", 
 	GetSQLValueString($colname_DetailRS1, "int"),
 	$_SESSION['MM_uid']);
+	//$inproject  $inprojects
 	$query_limit_DetailRS1 = sprintf("%s LIMIT %d, %d", $query_DetailRS1, $startRow_DetailRS1, $maxRows_DetailRS1);
 	$DetailRS1 = mysql_query($query_limit_DetailRS1, $tankdb) or die(mysql_error());
 	$row_DetailRS1 = mysql_fetch_assoc($DetailRS1);
