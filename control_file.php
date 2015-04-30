@@ -13,27 +13,29 @@ function addfolder()
 		<td >
 			<div class="search_div pagemarginfix">
 			<form id="form1" name="form1" method="get" action="file.php"  class="saerch_form form-inline">
-				<input type="text" name="filetitle" id="filetitle" class="form-control input-sm" placeholder="<?php echo $multilingual_project_file_search; ?>"><input name="search" type="text" id="search" value="1" style="display:none;"><input name="pagetab" type="text" id="pagetab" value="<?php echo $pagetabs; ?>" style="display:none;">
+				<?php  if($filenames == ""){ ?>
+					<input type="text" name="filetitle" id="filetitle" class="form-control input-sm" placeholder="<?php echo $multilingual_project_file_search; ?>">				
+				<?php  }else{ ?>
+					<input type="text" name="filetitle" id="filetitle" class="form-control input-sm" value="<?php echo $filenames; ?>">				
+				<?php  } ?>
+				<input name="search" type="text" id="search" value="1" style="display:none;">
+				<input name="pagetab" type="text" id="pagetab" value="<?php echo $pagetabs; ?>" style="display:none;">
+				<input name="projectID" type="text" id="projectID" value="<?php echo $project_id; ?>" style="display:none;">
+				<input name="recordID" type="text" id="recordID" value="<?php echo $colname_DetailRS1; ?>" style="display:none;">
 			  
-				<button type="submit" name="button11" id="button11" class="btn btn-default btn-sm" /><span class="glyphicon glyphicon-search" style="display:inline;"></span> <?php echo $multilingual_global_searchbtn; ?></button>
+				<button type="submit" name="button11" id="button11" class="btn btn-default btn-sm" ><span class="glyphicon glyphicon-search" style="display:inline;"></span> <?php echo $multilingual_global_searchbtn; ?></button>
             </form>
-
 			</div>
 		</td>
 	</tr>
-	<?php if ( $colname_DetailRS1 <> "-1" && $project_id <> "-1" ) { // 如果是一级页面不显示任何面包屑 ?>
+	<?php if ( ($colname_DetailRS1 <> "-1" && $project_id <> "-1") || $searchf == "1" ) { // 如果是一级页面不显示任何面包屑 ?>
 	<tr>
 		<td>
 			<ul class="breadcrumb"  style="margin-top:10px;">
-				<?php if ( $searchf == "1") { //搜索结果面包屑 ?>
+				<?php if($colname_DetailRS1 <> "-1" && $project_id <> "-1" ){// 项目文档面包屑 ?>
 
-					<span class="float_left"><a href="file.php?pagetab=<?php echo $pagetabs;?>"><?php echo $multilingual_breadcrumb_filelist; ?></a></span>
-					<span class="ui-icon month_next float_left"></span>
-					<span class="float_left"><?php echo $multilingual_project_file_searchr; ?>:<?php echo $filenames; ?></span>
-	 
-				<?php } else{// 项目文档面包屑 ?>
-
-					<li><a href="file.php?pagetab=<?php echo $pagetabs; ?>"><?php echo $multilingual_project_file_allfile; ?></a> </li>
+					<li><a href="file.php?pagetab=<?php echo $pagetabs; ?>">
+					<?php if($pagetabs== "allfile"){echo $multilingual_project_file_allfile;}else{echo $multilingual_project_file_myfile;} ?></a> </li>
 						<?php if(get_parent_folder_id($colname_DetailRS1) > 0){
 							$Pid1 = get_parent_folder_id($colname_DetailRS1);
 							if(get_parent_folder_id($Pid1) > 0){
@@ -72,15 +74,21 @@ function addfolder()
 							<a href="file.php?pagetab=<?php echo $pagetabs; ?>&projectID=<?php echo get_projectID($colname_DetailRS1); ?>&recordID=<?php echo $colname_DetailRS1; ?>"><?php echo get_document_name($colname_DetailRS1); ?></a>
 							</li>
 						<?php } ?>
+				<?php }else{ ?>
+					<a href="file.php?pagetab=<?php echo $pagetabs; ?>">
+					<?php if($pagetabs== "allfile"){echo $multilingual_project_file_allfile;}else{echo $multilingual_project_file_myfile;} ?></a>				
 				<?php } ?>	
-	
+				<?php if ( $searchf == "1") { //搜索结果面包屑  ?>
+					<span class="ui-icon month_next float_left"></span>
+						<span >&nbsp;&nbsp;中对于&nbsp;“<?php echo $filenames; ?>”&nbsp;的搜索结果：</span>	
+				<?php } ?>	
 			</ul>
 		</td>
 	 </tr>
 	<?php } //如果是一级页面不显示任何面包屑 ?>	
 
 
-	<?php if(get_doc_description($colname_DetailRS1)<>""){ //显示文档详情 ?>
+	<?php if(get_doc_description($colname_DetailRS1)<>""&& $searchf <> "1"){ //显示文档详情 ?>
 
 		<tr valign="baseline">
 			<td colspan="2" style="padding-left:10px; padding-bottom:15px ">
@@ -142,25 +150,52 @@ function addfolder()
 			</td>
 		</tr>
 	<?php } //显示操作记录，如果有?>
-	
+		
 	<?php if($totalRows_DetailRS1> "0"){  //文档列表 ?>
 		<tr>
-			<td>
-				<table  class="table table-striped table-hover glink" width="98%" >
-					<thead>
+			<td align="center">
+				<table  class="table table-striped table-hover glink" style="width:98%;">
+					<thead >
 						<tr>
-							<th>
+							<?php if($searchf == "1"){ ?>
+							<th  width="2%"  >
+							</th>
+							<th  width="15%"  style="padding-left:2%" >
 							<?php echo $multilingual_project_file_management; ?>
 							</th>
-							<th width="100px">
+							<th width="25%" style="text-align:center;" >
+							<?php echo $multilingual_project_file_path; ?>
+							</th>
+							<th width="15%" style="text-align:center;" >
+							<?php echo $multilingual_project_file_project; ?>
+							</th>
+							<th width="10%" style="text-align:center;" >
 							<?php echo $multilingual_project_file_update_by; ?>
 							</th>
-							<th width="160px">
+							<th width="15%" style="text-align:center;" >
 							<?php echo $multilingual_project_file_update; ?>
 							</th>
-							<th width="160px">
-	
+							<th width="16%" >	
 							</th>
+							<th  width="2%"  >
+							</th>
+							<?php  } else { ?>
+							<th  width="10%"  >
+							</th>
+							<th  width="20%"  style="padding-left:4%" >
+							<?php echo $multilingual_project_file_management; ?>
+							</th>
+							<th width="15%" style="text-align:center;" >
+							<?php echo $multilingual_project_file_update_by; ?>
+							</th>
+							<th width="15%" style="text-align:center;" >
+							<?php echo $multilingual_project_file_update; ?>
+							</th>
+							<th width="20%" >	
+							</th>
+							<th  width="10%"  >
+							</th>
+							<?php  } ?>
 						</tr>
 					</thead>
 					<tbody>
@@ -168,7 +203,8 @@ function addfolder()
 						<?php do { //循环文档列表 ?>
 							<tr>
 								<td>
-						  
+								</td>
+								<td style="text-align:center;">
 									<?php if($row_DetailRS1['tk_doc_backup1']=="1"){ //如果是文件夹 ?>
 										<a href="file.php?pagetab=<?php echo $pagetabs; ?>&projectID=<?php echo $row_DetailRS1['tk_doc_pid']; ?>&recordID=<?php echo $row_DetailRS1['docid']; ?>" class="icon_folder"><?php echo $row_DetailRS1['tk_doc_title']; ?></a>
 						  
@@ -182,10 +218,16 @@ function addfolder()
 										<?php } ?>
 						  
 									<?php } //如果是文件 ?>
-	
-	
 								</td>
-								<td>
+								<?php if($searchf == "1"){ ?>
+									<td style="text-align:center;" >
+										<?php echo stripslashes(getPATH($row_DetailRS1['tk_doc_parentdocid'],"")); ?>
+									</td>
+									<td style="text-align:center;" >
+										<?php echo get_projectNAME($row_DetailRS1['tk_doc_pid']); ?>
+									</td>
+								<?php  } ?>
+								<td style="text-align:center;" >
 									<?php if($row_DetailRS1['tk_doc_create']<>0){ ?>
 										<a href="user_view.php?recordID=<?php echo $row_DetailRS1['tk_doc_create']; ?>">
 										<?php echo $row_DetailRS1['tk_display_name']; ?>
@@ -194,10 +236,10 @@ function addfolder()
 										<?php echo $row_DetailRS1['tk_display_name']; ?>
 									<?php } ?>
 								</td>
-								<td>
+								<td style="text-align:center;">
 									<?php echo $row_DetailRS1['tk_doc_lastupdate']; ?>
 								</td>
-								<td>
+								<td style="text-align:center;">
 									<?php if ($row_DetailRS1['tk_doc_backup1'] <> "1") {  ?>
 										<a href="word.php?fileid=<?php echo $row_DetailRS1['docid']; ?>" class="icon_word"><?php echo $multilingual_project_file_word; ?></a> 
 									<?php } ?>
@@ -232,6 +274,8 @@ function addfolder()
 										<?php } ?>
 		
 									<?php } ?>
+								</td>
+								<td>
 								</td>
 							</tr>
     

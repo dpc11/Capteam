@@ -91,7 +91,6 @@ if ($searchf == "1"){
 		$inproject 
 		WHERE tk_document.tk_doc_parentdocid = %s and tk_doc_title LIKE %s and (tk_doc_create = %s or tk_doc_backup1=1)  and tk_doc_del_status=1 ",
 		GetSQLValueString($colname_DetailRS1, "int"),$inprolists,$_SESSION['MM_uid']);
-	
 	}
 	$query_limit_DetailRS1 = sprintf("%s LIMIT %d, %d", $query_DetailRS1, $startRow_DetailRS1, $maxRows_DetailRS1);
 	$DetailRS1 = mysql_query($query_limit_DetailRS1, $tankdb) or die(mysql_error());
