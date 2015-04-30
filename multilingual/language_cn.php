@@ -440,6 +440,8 @@ $multilingual_privilege_remove = "回收权限";
 
 // *** 文档管理
 $multilingual_project_file = "项目文档";
+$multilingual_project_file_project = "所属项目";
+$multilingual_project_file_path = "位置";
 $multilingual_project_file_management = "文档";
 $multilingual_project_file_search = "按文档名称搜索";
 $multilingual_project_file_searchr = "文档搜索结果";

@@ -45,6 +45,25 @@ function get_parent_folder_id($id){
 	return $row_Recordset_pfilename['tk_doc_parentdocid'];
 }
 
+//得到文件路径
+function getPATH($id,$path){
+	if($id<0){
+		if($path==""){
+			$PATH = " \\ ".$path;
+		}else{
+			$PATH = $path;
+		}
+	}else{
+		$PATH = " \\ ".get_document_name($id).$path;
+		global $tankdb;
+		$query_Recordset_pfilename = sprintf("SELECT * FROM tk_document WHERE docid = %s", GetSQLValueString($id, "int"));
+		$Recordset_pfilename = mysql_query($query_Recordset_pfilename, $tankdb) or die(mysql_error());
+		$row_Recordset_pfilename = mysql_fetch_assoc($Recordset_pfilename);
+		$PATH = getPATH($row_Recordset_pfilename['tk_doc_parentdocid'],$PATH);
+	}
+		return $PATH;
+}
+
 //得到文件夹的名字
 function get_document_name($id){
 
@@ -67,6 +86,17 @@ function get_projectID($id){
 	
 	return $row_Recordset_pfilename['tk_doc_pid'];
 
+}
+
+//得到文档所在的项目的名称
+function get_projectNAME($id){
+
+	global $tankdb;
+	$query_Recordset_pfilename = sprintf("SELECT * FROM tk_project WHERE id = %s", GetSQLValueString($id, "int"));
+	$Recordset_pfilename = mysql_query($query_Recordset_pfilename, $tankdb) or die(mysql_error());
+	$row_Recordset_pfilename = mysql_fetch_assoc($Recordset_pfilename);
+	
+	return $row_Recordset_pfilename['project_name'];
 }
 
 //得到项目对应的根目录文件夹的id
@@ -147,4 +177,5 @@ function check_folder_num($id){
 	return $totalRows_Recordset_pfilename;
 	
 }
+
 ?>
