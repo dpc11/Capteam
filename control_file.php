@@ -40,36 +40,36 @@ function addfolder()
 								$Pid2 = get_parent_folder_id($Pid1);
 								if(get_parent_folder_id($Pid2) > 0){//超过3层 ?>
 									<li>
-									......<a href="file.php?pagetab=<?php echo $pagetabs; ?>&projectID=<?php get_projectID($Pid2); ?>&recordID=<?php echo $Pid2; ?>"><?php echo get_document_name($Pid2); ?></a>
+									......<a href="file.php?pagetab=<?php echo $pagetabs; ?>&projectID=<?php echo get_projectID($Pid2); ?>&recordID=<?php echo $Pid2; ?>"><?php echo get_document_name($Pid2); ?></a>
 									</li>
 									<li>
-									<a href="file.php?pagetab=<?php echo $pagetabs; ?>&projectID=<?php get_projectID($Pid1); ?>&recordID=<?php echo $Pid1; ?>"><?php echo get_document_name($Pid1); ?></a>
+									<a href="file.php?pagetab=<?php echo $pagetabs; ?>&projectID=<?php echo get_projectID($Pid1); ?>&recordID=<?php echo $Pid1; ?>"><?php echo get_document_name($Pid1); ?></a>
 									</li>
 									<li>
-									<a href="file.php?pagetab=<?php echo $pagetabs; ?>&projectID=<?php get_projectID($colname_DetailRS1); ?>&recordID=<?php echo $colname_DetailRS1; ?>"><?php echo get_document_name($colname_DetailRS1); ?></a>
+									<a href="file.php?pagetab=<?php echo $pagetabs; ?>&projectID=<?php echo get_projectID($colname_DetailRS1); ?>&recordID=<?php echo $colname_DetailRS1; ?>"><?php echo get_document_name($colname_DetailRS1); ?></a>
 									</li>
 								<?php }else{//3层 ?>
 									<li>
-									<a href="file.php?pagetab=<?php echo $pagetabs; ?>&projectID=<?php get_projectID($Pid2); ?>&recordID=<?php echo $Pid2; ?>"><?php echo get_document_name($Pid2); ?></a>
+									<a href="file.php?pagetab=<?php echo $pagetabs; ?>&projectID=<?php echo get_projectID($Pid2); ?>&recordID=<?php echo $Pid2; ?>"><?php echo get_document_name($Pid2); ?></a>
 									</li>
 									<li>
-									<a href="file.php?pagetab=<?php echo $pagetabs; ?>&projectID=<?php get_projectID($Pid1); ?>&recordID=<?php echo $Pid1; ?>"><?php echo get_document_name($Pid1); ?></a>
+									<a href="file.php?pagetab=<?php echo $pagetabs; ?>&projectID=<?php echo get_projectID($Pid1); ?>&recordID=<?php echo $Pid1; ?>"><?php echo get_document_name($Pid1); ?></a>
 									</li>
 									<li>
-									<a href="file.php?pagetab=<?php echo $pagetabs; ?>&projectID=<?php get_projectID($colname_DetailRS1); ?>&recordID=<?php echo $colname_DetailRS1; ?>"><?php echo get_document_name($colname_DetailRS1); ?></a>
+									<a href="file.php?pagetab=<?php echo $pagetabs; ?>&projectID=<?php echo get_projectID($colname_DetailRS1); ?>&recordID=<?php echo $colname_DetailRS1; ?>"><?php echo get_document_name($colname_DetailRS1); ?></a>
 									</li>
 								<?php }
 							}else{//2层 ?>
 								<li>
-								<a href="file.php?pagetab=<?php echo $pagetabs; ?>&projectID=<?php get_projectID($Pid1); ?>&recordID=<?php echo $Pid1; ?>"><?php echo get_document_name($Pid1); ?></a>
+								<a href="file.php?pagetab=<?php echo $pagetabs; ?>&projectID=<?php echo get_projectID($Pid1); ?>&recordID=<?php echo $Pid1; ?>"><?php echo get_document_name($Pid1); ?></a>
 								</li>
 								<li>
-								<a href="file.php?pagetab=<?php echo $pagetabs; ?>&projectID=<?php get_projectID($colname_DetailRS1); ?>&recordID=<?php echo $colname_DetailRS1; ?>"><?php echo get_document_name($colname_DetailRS1); ?></a>
+								<a href="file.php?pagetab=<?php echo $pagetabs; ?>&projectID=<?php echo get_projectID($colname_DetailRS1); ?>&recordID=<?php echo $colname_DetailRS1; ?>"><?php echo get_document_name($colname_DetailRS1); ?></a>
 								</li>
 							<?php }			
 						}else{//1层 ?>
 							<li>
-							<a href="file.php?pagetab=<?php echo $pagetabs; ?>&projectID=<?php get_projectID($colname_DetailRS1); ?>&recordID=<?php echo $colname_DetailRS1; ?>"><?php echo get_document_name($colname_DetailRS1); ?></a>
+							<a href="file.php?pagetab=<?php echo $pagetabs; ?>&projectID=<?php echo get_projectID($colname_DetailRS1); ?>&recordID=<?php echo $colname_DetailRS1; ?>"><?php echo get_document_name($colname_DetailRS1); ?></a>
 							</li>
 						<?php } ?>
 				<?php } ?>	

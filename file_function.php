@@ -34,17 +34,18 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
   return $theValue;
 }
 }
+//得到文件夹的父文件夹id
 function get_parent_folder_id($id){
 
 	global $tankdb;
 	$query_Recordset_pfilename = sprintf("SELECT * FROM tk_document WHERE docid = %s", GetSQLValueString($id, "int"));
 	$Recordset_pfilename = mysql_query($query_Recordset_pfilename, $tankdb) or die(mysql_error());
 	$row_Recordset_pfilename = mysql_fetch_assoc($Recordset_pfilename);
-	$totalRows_Recordset_pfilename = mysql_num_rows($Recordset_pfilename);
 
 	return $row_Recordset_pfilename['tk_doc_parentdocid'];
 }
 
+//得到文件夹的名字
 function get_document_name($id){
 
 	global $tankdb;
@@ -55,18 +56,20 @@ function get_document_name($id){
 	return $row_Recordset_pfilename['tk_doc_title'];
 
 }
+
+//得到文档所在的项目的id
 function get_projectID($id){
 
 	global $tankdb;
 	$query_Recordset_pfilename = sprintf("SELECT * FROM tk_document WHERE docid = %s", GetSQLValueString($id, "int"));
 	$Recordset_pfilename = mysql_query($query_Recordset_pfilename, $tankdb) or die(mysql_error());
 	$row_Recordset_pfilename = mysql_fetch_assoc($Recordset_pfilename);
-	$totalRows_Recordset_pfilename = mysql_num_rows($Recordset_pfilename);
 	
 	return $row_Recordset_pfilename['tk_doc_pid'];
 
 }
 
+//得到项目对应的根目录文件夹的id
 function get_project_document_ID($id){
 
 	global $tankdb;
@@ -79,7 +82,7 @@ function get_project_document_ID($id){
 
 }
 
-
+//得到文件夹的描述
 function get_doc_description($id){
 
 	global $tankdb;
@@ -90,5 +93,58 @@ function get_doc_description($id){
 	
 	return $row_Recordset_pfilename['tk_doc_description'];
 
+}
+
+function delete_doc($id){
+	
+	$folder_number = check_folder_num($id);
+	if($folder_number>0)
+	{
+		$DetailRS1=get_parent_folders($id);
+		$row_DetailRS1 = mysql_fetch_assoc($DetailRS1);
+		do{
+			
+			delete_doc($row_DetailRS1['docid']);
+			
+		}while ($row_DetailRS1 = mysql_fetch_assoc($DetailRS1));
+			$rows = mysql_num_rows($DetailRS1);
+			if($rows > 0) {
+				mysql_data_seek($Recordset_file, 0);
+				$row_DetailRS1 = mysql_fetch_assoc($DetailRS1);
+			} 
+	}
+	global $tankdb;
+	$query_Recordset_pfilename = sprintf("UPDATE tk_document SET tk_doc_del_status=-1 WHERE tk_doc_parentdocid=%s", GetSQLValueString($id, "int"));
+	$Recordset_pfilename = mysql_query($query_Recordset_pfilename, $tankdb) or die(mysql_error());
+	$row_Recordset_pfilename = mysql_fetch_assoc($Recordset_pfilename);
+	
+	//删除他自己
+	global $tankdb;
+	$query_Recordset_pfilename = sprintf("UPDATE tk_document SET tk_doc_del_status=-1 WHERE docid=%s", GetSQLValueString($id, "int"));
+	$Recordset_pfilename = mysql_query($query_Recordset_pfilename, $tankdb) or die(mysql_error());
+	$row_Recordset_pfilename = mysql_fetch_assoc($Recordset_pfilename);
+
+}
+
+function get_parent_folders($id){
+
+	global $tankdb;
+	$query_Recordset_pfilename = sprintf("SELECT distinct docid FROM tk_document WHERE tk_doc_parentdocid = %s and tk_doc_backup1=1 and tk_doc_del_status=1", GetSQLValueString($id, "int"));
+	$Recordset_pfilename = mysql_query($query_Recordset_pfilename, $tankdb) or die(mysql_error());
+	
+	return $Recordset_pfilename;
+	
+}
+
+function check_folder_num($id){
+
+	global $tankdb;
+	$query_Recordset_pfilename = sprintf("SELECT * FROM tk_document WHERE tk_doc_parentdocid = %s and tk_doc_backup1=1 and tk_doc_del_status=1", GetSQLValueString($id, "int"));
+	$Recordset_pfilename = mysql_query($query_Recordset_pfilename, $tankdb) or die(mysql_error());
+	$row_Recordset_pfilename = mysql_fetch_assoc($Recordset_pfilename);
+	$totalRows_Recordset_pfilename = mysql_num_rows($Recordset_pfilename);
+	
+	return $totalRows_Recordset_pfilename;
+	
 }
 ?>

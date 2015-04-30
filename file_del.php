@@ -1,5 +1,6 @@
 <?php require_once('config/tank_config.php'); ?>
 <?php require_once('session.php'); ?>
+<?php require_once('file_function.php'); ?>
 <?php
 $restrictGoTo = "user_error3.php";
 
@@ -50,18 +51,19 @@ if (isset($_GET['url'])) {
 $pageurl =strtr($pageurl,"!","&");
 
 if ((isset($_GET['delID'])) && ($_GET['delID'] != "")) {
+	/*
   $deleteSQL = sprintf("UPDATE tk_document SET tk_doc_del_status=-1 WHERE docid=%s",
                        GetSQLValueString($_GET['delID'], "int"));
 
   mysql_select_db($database_tankdb, $tankdb);
   $Result1 = mysql_query($deleteSQL, $tankdb) or die(mysql_error());
+*/
 
+	delete_doc(GetSQLValueString($_GET['delID'], "int"));
 
-  $deleteGoTo = $pageurl;
+	$deleteGoTo = $pageurl;  
 
-  
-
-  header(sprintf("Location: %s", $deleteGoTo));
+	header(sprintf("Location: %s", $deleteGoTo));
 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
