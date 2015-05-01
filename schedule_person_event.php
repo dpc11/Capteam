@@ -42,7 +42,7 @@ $date = $_GET['date'];
                 </label>
             </div>
             <div class="col-xs-6" style="padding-left: 0;">
-                <input type="text" name="project_start" id="datepicker" value="<?php echo date('Y-m-d'); ?>" class="form-control" />
+                <input type="text" name="startdate" id="datepicker" value="<?php echo date('Y-m-d'); ?>" class="form-control" />
             </div>
             <span id="sel_start">
                 <div class="col-xs-3">
@@ -92,7 +92,7 @@ $date = $_GET['date'];
                 </label>
             </div>
             <div class="col-xs-6" style="padding-left: 0;">
-                <input type="text" name="project_end" id="datepicker2" value="<?php echo date('Y-m-d'); ?>" class="form-control" />
+                <input type="text" name="enddate" id="datepicker2" value="<?php echo date('Y-m-d'); ?>" class="form-control" />
             </div>
             <span id="sel_end">
                 <div class="col-xs-3">
@@ -162,7 +162,7 @@ function editform($id){
         $end_h = date("H",$endtime);
         $end_m = date("i",$endtime);
         
-        $allday = $row['allday'];
+        $allday = $row['is_allday'];
 		if($allday==1){
 			$display = "style='display:none'";
 			$allday_chk = "checked";
