@@ -9,6 +9,9 @@
   $team_dao_obj = new team_dao();
   //初始化user数据库操作类
   $user_dao_obj = new user_dao();
+  //获取个人日程的数据库操作类
+  $schedule_dao_obj = new schedule_dao();
+
 
   $pagetabs = "allprj";
   if (isset($_GET['pagetab'])) {
@@ -36,6 +39,9 @@
   if (isset($_GET['recordID'])) {
     $colname_DetailRS1 = $_GET['recordID'];
   }
+
+  //获得日程数据
+  $data = $schedule_dao_obj->get_team_events($colname_DetailRS1);
 
   //授权的id是否有权限
   if (isset($_GET['authority_user_id'])&&isset($_GET['authority_ulimit'])) {
@@ -299,6 +305,43 @@
   ?>
 
   <?php require('head.php'); ?>
+  <link rel="stylesheet" type="text/css" href="calendar/css/fullcalendar.css">
+<link rel="stylesheet" type="text/css" href="calendar/css/fancybox.css">
+<style type="text/css">
+    .fc-day
+    {
+        cursor: pointer; 
+    }
+    .fc-widget-content
+    {
+        cursor: pointer; 
+    }
+</style>
+<script src='srcipt/jquery-1.9.1.js'></script>
+<script src='srcipt/jquery-ui-1.10.4.min.js'></script>
+<script src='calendar/js/fullcalendar.js'></script>
+<script src='calendar/js/jquery.fancybox-1.3.1.pack.js'></script>
+<script type="text/javascript">
+$(function() {
+  $('#calendar').fullCalendar({
+    header: {
+      left: 'prev today next',
+      center: 'title',
+      right: 'month,agendaWeek'
+    },
+    // events: 'calendar_person_schedule.php',
+    events: <?php echo json_encode($data); ?>,
+    // // 查看任务日程的详细日程
+    // eventClick: function(calEvent, jsEvent, view) {
+    //   $.fancybox({
+    //     'type':'ajax',                    
+    //     'href':'schedule_team_event.php?&id='+calEvent.id
+    //   });
+    //   }
+  });
+  
+});
+</script>
   <script type="text/javascript" src="srcipt/lhgcore.js"></script>
   <script type="text/javascript" src="srcipt/lhgdialog.js"></script>
   <script type="text/javascript" src="chart/js/swfobject.js"></script> 
@@ -1153,6 +1196,17 @@
           </td>
           </tr>
           </table>
+          <!-- 日历表 -->
+          <div class="clearboth"></div>
+            <div class="pagemargin">
+
+                <!-- 所有日程表主体部分 -->
+                <div>
+                    <div id='calendar'>
+                    </div>
+                </div>
+            </div>
+
           <?php require('foot.php'); ?>
                </div><!-- right main -->
           </td>
