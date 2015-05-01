@@ -265,7 +265,7 @@ html .fc,
 	}
 
 .fc-event-container div:hover {
-    border-color: #FFF200 !important;
+    border-color: #FCD200 !important;
 }
 
 a.fc-event {
@@ -507,7 +507,7 @@ table.fc-border-separate {
 	}
 
 .fc-agenda-slots td:hover {
-	background-color: #D6E5F2;
+	background-color: #FCD200;
 	}
 	
 .fc-agenda-slots td div {
