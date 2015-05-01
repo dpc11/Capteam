@@ -37,7 +37,7 @@ while($row = mysql_fetch_array($ResultTaskCalendar))
 
 <!-- 显示详细任务日程 -->
 <div class="fancy">
-    <h3>任务日程</h3>
+    <h3><?php echo $multilingual_schedule_task; ?></h3>
     <div class="form-group col-xs-12">
         <label style="font-size: 1.3em">
             （任务名称及链接）

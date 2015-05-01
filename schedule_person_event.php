@@ -13,6 +13,7 @@ switch($action){
 		break;
 }
 
+// 新增日程部分
 function addform($uid){
 $date = $_GET['date'];
 ?>
@@ -143,6 +144,7 @@ $date = $_GET['date'];
 </div>
 <?php }
 
+// 编辑日程部分
 function editform($id){
 	$query = mysql_query("select * from tk_schedule where id='$id'");
 	$row = mysql_fetch_array($query);
@@ -172,7 +174,11 @@ function editform($id){
 		}
 	}
 ?>
+
 <link rel="stylesheet" type="text/css" href="calendar/css/jquery-ui.css">
+<link rel="stylesheet" href="bootstrap/css/datepicker3.css" type="text/css"/>
+<script type="text/javascript" src="bootstrap/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="bootstrap/js/locales/bootstrap-datepicker.zh-CN.js"></script>
 
 <input type="hidden" name="id" id="eventid" value="<?php echo $id;?>" />
 <div class="fancy">
