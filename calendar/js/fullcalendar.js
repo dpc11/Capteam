@@ -2148,16 +2148,16 @@
             endParam: "end",
             titleFormat: {
                 month: "yyyy年MMMM月",
-                week: "yyyy年MMMM月d{'&#8212;'d日}",
+                week: "MMMM月dd日{ '&#8212;' MMMM月dd日}",
                 day: "yyyy年MMMM月d日 dddd"
             },
             columnFormat: {
                 month: "ddd",
-                week: "ddd M/d",
-                day: "dddd M/d"
+                week: "ddd / MM.dd",
+                day: "dddd MM.dd"
             },
             timeFormat: {
-                "": "H:mm"
+                "": "HH:mm"
             },
             isRTL: !1,
             firstDay: 1,
@@ -2323,9 +2323,9 @@
         firstHour: 6,
         slotMinutes: 60,
         defaultEventMinutes: 120,
-        axisFormat: "H:mm",
+        axisFormat: "HH:mm",
         timeFormat: {
-            agenda: "H:mm"
+            agenda: "HH:mm"
         },
         dragOpacity: {
             agenda: .5

@@ -655,6 +655,9 @@ $multilingual_schedule_view = "所有日程";
 $multilingual_schedule_task = "任务日程";
 $multilingual_schedule_person = "个人日程";
 $multilingual_schedule_course = "课业日程";
+$multilingual_schedule_new = "新建日程";
+$multilingual_schedule_review = "查看日程";
+$multilingual_schedule_edit = "编辑日程";
 
 $multilingual_schedule_view_tip = "<p>所有日程提供了一个综合性的日程视图</p><br />
 <p>所有日程是用来查看本月或者本周的任务、个人、课程安排的综合视图，点击事件标签即可查看详细，切换右上角的标签可分别查看概要和详细日程安排</p><br /><p>若需修改日程请前往对应分类视图。</p>

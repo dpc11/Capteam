@@ -260,9 +260,13 @@ html .fc,
 	background-color: #3a87ad; /* default BACKGROUND color */
 	color: #fff;               /* default TEXT color */
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-	font-size: .85em;
-	cursor: default;
+	font-size: 1.05em;
+	cursor: pointer;
 	}
+
+.fc-event-container div:hover {
+    border-color: #FFF200 !important;
+}
 
 a.fc-event {
 	text-decoration: none;
@@ -280,7 +284,6 @@ a.fc-event,
 .fc-event-inner {
 	width: 100%;
 	overflow: hidden;
-    cursor: pointer;
 	}
 	
 .fc-event-time,
@@ -304,21 +307,23 @@ a.fc-event,
 
 .fc-event-hori {
 	border-width: 1px 0;
-	margin-bottom: 1px;
+	margin-bottom: 2px;
 	}
 
 .fc-ltr .fc-event-hori.fc-event-start,
 .fc-rtl .fc-event-hori.fc-event-end {
-	border-left-width: 1px;
-	border-top-left-radius: 3px;
-	border-bottom-left-radius: 3px;
+	border-left-width: 2px;
+	border-top-left-radius: 6px;
+	border-bottom-left-radius: 6px;
+    margin-left: 2px;
 	}
 
 .fc-ltr .fc-event-hori.fc-event-end,
 .fc-rtl .fc-event-hori.fc-event-start {
-	border-right-width: 1px;
-	border-top-right-radius: 3px;
-	border-bottom-right-radius: 3px;
+	border-right-width: 2px;
+	border-top-right-radius: 6px;
+	border-bottom-right-radius: 6px;
+    margin-right: 3px;
 	}
 	
 /* resizable */
@@ -357,6 +362,10 @@ table.fc-border-separate {
 	border-width: 1px 0 0 1px;
 	}
 	
+.fc-border-separate td:hover {
+    background-color: #D6E5F2;
+}
+
 .fc-border-separate th.fc-last,
 .fc-border-separate td.fc-last {
 	border-right-width: 1px;
@@ -496,6 +505,10 @@ table.fc-border-separate {
 	border-width: 1px 0 0;
 	background: none;
 	}
+
+.fc-agenda-slots td:hover {
+	background-color: #D6E5F2;
+	}
 	
 .fc-agenda-slots td div {
 	height: 20px;
@@ -526,14 +539,15 @@ table.fc-border-separate {
 
 .fc-event-vert.fc-event-start {
 	border-top-width: 1px;
-	border-top-left-radius: 3px;
-	border-top-right-radius: 3px;
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
+    margin-top: 2px;
 	}
 
 .fc-event-vert.fc-event-end {
 	border-bottom-width: 1px;
-	border-bottom-left-radius: 3px;
-	border-bottom-right-radius: 3px;
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
 	}
 	
 .fc-event-vert .fc-event-time {

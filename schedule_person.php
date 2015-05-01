@@ -17,7 +17,11 @@ $data = $schedule_dao_obj->get_person_events($userid);
 <style type="text/css">
     .fc-day
     {
-       cursor: pointer; 
+        cursor: pointer; 
+    }
+    .fc-widget-content
+    {
+        cursor: pointer; 
     }
 </style>
 <script src='srcipt/jquery-1.9.1.js'></script>

@@ -1332,20 +1332,20 @@ a:focus {
 }
 
 .fancy {
-    width: 450px;
+    width: 560px;
     height: auto;
 }
 
 .fancy h3 {
     height: 30px;
     line-height: 30px;
-    border-bottom: 1px solid #d3d3d3;
-    font-size: 14px
+    border-bottom: 1px solid #DDD;
+    font-size: 1.6em;
+    margin-top: 5px;
+    font-weight: 600;
 }
 
-.fancy form {
-    padding: 10px
-}
+
 
 .fancy p {
     height: 28px;
@@ -1388,18 +1388,17 @@ a:focus {
 }
 
 .sub_btn {
-    height: 32px;
-    line-height: 32px;
-    padding-top: 6px;
-    border-top: 1px solid #f0f0f0;
-    text-align: right;
-    position: relative
+    margin: 6px 0 10px 0;
 }
 
-.sub_btn .del {
-    position: absolute;
-    left: 2px
-}
 .btn-sm {
     font-size: 1em; !important
+}
+
+label {
+    font-size: 1.1em;
+}
+
+p {
+    font-size: 1.05em;
 }
