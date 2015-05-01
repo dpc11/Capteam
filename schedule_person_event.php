@@ -22,8 +22,6 @@ $date = $_GET['date'];
 <link rel="stylesheet" href="bootstrap/css/datepicker3.css" type="text/css"/>
 <script type="text/javascript" src="bootstrap/js/bootstrap-datepicker.js"></script>
 <script type="text/javascript" src="bootstrap/js/locales/bootstrap-datepicker.zh-CN.js"></script>
-    
-<input type="hidden" name="uid" value=<?php echo $uid; ?> />
 <div class="fancy">
     <h3>新增日程</h3>
     <form id="add_form" action="schedule_person_opt.php?action=add" method="post">
@@ -185,6 +183,7 @@ function editform($id){
 <div class="fancy">
 	<h3>编辑日程</h3>
     <form id="add_form" action="schedule_person_opt.php?action=edit" method="post">
+        <input type="hidden" name="id" value=<?php echo $id; ?> />
         <input type="hidden" name="uid" value=<?php echo $uid; ?> />
         <div class="form-group col-xs-12">
             <label for="datepicker">
@@ -202,7 +201,7 @@ function editform($id){
                 </label>
             </div>
             <div class="col-xs-6" style="padding-left: 0;">
-                <input type="text" name="project_start" id="datepicker" value="<?php echo $start_d; ?>" class="form-control" />
+                <input type="text" name="startdate" id="datepicker" value="<?php echo $start_d; ?>" class="form-control" />
             </div>
             <span id="sel_start" <?php echo $display;?>>
                 <div class="col-xs-3">
@@ -256,7 +255,7 @@ function editform($id){
             </div>
             </div>
             <div class="col-xs-6" style="padding-left: 0;">
-                <input type="text" name="project_end" id="datepicker2" value="<?php echo date('Y-m-d'); ?>" class="form-control" />
+                <input type="text" name="enddate" id="datepicker2" value="<?php echo date('Y-m-d'); ?>" class="form-control" />
             </div>
             <span id="sel_end" <?php echo $display;?>>
                 <div class="col-xs-3">

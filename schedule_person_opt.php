@@ -36,7 +36,7 @@ if($action=='add'){
 elseif($action=="edit"){
 	$id = $_POST['id'];
 	if($id==0){
-		echo '事件不存在！';
+		echo '事件不存在1！';
 		exit;	
 	}
 
