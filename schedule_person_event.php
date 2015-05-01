@@ -27,6 +27,7 @@ $date = $_GET['date'];
 <div class="fancy">
     <h3>新增日程</h3>
     <form id="add_form" action="schedule_person_opt.php?action=add" method="post">
+        <input type="hidden" name="uid" value=<?php echo $uid; ?> />
         <div class="form-group col-xs-12">
             <label for="datepicker">
                 日程内容
@@ -184,6 +185,7 @@ function editform($id){
 <div class="fancy">
 	<h3>编辑日程</h3>
     <form id="add_form" action="schedule_person_opt.php?action=edit" method="post">
+        <input type="hidden" name="uid" value=<?php echo $uid; ?> />
         <div class="form-group col-xs-12">
             <label for="datepicker">
                 日程内容
