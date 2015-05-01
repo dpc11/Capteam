@@ -166,6 +166,11 @@ class schedule_dao
         $sql = "select * from tk_schedule where uid='$userid'";
         $query = mysql_query($sql);
         while($row=mysql_fetch_array($query)){
+            if($row['is_allday'] ==0){
+                $allday = FALSE;
+            }else{
+                $allday = TRUE;
+            }
             $data[] = array(
             'id' => $row['id'],
             'title' => $row['name'],
@@ -173,7 +178,7 @@ class schedule_dao
             'end' => $row['end_time'],
             'url' => $row['url'],
             'color' => '#008573',
-            'allDay' => FALSE
+            'allDay' => $allday
             );
         }
         return $data;
