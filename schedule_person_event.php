@@ -37,8 +37,8 @@ $date = $_GET['date'];
             <input type="checkbox" id="isallday" name="isallday"/><label for="isallday">&nbsp;全天日程（精确到天）</label>
         </div>
         <div class="form-group col-xs-12">
-            <div>    
-                <label for="datepicker" style="display: inline-block">
+            <div style="display: block">    
+                <label for="datepicker">
                     开始时间
                 </label>
             </div>
@@ -86,9 +86,9 @@ $date = $_GET['date'];
                 </div>
             </span>
         </div>
-        <div class="form-group col-xs-12">
-            <div>    
-                <label for="datepicker2" style="display: inline-block">
+        <div class="form-group col-xs-12">   
+            <div style="display: block">    
+                <label for="datepicker2">
                     结束时间
                 </label>
             </div>
@@ -190,9 +190,12 @@ function editform($id){
             </label>
             <textarea name="event" id="event" class="form-control" rows="4" cols="20"><?php echo $title; ?></textarea>
         </div>
+        <div class="col-xs-12">
+            <input type="checkbox" id="isallday" name="isallday" <?php echo $allday_chk;?>/><label for="isallday">&nbsp;全天日程（精确到天）</label>
+        </div>
         <div class="form-group col-xs-12">
-            <div>    
-                <label for="datepicker" style="display: inline-block">
+            <div style="display: block">    
+                <label for="datepicker">
                     开始时间
                 </label>
             </div>
@@ -244,9 +247,11 @@ function editform($id){
         </div>
         <div class="form-group col-xs-12">
             <div>    
-                <label for="datepicker2" style="display: inline-block">
+                <div style="display: block">    
+                <label for="datepicker2">
                     结束时间
                 </label>
+            </div>
             </div>
             <div class="col-xs-6" style="padding-left: 0;">
                 <input type="text" name="project_end" id="datepicker2" value="<?php echo date('Y-m-d'); ?>" class="form-control" />
