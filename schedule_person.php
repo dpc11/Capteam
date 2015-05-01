@@ -36,7 +36,6 @@ $(function() {
 			center: 'title',
 			right: 'month,agendaWeek'
 		},
-		// events: 'calendar_person_schedule.php',
         events: <?php echo json_encode($data); ?>,
 
         // 在个人日程中新增日程

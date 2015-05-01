@@ -8,7 +8,7 @@
 $schedule_dao_obj = new schedule_dao();
 //获得个人日程数据
 $userid = $_SESSION['MM_uid'];
-$data = $schedule_dao_obj->get_person_all_events($userid);
+$data = $schedule_dao_obj->get_person_events($userid);
 ?>
 
 <?php require( 'head.php'); ?>
@@ -30,35 +30,35 @@ $data = $schedule_dao_obj->get_person_all_events($userid);
 <script src='calendar/js/jquery.fancybox-1.3.1.pack.js'></script>
 <script type="text/javascript">
 $(function() {
-    $('#calendar').fullCalendar({
-        header: {
-            left: 'prev today next',
-            center: 'title',
-            right: 'month,agendaWeek'
-        },
+	$('#calendar').fullCalendar({
+		header: {
+			left: 'prev today next',
+			center: 'title',
+			right: 'month,agendaWeek'
+		},
+		// events: 'calendar_person_schedule.php',
         events: <?php echo json_encode($data); ?>,
 
-        // // 在个人日程中新增日程
-        // dayClick: function(date, allDay, jsEvent, view) {
-        //     var selDate =$.fullCalendar.formatDate(date,'yyyy-MM-dd');
-        //     $.fancybox({
-        //         'type':'ajax',
-        //         'href':'schedule_person_event.php?action=add&uid='+<?php echo $userid; ?>+'&date='+selDate
-        //     });
-        // },
+        // 在个人日程中新增日程
+		dayClick: function(date, allDay, jsEvent, view) {
+			var selDate =$.fullCalendar.formatDate(date,'yyyy-MM-dd');
+			$.fancybox({
+				'type':'ajax',
+				'href':'schedule_person_event.php?action=add&uid='+<?php echo $userid; ?>+'&date='+selDate
+			});
+    	},
     
-        // // 修改个人日程中的日程
-        // eventClick: function(calEvent, jsEvent, view) {
-        //     $.fancybox({
-        //         'type':'ajax',
-        //         'href':'schedule_person_event.php?action=edit&uid='+<?php echo $userid; ?>+'&id='+calEvent.id
-        //     });
-        // }
-    });
-    
+        // 修改个人日程中的日程
+        eventClick: function(calEvent, jsEvent, view) {
+			$.fancybox({
+				'type':'ajax',
+				'href':'schedule_person_event.php?action=edit&uid='+<?php echo $userid; ?>+'&id='+calEvent.id
+			});
+    	}
+	});
+	
 });
 </script>
-
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
@@ -68,9 +68,9 @@ $(function() {
             <table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
                 <tr>
                     <td valign="top" class="gray2">
-                        <h4 style="margin-top:40px; margin-left: 5px;"><strong><?php echo $multilingual_schedule_view; ?></strong></h4>
+                        <h4 style="margin-top:40px; margin-left: 5px;"><strong><?php echo $multilingual_schedule_person; ?></strong></h4>
                         <p>
-                            <?php echo $multilingual_schedule_view_tip; ?>
+                            <?php echo $multilingual_schedule_person_tip; ?>
                         </p>
 
                     </td>
@@ -85,13 +85,13 @@ $(function() {
 
                     <!-- 切换按钮 -->
                     <div class="btn-group">
-                        <a type="button" class="btn btn-default btn-sm active" href="schedule_view.php">
+                        <a type="button" class="btn btn-default btn-sm" href="schedule_view.php">
                             <?php echo $multilingual_schedule_view;?>
                         </a>
                         <a type="button" class="btn btn-default btn-sm" href="schedule_task.php">
                             <?php echo $multilingual_schedule_task;?>
                         </a>
-                        <a type="button" class="btn btn-default btn-sm" href="schedule_person.php">
+                        <a type="button" class="btn btn-default btn-sm active" href="schedule_person.php">
                             <?php echo $multilingual_schedule_person;?>
                         </a>
                         <a type="button" class="btn btn-default btn-sm" href="schedule_course.php">
@@ -115,4 +115,5 @@ $(function() {
 <?php require( 'foot.php'); ?>
 
 </body>
+
 </html>
