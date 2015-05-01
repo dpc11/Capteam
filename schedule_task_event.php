@@ -46,13 +46,13 @@ while($row = mysql_fetch_array($ResultTaskCalendar))
     </div>
     <div class="form-group col-xs-12">
         <label>
-            截止日期
+            <?php echo $multilingual_project_end; ?>
         </label>
         <input type="text" name="project_start" id="datepicker" value="<?php echo date('Y-m-d'); ?>" class="form-control" readonly/>
     </div>
     <div class="form-group col-xs-12" style="margin-bottom: 5px;">
         <label>
-            所属项目：&nbsp;
+            <?php echo $multilingual_default_task_project; ?>：&nbsp;
         </label>
         <label style="font-size: 1.2em">
             （项目及链接）
@@ -60,14 +60,14 @@ while($row = mysql_fetch_array($ResultTaskCalendar))
     </div>
     <div class="form-group col-xs-12">
         <label>
-            所属阶段：&nbsp;
+            <?php echo $multilingual_default_task_stage; ?>：&nbsp;
         </label>
         <label style="font-size: 1.2em">
             （阶段及链接）
         </label>
     </div>
     <div class="col-xs-12">
-        <button type="button" class="btn btn-primary btn-sm" value="取消" onClick="$.fancybox.close()" style="width: 70px; float: right;">关闭</button>
+        <button type="button" class="btn btn-primary btn-sm" value="取消" onClick="$.fancybox.close()" style="width: 70px; float: right;"><?php echo $multilingual_global_action_close; ?></button>
     </div>
     </div>
 </div>

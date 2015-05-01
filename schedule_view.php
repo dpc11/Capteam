@@ -18,28 +18,14 @@ $(function() {
 			right: 'month,agendaWeek'
 		},
 		events: 'calendar_json.php',
-//		dayClick: function(date, allDay, jsEvent, view) {
-//			var selDate =$.fullCalendar.formatDate(date,'yyyy-MM-dd');
+
+//        // 查看所有日程中的详细日程
+//		eventClick: function(calEvent, jsEvent, view) {
 //			$.fancybox({
 //				'type':'ajax',
-//				'href':'schedule_view_event.php?action=add&date='+selDate
+//				'href':'schedule_view_event.php?&id='+calEvent.id
 //			});
 //    	},
-
-        // 查看所有日程中的详细日程
-		eventClick: function(calEvent, jsEvent, view) {
-			$.fancybox({
-				'type':'ajax',
-				'href':'schedule_view_event.php?&id='+calEvent.id
-			});
-    	},
-    
-//        eventClick: function(calEvent, jsEvent, view) {
-//			$.fancybox({
-//				'type':'ajax',
-//				'href':'schedule_view_event.php?action=edit&id='+calEvent.id
-//			});
-//    	}
 	});
 	
 });
