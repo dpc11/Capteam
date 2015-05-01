@@ -41,11 +41,11 @@ $date = $_GET['date'];
                     开始时间
                 </label>
             </div>
-            <div class="col-xs-8" style="padding-left: 0;">
+            <div class="col-xs-6" style="padding-left: 0;">
                 <input type="text" name="project_start" id="datepicker" value="<?php echo date('Y-m-d'); ?>" class="form-control" />
             </div>
             <span id="sel_start">
-                <div class="col-xs-2">
+                <div class="col-xs-3">
                 <select name="s_hour" class="form-control">
                     <option value="00">00</option>
                     <option value="01">01</option>
@@ -73,7 +73,7 @@ $date = $_GET['date'];
                     <option value="23">23</option>
                 </select>
                 </div>
-                <div class="col-xs-2">
+                <div class="col-xs-3">
                 <select name="s_minute" class="form-control">
                     <option value="00" selected>00</option>
                     <option value="10">10</option>
@@ -91,11 +91,11 @@ $date = $_GET['date'];
                     结束时间
                 </label>
             </div>
-            <div class="col-xs-8" style="padding-left: 0;">
+            <div class="col-xs-6" style="padding-left: 0;">
                 <input type="text" name="project_end" id="datepicker2" value="<?php echo date('Y-m-d'); ?>" class="form-control" />
             </div>
             <span id="sel_end">
-                <div class="col-xs-2">
+                <div class="col-xs-3">
                 <select name="e_hour" class="form-control">
                     <option value="00">00</option>
                     <option value="01">01</option>
@@ -123,7 +123,7 @@ $date = $_GET['date'];
                     <option value="23">23</option>
                 </select>
                 </div>
-                <div class="col-xs-2">
+                <div class="col-xs-3">
                 <select name="e_minute" class="form-control">
                     <option value="00" selected>00</option>
                     <option value="10">10</option>
@@ -190,11 +190,11 @@ function editform($id){
                     开始时间
                 </label>
             </div>
-            <div class="col-xs-8" style="padding-left: 0;">
+            <div class="col-xs-6" style="padding-left: 0;">
                 <input type="text" name="project_start" id="datepicker" value="<?php echo $start_d; ?>" class="form-control" />
             </div>
             <span id="sel_start" <?php echo $display;?>>
-                <div class="col-xs-2">
+                <div class="col-xs-3">
                 <select name="s_hour" class="form-control">
                     <option value="<?php echo $start_h;?>" selected><?php echo $start_h;?></option>
                     <option value="00">00</option>
@@ -223,7 +223,7 @@ function editform($id){
                     <option value="23">23</option>
                 </select>
                 </div>
-                <div class="col-xs-2">
+                <div class="col-xs-3">
                 <select name="s_minute" class="form-control">
                     <option value="<?php echo $start_m;?>" selected><?php echo $start_m;?></option>
                     <option value="00">00</option>
@@ -242,11 +242,11 @@ function editform($id){
                     结束时间
                 </label>
             </div>
-            <div class="col-xs-8" style="padding-left: 0;">
+            <div class="col-xs-6" style="padding-left: 0;">
                 <input type="text" name="project_end" id="datepicker2" value="<?php echo date('Y-m-d'); ?>" class="form-control" />
             </div>
             <span id="sel_end" <?php echo $display;?>>
-                <div class="col-xs-2">
+                <div class="col-xs-3">
                 <select name="e_hour" class="form-control">
                     <option value="<?php echo $end_h;?>" selected><?php echo $end_h;?></option>
                     <option value="00">00</option>
@@ -275,7 +275,7 @@ function editform($id){
                     <option value="23">23</option>
                 </select>
                 </div>
-                <div class="col-xs-2">
+                <div class="col-xs-3">
                 <select name="e_minute" class="form-control">
                     <option value="<?php echo $end_m;?>" selected><?php echo $end_m;?></option>
                     <option value="00">00</option>
