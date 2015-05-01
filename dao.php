@@ -1,4 +1,25 @@
 <?php 
+//                            _ooOoo_  
+//                           o8888888o  
+//                           88" . "88  
+//                           (| -_- |)  
+//                            O\ = /O  
+//                        ____/`---'\____  
+//                      .   ' \\| |// `.  
+//                       / \\||| : |||// \  
+//                     / _||||| -:- |||||- \  
+//                       | | \\\ - /// | |  
+//                     | \_| ''\---/'' | |  
+//                      \ .-\__ `-` ___/-. /  
+//                   ___`. .' /--.--\ `. . __  
+//                ."" '< `.___\_<|>_/___.' >'"".  
+//               | | : `- \`.;`\ _ /`;.`/ - ` : | |  
+//                 \ \ `-. \_ __\ /__ _/ .-` / /  
+//         ======`-.____`-.___\_____/___.-`____.-'======  
+//                            `=---='  
+//  
+//         .............................................  
+//                  佛祖保佑             永无BUG 
 require_once('config/tank_config.php'); 
 
 /**
@@ -161,6 +182,24 @@ class team_dao
 */
 class schedule_dao
 {
+    //获取个人任务的数据
+    public function get_task_events($userid){
+        $sql = "select * from tk_task where csa_to_user='$userid'";
+        $query = mysql_query($sql);
+        while($row=mysql_fetch_array($query)){
+            $data[] = array(
+                'id' => $row['tid'],
+                'title' => $row['csa_text'],
+                'start' => $row['csa_plan_et'],
+                'end' => $row['csa_plan_et'],
+                'url' => $row['url'],
+                'allDay' => TRUE,
+                // 'color' => $row['color']
+            );
+        }
+        return $data;
+    }
+
     //获取个人日程的数据
     public function get_person_events($userid){
         $sql = "select * from tk_schedule where uid='$userid'";
@@ -273,6 +312,9 @@ class schedule_dao
 
         return $data;
     }
+
+
+
 
 
 }

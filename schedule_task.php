@@ -1,6 +1,15 @@
 <?php require_once( 'config/tank_config.php'); ?>
 <?php require_once( 'session_unset.php'); ?>
 <?php require_once( 'session.php'); ?>
+<?php require_once( 'dao.php'); ?>
+
+<?php 
+//获取个人日程的数据库操作类
+$schedule_dao_obj = new schedule_dao();
+//获得个人日程数据
+$userid = $_SESSION['MM_uid'];
+$data = $schedule_dao_obj->get_task_events($userid);
+?>
 
 <?php require( 'head.php'); ?>
 <link rel="stylesheet" type="text/css" href="calendar/css/fullcalendar.css">
@@ -17,7 +26,7 @@ $(function() {
 			center: 'title',
             right: ''
 		},
-		events: 'calendar_json.php',
+		events: <?php echo json_encode($data); ?>,
 
 		eventClick: function(calEvent, jsEvent, view) {
 			$.fancybox({
