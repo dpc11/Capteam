@@ -2,10 +2,6 @@
 <?php require_once('session.php'); ?>
 <?php
 $restrictGoTo = "user_error3.php";
-if ($_SESSION['MM_rank'] < "2") {   
-  header("Location: ". $restrictGoTo); 
-  exit;
-}
 
 $taskid = $_GET['taskid'];
 $nowuserid = $_SESSION['MM_uid'];
@@ -154,13 +150,14 @@ function over()
 <script charset="utf-8" src="editor/kindeditor.js"></script>
 <script charset="utf-8" src="editor/lang/zh_CN.js"></script>
 <script>
+
 function submitform()
 {
     document.form1.cont.value='<?php echo $multilingual_global_wait; ?>';
 	document.form1.cont.disabled=true;
 	document.getElementById("btn5").click();
 }
-<!--
+
 var editor;
         KindEditor.ready(function(K) {
                 editor = K.create('#tk_comm_title', {
@@ -183,7 +180,7 @@ function MM_goToURL() { //v3.0
   var i, args=MM_goToURL.arguments; document.MM_returnValue = false;
   for (i=0; i<(args.length-1); i+=2) eval(args[i]+".location='"+args[i+1]+"'");
 }
-//-->
+
 </script>
 </head>
 

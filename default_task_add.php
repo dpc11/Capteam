@@ -178,14 +178,15 @@ window.onload = function()
 {
     J.check.regform('myform');
 }
-
+/*
+onChange
 function option_gourl(str)
 {
 if(str == '-1')window.open('task_type_list.php');
 if(str == '-2')window.open('user_add.php');
 if(str == '-3')window.open('project_add.php');
 }
-//-->
+*/
 </script>
 
 <script charset="utf-8" src="editor/kindeditor.js"></script>
@@ -208,14 +209,14 @@ if(str == '-3')window.open('project_add.php');
 ]
 });
         });
-		
+		/*
 function submitform()
 {
     document.myform.cont.value='<?php echo $multilingual_global_wait; ?>';
 	document.myform.cont.disabled=true;
 	document.getElementById("btn5").click();
 }	
-
+*/
 
 </script>
 <!-- Initialize the plugin: -->
@@ -241,6 +242,13 @@ function submitform()
 				
 			            numberDisplayed: 15
                     });
+					
+	$('button[data-loading-text]').click(function () {
+    var btn = $(this).button('loading');
+    setTimeout(function () {
+        btn.button('reset');
+    }, 2000);
+});
 	
   });
 </script>
@@ -291,7 +299,7 @@ function submitform()
 			  <div class="form-group  col-xs-6">
                 <label for="select4" ><?php echo $multilingual_default_task_to; ?><span id="csa_to_user_msg"></span></label>
                 <div >
-                  <select id="select4" name="csa_to_user" onChange="option_gourl(this.value)"  class="form-control">
+                  <select id="select4" name="csa_to_user"  class="form-control">
 					 <?php foreach($user_arr as $key => $val){  ?>
 					 <option value='<?php echo $val["uid"]?>> <!--, ,<?php echo $val["name"]?>' -->
 					 <?php 
@@ -394,14 +402,7 @@ function submitform()
     </tr>
   </table>
 </form>
-<script type="text/javascript">
-$('button[data-loading-text]').click(function () {
-    var btn = $(this).button('loading');
-    setTimeout(function () {
-        btn.button('reset');
-    }, 2000);
-});
-</script>
+
 <?php require('foot.php'); ?>
 </body>
 </html>

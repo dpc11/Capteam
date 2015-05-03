@@ -18,7 +18,7 @@ if($row){
 		//if(mysql_affected_rows($link)!=1) die(0);
 		$msg = '激活成功！马上为您转入登录页面……';
  }
-$url = "http://localhost//Capteam/user_login.php";   
+$url = "http://localhost/Capteam/user_login.php";   
 ?> 
 <html>     
 <head>     

@@ -1,20 +1,78 @@
 <?php require_once('config/tank_config.php'); ?>
 
-
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>WSS - <?php echo $multilingual_userlogin_title; ?></title>
+<title>Capteam- <?php echo $multilingual_register_title; ?></title>
+<link href="skin/themes/base/lhgdialog.css" rel="stylesheet" type="text/css" />
 <link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
 <link href="skin/themes/base/tk_style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="srcipt/jquery.js"></script>
-<script src="bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript" src="srcipt/lhgcore.js"></script>
+<script type="text/javascript" src="srcipt/lhgdialog.js"></script>
 
+<?php   
+	
+	$editFormAction = $_SERVER['PHP_SELF'];
+    if (isset($_SERVER['QUERY_STRING'])) {
+      $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
+    }
+	if (isset($_POST['URL'])) {
+      $editFormAction = $_POST['URL'];
+    }
+	
+	$username = "";
+    if (isset($_POST['textfield1'])) {
+      $username = $_POST['textfield1'];
+    }
+	$password = "";
+    if (isset($_POST['textfield3'])) {
+      $password = $_POST['textfield3'];
+    }
+	$email = "";
+    if (isset($_POST['textfield5'])) {
+      $email = $_POST['textfield5'];
+    }
+	$judgeid=0;	
+    if (isset($_POST['judgeid'])) {
+      $judgeid = $_POST['judgeid'];
+    }
+	
+	if (isset($_POST["MM_insert"])) {		
+		if($_SESSION["MM_Mail"]==$email){
+			//已注册用户重复提交
+			$judgeid=2;	
+			
+			//跳转
+		}
+	}
+?>
+ 
+<script type="text/javascript">	
+function registeruser(editFormAction)
+{ 
+	var username=document.getElementById('textfield1').value;
+	var password=document.getElementById('textfield3').value;
+	var email=document.getElementById('textfield5').value;
+	editFormAction=editFormAction+"textfield1="+username+"&&textfield3="+password+"&&textfield5="+email;
+	document.getElementsByName("URL").value=editFormAction;
+	document.getElementsByName("textfield1").value=username;
+	document.getElementsByName("textfield3").value=password;
+	document.getElementsByName("textfield5").value=email;
+	
+	J.dialog.get({ id: "registerDILOG", title: '提示', width: 300, height: 200,page: 'register_real.php?textfield1='+username+'&&textfield3='+password+'&&textfield5='+email ,cover: true ,max: false, min: false,lock: true, background: '#000', opacity: 0.5, drag: false,resize: false});
+	
+	return false;
+}
+</script>
 
+<!--
+J.dialog.get({ id: "registerDILOG", title: '提示', width: 600, height: 300,page: 'url:register.php?textfield1='+username+'&&textfield3='+password+'&&textfield5='+email ,cover: true ,max: false, min: false,lock: true, background: '#000', opacity: 0.5, drag: false,resize: false});
+	
 
+background: '#000', opacity: 0.5, drag: false,resize: false
 <script type="text/javascript">
 function chk_form(){
   var user = document.getElementById("textfield1");
@@ -60,56 +118,61 @@ function chk_form(){
     return false;
     //email.focus();
   }
-
 }
+
+
+
+function registeruser()
+{
+/*	J.dialog({ 
+		closeOnEscape:false, 
+
+		open:function(event,ui){$(".ui-dialog-titlebar-close").hide();} 
+
+	}); 
+J.dialog.get({ id: "test1", title: '<?php echo $multilingual_default_addcom; ?>', width: 600, height: 500, page: "comment_add.php?taskid=<?php echo $row_Recordset_task['TID']; ?>&type=1" });
+
+*/
+	
+}
+
 </script>
+-->
 </head>
-
-
-
 <?php require('head_sub.php'); ?>
 <table width="70%" border="0" cellspacing="0" cellpadding="0" height="520px;" align="center">
     <tr>
       <td >
       <div class="ping_logo"></div>
       </td>
-    
+	<form action="<?php echo $editFormAction; ?>" method="post" name="myform" id="form1"  >
     <td >
-      <form id="form1" name="form1" method="POST" action="register.php" onsubmit="return chk_form();">
-    
      <div class="form-group">
     <label class="beauty-label" for="textfield"><?php echo $multilingual_userlogin_username; ?></label>
-    <input type="text" class="form-control" id="textfield1" name="textfield1" placeholder="User name">
+    <input type="text" class="form-control" id="textfield1" name="textfield1" placeholder="User name" value="<?php  echo $username; ?>">
   </div>
-  
-    <div class="form-group">
-    <label class="beauty-label" for="textfield"><?php echo $multilingual_user_title; ?></label>
-    <input type="text" class="form-control" id="textfield2" name="textfield2" placeholder="Display name">
-  </div>
-
   <div class="form-group">
     <label class="beauty-label" for="textfield2"><?php echo $multilingual_userlogin_password; ?></label>
-    <input type="password" class="form-control" name="textfield3" id="textfield3" placeholder="Password">
+    <input type="password" class="form-control" name="textfield3" id="textfield3" placeholder="Password" value="<?php  echo $password; ?>">
   </div>
     <div class="form-group">
     <label class="beauty-label" for="textfield2"><?php echo $multilingual_user_password2; ?></label>
-    <input type="password" class="form-control" name="textfield4" id="textfield4" placeholder="Confirm Password">
+    <input type="password" class="form-control" name="textfield4" id="textfield4" placeholder="Confirm Password" value="<?php  echo $password; ?>">
   </div>
   <div class="form-group">
     <label class="beauty-label" for="textfield2"><?php echo $multilingual_user_email; ?></label>
-    <input type="text" class="form-control" name="textfield5" id="textfield5" placeholder="Email">
+    <input type="text" class="form-control" name="textfield5" id="textfield5" placeholder="Email" value="<?php  echo $email; ?>">
   </div>
-
-  <button type="submit" class="btn btn-default" style="width: 120px;margin-top: 24px;"><?php echo $multilingual_user_register; ?></button>
+  <button type="button" class="btn btn-default" style="width: 120px;margin-top: 24px;" onclick=" return registeruser('<?php echo $editFormAction;  ?>');"> <?php echo $multilingual_user_register; ?></button>
   <div class="pull-right">
       <label class="beauty-label" style="margin-top: 0;"><?php echo $multilingual_global_version; ?>: <?php echo $version; ?></label>
   </div>
+   <input type="hidden" name="MM_insert" id="MM_insert" value="form1" />
+   <input type="hidden" name="URL" id="URL" value="<?php  echo $editFormAction; ?>" />
+   </td>
     </form>
-      </td>
-    
     </tr>
-
-  </table>
+ </table>
 
 <!--
 <div style="background:#F6F6F6; padding:15px; width:100%;" >

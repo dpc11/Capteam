@@ -120,6 +120,7 @@ $multilingual_breadcrumb_anclist = " <a href='default_announcement.php'>公告</
 
 // *** 登录页面(user_login.php)
 $multilingual_userlogin_title = "请先登录";
+$multilingual_register_title = "用户注册";
 $multilingual_userlogin_username = "用户名";
 $multilingual_userlogin_password = "密码";
 $multilingual_userlogin_login = "登录";

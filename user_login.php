@@ -32,7 +32,7 @@ if (isset($_POST['textfield'])) {
   if ($loginFoundUser) {	
 
     //$loginStrGroup  = mysql_result($LoginRS,0,'tk_user_status');
-    $loginStrGroup  = "管理员";
+    //$loginStrGroup  = "管理员";
 	$loginStrDisplayname  = mysql_result($LoginRS,0,'tk_display_name');
 	$loginStrpid  = mysql_result($LoginRS,0,'uid');
 	//$loginStrrank  = mysql_result($LoginRS,0,'tk_user_rank');
@@ -46,7 +46,7 @@ if (isset($_POST['textfield'])) {
     
     //declare two session variables and assign them
     $_SESSION['MM_Username'] = $loginUsername;
-    $_SESSION['MM_UserGroup'] = $loginStrGroup;
+    //$_SESSION['MM_UserGroup'] = $loginStrGroup;
 	$_SESSION['MM_Displayname'] = $loginStrDisplayname;	
 	$_SESSION['MM_uid'] = $loginStrpid;	
 	$_SESSION['MM_rank'] = $loginStrrank;	
@@ -61,7 +61,7 @@ if (isset($_POST['textfield'])) {
   } else if ($loginStrGroup == $multilingual_dd_role_disabled){
   $userrank = "0";
   }*/
-  $userrank = "5";
+  //$userrank = "5";
    
   /*if ($loginStrrank == null) {
   $updateSQL = sprintf("UPDATE tk_user SET tk_user_rank=%s WHERE tk_user_login=%s", 
