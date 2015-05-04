@@ -1,7 +1,7 @@
 <?php require_once('config/tank_config.php'); ?>
 <?php require_once('session_unset.php'); ?>
 <?php require_once('session.php'); ?>
-<?php require_once('file_function.php'); ?>
+<?php require_once('function/file_function.php'); ?>
 <?php
 $restrictGoTo = "user_error3.php";
 
@@ -244,13 +244,14 @@ $totalRows_tkstatus = mysql_num_rows($tkstatus);
 ?>
 <?php require('head.php'); ?>
 <link type="text/css" href="skin/themes/base/ui.all.css" rel="stylesheet" />
-<link href="skin/themes/base/lhgcheck.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="srcipt/lhgcheck.js"></script>
-<link rel="stylesheet" href="bootstrap/css/bootstrap-multiselect.css" type="text/css"/>
-<script type="text/javascript" src="bootstrap/js/bootstrap-multiselect.js"></script>
-<link rel="stylesheet" href="bootstrap/css/datepicker3.css" type="text/css"/>
-<script type="text/javascript" src="bootstrap/js/bootstrap-datepicker.js"></script>
-<script type="text/javascript" src="bootstrap/js/locales/bootstrap-datepicker.zh-CN.js"></script>
+        <link href="skin/themes/base/lhgcheck.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="srcipt/lhgcore.js"></script>
+        <script type="text/javascript" src="srcipt/lhgcheck.js"></script>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-multiselect.css" type="text/css"/>
+    <script type="text/javascript" src="bootstrap/js/bootstrap-multiselect.js"></script>
+    <link rel="stylesheet" href="bootstrap/css/datepicker3.css" type="text/css"/>
+    <script type="text/javascript" src="bootstrap/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="bootstrap/js/locales/bootstrap-datepicker.zh-CN.js"></script>
 <script type="text/javascript">
 	$(function() {
     $('#datepicker2').datepicker({
