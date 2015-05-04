@@ -61,4 +61,13 @@ function update_log($stageid,$myid){
 
   return $log_id;
 }
+
+function get_stage_log($stageid)
+{
+  global $tankdb;
+  $selStageLog="SELECT * FROM tk_log,tk_user WHERE tk_log_type=$stageid AND tk_log_class=2 AND tk_log_user=uid";
+  $StageLog_Result=mysql_query($selStageLog, $tankdb) or die(mysql_error());
+
+  return $StageLog_Result;
+}
 ?>

@@ -2,6 +2,7 @@
 <?php require_once('session_unset.php'); ?>
 <?php require_once('session.php'); ?>
 <?php require_once('dao.php'); ?>
+<?php require_once('function/stage_function.php'); ?>
 <?php
 $currentPage = $_SERVER["PHP_SELF"];
 
@@ -21,6 +22,8 @@ if(isset($_GET['pid'])){
 if(isset($_GET['sid'])){
   $now_sid = $_GET['sid'];
 }
+
+$Log_Result=get_stage_log($now_sid);
 
 $user_rank = $team_dao->get_user_authority($now_uid,$now_pid);
 $selLimit = "SELECT tk_team_ulimit FROM tk_team WHERE tk_team_pid=$now_pid
@@ -658,6 +661,53 @@ echo $editcomment_row;
       </tr>
     <?php } ?>
 -->
+
+        <tr>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td><span class="font_big18 fontbold"><?php echo $multilingual_log_title; ?></span><a name="log"></td>
+        </tr>
+        <tr>
+          <td><table class="table table-striped table-hover glink" style="margin-bottom:3px;">
+              <?php while ($row_log = mysql_fetch_assoc($Log_Result)) { ?>
+              <tr>
+                <td ><?php echo $row_log['tk_log_time']; ?>     <!--<a href="user_view.php?recordID=<?php echo $row_Recordset_actlog['tk_log_user']; ?>">--><?php echo $row_log['tk_user_login']; ?><!--</a>-->  <?php echo $row_log['tk_log_action']; ?>
+                </td>              
+              </tr>
+              <?php
+          } 
+        //$rows = mysql_num_rows($Recordset_actlog);
+        //if($rows > 0) {
+          //mysql_data_seek($Recordset_actlog, 0);
+          //$row_Recordset_actlog = mysql_fetch_assoc($Recordset_actlog);
+        //}
+      ?>
+            </table>
+            <p><?php echo '<br>'?></p>
+            <!--<table class="rowcon" border="0" align="center">
+              <tr>
+                <td><table border="0">
+                    <tr>
+                      <td><?php if ($pageNum_Recordset_actlog > 0) { // Show if not first page ?>
+                          <a href="<?php printf("%s?pageNum_Recordset_actlog=%d%s", $currentPage, 0, $queryString_Recordset_actlog); ?>#log"><?php echo $multilingual_global_first; ?></a>
+                          <?php } // Show if not first page ?></td>
+                      <td><?php if ($pageNum_Recordset_actlog > 0) { // Show if not first page ?>
+                          <a href="<?php printf("%s?pageNum_Recordset_actlog=%d%s", $currentPage, max(0, $pageNum_Recordset_actlog - 1), $queryString_Recordset_actlog); ?>#log"><?php echo $multilingual_global_previous; ?></a>
+                          <?php } // Show if not first page ?></td>
+                      <td><?php if ($pageNum_Recordset_actlog < $totalPages_Recordset_actlog) { // Show if not last page ?>
+                          <a href="<?php printf("%s?pageNum_Recordset_actlog=%d%s", $currentPage, min($totalPages_Recordset_actlog, $pageNum_Recordset_actlog + 1), $queryString_Recordset_actlog); ?>#log"><?php echo $multilingual_global_next; ?></a>
+                          <?php } // Show if not last page ?></td>
+                      <td><?php if ($pageNum_Recordset_actlog < $totalPages_Recordset_actlog) { // Show if not last page ?>
+                          <a href="<?php printf("%s?pageNum_Recordset_actlog=%d%s", $currentPage, $totalPages_Recordset_actlog, $queryString_Recordset_actlog); ?>#log"><?php echo $multilingual_global_last; ?></a>
+                          <?php } // Show if not last page ?></td>
+                    </tr>
+                  </table></td>
+                <td align="right"><?php echo ($startRow_Recordset_actlog + 1) ?> <?php echo $multilingual_global_to; ?> <?php echo min($startRow_Recordset_actlog + $maxRows_Recordset_actlog, $totalRows_Recordset_actlog) ?> (<?php echo $multilingual_global_total; ?> <?php echo $totalRows_Recordset_actlog ?>)&nbsp;&nbsp;&nbsp;&nbsp;</td>
+              </tr>
+            </table>-->
+          </td>
+        </tr>
 
                             <tr>
                                 <td>
