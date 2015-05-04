@@ -34,7 +34,7 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
   return $theValue;
 }
 }
-//插入日志
+//新建插入日志
 function insert_log($stageid,$myid){
 
   global $tankdb;
@@ -43,6 +43,20 @@ function insert_log($stageid,$myid){
           VALUES($myid,%s,$stageid,2)",
              GetSQLValueString($log_action,"text"));
   $Recordset_pfilename = mysql_query($insert_log, $tankdb) or die(mysql_error());
+  $log_id = mysql_insert_id();
+
+  return $log_id;
+}
+
+//编辑插入日志
+function update_log($stageid,$myid){
+
+  global $tankdb;
+  $log_action = "编辑了阶段";
+  $update_log=sprintf("INSERT INTO tk_log(tk_log_user,tk_log_action,tk_log_type,tk_log_class)
+          VALUES($myid,%s,$stageid,2)",
+             GetSQLValueString($log_action,"text"));
+  $Recordset_pfilename = mysql_query($update_log, $tankdb) or die(mysql_error());
   $log_id = mysql_insert_id();
 
   return $log_id;

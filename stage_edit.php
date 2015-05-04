@@ -1,8 +1,10 @@
 <?php require_once('config/tank_config.php'); ?>
 <?php require_once('session_unset.php'); ?>
 <?php require_once('session.php'); ?>
+<?php require_once('function/stage_function.php'); ?>
 <?php
 $dateError = 1;
+$myid = $_SESSION['MM_uid'];
 
 $colname_Recordset1 = "-1";
 if (isset($_GET['editID'])) {
@@ -118,6 +120,8 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
 
           mysql_select_db($database_tankdb, $tankdb);
           $Result2 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
+
+          $log_id = update_log($colname_Recordset1,$myid);
 
           $updateGoTo = "stage_view.php?pid=$pid&sid=$colname_Recordset1";
           /*if (isset($_SERVER['QUERY_STRING'])) {
