@@ -57,7 +57,7 @@ if (isset($_GET['recordID'])) {
   $colname_DetailRS1 = $_GET['recordID'];
 }
 mysql_select_db($database_tankdb, $tankdb);
-$query_DetailRS1 = "SELECT * FROM tk_stage WHERE stageid = $now_sid";
+$query_DetailRS1 = "SELECT * FROM tk_stage WHERE stageid = $now_sid AND tk_stage_delestatus=1";
 //$query_limit_DetailRS1 = sprintf("%s LIMIT %d, %d", $query_DetailRS1, $startRow_DetailRS1, $maxRows_DetailRS1);
 $DetailRS1 = mysql_query($query_DetailRS1, $tankdb) or die(mysql_error());
 $row_DetailRS1 = mysql_fetch_assoc($DetailRS1);
@@ -86,7 +86,7 @@ mysql_select_db($database_tankdb, $tankdb);
               inner join tk_user on tk_task.csa_to_user=tk_user.uid 
               inner join tk_status on tk_task.csa_status=tk_status.id 
                 WHERE csa_project = %s ORDER BY csa_last_update DESC", GetSQLValueString($colname_Recordset_task, "text"));*/
-$query_Recordset_task = "SELECT * FROM tk_task WHERE csa_project_stage = $now_sid";
+$query_Recordset_task = "SELECT * FROM tk_task WHERE csa_project_stage = $now_sid AND csa_del_status=1";
 //$query_limit_Recordset_task = sprintf("%s LIMIT %d, %d", $query_Recordset_task, $startRow_Recordset_task, $maxRows_Recordset_task);
 $Recordset_task = mysql_query($query_Recordset_task, $tankdb) or die(mysql_error());
 $row_Recordset_task = mysql_fetch_assoc($Recordset_task);
@@ -517,7 +517,7 @@ document.getElementById('tab_' + i).className = (i == ".$tabid.") ? 'onhover' : 
                                             <a class="mouse_over" onClick="javascript:if(confirm( '<?php 
    if($totalRows_Recordset_task == "0"){  
     echo $multilingual_global_action_delconfirm;
-    } else { echo $multilingual_global_action_delconfirm3;} ?>'))self.location='stage_del.php?delID=<?php echo $row_DetailRS1['id']; ?>';">
+    } else { echo $multilingual_global_action_delconfirm3;} ?>'))self.location='stage_del.php?delID=<?php echo $row_DetailRS1['stageid']; ?>';">
                                                 <span class="glyphicon glyphicon-remove"></span>
                                                 <?php echo $multilingual_global_action_del; ?> </a>
                                         </td>
