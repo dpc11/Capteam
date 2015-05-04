@@ -118,7 +118,15 @@
     VALUES ($tk_team_pid,$tk_team_uid,$tk_team_ulimit,$tk_team_del_status,'$tk_team_jointeamtime')";
     mysql_select_db($database_tankdb, $tankdb);
     $Result1 = mysql_query($addnewmemSQL, $tankdb) or die(mysql_error());
-
+    //添加项目负责人的log记录
+    date_default_timezone_set('PRC');
+    $action='添加了成员:'.$tk_team_uid;
+              $timenow=date('Y-m-d H:i:s',time());
+              $insertSQLLog=sprintf("INSERT into tk_log(tk_log_user,tk_log_action,tk_log_time,tk_log_type,tk_log_class)
+                VALUES(%s,'$action','$timenow','$tk_team_pid','1')",GetSQLValueString($_SESSION['MM_uid'], "int"));
+ 
+               mysql_select_db($database_tankdb, $tankdb);
+              $Result2 = mysql_query($insertSQLLog, $tankdb) or die(mysql_error());
     //获取选中的项目成员
     $user_list= $_POST['project_to_user'];
 
@@ -133,6 +141,15 @@
         VALUES ($tk_team_pid,$tk_team_uid,$tk_team_ulimit,$tk_team_del_status,'$tk_team_jointeamtime')";
         mysql_select_db($database_tankdb, $tankdb);
         $Result1 = mysql_query($addnewmemSQL, $tankdb) or die(mysql_error());
+        //添加项目成员的log记录
+    date_default_timezone_set('PRC');
+    $action='添加了成员:'.$tk_team_uid;
+              $timenow=date('Y-m-d H:i:s',time());
+              $insertSQLLog=sprintf("INSERT into tk_log(tk_log_user,tk_log_action,tk_log_time,tk_log_type,tk_log_class)
+                VALUES(%s,'$action','$timenow','$tk_team_pid','1')",GetSQLValueString($_SESSION['MM_uid'], "int"));
+ 
+               mysql_select_db($database_tankdb, $tankdb);
+              $Result2 = mysql_query($insertSQLLog, $tankdb) or die(mysql_error());
     }
 
     }
