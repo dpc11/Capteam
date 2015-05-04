@@ -2,6 +2,7 @@
 <?php require_once('session_unset.php'); ?>
 <?php require_once('session.php'); ?>
 <?php require_once('function/file_function.php'); ?>
+<?php require_once('function/stage_function.php'); ?>
 <?php
 $restrictGoTo = "user_error3.php";
 
@@ -162,6 +163,9 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 				$insertSQL = sprintf("UPDATE tk_stage SET tk_stage_folder_id = $folderID WHERE stageid=$thisSid");
               mysql_select_db($database_tankdb, $tankdb);
               $Result1 = mysql_query($insertSQL, $tankdb) or die(mysql_error());
+
+        //插入日志数据库
+          $log_id = insert_log($thisSid,$myid);
 			  
 			  
          /* $selSID = sprintf("SELECT stageid FROM tk_stage WHERE tk_stage_title LIKE %s AND tk_stage_desc LIKE %s
