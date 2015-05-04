@@ -65,6 +65,15 @@
               $Result1 = mysql_query($insertSQL, $tankdb) or die(mysql_error());
               $newID = mysql_insert_id();
 			  
+
+              date_default_timezone_set('PRC');
+              $timenow=date('Y-m-d H:i:s',time());
+              $insertSQLLog=sprintf("INSERT into tk_log(tk_log_user,tk_log_action,tk_log_time,tk_log_type,tk_log_class)
+                VALUES(%s,'创建了项目','$timenow','$newID','1')",GetSQLValueString($_SESSION['MM_uid'], "int"));
+ 
+               mysql_select_db($database_tankdb, $tankdb);
+              $Result2 = mysql_query($insertSQLLog, $tankdb) or die(mysql_error());
+
 			  $CurDate = date("Y-m-d H:i:s");
 			  $tk_doc_description="'本文件夹用于存放【".str_replace("'","",$projectNAME)."】团队的所有资料。'";
 			  $insertSQLFolder = sprintf("INSERT INTO tk_document (tk_doc_title, tk_doc_description,tk_doc_pid, tk_doc_parentdocid, tk_doc_create, tk_doc_lastupdate,tk_doc_backup1, tk_doc_type) VALUES ($projectNAME, $tk_doc_description,$newID, -1, 0,'$CurDate',1,1)");
