@@ -50,7 +50,15 @@ if ((isset($_GET['delID'])) && ($_GET['delID'] != "") && ($_SESSION['MM_Username
   $delTeam = "DELETE from tk_team WHERE tk_team_pid = $del_project_id"; 
   mysql_select_db($database_tankdb, $tankdb);
   $Result2 = mysql_query($delTeam, $tankdb) or die(mysql_error());
-
+  
+  date_default_timezone_set('PRC');
+      
+              $timenow=date('Y-m-d H:i:s',time());
+              $insertSQLLog=sprintf("INSERT into tk_log(tk_log_user,tk_log_action,tk_log_time,tk_log_type,tk_log_class)
+                VALUES(%s,'删除了项目','$timenow','$del_project_id','1')",GetSQLValueString($_SESSION['MM_uid'], "int"));
+ 
+               mysql_select_db($database_tankdb, $tankdb);
+              $Result2 = mysql_query($insertSQLLog, $tankdb) or die(mysql_error());
   // //将项目中的删除位置为-1
   // $delProject = "UPDATE tk_project SET project_del_status = -1, project_lastupdate = '$del_project_lastupdate' WHERE id = $del_project_id";
   // mysql_select_db($database_tankdb, $tankdb);

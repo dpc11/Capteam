@@ -52,6 +52,15 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
     echo $updateSQL;
       mysql_select_db($database_tankdb, $tankdb);
       $Result1 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
+      
+      date_default_timezone_set('PRC');
+      $editlogid=$_POST['id'];
+              $timenow=date('Y-m-d H:i:s',time());
+              $insertSQLLog=sprintf("INSERT into tk_log(tk_log_user,tk_log_action,tk_log_time,tk_log_type,tk_log_class)
+                VALUES(%s,'编辑了项目','$timenow','$editlogid','1')",GetSQLValueString($_SESSION['MM_uid'], "int"));
+ 
+               mysql_select_db($database_tankdb, $tankdb);
+              $Result2 = mysql_query($insertSQLLog, $tankdb) or die(mysql_error());
 
       $updateGoTo = "project_view.php?recordID=$colname_Recordset1";
       if (isset($_SERVER['QUERY_STRING'])) {
