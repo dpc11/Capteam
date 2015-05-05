@@ -156,6 +156,16 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
 
             mysql_select_db($database_tankdb, $tankdb);
           $Result4 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
+
+          date_default_timezone_set('PRC');//编辑任务的log记录
+              $action='审核了任务，任务被驳回';
+              $taskid=$_POST['TID'];
+              $timenow=date('Y-m-d H:i:s',time());
+              $insertSQLLog=sprintf("INSERT into tk_log(tk_log_user,tk_log_action,tk_log_time,tk_log_type,tk_log_class)
+                VALUES(%s,'$action','$timenow','$task_id','3')",GetSQLValueString($_SESSION['MM_uid'], "int"));
+ 
+               mysql_select_db($database_tankdb, $tankdb);
+              $Result2 = mysql_query($insertSQLLog, $tankdb) or die(mysql_error());
       }
       else if($check_result == '1')//验收
       {
@@ -173,6 +183,16 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
           mysql_select_db($database_tankdb, $tankdb);
            $Result4 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
       
+
+          date_default_timezone_set('PRC');//编辑任务的log记录
+              $action='审核了任务，任务被验收';
+              $taskid=$_POST['TID'];
+              $timenow=date('Y-m-d H:i:s',time());
+              $insertSQLLog=sprintf("INSERT into tk_log(tk_log_user,tk_log_action,tk_log_time,tk_log_type,tk_log_class)
+                VALUES(%s,'$action','$timenow','$task_id','3')",GetSQLValueString($_SESSION['MM_uid'], "int"));
+ 
+               mysql_select_db($database_tankdb, $tankdb);
+              $Result2 = mysql_query($insertSQLLog, $tankdb) or die(mysql_error());
           $project_id = $row_DetailRS1['tk_doc_pid'];
           $task_to_user = $row_DetailRS1['csa_to_user'];
         
