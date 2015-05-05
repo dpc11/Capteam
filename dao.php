@@ -293,13 +293,48 @@ class schedule_dao
 
         return $data;
     }
+}
 
+/**
+* 对message的数据库操作
+*/
+class message_dao 
+{
+    //check message
+    // public function check_message( $userid ,$user_message_id) {
+    //     global $tankdb;
+    //     global $database_tankdb;
 
+    //     //$user_message_id = $_SESSION['MM_msg'];
+    //     $count_message_SQL = sprintf("SELECT 
+    //                                 COUNT(meid) as count_msg   
+    //                                 FROM tk_message                             
+    //                                 WHERE meid > '$user_message_id' AND tk_mess_touser = '$userid'"
+    //                                     );
+    //     $count_message_RS = mysql_query($count_message_SQL, $tankdb) or die(mysql_error());
+    //     $row_count_message = mysql_fetch_assoc($count_message_RS);
+    //     return $row_count_message['count_msg'];
+    //     }
+}
 
+/**
+* 对item的数据库操作
+*/
+class item_dao 
+{
+    // //获得对应的item值
+    // public function get_item($item)
+    // {
+    //     global $tankdb;
+    //     $sql_item = "SELECT tk_item_value FROM tk_item WHERE tk_item_key = '$item'";
+
+    //     $Recordset_item = mysql_query($sql_item, $tankdb) or die(mysql_error());
+    //     $row_Recordset_item = mysql_fetch_assoc($Recordset_item);
+    //     return $row_Recordset_item['tk_item_value'];
+    // }
 
 
 }
-
 
 
 

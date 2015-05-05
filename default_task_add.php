@@ -122,24 +122,22 @@ $insertGoTo = "default_task_edit.php?editID=$newID";
     $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
     $insertGoTo .= $_SERVER['QUERY_STRING'];
   }
-/*
-$msg_to = $to_user_arr['0'];
-$msg_from = $_POST['csa_create_user'];
+//新建任务，给被指派的人发消息
+$msg_to = $to_user;
+//$msg_from = $_POST['csa_create_user'];
+$msg_from = $_POST['csa_from_user_name'];
 $msg_type = "newtask";
 $msg_id = $newID;
 $msg_title = $title;
 $mail = send_message( $msg_to, $msg_from, $msg_type, $msg_id, $msg_title );
-
+//新建任务，给抄送的人发消息
 if($_POST['user_cc'] <> null){
-
-$cc_arr = json_decode($cc_post, true);
-
-foreach($cc_arr as $k=>$v){
-send_message( $v['uid'], $msg_from, $msg_type, $msg_id, $msg_title, 1 );
+    $cc_arr = json_decode($cc_post, true);
+    foreach($cc_arr as $k=>$v){
+        send_message( $v['uid'], $msg_from, $msg_type, $msg_id, $msg_title, 1 );
+    }
 }
 
-}
-*/
   header(sprintf("Location: %s", $insertGoTo));
 }
 

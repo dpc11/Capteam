@@ -440,13 +440,13 @@ global $multilingual_message_edituser_cc;
 global $multilingual_message_edittask_cc;
 
 
-if($cc==0){
+if($cc==0){//是新建任务
 $msg_newtask = $multilingual_message_newtask;
 $msg_taskcomm = $multilingual_message_newtaskcomment;
 $msg_exam = $multilingual_message_exam;
 $msg_edituser = $multilingual_message_edituser;
 $msg_edittask = $multilingual_message_edittask;
-} else {
+} else {//是抄送
 $msg_newtask = $multilingual_message_newtask_cc;
 $msg_taskcomm = $multilingual_message_newtaskcomment_cc;
 $msg_exam = $multilingual_message_exam_cc;
