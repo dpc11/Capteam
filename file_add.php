@@ -1,6 +1,7 @@
 <?php require_once('config/tank_config.php'); ?>
 <?php require_once('session_unset.php'); ?>
 <?php require_once('session.php'); ?>
+<?php require_once('function/file_log_function.php'); ?>
 <?php
 $restrictGoTo = "user_error3.php";
 
@@ -59,6 +60,9 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 
   $docID = mysql_insert_id();
   $newName = $_SESSION['MM_uid'];
+
+  //插入log数据库
+  $log_id = insert_log_file($project_id,$newName,$p_id,$docID);
 /*
 $insertSQL2 = sprintf("INSERT INTO tk_log (tk_log_user, tk_log_action, tk_log_type, tk_log_class, tk_log_description) VALUES (%s, %s, %s, 2, '' )",
                        GetSQLValueString($newName, "text"),
