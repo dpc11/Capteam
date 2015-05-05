@@ -53,9 +53,8 @@ dialog : (function()
 			
 			var dfrm = J(tdoc).crte('iframe'); 
 			restyle(dfrm);
-			J(dfrm).attr({ id: 'lhg_' + d.id, frameBorder: 0 }).stcs({
-			    top: itop + 'px', left: ileft + 'px', position: 'absolute',
-				width: d.width + 'px', height: d.height + 'px', zIndex: getzi()
+			J(dfrm).attr({ id: 'lhg_' + d.id, frameBorder: 0 ,width: d.width + 'px', height: d.height + 'px'}).stcs({
+			    top: itop + 'px', left: ileft + 'px', position: 'absolute', zIndex: getzi()
 			});
 			dfrm._dlgargs = dinfo; 
 			J(tdoc.body).apch(dfrm); 
@@ -74,7 +73,7 @@ dialog : (function()
 				'</head>',
 				'<body>',
 				    '<div id="contain"  class="contain">',
-					    '<div id="dtit"   class="dlgtit"><span id="txt"></span><div id="xbtn"></div></div>',
+					    '<div id="dtit"  style="display:none;" class="dlgtit"><span id="txt"></span><div id="xbtn"></div></div>',
 						'<div id="dinner" class="dlginner"></div>',
 						'<div id="dfoot" class="dlgfoot" style="display:none;"><ul id="btns"><li id="dark"></li></ul></div>',
 					'</div>',

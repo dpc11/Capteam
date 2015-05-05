@@ -19,33 +19,31 @@ body
 
 .dlgtit
 {
-    height: 50px;
+    height: 33px;
 	margin: 0px;
 	cursor: move;
-
+	background: #E1E1E1;
 	background-repeat: repeat-x;
 	background-position: 0 0;
-	
-	border-bottom: 1px solid #E5E5E5;
+	border: 0px solid #AAAAAA;
 }
 
 .dlgtit #txt
 {
-
+    margin-top: 5px;	
 	position: relative;
 	left: 15px;
 	top: 6px;
 	color: #000000;
-	font: 18px Tahoma, Arial, sans-serif;
-	line-height:35px;
-
+	font: 15px Tahoma, Arial, sans-serif;
+	font-weight: bold;
 }
-.dlgtit>#txt{ +top: 6px;  }
+.dlgtit>#txt{ +top: 6px; }
 
 #xbtn
 {
 	position: absolute;
-	top: 15px;
+	top: 5px;
 	right: 15px;
 	width: 21px;
 	height: 20px;
@@ -53,7 +51,6 @@ body
 	background-image: url(images/btn_bg.gif);
 	background-repeat: no-repeat;
 	background-position: -22px 0;
-
 }
 
 .dlginner{ padding: 2px; }
@@ -151,12 +148,7 @@ p{ margin:5px;}
 .glink a{  text-decoration:none;  color:#0076AE;  }
 .glink a:hover{ text-decoration:underline; color:#0076AE}
 
-.calendar_main{
-    width: 100%;
-    background: #DFDFDF; 
-    border-spacing: 2px;
-    border-collapse: separate;
-}
+.calendar_main{ width:100%; background: #DFDFDF; }
 
 .day_border{ border:1px #B0B0B0 solid; }
 

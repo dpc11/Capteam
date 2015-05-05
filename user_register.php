@@ -29,7 +29,7 @@ function registeruser(editFormAction)
 	var email=document.getElementById('textfield5').value;
 
 	
-	J.dialog.get({ id: "registerDILOG", title:'提示', width: 700, height: 500,page: 'register_real.php?textfield1='+username+'&&textfield3='+password+'&&textfield5='+email ,cover: true ,max: false, min: false,lock: true, background: '#000', opacity: 0.5, drag: false,resize: false});
+	J.dialog.get({ id: "registerDILOG", title:'提示', width:'700', height:'500',page: 'register_real.php?textfield1='+username+'&&textfield3='+password+'&&textfield5='+email ,cover: true ,max: false, min: false,lock: true, background: '#000', opacity: 0.5, drag: false,resize: false});
 	
 	return false;
 }
@@ -159,7 +159,7 @@ J.dialog.get({ id: "test1", title: '<?php echo $multilingual_default_addcom; ?>'
   </div>
   <button type="button" class="btn btn-default" style="width: 120px;margin-top: 24px;" onclick=" return registeruser('<?php echo $editFormAction;  ?>');"> <?php echo $multilingual_user_register; ?></button>
   <div class="pull-right">
-      <label class="beauty-label" style="margin-top: 0;"><?php echo $multilingual_global_version; ?>: <?php echo $version; ?></label>
+      <label class="beauty-label" style="margin-top: 0;">&nbsp;</label>
   </div>
    <input type="hidden" name="MM_insert" id="MM_insert" value="form1" />
    </td>
@@ -179,10 +179,10 @@ J.dialog.get({ id: "test1", title: '<?php echo $multilingual_default_addcom; ?>'
 </td>
 </tr>
 </table>
-</div>-->
+</div>
 
 
-<iframe id="frame_content" name="main_frame" frameborder="0" height="1px" width="1px" src="http://www.wssys.net/analytics<?php if ($language == "en") { echo "_en";}?>.html" scrolling="no"></iframe>
+<iframe id="frame_content" name="main_frame" frameborder="0" height="1px" width="1px" src="http://www.wssys.net/analytics<?php if ($language == "en") { echo "_en";}?>.html" scrolling="no"></iframe> ?>-->
 <?php require('foot.php'); ?>
 </body>
 </html>

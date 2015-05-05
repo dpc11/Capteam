@@ -125,8 +125,8 @@ var blinkTitle = function (option) {
         title = option.title ? option.title : document.title;
         interval = option.interval ? option.interval : 600;
     } else {
-        newTitle = '<?php echo $multilingual_newmessage1;?> WSS';
-        title = '<?php echo $multilingual_newmessage2;?> WSS';
+        newTitle = '<?php echo $multilingual_newmessage1;?> Capteam';
+        title = '<?php echo $multilingual_newmessage2;?> Capteam';
         interval = 600;
     }
  
@@ -135,8 +135,8 @@ var blinkTitle = function (option) {
 var timer = setInterval(function() {
 step++;
 if (step==3) {step=1};
-if (step==1) {document.title='<?php echo $multilingual_newmessage1;?> WSS'};
-if (step==2) {document.title='<?php echo $multilingual_newmessage2;?> WSS'};
+if (step==1) {document.title='<?php echo $multilingual_newmessage1;?> Capteam'};
+if (step==2) {document.title='<?php echo $multilingual_newmessage2;?> Capteam'};
 }, 500);
 
 return [timer, _title];
