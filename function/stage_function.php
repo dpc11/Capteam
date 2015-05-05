@@ -70,4 +70,15 @@ function get_stage_log($stageid)
 
   return $StageLog_Result;
 }
+
+//得到阶段的文件编号
+function get_stage_folder($stageid)
+{
+  global $tankdb;
+  $selStageFolder="SELECT * FROM tk_stage WHERE  stageid=$stageid";
+  $StageFolder_Result=mysql_query($selStageFolder, $tankdb) or die(mysql_error());
+  $row = mysql_fetch_assoc($StageFolder_Result);
+
+  return $row['tk_stage_folder_id'];
+}
 ?>

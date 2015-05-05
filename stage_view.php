@@ -24,6 +24,8 @@ if(isset($_GET['sid'])){
 }
 
 $Log_Result=get_stage_log($now_sid);
+$folder_id=get_stage_folder($now_sid);
+echo $folder_id;
 
 $user_rank = $team_dao->get_user_authority($now_uid,$now_pid);
 $selLimit = "SELECT tk_team_ulimit FROM tk_team WHERE tk_team_pid=$now_pid
@@ -502,7 +504,7 @@ document.getElementById('tab_' + i).className = (i == ".$tabid.") ? 'onhover' : 
                                         <!-- 上传文档 -->
                                         <?php if($user_rank > 1) { ?>
                                         <td width="12%">
-                                            <a target="_blank" href="file_add.php?projectid=<?php echo $row_DetailRS1['stageid']; ?>&pid=0&pagetab=allfile"><span class="glyphicon glyphicon-file"></span> <?php echo $multilingual_project_file_addfile; ?></a> </td>
+                                            <a target="_blank" href="file_add.php?projectid=<?php echo $now_pid; ?>&pid=<?php echo $folder_id?>&pagetab=allfile"><span class="glyphicon glyphicon-file"></span> <?php echo $multilingual_project_file_addfile; ?></a> </td>
                                         <?php } ?>
 
                                         <!-- 阶段修改 -->
