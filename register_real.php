@@ -4,6 +4,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="skin/themes/base/lhgdialog.css" rel="stylesheet" type="text/css" />
 <link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+<script type="text/javascript" src="srcipt/jquery.js"></script>
+<script src="bootstrap/js/bootstrap.js"></script>	
+<script charset="utf-8" src="editor/kindeditor.js"></script>
+<script charset="utf-8" src="editor/lang/zh_CN.js"></script>
 <title>log</title>
 	<script type="text/javascript">
 		var P = window.parent, D = P.loadinndlg(); 	
@@ -36,17 +40,6 @@
 			}, 3000);
 		}
 	</script>
-	
-<script type="text/javascript" src="srcipt/jquery.js"></script>
-<script src="bootstrap/js/bootstrap.js"></script>
-	
-<script charset="utf-8" src="editor/kindeditor.js"></script>
-<script charset="utf-8" src="editor/lang/zh_CN.js"></script>
-
-<script type="text/javascript">
-
-
-</script>
 </head> 
 <?php 
 
