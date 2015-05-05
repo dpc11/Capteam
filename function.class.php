@@ -432,12 +432,14 @@ global $multilingual_message_newtaskcomment;
 global $multilingual_message_exam;
 global $multilingual_message_edituser;
 global $multilingual_message_edittask;
+global $multilingual_message_newtaskcommit;
 
 global $multilingual_message_newtask_cc;
 global $multilingual_message_newtaskcomment_cc;
 global $multilingual_message_exam_cc;
 global $multilingual_message_edituser_cc;
 global $multilingual_message_edittask_cc;
+global $multilingual_message_newtaskcommit_cc;
 
 
 if($cc==0){//是新建任务

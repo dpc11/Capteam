@@ -11,6 +11,8 @@
   $user_dao_obj = new user_dao();
   //获取个人日程的数据库操作类
   $schedule_dao_obj = new schedule_dao();
+  //获取s阶段的数据库操作类
+  $stage_dao_obj = new stage_dao();
 
 
   $pagetabs = "allprj";
@@ -815,65 +817,20 @@ $(function() {
           </tr>
           </thead>
           <tbody>
-          <?php do { ?>
-            <tr>
-  <!--            <td><?php echo $row_Recordset_task['TID']; ?></td>-->
-              <td class="task_title">
-  			<div  class="text_overflow_150 task_title"  title="<?php echo $row_Recordset_task['csa_text']; ?>">
-  			<a href="default_task_edit.php?editID=<?php echo $row_Recordset_task['TID']; ?>&pagetab=alltask" >
-  			 <?php echo $row_Recordset_task['csa_text']; ?>			</a>			</div></td>
-  <!--            <td ><a href="user_view.php?recordID=<?php echo $row_Recordset_task['csa_to_user']; ?>"><?php echo $row_Recordset_task['tk_display_name']; ?></a></td>-->
-  <!--            <td><?php echo $row_Recordset_task['task_status_display']; ?></td>-->
-              <td><?php echo $row_Recordset_task['csa_plan_st']; ?></td>
-              <td><?php echo $row_Recordset_task['csa_plan_et']; ?></td>
-  <!--
-              <td>
-  			<?php
-  switch ($row_Recordset_task['csa_priority'])
-  {
-  case 5:
-    echo $multilingual_dd_priority_p5;
-    break;
-  case 4:
-    echo $multilingual_dd_priority_p4;
-    break;
-  case 3:
-    echo $multilingual_dd_priority_p3;
-    break;
-  case 2:
-    echo $multilingual_dd_priority_p2;
-    break;
-  case 1:
-    echo $multilingual_dd_priority_p1;
-    break;
-  }
-  ?>			</td>
-
-              <td class="hide">
-  			<?php
-  switch ($row_Recordset_task['csa_temp'])
-  {
-  case 5:
-    echo $multilingual_dd_level_l5;
-    break;
-  case 4:
-    echo $multilingual_dd_level_l4;
-    break;
-  case 3:
-    echo $multilingual_dd_level_l3;
-    break;
-  case 2:
-    echo $multilingual_dd_level_l2;
-    break;
-  case 1:
-    echo $multilingual_dd_level_l1;
-    break;
-  }
-  ?>			</td>
-  -->
-           
-            </tr>
-            <?php } while ($row_Recordset_task = mysql_fetch_assoc($Recordset_task)); ?>
+          <?php $stage_arr = $stage_dao_obj->get_stages($colname_DetailRS1);//获得阶段的数组
+          foreach($stage_arr as $key => $val){ //对数组进行遍历  ?>
+              <tr>
+                  <td class="task_title">
+  			          <div  class="text_overflow_150 task_title"  title="<?php echo $row_Recordset_task['csa_text']; ?>">
+  			              <a href="stage_view.php?sid=<?php echo $val['sid']; ?>&pid=<?php echo $val['pid']; ?>" >
+  			              <?php echo $val['title']; ?>			
+  			              </a>			
+  			          </div>
+  			      </td>
+                  <td><?php echo $val['start_time']; ?></td>
+                  <td><?php echo $val['end_time']; ?></td>
+              </tr>
+          <?php } ?>
   		  </tbody>
         </table>
 

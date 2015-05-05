@@ -342,5 +342,33 @@ class task_dao
 }
 
 
+/**
+* 对stage的数据库操作
+*/
+class stage_dao
+{
+    //根据项目id获得stages
+    public function get_stages($project_id)
+    {
+        global $tankdb;
+        global $database_tankdb;
+        $query_stage ="SELECT * FROM tk_stage WHERE  tk_stage_pid= $project_id";
+        $stageRS = mysql_query($query_stage, $tankdb) or die(mysql_error());
+        $row_stage = mysql_fetch_assoc($stageRS);
+ 
+        $stage_arr = array ();
+        do { 
+        $stage_arr[$row_stage['sid']]['sid'] =  $row_stage['stageid'];
+        $stage_arr[$row_stage['sid']]['pid'] =  $row_stage['tk_stage_pid'];
+        $stage_arr[$row_stage['sid']]['title'] =  $row_stage['tk_stage_title'];
+        $stage_arr[$row_stage['sid']]['start_time'] =  $row_stage['tk_stage_st'];
+        $stage_arr[$row_stage['sid']]['end_time'] =  $row_stage['tk_stage_et'];
+        } while ($row_stage = mysql_fetch_assoc($userRS));     
+    
+        return $stage_arr;
+    }
+}
+
+
 
 ?>
