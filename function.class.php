@@ -500,10 +500,11 @@ send_mail($to,$from,$type,$id,$title);
 }
 }
 
-$insert_msg_SQL = sprintf("INSERT INTO tk_message (tk_mess_touser, tk_mess_fromuser, tk_mess_title) VALUES (%s, %s, %s )",
+$insert_msg_SQL = sprintf("INSERT INTO tk_message (tk_mess_touser, tk_mess_fromuser, tk_mess_title,tk_task_id) VALUES (%s, %s, %s, %s)",
                        GetSQLValueString($to, "int"),
                        GetSQLValueString($from, "int"),
-                       GetSQLValueString($text, "text"));  
+                       GetSQLValueString($text, "text"),
+                       GetSQLValueString($id, "int"));  
 $insert_msg_RS = mysql_query($insert_msg_SQL, $tankdb) or die(mysql_error());
 
 	} //to no from
