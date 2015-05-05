@@ -14,7 +14,14 @@ $pagetabs = "alltask";
 if (isset($_GET['pagetab'])) {
   $pagetabs = $_GET['pagetab'];
 }
-
+//任务log的显示操作
+mysql_select_db($database_tankdb, $tankdb);
+$tid= $_GET['editID'];
+echo $tid;
+$uid= $_SESSION['MM_uid'];
+              //$Result2 = mysql_query($insertSQLLog, $tankdb) or die(mysql_error());
+  $selTaskLog="SELECT * FROM tk_log,tk_user WHERE tk_log_type=$tid AND tk_log_class=3 AND tk_log.tk_log_user=tk_user.uid";
+  $TaskLog_Result=mysql_query($selTaskLog, $tankdb) or die(mysql_error());
 //<!--我参与的任务 -->
 if($pagetabs=="mtask"){
 $tasklisturl = "index.php?select=&select_project=&select_year=".date("Y")."&textfield=".date("m")."&select3=-1&select4=".$_SESSION['MM_uid']."&select_prt=&select_temp=&inputtitle=&select1=-1&select2=%&create_by=%&select_type=&inputid=&inputtag=";
@@ -493,7 +500,6 @@ function addcomm()
 		
 		
 		<!--操作记录，如果有-->
-        <?php if($totalRows_Recordset_actlog > 0){ //如果有操作记录 ?>
         <tr>
           <td>&nbsp;</td>
         </tr>
@@ -502,20 +508,22 @@ function addcomm()
         </tr>
         <tr>
           <td><table class="table table-striped table-hover glink" style="margin-bottom:3px;">
-              <?php do { ?>
+              <?php while ($row_log = mysql_fetch_assoc($TaskLog_Result)) { ?>
               <tr>
-                <td ><?php echo $row_Recordset_actlog['tk_log_time']; ?> <a href="user_view.php?recordID=<?php echo $row_Recordset_actlog['tk_log_user']; ?>"><?php echo $row_Recordset_actlog['tk_display_name']; ?></a><?php echo $row_Recordset_actlog['tk_log_action']; ?>
-              <td>              </tr>
+                <td ><?php echo $row_log['tk_log_time']; ?>     <!--<a href="user_view.php?recordID=<?php echo $row_Recordset_actlog['tk_log_user']; ?>">--><?php echo $row_log['tk_user_login']; ?><!--</a>-->  <?php echo $row_log['tk_log_action']; ?>
+                </td>              
+              </tr>
               <?php
-			} while ($row_Recordset_actlog = mysql_fetch_assoc($Recordset_actlog));
-			  $rows = mysql_num_rows($Recordset_actlog);
-			  if($rows > 0) {
-				  mysql_data_seek($Recordset_actlog, 0);
-				  $row_Recordset_actlog = mysql_fetch_assoc($Recordset_actlog);
-			  }
-			?>
+          } 
+        //$rows = mysql_num_rows($Recordset_actlog);
+        //if($rows > 0) {
+          //mysql_data_seek($Recordset_actlog, 0);
+          //$row_Recordset_actlog = mysql_fetch_assoc($Recordset_actlog);
+        //}
+      ?>
             </table>
-            <table class="rowcon" border="0" align="center">
+            <p><?php echo '<br>'?></p>
+            <!--<table class="rowcon" border="0" align="center">
               <tr>
                 <td><table border="0">
                     <tr>
@@ -535,9 +543,10 @@ function addcomm()
                   </table></td>
                 <td align="right"><?php echo ($startRow_Recordset_actlog + 1) ?> <?php echo $multilingual_global_to; ?> <?php echo min($startRow_Recordset_actlog + $maxRows_Recordset_actlog, $totalRows_Recordset_actlog) ?> (<?php echo $multilingual_global_total; ?> <?php echo $totalRows_Recordset_actlog ?>)&nbsp;&nbsp;&nbsp;&nbsp;</td>
               </tr>
-            </table></td>
+            </table>-->
+          </td>
         </tr>
-        <?php } //如果有操作记录  ?>
+        
         
       </table>
             <?php require('foot.php'); ?>
