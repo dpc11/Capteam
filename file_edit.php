@@ -1,6 +1,7 @@
 <?php require_once('config/tank_config.php'); ?>
 <?php require_once('session_unset.php'); ?>
 <?php require_once('session.php'); ?>
+<?php require_once('function/file_log_function.php'); ?>
 <?php
 $restrictGoTo = "user_error3.php";
 
@@ -68,6 +69,10 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
 
   $newID = $colname_Recordset1;
   $newName = $_SESSION['MM_uid'];
+
+  //插入log数据库
+  $log_id = update_log_file($project_id,$newName,$p_id,$colname_Recordset1);
+
 /*
 $insertSQL2 = sprintf("INSERT INTO tk_log (tk_log_user, tk_log_action, tk_log_type, tk_log_class, tk_log_description) VALUES (%s, %s, %s, 2, '')",
                        GetSQLValueString($newName, "text"),
@@ -75,22 +80,22 @@ $insertSQL2 = sprintf("INSERT INTO tk_log (tk_log_user, tk_log_action, tk_log_ty
                        GetSQLValueString($newID, "text"));  
 $Result2 = mysql_query($insertSQL2, $tankdb) or die(mysql_error());
 */
-$b01 ="-1";
-if (isset($_POST["b01"])) {
-  $b01 = $_POST["b01"];
-}
+      $b01 ="-1";
+      if (isset($_POST["b01"])) {
+        $b01 = $_POST["b01"];
+      }
 
-if($b01 =="-1"){
-  $updateGoTo = "http://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']."?".$_SERVER["QUERY_STRING"];
-} else{
-  $updateGoTo = "file_view.php?recordID=$colname_Recordset1&folder=$fd&projectID=$project_id".$pf.$ptab;
-}
-  
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
-    
-  }
-  header(sprintf("Location: %s", $updateGoTo));
+      if($b01 =="-1"){
+        $updateGoTo = "http://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']."?".$_SERVER["QUERY_STRING"];
+      } else{
+        $updateGoTo = "file_view.php?recordID=$colname_Recordset1&folder=$fd&projectID=$project_id".$pf.$ptab;
+      }
+        
+        if (isset($_SERVER['QUERY_STRING'])) {
+          $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
+          
+        }
+        header(sprintf("Location: %s", $updateGoTo));
 }
 
 mysql_select_db($database_tankdb, $tankdb);

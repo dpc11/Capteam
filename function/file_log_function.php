@@ -59,6 +59,32 @@ function insert_log_file($proid,$myid,$parentid,$docid){
   return $log_id;
 }
 
+//编辑插入日志
+function update_log_file($proid,$myid,$parentid,$docid){
+
+  global $tankdb;
+
+  $isProject = isProject($parentid);
+
+  if($isProject == 1)//是项目文件
+  {
+    $log_action = "编辑了项目文件";
+  }
+  else
+  {
+    $log_action = "编辑了阶段文件";
+  }
+
+  $insert_log=sprintf("INSERT INTO tk_log(tk_log_user,tk_log_action,tk_log_type,tk_log_class)
+          VALUES($myid,%s,$docid,4)",
+             GetSQLValueString($log_action,"text"));
+  $Recordset_pfilename = mysql_query($insert_log, $tankdb) or die(mysql_error());
+  $log_id = mysql_insert_id();
+
+  return $log_id;
+}
+
+
 function isProject($parentid){
   global $tankdb;
 
