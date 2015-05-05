@@ -19,10 +19,25 @@
     if (isset($_SERVER['QUERY_STRING'])) {
       $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
     }
-	if (isset($_POST['URL'])) {
-      $editFormAction = $_POST['URL'];
-    }
+?>
+ 
+<script type="text/javascript">	
+function registeruser(editFormAction)
+{ 
+	var username=document.getElementById('textfield1').value;
+	var password=document.getElementById('textfield3').value;
+	var email=document.getElementById('textfield5').value;
+
 	
+	J.dialog.get({ id: "registerDILOG", title:'提示', width: 700, height: 500,page: 'register_real.php?textfield1='+username+'&&textfield3='+password+'&&textfield5='+email ,cover: true ,max: false, min: false,lock: true, background: '#000', opacity: 0.5, drag: false,resize: false});
+	
+	return false;
+}
+
+</script>
+
+<!--
+
 	$username = "";
     if (isset($_POST['textfield1'])) {
       $username = $_POST['textfield1'];
@@ -48,27 +63,6 @@
 			//跳转
 		}
 	}
-?>
- 
-<script type="text/javascript">	
-function registeruser(editFormAction)
-{ 
-	var username=document.getElementById('textfield1').value;
-	var password=document.getElementById('textfield3').value;
-	var email=document.getElementById('textfield5').value;
-	editFormAction=editFormAction+"textfield1="+username+"&&textfield3="+password+"&&textfield5="+email;
-	document.getElementsByName("URL").value=editFormAction;
-	document.getElementsByName("textfield1").value=username;
-	document.getElementsByName("textfield3").value=password;
-	document.getElementsByName("textfield5").value=email;
-	
-	J.dialog.get({ id: "registerDILOG", title: '提示', width: 300, height: 200,page: 'register_real.php?textfield1='+username+'&&textfield3='+password+'&&textfield5='+email ,cover: true ,max: false, min: false,lock: true, background: '#000', opacity: 0.5, drag: false,resize: false});
-	
-	return false;
-}
-</script>
-
-<!--
 J.dialog.get({ id: "registerDILOG", title: '提示', width: 600, height: 300,page: 'url:register.php?textfield1='+username+'&&textfield3='+password+'&&textfield5='+email ,cover: true ,max: false, min: false,lock: true, background: '#000', opacity: 0.5, drag: false,resize: false});
 	
 
@@ -149,26 +143,25 @@ J.dialog.get({ id: "test1", title: '<?php echo $multilingual_default_addcom; ?>'
     <td >
      <div class="form-group">
     <label class="beauty-label" for="textfield"><?php echo $multilingual_userlogin_username; ?></label>
-    <input type="text" class="form-control" id="textfield1" name="textfield1" placeholder="User name" value="<?php  echo $username; ?>">
+    <input type="text" class="form-control" id="textfield1" name="textfield1" placeholder="User name" value="">
   </div>
   <div class="form-group">
     <label class="beauty-label" for="textfield2"><?php echo $multilingual_userlogin_password; ?></label>
-    <input type="password" class="form-control" name="textfield3" id="textfield3" placeholder="Password" value="<?php  echo $password; ?>">
+    <input type="password" class="form-control" name="textfield3" id="textfield3" placeholder="Password" value="">
   </div>
     <div class="form-group">
     <label class="beauty-label" for="textfield2"><?php echo $multilingual_user_password2; ?></label>
-    <input type="password" class="form-control" name="textfield4" id="textfield4" placeholder="Confirm Password" value="<?php  echo $password; ?>">
+    <input type="password" class="form-control" name="textfield4" id="textfield4" placeholder="Confirm Password" value="">
   </div>
   <div class="form-group">
     <label class="beauty-label" for="textfield2"><?php echo $multilingual_user_email; ?></label>
-    <input type="text" class="form-control" name="textfield5" id="textfield5" placeholder="Email" value="<?php  echo $email; ?>">
+    <input type="text" class="form-control" name="textfield5" id="textfield5" placeholder="Email" value="">
   </div>
   <button type="button" class="btn btn-default" style="width: 120px;margin-top: 24px;" onclick=" return registeruser('<?php echo $editFormAction;  ?>');"> <?php echo $multilingual_user_register; ?></button>
   <div class="pull-right">
       <label class="beauty-label" style="margin-top: 0;"><?php echo $multilingual_global_version; ?>: <?php echo $version; ?></label>
   </div>
    <input type="hidden" name="MM_insert" id="MM_insert" value="form1" />
-   <input type="hidden" name="URL" id="URL" value="<?php  echo $editFormAction; ?>" />
    </td>
     </form>
     </tr>
@@ -186,8 +179,8 @@ J.dialog.get({ id: "test1", title: '<?php echo $multilingual_default_addcom; ?>'
 </td>
 </tr>
 </table>
-</div>
--->
+</div>-->
+
 
 <iframe id="frame_content" name="main_frame" frameborder="0" height="1px" width="1px" src="http://www.wssys.net/analytics<?php if ($language == "en") { echo "_en";}?>.html" scrolling="no"></iframe>
 <?php require('foot.php'); ?>
