@@ -79,23 +79,21 @@ $insertSQL2 = sprintf("INSERT INTO tk_log (tk_log_user, tk_log_action, tk_log_ty
                        GetSQLValueString($multilingual_log_edittask, "text"),
                        GetSQLValueString($newID, "text"));  
 $Result2 = mysql_query($insertSQL2, $tankdb) or die(mysql_error());
-
-$msg_to = $to_user;
-$msg_from = $_POST['csa_from_user'];
-$msg_type = "edittask";
-$msg_id = $_POST['TID'];
-$msg_title = $_POST['csa_text'];
-
-if($cc_post <> null){
-
-$cc_arr = json_decode($cc_post, true);
-
-foreach($cc_arr as $k=>$v){
-send_message( $v['uid'], $msg_from, $msg_type, $msg_id, $msg_title, 1 );
-}
-
-}
 */
+
+// $msg_to = $to_user;
+// $msg_from = $_POST['csa_from_user'];
+// $msg_type = "edittask";
+// $msg_id = $_POST['TID'];
+// $msg_title = $_POST['csa_text'];
+// //给抄送的人发消息
+// if($cc_post <> null){
+//     $cc_arr = json_decode($cc_post, true);
+//     foreach($cc_arr as $k=>$v){
+//         send_message( $v['uid'], $msg_from, $msg_type, $msg_id, $msg_title, 1 );
+//     }
+// }
+
   $updateGoTo = "default_task_edit.php?editID=$colname_Recordset_task";
   if (isset($_SERVER['QUERY_STRING'])) {
     $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";

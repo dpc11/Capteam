@@ -17,7 +17,7 @@ if (isset($_GET['pagetab'])) {
 //任务log的显示操作
 mysql_select_db($database_tankdb, $tankdb);
 $tid= $_GET['editID'];
-echo $tid;
+// echo $tid;
 $uid= $_SESSION['MM_uid'];
               //$Result2 = mysql_query($insertSQLLog, $tankdb) or die(mysql_error());
   $selTaskLog="SELECT * FROM tk_log,tk_user WHERE tk_log_type=$tid AND tk_log_class=3 AND tk_log.tk_log_user=tk_user.uid";
