@@ -3,6 +3,7 @@
 <?php require_once('session.php'); ?>
 <?php require_once('dao.php'); ?>
 <?php require_once('function/stage_function.php'); ?>
+<?php require_once('function/file_log_function.php'); ?>
 <?php
 $currentPage = $_SERVER["PHP_SELF"];
 
@@ -25,7 +26,7 @@ if(isset($_GET['sid'])){
 
 $Log_Result=get_stage_log($now_sid);
 $folder_id=get_stage_folder($now_sid);
-echo $folder_id;
+$file_log_Result = get_stage_file_log($folder_id);
 
 $user_rank = $team_dao->get_user_authority($now_uid,$now_pid);
 $selLimit = "SELECT tk_team_ulimit FROM tk_team WHERE tk_team_pid=$now_pid
@@ -677,14 +678,25 @@ echo $editcomment_row;
                 <td ><?php echo $row_log['tk_log_time']; ?>     <!--<a href="user_view.php?recordID=<?php echo $row_Recordset_actlog['tk_log_user']; ?>">--><?php echo $row_log['tk_user_login']; ?><!--</a>-->  <?php echo $row_log['tk_log_action']; ?>
                 </td>              
               </tr>
-              <?php
-          } 
-        //$rows = mysql_num_rows($Recordset_actlog);
-        //if($rows > 0) {
-          //mysql_data_seek($Recordset_actlog, 0);
-          //$row_Recordset_actlog = mysql_fetch_assoc($Recordset_actlog);
-        //}
-      ?>
+              <?php } ?>
+              <?php while ($row_file_log = mysql_fetch_assoc($file_log_Result)) {?>
+                <tr>
+                  <td ><?php echo $row_file_log['tk_log_time']; ?>     <!--<a href="user_view.php?recordID=<?php echo $row_Recordset_actlog['tk_log_user']; ?>">-->
+                    <?php echo $row_file_log['tk_user_login']; ?><!--</a>-->  
+                    <?php echo $row_file_log['tk_log_action']; ?>     
+                    <a href="file_view.php?recordID=<?php echo $row_file_log['docid']; ?>">
+                      <?php echo $row_file_log['tk_doc_title']?>
+                    </a>
+                  </td>              
+                </tr>
+              <?php } ?>
+          
+        <!--$rows = mysql_num_rows($Recordset_actlog);
+        if($rows > 0) {
+          mysql_data_seek($Recordset_actlog, 0);
+          $row_Recordset_actlog = mysql_fetch_assoc($Recordset_actlog);
+        }-->
+      
             </table>
             <p><?php echo '<br>'?></p>
             <!--<table class="rowcon" border="0" align="center">

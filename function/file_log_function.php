@@ -98,4 +98,15 @@ function isProject($parentid){
     return 0;//不是项目文件夹
 }
 
+//获取阶段文件的log列表
+function get_stage_file_log($folder_id){
+
+  global $tankdb;
+
+  $selStageFileLog="SELECT * FROM tk_log,tk_document,tk_user WHERE tk_log_class=4 and tk_log_type= docid and tk_doc_parentdocid=$folder_id and tk_log_user=uid";
+  $StageFileLogRS = mysql_query($selStageFileLog, $tankdb) or die(mysql_error());
+
+  return $StageFileLogRS;
+}
+
 ?>
