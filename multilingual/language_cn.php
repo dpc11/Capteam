@@ -716,6 +716,7 @@ $multilingual_message = "消息";
 $multilingual_message_time = "接收时间";
 $multilingual_message_newtask = "指派给您一个新任务:";
 $multilingual_message_newtaskcomment = "评论了您的任务:";
+$multilingual_message_newtaskcommit = "提交了您的任务:";
 $multilingual_message_exam = "审核了您的任务:";
 $multilingual_message_edituser = "转让给您一个任务:";
 $multilingual_message_edittask = "更新了来自您的任务:";
@@ -726,6 +727,7 @@ $multilingual_message_newmsg1 = "您有 ";
 $multilingual_message_newmsg2 = " 条新消息";
 $multilingual_message_nomore = "系统消息最多保留30条";
 
+$multilingual_message_newtaskcommit_cc = "提交了抄送给您的任务:";
 $multilingual_message_newtask_cc = "抄送给您一个新任务:";
 $multilingual_message_newtaskcomment_cc = "评论了抄送给您的任务:";
 $multilingual_message_exam_cc =  "审核了抄送给您的任务:";

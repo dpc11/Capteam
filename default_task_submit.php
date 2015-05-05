@@ -159,17 +159,48 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
  
                mysql_select_db($database_tankdb, $tankdb);
               $Result2 = mysql_query($insertSQLLog, $tankdb) or die(mysql_error());
+/**
+ * 
+ * __   (__`\
+ * (__`\   \\`\
+ *  `\\`\   \\ \
+ *    `\\`\  \\ \
+ *      `\\`\#\\ \#
+ *        \_ ##\_ |##
+ *        (___)(___)##
+ *         (0)  (0)`\##
+ *          |~   ~ , \##
+ *          |      |  \##
+ *          |     /\   \##         __..---'''''-.._.._
+ *          |     | \   `\##  _.--'                _  `.
+ *          Y     |  \    `##'                     \`\  \
+ *         /      |   \                             | `\ \
+ *        /_...___|    \                            |   `\\
+ *       /        `.    |                          /      ##
+ *      |          |    |                         /      ####
+ *      |          |    |                        /       ####
+ *      | () ()    |     \     |          |  _.-'         ##
+ *      `.        .'      `._. |______..| |-'|
+ *        `------'           | | | |    | || |
+ *                           | | | |    | || |
+ *                           | | | |    | || |
+ *                           | | | |    | || |     神兽保佑，永无bug
+ *                     _____ | | | |____| || |
+ *                    /     `` |-`/     ` |` |
+ *                    \________\__\_______\__\
+ *                     """""""""   """""""'"""
+ *
+ */
 
-
- $task_obj = $task_dao_obj->get_task_by_id($_POST['TID']);
+$task_obj = $task_dao_obj->get_task_by_id($task_id);
 //提交任务，给被指派的人发消息
-$msg_to = $task_obj->to;
-$msg_from = $task_obj->from;
-$msg_type = "taskcomm";
-$msg_id = $_POST['TID'];
-$msg_title = $userName.'提交了任务['.$task_obj->description.']';
+$msg_to = $task_obj->from;
+$msg_from = $task_obj->to;
+$msg_type = "taskcommit";
+$msg_id = $task_id;
+$msg_title = $taskName;
 $mail = send_message( $msg_to, $msg_from, $msg_type, $msg_id, $msg_title );
-//新建任务，给抄送的人发消息
+//提交任务，给抄送的人发消息
 $cc_post = $task_obj->testto;
 if($cc_post <> null){
     $cc_arr = json_decode($cc_post, true);

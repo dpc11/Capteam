@@ -443,10 +443,12 @@ global $multilingual_message_edittask_cc;
 if($cc==0){//是新建任务
 $msg_newtask = $multilingual_message_newtask;
 $msg_taskcomm = $multilingual_message_newtaskcomment;
+$msg_taskcommit = $multilingual_message_newtaskcommit;
 $msg_exam = $multilingual_message_exam;
 $msg_edituser = $multilingual_message_edituser;
 $msg_edittask = $multilingual_message_edittask;
 } else {//是抄送
+$msg_taskcommit = $multilingual_message_newtaskcommit_cc;
 $msg_newtask = $multilingual_message_newtask_cc;
 $msg_taskcomm = $multilingual_message_newtaskcomment_cc;
 $msg_exam = $multilingual_message_exam_cc;
@@ -464,9 +466,16 @@ if($mail_create=="on" && $cc==0){
 send_mail($to,$from,$type,$id,$title);
 }
 }
-//提交任务
+//评论任务
 else if($type=="taskcomm"){
 $text = $msg_taskcomm." <a href='default_task_edit.php?editID=".$id."&pagetabs=mtask#comment'>".$title."</a>";
+if($mail_comment=="on" && $cc==0){
+send_mail($to,$from,$type,$id,$title);
+}
+}
+//提交任务
+else if($type=="taskcommit"){
+$text = $msg_taskcommit." <a href='default_task_edit.php?editID=".$id."&pagetabs=mtask#comment'>".$title."</a>";
 if($mail_comment=="on" && $cc==0){
 send_mail($to,$from,$type,$id,$title);
 }
