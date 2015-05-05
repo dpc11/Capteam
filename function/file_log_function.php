@@ -109,4 +109,55 @@ function get_stage_file_log($folder_id){
   return $StageFileLogRS;
 }
 
+//获取父目录的id
+function get_parent($doc_id){
+
+  global $tankdb;
+
+  $selParentFile="SELECT * FROM tk_document WHERE docid=$doc_id";
+  $ParentFileRS = mysql_query($selParentFile, $tankdb) or die(mysql_error());
+  $row = mysql_fetch_assoc($ParentFileRS);
+
+  return $row['tk_doc_parentdocid'];
+}
+
+//删除文件的LOG
+function delete_file_log($del_id,$myid){
+
+   global $tankdb;
+
+   $parentid = get_parent($del_id);
+
+  $isProject = isProject($parentid);
+
+  if($isProject == 1)//是项目文件
+  {
+    $log_action = "删除了项目文件";
+  }
+  else
+  {
+    $log_action = "删除了阶段文件";
+  }
+
+  $insert_log=sprintf("INSERT INTO tk_log(tk_log_user,tk_log_action,tk_log_type,tk_log_class)
+          VALUES($myid,%s,$del_id,4)",
+             GetSQLValueString($log_action,"text"));
+  $delFileRS = mysql_query($insert_log, $tankdb) or die(mysql_error());
+  $log_id = mysql_insert_id();
+
+  return $log_id;
+}
+
+//判断是否为删除文件的LOG
+function isDeleteFile($log_id){
+
+  global $tankdb;
+
+  $selLogInfo="SELECT * FROM tk_log WHERE logid=$log_id AND tk_log_action LIKE '删除%'";
+  $LogInfoRS = mysql_query($selLogInfo, $tankdb) or die(mysql_error());
+  $row_num = mysql_num_rows($LogInfoRS);
+
+  return $row_num;
+}
+
 ?>

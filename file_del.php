@@ -1,6 +1,7 @@
 <?php require_once('config/tank_config.php'); ?>
 <?php require_once('session.php'); ?>
 <?php require_once('function/file_function.php'); ?>
+<?php require_once('function/file_log_function.php'); ?>
 <?php
 $restrictGoTo = "user_error3.php";
 
@@ -47,7 +48,7 @@ $pageurl = "-1";
 if (isset($_GET['url'])) {
   $pageurl = $_GET['url'];
 }
-
+$newName = $_SESSION['MM_uid'];
 $pageurl =strtr($pageurl,"!","&");
 
 if ((isset($_GET['delID'])) && ($_GET['delID'] != "")) {
@@ -60,6 +61,8 @@ if ((isset($_GET['delID'])) && ($_GET['delID'] != "")) {
 */
 
 	delete_doc(GetSQLValueString($_GET['delID'], "int"));
+
+  $log_id = delete_file_log(GetSQLValueString($_GET['delID'], "int"),$newName);
 
 	$deleteGoTo = $pageurl;  
 

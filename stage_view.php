@@ -675,7 +675,9 @@ echo $editcomment_row;
           <td><table class="table table-striped table-hover glink" style="margin-bottom:3px;">
               <?php while ($row_log = mysql_fetch_assoc($Log_Result)) { ?>
               <tr>
-                <td ><?php echo $row_log['tk_log_time']; ?>     <!--<a href="user_view.php?recordID=<?php echo $row_Recordset_actlog['tk_log_user']; ?>">--><?php echo $row_log['tk_user_login']; ?><!--</a>-->  <?php echo $row_log['tk_log_action']; ?>
+                <td ><?php echo $row_log['tk_log_time']; ?>     <!--<a href="user_view.php?recordID=<?php echo $row_Recordset_actlog['tk_log_user']; ?>">-->
+                  <?php echo $row_log['tk_user_login']; ?><!--</a>-->  
+                  <?php echo $row_log['tk_log_action']; ?>
                 </td>              
               </tr>
               <?php } ?>
@@ -684,9 +686,16 @@ echo $editcomment_row;
                   <td ><?php echo $row_file_log['tk_log_time']; ?>     <!--<a href="user_view.php?recordID=<?php echo $row_Recordset_actlog['tk_log_user']; ?>">-->
                     <?php echo $row_file_log['tk_user_login']; ?><!--</a>-->  
                     <?php echo $row_file_log['tk_log_action']; ?>     
-                    <a href="file_view.php?recordID=<?php echo $row_file_log['docid']; ?>">
-                      <?php echo $row_file_log['tk_doc_title']?>
-                    </a>
+                    <?php if(isDeleteFile($row_file_log['logid']) == 1)
+                          {
+                               echo "【";echo $row_file_log['tk_doc_title'];echo "】";
+                          }
+                          else 
+                          {?>
+                          <a href="file_view.php?recordID=<?php echo $row_file_log['docid']; ?>">
+                            <?php echo "【"; echo $row_file_log['tk_doc_title']; echo "】";?>
+                          </a>
+                          <?php } ?>
                   </td>              
                 </tr>
               <?php } ?>
