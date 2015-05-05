@@ -504,7 +504,7 @@ document.getElementById('tab_' + i).className = (i == ".$tabid.") ? 'onhover' : 
                                         <!-- 上传文档 -->
                                         <?php if($user_rank > 1) { ?>
                                         <td width="12%">
-                                            <a target="_blank" href="file_add.php?projectid=<?php echo $now_pid; ?>&pid=<?php echo $folder_id?>&pagetab=allfile"><span class="glyphicon glyphicon-file"></span> <?php echo $multilingual_project_file_addfile; ?></a> </td>
+                                            <a target="_blank" href="file_add.php?projectid=<?php echo $now_pid; ?>&pid=<?php echo $folder_id;?>&pagetab=allfile"><span class="glyphicon glyphicon-file"></span> <?php echo $multilingual_project_file_addfile; ?></a> </td>
                                         <?php } ?>
 
                                         <!-- 阶段修改 -->

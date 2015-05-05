@@ -70,6 +70,13 @@
   $DetailRS1 = mysql_query($query_limit_DetailRS1, $tankdb) or die(mysql_error());
   $row_DetailRS1 = mysql_fetch_assoc($DetailRS1);
 
+  //查找该项目所对应的文件夹
+   mysql_select_db($database_tankdb, $tankdb);
+  $selProFolder = "SELECT * FROM tk_document WHERE tk_doc_pid=$colname_DetailRS1 AND tk_doc_parentdocid=-1";
+  $ProFolderRS = mysql_query($selProFolder, $tankdb) or die(mysql_error());
+  $row_folder = mysql_fetch_assoc($ProFolderRS);
+  $project_folder_id = $row_folder['docid'];
+
   if (isset($_GET['totalRows_DetailRS1'])) {
     $totalRows_DetailRS1 = $_GET['totalRows_DetailRS1'];
   } else {
@@ -544,7 +551,7 @@ $(function() {
            
   <!-- 上传文档 -->
   			 <td width="12%">
-  			 <a  target="_blank" href="file_add.php?projectid=<?php echo $row_DetailRS1['id']; ?>&pid=0&pagetab=allfile"><span class="glyphicon glyphicon-file"></span> <?php echo $multilingual_project_file_addfile; ?></a>			 </td>
+  			 <a  target="_blank" href="file_add.php?projectid=<?php echo $row_DetailRS1['id']; ?>&pid=<?php echo $project_folder_id;?>&pagetab=allfile"><span class="glyphicon glyphicon-file"></span> <?php echo $multilingual_project_file_addfile; ?></a>			 </td>
   			 
   <!-- 增加评论 -->
   			 <td width="12%">
