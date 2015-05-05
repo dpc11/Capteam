@@ -97,10 +97,21 @@ if ($_SESSION['MM_rank'] < "4" && ($row_Recordset1['project_to_user'] <> $_SESSI
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
 //更新team表中的数据
+//先判断原来项目成员都有谁
+  $user_arr = $user_dao_obj->get_user_select_by_project($colname_DetailRS1);
+
 //删除原有的项目成员
 $deleteMemSQL = sprintf("DELETE from tk_team WHERE tk_team_pid = %s", GetSQLValueString($colname_Recordset1, "int"));
 mysql_select_db($database_tankdb, $tankdb);
 $Result1 = mysql_query($deleteMemSQL, $tankdb) or die(mysql_error());
+date_default_timezone_set('PRC');
+    $action='删除了成员:'.$tk_team_uid;
+              $timenow=date('Y-m-d H:i:s',time());
+              $insertSQLLog=sprintf("INSERT into tk_log(tk_log_user,tk_log_action,tk_log_time,tk_log_type,tk_log_class)
+                VALUES(%s,'$action','$timenow','$tk_team_pid','1')",GetSQLValueString($_SESSION['MM_uid'], "int"));
+ 
+               mysql_select_db($database_tankdb, $tankdb);
+              $Result2 = mysql_query($insertSQLLog, $tankdb) or die(mysql_error());
 //往数据库中插入新成员
     //插入项目负责人
     $tk_team_pid= GetSQLValueString($colname_Recordset1, "int");//项目id
@@ -122,6 +133,8 @@ $user_list= $_POST['project_to_user'];
         $tk_team_ulimit=1;//用户权限,组长是3，组员是1，副组长是2
         $tk_team_del_status=1;//该用户在该项目中的删除状态
         $tk_team_jointeamtime=date('Y-m-d H:i:s');//该用户加入该项目的时间，PHP date() 函数会返回服
+
+
         /*开始操作数据库了，insert语句*/
         $addnewmemSQL="INSERT INTO tk_team (tk_team_pid,tk_team_uid,tk_team_ulimit,tk_team_del_status,tk_team_jointeamtime)
         VALUES ($tk_team_pid,$tk_team_uid,$tk_team_ulimit,$tk_team_del_status,'$tk_team_jointeamtime')";
