@@ -1,7 +1,9 @@
 <?php require_once('config/tank_config.php'); ?>
 <?php require_once('session_unset.php'); ?>
 <?php require_once('session.php'); ?>
+<?php require_once('dao.php'); ?>
 <?php
+$task_dao_obj = new task_dao();
 
 $project_id = "-1";
 if (isset($_GET['projectid'])) {
@@ -157,6 +159,24 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
  
                mysql_select_db($database_tankdb, $tankdb);
               $Result2 = mysql_query($insertSQLLog, $tankdb) or die(mysql_error());
+
+
+ $task_obj = $task_dao_obj->get_task_by_id($_POST['TID']);
+//提交任务，给被指派的人发消息
+$msg_to = $task_obj->to;
+$msg_from = $task_obj->from;
+$msg_type = "taskcomm";
+$msg_id = $_POST['TID'];
+$msg_title = $userName.'提交了任务['.$task_obj->description.']';
+$mail = send_message( $msg_to, $msg_from, $msg_type, $msg_id, $msg_title );
+//新建任务，给抄送的人发消息
+$cc_post = $task_obj->testto;
+if($cc_post <> null){
+    $cc_arr = json_decode($cc_post, true);
+    foreach($cc_arr as $k=>$v){
+        send_message( $v['uid'], $msg_from, $msg_type, $msg_id, $msg_title, 1 );
+    }
+}
   /*
   $newID = mysql_insert_id();
   $docID = $newID;

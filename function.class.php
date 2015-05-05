@@ -457,14 +457,14 @@ $msg_edittask = $multilingual_message_edittask_cc;
 $mail_create = get_item( 'mail_create' );  
 $mail_update = get_item( 'mail_update' );  
 $mail_comment = get_item( 'mail_comment' );  
-
+//新建任务
 if($type=="newtask"){
 $text = $msg_newtask." <a href='default_task_edit.php?editID=".$id."&pagetabs=mtask'>".$title."</a>";
 if($mail_create=="on" && $cc==0){
 send_mail($to,$from,$type,$id,$title);
 }
 }
-
+//提交任务
 else if($type=="taskcomm"){
 $text = $msg_taskcomm." <a href='default_task_edit.php?editID=".$id."&pagetabs=mtask#comment'>".$title."</a>";
 if($mail_comment=="on" && $cc==0){
@@ -492,7 +492,7 @@ if($mail_create=="on" && $cc==0){
 send_mail($to,$from,$type,$id,$title);
 }
 }
-
+//编辑任务
 else if($type=="edittask"){
 $text = $msg_edittask." <a href='default_task_edit.php?editID=".$id."&pagetabs=ftask#log'>".$title."</a>";
 if($mail_update=="on" && $cc==0){

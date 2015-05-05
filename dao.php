@@ -295,47 +295,51 @@ class schedule_dao
     }
 }
 
-/**
-* 对message的数据库操作
-*/
-class message_dao 
-{
-    //check message
-    // public function check_message( $userid ,$user_message_id) {
-    //     global $tankdb;
-    //     global $database_tankdb;
-
-    //     //$user_message_id = $_SESSION['MM_msg'];
-    //     $count_message_SQL = sprintf("SELECT 
-    //                                 COUNT(meid) as count_msg   
-    //                                 FROM tk_message                             
-    //                                 WHERE meid > '$user_message_id' AND tk_mess_touser = '$userid'"
-    //                                     );
-    //     $count_message_RS = mysql_query($count_message_SQL, $tankdb) or die(mysql_error());
-    //     $row_count_message = mysql_fetch_assoc($count_message_RS);
-    //     return $row_count_message['count_msg'];
-    //     }
-}
 
 /**
-* 对item的数据库操作
+* 对task的数据库操作
 */
-class item_dao 
+class task_dao 
 {
-    // //获得对应的item值
-    // public function get_item($item)
-    // {
-    //     global $tankdb;
-    //     $sql_item = "SELECT tk_item_value FROM tk_item WHERE tk_item_key = '$item'";
+    //获得任务id获得对应的task值
+    public function get_task_by_id($tid){
+        global $tankdb;
+        global $database_tankdb;
+        mysql_select_db($database_tankdb, $tankdb);
+        $query_task =  sprintf("SELECT * FROM tk_task WHERE tid = %s",GetSQLValueString($tid, "int")); 
+        $task = mysql_query($query_task, $tankdb) or die(mysql_error());
+        $row_task = mysql_fetch_assoc($task);
 
-    //     $Recordset_item = mysql_query($sql_item, $tankdb) or die(mysql_error());
-    //     $row_Recordset_item = mysql_fetch_assoc($Recordset_item);
-    //     return $row_Recordset_item['tk_item_value'];
-    // }
+        $taskinfo->id = $tid;
+        $taskinfo->from = $row_task['csa_from_user'];
+        $taskinfo->to = $row_task['csa_to_user'];
+        $taskinfo->project = $row_task['csa_project'];
+        $taskinfo->project_stage = $row_task['csa_project_stage'];
+        $taskinfo->text = $row_task['csa_text'];
+        $taskinfo->priority = $row_task['csa_priority'];
+        $taskinfo->plan_st = $row_task['csa_plan_st'];
+        $taskinfo->plan_et = $row_task['csa_plan_et'];
+        $taskinfo->plan_hour = $row_task['csa_plan_hour'];
+        $taskinfo->description = $row_task['csa_description'];
+        $taskinfo->status = $row_task['csa_status'];
+        $taskinfo->check_time = $row_task['csa_check_time'];
+        $taskinfo->check_context = $row_task['csa_check_context'];
+        $taskinfo->link = $row_task['csa_linl'];
+        $taskinfo->tag = $row_task['csa_tag'];
+        $taskinfo->last_update = $row_task['csa_last_update'];
+        $taskinfo->leader_grade = $row_task['csa_leader_grade'];
+        $taskinfo->final_grade = $row_task['csa_final_grade'];
+        $taskinfo->document_id = $row_task['csa_document_id'];
+        $taskinfo->commint_time = $row_task['csa_commit_time'];
+        $taskinfo->del_status = $row_task['csa_del_status'];
+        $taskinfo->testto = $row_task['csa_testto'];
+
+        return $taskinfo;
+    }
+
 
 
 }
-
 
 
 
