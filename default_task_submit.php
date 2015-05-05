@@ -148,7 +148,15 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
                 mysql_select_db($database_tankdb, $tankdb);
           $Result5 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
 
-  
+  date_default_timezone_set('PRC');//编辑任务的log记录
+              $action='提交了任务';
+              $taskid=$_POST['TID'];
+              $timenow=date('Y-m-d H:i:s',time());
+              $insertSQLLog=sprintf("INSERT into tk_log(tk_log_user,tk_log_action,tk_log_time,tk_log_type,tk_log_class)
+                VALUES(%s,'$action','$timenow','$task_id','3')",GetSQLValueString($_SESSION['MM_uid'], "int"));
+ 
+               mysql_select_db($database_tankdb, $tankdb);
+              $Result2 = mysql_query($insertSQLLog, $tankdb) or die(mysql_error());
   /*
   $newID = mysql_insert_id();
   $docID = $newID;
