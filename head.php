@@ -10,9 +10,9 @@ $row_Recordset_anc = mysql_fetch_assoc($Recordset_anc);
 $totalRows_Recordset_anc = mysql_num_rows($Recordset_anc);
 
 /////////////////////////////////////////////////////////////////////////////////
-//$message_count = check_message( $_SESSION['MM_uid'] );
+$message_count = check_message( $_SESSION['MM_uid'] );
 
-$message_count = 0;
+//$message_count = 0;
 $totalRows_Recordset_anc=0;
 
 
@@ -151,7 +151,7 @@ return [timer, _title];
  */
 
 setInterval(function() {
-	/*		
+			
 $.ajax({
 		url:'message_check.php',
 		success:function(resp){
@@ -162,12 +162,13 @@ $.ajax({
 				$("#conmsg")[0].innerHTML=' <span class="label label-danger">' + resp + '</span>';	
 			}	
 		}
-	})*/
+	})
 }, 120000);
 </script>  
-                  
-				 <a href="message.php" title = "<?php echo $multilingual_message; ?>" class="mouse_hover"><i class="glyphicon glyphicon-envelope icon-white"></i><span id="conmsg"><?php if($message_count > 0){ ?> <span class="label label-danger"><?php 
-				 echo $message_count; ?></span>
+                 <a href="message.php" title = "<?php echo $multilingual_message; ?>" class="mouse_hover">
+				 <i class="glyphicon glyphicon-envelope icon-white"></i>
+				 <span id="conmsg"><?php if($message_count > 0){ ?> <span class="label label-danger">
+				 <?php echo $message_count; ?></span>
 				 <script type="text/javascript">  
 				 blinkTitle.start();
 				 </script>
