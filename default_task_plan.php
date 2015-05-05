@@ -58,6 +58,16 @@ $cc_post= "[".implode(",",$_POST['user_cc'])."]";
   mysql_select_db($database_tankdb, $tankdb);
   $Result1 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
   
+
+   date_default_timezone_set('PRC');//编辑任务的log记录
+              $action='编辑了任务';
+              $taskid=$_POST['TID'];
+              $timenow=date('Y-m-d H:i:s',time());
+              $insertSQLLog=sprintf("INSERT into tk_log(tk_log_user,tk_log_action,tk_log_time,tk_log_type,tk_log_class)
+                VALUES(%s,'$action','$timenow','$taskid','3')",GetSQLValueString($_SESSION['MM_uid'], "int"));
+ 
+               mysql_select_db($database_tankdb, $tankdb);
+              $Result2 = mysql_query($insertSQLLog, $tankdb) or die(mysql_error());
   
   
 /*   生成日志、消息
