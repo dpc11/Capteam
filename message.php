@@ -124,10 +124,11 @@ $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recor
           <tr>
             <td><input type="checkbox" name="item[]" value=<?php echo $row_Recordset1['meid']; ?> ></td>  <!-- 删除多选框 -->
             <td class="task_title5">
-            <div  class="text_overflow_450  <?php if($row_Recordset1['meid'] > $new_msgid) {echo "fontbold"; } ?>">
+            <div  class="text_overflow_450  <?php if($row_Recordset1['tk_mess_status'] == 1) {echo "fontbold"; } ?>">
                 <a href="user_view.php?recordID=<?php echo $row_Recordset1['tk_mess_fromuser']; ?>">
 			        <?php echo $row_Recordset1['tk_display_name']; ?></a> <!-- 显示用户 -->
 			        <?php echo $row_Recordset1['tk_mess_title']; ?>   <!-- 显示内容 -->
+			        <?php $message_dao_obj->update_message_read($row_Recordset1['meid']); ?>   <!-- 显示内容 -->
 			 </div>
 			 </td>
             
