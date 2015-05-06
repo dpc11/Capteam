@@ -137,6 +137,7 @@
 
 <?php   
 
+	$email="";
 	$passwordMsg="6-25位数字、字母和字符`-=\[];',./~!@#$%^&*()_+|?><:{}";
 	
 	$editFormAction = $_SERVER['PHP_SELF'];
@@ -176,16 +177,26 @@ J.check.rules = [
 	{ name: 'textfield3', mid: 'password_msg', requir: true, type: 'cusfn', cusfunc: 'checkpassword2()', warn: '密码长度至多为25位' },
 	{ name: 'textfield3', mid: 'password_msg', requir: true, type: 'cusfn', cusfunc: 'checkpassword3()', warn: '密码中含有非法字符' },
 	{ name: 'textfield4', mid: 're_password_msg', requir: true, type: 'match', to: 'textfield3', warn: '两次密码不一致' },
-	{ name: 'textfield5', mid: 'email_msg', requir: true, type: 'email', warn: '邮箱格式错误' },
-	{ name: 'textfield5', mid: 'email_msg', requir: true, type: 'ajax', url: 'page.php',warn: '该邮箱已经注册，请直接登陆' }
+	{ name: 'textfield5', mid: 'email_msg', requir: true, type: 'email|cusfn', warn: '邮箱格式错误|该邮箱已经注册，请直接登陆' },
 ];
 
+function checkemail(){
+	
+	$.post('if_email_register.php?email='+document.getElementById("textfield5").value,function(data){
+  if(data ==0){
+   return true;
+  }else{
+	  return false;
+  }
+});
+}
 function changemsg(UP,DOWN){
 	
 		document.getElementById(DOWN).focus();
 		var contentmsg = document.getElementById(UP).value;
 		document.getElementById(DOWN).value=contentmsg;
 		document.getElementById(DOWN).blur();
+
 }
         
 
@@ -294,7 +305,7 @@ window.onload = function()
 							
 						</div>
 						<div style="width: 400px;margin-top: 6px;margin-left:125px;font-size:15px;" >
-						<p class="text-muted" style="font-size:15px;width:400px"><?php echo $passwordMsg.'"'; ?></p>
+						<p class="text-muted" style="font-size:13px;width:400px"><?php echo $passwordMsg.'"'; ?></p>
 						</div>
 						</div>
 						<div id="h4">
@@ -309,7 +320,7 @@ window.onload = function()
 						
 						<div id="h5">
 						<div  class="control-group">	 
-						<label  class="control-label" id="for5"  for="textfield5" style="font-size:17px;" >&nbsp;&nbsp;&nbsp;邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱 &nbsp;&nbsp;：&nbsp;&nbsp;</label> 
+						<label  class="control-label" id="for5"  for="textfield5" style="font-size:17px;" >&nbsp;&nbsp;&nbsp;&nbsp;邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱 &nbsp;&nbsp;：&nbsp;&nbsp;</label> 
 							<input class="input-xlarge" type="text" id="textfield5"  name="textfield5" style="z-index:2;width:280px;" ><span id="email_msg" style="margin-left:10px;"></span>
 						</div>
 						<div style="width: 400px;margin-top: 6px;margin-left:125px;">
@@ -317,10 +328,11 @@ window.onload = function()
 						</div>
 						</div>
 						
-						 <div class="form-actions">
-						 <button type="button" class="btn btn-default" style="width: 70px;margin-top: 40px;margin-left:180px;margin-right:2px;" onclick="return registeruser('<?php echo $editFormAction;  ?>');" > <?php echo $multilingual_user_register; ?></button>
-						 <button type="button" class="btn btn-link" style="width: 150px;margin-top: 40px;" > 已有账号，直接登陆</button>
-						</div>	 
+						<div style="margin-top: 40px;margin-left:200px;margin-right:2px;">
+						 <button type="button" class="btn btn-default" style="width: 70px;margin-right:6px;" onclick="return registeruser('<?php echo $editFormAction;  ?>');" > <?php echo $multilingual_user_register; ?></button>
+						 <a  style="width: 150px;"  href="user_login.php"> 已有账号，直接登陆</a>
+						
+						</div>						
 					
 						<input type="hidden" name="MM_insert" id="MM_insert" value="form1" />
 							
