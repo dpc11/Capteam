@@ -367,8 +367,36 @@ class stage_dao
     
         return $stage_arr;
     }
+
+
 }
 
+/**
+* message数据库操作
+*/
+class message_dao
+{
+    //删除某条消息
+    public function delete_message($mid)
+    {
+        global $tankdb;
+        global $database_tankdb;
+        $deleteSQL = sprintf("DELETE FROM tk_message WHERE meid=%s",GetSQLValueString($mid, "int"));
+        mysql_select_db($database_tankdb, $tankdb);
+        $Result1 = mysql_query($deleteSQL, $tankdb) or die(mysql_error());
+    }
+    //把某条消息置为已读
+    public function update_message_read($mid)
+    {
+        global $tankdb;
+        global $database_tankdb;
+        //1表示未读，0表示已读
+        $deleteSQL = sprintf("UPDATE tk_message set tk_mess_status = 0 WHERE meid=%s",GetSQLValueString($mid, "int"));
+        mysql_select_db($database_tankdb, $tankdb);
+        $Result1 = mysql_query($deleteSQL, $tankdb) or die(mysql_error());
+    }
+
+}
 
 
 ?>

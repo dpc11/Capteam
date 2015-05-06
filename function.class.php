@@ -413,8 +413,10 @@ $user_message_id = $_SESSION['MM_msg'];
 $count_message_SQL = sprintf("SELECT 
 							COUNT(meid) as count_msg   
 							FROM tk_message  							
-							WHERE meid > '$user_message_id' AND tk_mess_touser = '$userid'"
-								);
+                WHERE tk_mess_status = 1 AND tk_mess_touser = '$userid'"
+								);//选择未读的消息
+//WHERE tk_mess_status = 1 AND tk_mess_touser = '$userid'"
+//WHERE meid > '$user_message_id' AND tk_mess_touser = '$userid'"
 $count_message_RS = mysql_query($count_message_SQL, $tankdb) or die(mysql_error());
 $row_count_message = mysql_fetch_assoc($count_message_RS);
 //$_SESSION['MM_msg_con'] = $row_count_message['count_msg'];
