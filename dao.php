@@ -367,8 +367,26 @@ class stage_dao
     
         return $stage_arr;
     }
+
+
 }
 
+/**
+* message数据库操作
+*/
+class message_dao
+{
+    
+    public function delete_message($mid)
+    {
+        global $tankdb;
+        global $database_tankdb;
+        $deleteSQL = sprintf("DELETE FROM tk_message WHERE meid=%s",GetSQLValueString($mid, "int"));
+
+        mysql_select_db($database_tankdb, $tankdb);
+        $Result1 = mysql_query($deleteSQL, $tankdb) or die(mysql_error());
+    }
+}
 
 
 ?>

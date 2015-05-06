@@ -1,11 +1,17 @@
 <?php require_once('config/tank_config.php'); ?>
 <?php require_once('session_unset.php'); ?>
 <?php require_once('session.php'); ?>
+<?php require_once('dao.php'); ?>
 <?php
+//创建Message数据库操作实体类
+$message_dao_obj = new message_dao();
+//获得当前页面的url
 $currentPage = $_SERVER["PHP_SELF"];
-
+//设置消息最大显示行数为30行
 $maxRows_Recordset1 = 30;
+//设置当前显示页面为0
 $pageNum_Recordset1 = 0;
+//获取当前显示页面
 if (isset($_GET['pageNum_Recordset1'])) {
   $pageNum_Recordset1 = $_GET['pageNum_Recordset1'];
 }
@@ -20,6 +26,13 @@ if (isset($_GET['select1'])) {
 $new_msgid = $_SESSION['MM_msg'];
 
 $user_id= $_SESSION['MM_uid'];
+
+//删除选中的消息
+$frm_tag = $_POST['item']; 
+for($i=0;$i<count($frm_tag);$i++){ 
+  $message_dao_obj->delete_message($frm_tag[$i]);
+} 
+
 
 mysql_select_db($database_tankdb, $tankdb);
 $query_Recordset1 = sprintf("SELECT * FROM tk_message inner join tk_user on tk_message.tk_mess_fromuser=tk_user.uid WHERE tk_mess_touser = %s ORDER BY meid DESC", GetSQLValueString($_SESSION['MM_uid'], "int"));
@@ -79,21 +92,31 @@ $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recor
       <table  class="table table-striped table-hover glink" width="98%" >
         <thead>
           <tr>
+            <th><input type="checkbox" name="all_items" value=<?php echo 1; ?> >全选</th>  <!-- 全选多选框 -->
             <th><span class="font_big18 fontbold breakwordsfloat_left"><?php echo $multilingual_message; ?></span></th>
             <th><?php echo $multilingual_message_time; ?></th>
           </tr>
         </thead>
 		<tbody>
+
+        <form name="form1" id="form1" method="post">
         <?php do { ?>
           <tr>
-            <td class="task_title5"><div  class="text_overflow_450  <?php if($row_Recordset1['meid'] > $new_msgid) {echo "fontbold"; } ?>">
+            <td><input type="checkbox" name="item[]" value=<?php echo $row_Recordset1['meid']; ?> ></td>  <!-- 删除多选框 -->
+            <td class="task_title5">
+            <div  class="text_overflow_450  <?php if($row_Recordset1['meid'] > $new_msgid) {echo "fontbold"; } ?>">
                 <a href="user_view.php?recordID=<?php echo $row_Recordset1['tk_mess_fromuser']; ?>">
-			<?php echo $row_Recordset1['tk_display_name']; ?></a>
-			 <?php echo $row_Recordset1['tk_mess_title']; ?></div></td>
+			        <?php echo $row_Recordset1['tk_display_name']; ?></a> <!-- 显示用户 -->
+			        <?php echo $row_Recordset1['tk_mess_title']; ?>   <!-- 显示内容 -->
+			 </div>
+			 </td>
             
-            <td><?php echo $row_Recordset1['tk_mess_time']; ?>&nbsp; </td>
+            <td><?php echo $row_Recordset1['tk_mess_time']; ?>&nbsp; </td>   <!-- 显示时间 -->
           </tr>
           <?php } while ($row_Recordset1 = mysql_fetch_assoc($Recordset1)); ?>
+          <input type="submit" value="删除">
+          </form>
+
 		  </tbody>
       </table>
       <?php if ( $totalRows_Recordset1 > $maxRows_Recordset1) { ?>
