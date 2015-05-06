@@ -51,10 +51,6 @@ function over()
 				top.location.href='user_register.php';
 		}
 		function setHeight(x){
-			//window.document.height=x;
-			//window.frames.innerHeight=x;
-			//window.parent.parent.document.height=x;
-			//window.parent.parent.document.getElementById("lhg_registerDILOG").style.height=x;
 			window.parent.parent.document.getElementById("lhg_registerDILOG").height=x;
 	   }
 	</script>
@@ -100,7 +96,7 @@ if($type==1){//注册
 $sql = "INSERT into tk_user (tk_user_login,tk_user_pass,tk_display_name,tk_user_email,token_exptime,token)values('$username','$tk_password','$displayname','$email','$token_exptime','$token')";
 mysql_query($sql);
 
-if(!mysql_insert_id()){//写入成功，发邮件
+if(mysql_insert_id()){//写入成功，发邮件
   include_once("smtp.class.php");
     $smtpserver = "smtp.qq.com"; //SMTP服务器
     $smtpserverport = 25; //SMTP服务器端口

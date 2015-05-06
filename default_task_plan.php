@@ -152,12 +152,13 @@ $user_arr = get_user_select($prjid);
 
     </script>
 <script type="text/javascript">
-<!--
+/*<!--
+
 function openBrWindow(theURL,winName,features) { //v2.0
   window.open(theURL,winName,features);
 }
 //-->
-</script>
+</script>*/
 <script charset="utf-8" src="editor/kindeditor.js"></script>
 <script charset="utf-8" src="editor/lang/zh_CN.js"></script>
 <script>
@@ -180,7 +181,7 @@ function openBrWindow(theURL,winName,features) { //v2.0
         });
 </script>
 <script type="text/javascript">
-<!--
+
 J.check.rules = [
 	{ name: 'select4', mid: 'csa_to_user_msg', requir: true, type: 'group', noselected: '', warn: '<?php echo $multilingual_default_required1; ?>' },
 	{ name: 'datepicker2', mid: 'csa_plan_st_msg', requir: true, type: 'date',  warn: '<?php echo $multilingual_error_date; ?>' },
@@ -194,7 +195,7 @@ window.onload = function()
 {
     J.check.regform('myform');
 }
-//-->
+
 </script>
 <!-- Initialize the plugin: -->
 <script type="text/javascript">
@@ -258,7 +259,8 @@ window.onload = function()
 		</td>
         
         <!-- 右边80%宽度的主体内容 -->
-		<td width="80%" valign="top"><table width="98%" border="0" cellspacing="0" cellpadding="5" align="center">
+		<td width="80%" valign="top">
+		<table width="98%" border="0" cellspacing="0" cellpadding="5" align="center">
           <tr>
 			<!-- 编辑任务 -->
             <td><div class="col-xs-12">
