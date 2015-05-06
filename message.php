@@ -84,11 +84,24 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recordset1, $queryString_Recordset1);
 ?>
 <script language="javascript">
+    //该方法实现全选和取消全选
     function check_all(){
-    	 if ($('[name="all_items"]').attr("checked")=='checked') {
-                $('[type="checkbox"]').attr('checked','checked');
-        }
+    	var a=document.getElementsByName('all_items');//获得全选的框
+         for (j=0;j<a.length;j++){
+    	     if(a[j].checked == true){
+                 var b=document.getElementsByName('item[]');//获得所有的checkbox变量
+                 for (i=0;i<b.length;i++){
+                     b[i].checked=true;
+                 }
+    	     }else{
+                 var b=document.getElementsByName('item[]');//获得所有的checkbox变量
+                 for (i=0;i<b.length;i++){
+                     b[i].checked=false;
+                 }
+    	     }
+          }
     }
+
 </script>
 
   <?php require('head.php'); ?>
@@ -99,6 +112,7 @@ $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recor
       <table  class="table table-striped table-hover glink" width="98%" >
         <thead>
           <tr>
+            <th><input type="checkbox" name="all_items" id=="all_items" onclick="check_all()"></th>  <!-- 全选多选框 -->
             <th><span class="font_big18 fontbold breakwordsfloat_left"><?php echo $multilingual_message; ?></span></th>
             <th><?php echo $multilingual_message_time; ?></th>
           </tr>
