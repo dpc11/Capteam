@@ -188,7 +188,7 @@ foreach($onemoretwo as $a){//在循环中只要用到值
             $loginStrDisplayname  = mysql_result($Result1,0,'tk_display_name');
           }
 date_default_timezone_set('PRC');
-    $action='添加了成员:'.$a.'--'.$loginStrDisplayname;
+    $action='添加了成员:'.$a.'--'.$loginStrDisplayname;//看commit能不能更新
               $timenow=date('Y-m-d H:i:s',time());
               $insertSQLLog=sprintf("INSERT into tk_log(tk_log_user,tk_log_action,tk_log_time,tk_log_type,tk_log_class)
                 VALUES(%s,'$action','$timenow','$tk_team_pid','1')",GetSQLValueString($_SESSION['MM_uid'], "int"));
