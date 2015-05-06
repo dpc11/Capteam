@@ -2,6 +2,7 @@
   <?php require_once('session_unset.php'); ?>
   <?php require_once('session.php'); ?>
   <?php require_once('dao.php'); ?>
+  <?php require_once('function/file_log_function.php');?>
   <?php
   $currentPage = $_SERVER["PHP_SELF"];
    
@@ -87,6 +88,8 @@
   $ProFolderRS = mysql_query($selProFolder, $tankdb) or die(mysql_error());
   $row_folder = mysql_fetch_assoc($ProFolderRS);
   $project_folder_id = $row_folder['docid'];
+
+  $file_log_Result = get_project_file_log($project_folder_id);
 
   if (isset($_GET['totalRows_DetailRS1'])) {
     $totalRows_DetailRS1 = $_GET['totalRows_DetailRS1'];
@@ -674,17 +677,37 @@ $(function() {
           <td><table class="table table-striped table-hover glink" style="margin-bottom:3px;">
               <?php while ($row_log = mysql_fetch_assoc($ProjectLog_Result)) { ?>
               <tr>
-                <td ><?php echo $row_log['tk_log_time']; ?>     <!--<a href="user_view.php?recordID=<?php echo $row_Recordset_actlog['tk_log_user']; ?>">--><?php echo $row_log['tk_user_login']; ?><!--</a>-->  <?php echo $row_log['tk_log_action']; ?>
+                <td ><?php echo $row_log['tk_log_time']; ?>     <!--<a href="user_view.php?recordID=<?php echo $row_Recordset_actlog['tk_log_user']; ?>">-->
+                  <?php echo $row_log['tk_user_login']; ?><!--</a>-->  
+                  <?php echo $row_log['tk_log_action']; ?>
                 </td>              
               </tr>
-              <?php
-          } 
-        //$rows = mysql_num_rows($Recordset_actlog);
-        //if($rows > 0) {
-          //mysql_data_seek($Recordset_actlog, 0);
-          //$row_Recordset_actlog = mysql_fetch_assoc($Recordset_actlog);
-        //}
-      ?>
+              <?php } ?>
+              <?php while ($row_file_log = mysql_fetch_assoc($file_log_Result)) {?>
+                <tr>
+                  <td ><?php echo $row_file_log['tk_log_time']; ?>     <!--<a href="user_view.php?recordID=<?php echo $row_Recordset_actlog['tk_log_user']; ?>">-->
+                    <?php echo $row_file_log['tk_user_login']; ?><!--</a>-->  
+                    <?php echo $row_file_log['tk_log_action']; ?>     
+                    <?php if(isDeleteFile($row_file_log['logid']) == 1)
+                          {
+                               echo "【";echo $row_file_log['tk_doc_title'];echo "】";
+                          }
+                          else 
+                          {?>
+                          <a href="file_view.php?recordID=<?php echo $row_file_log['docid']; ?>">
+                            <?php echo "【"; echo $row_file_log['tk_doc_title']; echo "】";?>
+                          </a>
+                          <?php } ?>
+                  </td>              
+                </tr>
+              <?php } ?>
+          
+        <!--$rows = mysql_num_rows($Recordset_actlog);
+        if($rows > 0) {
+          mysql_data_seek($Recordset_actlog, 0);
+          $row_Recordset_actlog = mysql_fetch_assoc($Recordset_actlog);
+        }-->
+      
             </table>
             <p><?php echo '<br>'?></p>
             <!--<table class="rowcon" border="0" align="center">

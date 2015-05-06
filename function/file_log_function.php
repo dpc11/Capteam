@@ -109,6 +109,17 @@ function get_stage_file_log($folder_id){
   return $StageFileLogRS;
 }
 
+//获取项目文件的log列表
+function get_project_file_log($folder_id){
+
+  global $tankdb;
+
+  $selProjectFileLog="SELECT * FROM tk_log,tk_document,tk_user WHERE tk_log_class=4 and tk_log_type= docid and tk_doc_parentdocid=$folder_id and tk_log_user=uid";
+  $ProjectFileLogRS = mysql_query($selProjectFileLog, $tankdb) or die(mysql_error());
+
+  return $ProjectFileLogRS;
+}
+
 //获取父目录的id
 function get_parent($doc_id){
 
