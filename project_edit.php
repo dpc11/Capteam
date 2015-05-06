@@ -157,6 +157,7 @@ $user_list= $_POST['project_to_user'];
 
     $arr1[] = array(); //将要被添加的成员数组
 mysql_select_db($database_tankdb, $tankdb);
+$query_deleterecordset1 = "SELECT * FROM tk_team WHERE tk_team_pid=$tk_team_pid";
 $Recordset3 = mysql_query($query_deleterecordset1, $tankdb) or die(mysql_error());
 $totalRows_Recordset3 = mysql_num_rows($Recordset3);
 
@@ -178,10 +179,19 @@ print_r($onemoretwo);
 
 mysql_select_db($database_tankdb, $tankdb);
 foreach($onemoretwo as $a){//在循环中只要用到值
+  $searchmemSQL="SELECT* FROM tk_user WHERE uid=$a";
+        mysql_select_db($database_tankdb, $tankdb);
+        $Result1 = mysql_query($searchmemSQL, $tankdb) or die(mysql_error());
+        
+        $FoundUser = mysql_num_rows($Result1);
+          if ($FoundUser) {  
+            $loginStrDisplayname  = mysql_result($Result1,0,'tk_display_name');
+          }
 date_default_timezone_set('PRC');
-    $action='删除了成员:'.$a;
+    $action='添加了成员:'.$a.'--'.$loginStrDisplayname;
               $timenow=date('Y-m-d H:i:s',time());
               $insertSQLLog=sprintf("INSERT into tk_log(tk_log_user,tk_log_action,tk_log_time,tk_log_type,tk_log_class)
+                VALUES(%s,'$action','$timenow','$tk_team_pid','1')",GetSQLValueString($_SESSION['MM_uid'], "int"));
  
                
               $Result2 = mysql_query($insertSQLLog, $tankdb) or die(mysql_error());}
@@ -193,10 +203,19 @@ print_r($twomoreone);
 
 mysql_select_db($database_tankdb, $tankdb);
 foreach($twomoreone as $b){//在循环中只要用到值
+  $searchmemSQL="SELECT* FROM tk_user WHERE uid=$b";
+        mysql_select_db($database_tankdb, $tankdb);
+        $Result1 = mysql_query($searchmemSQL, $tankdb) or die(mysql_error());
+        
+        $FoundUser = mysql_num_rows($Result1);
+          if ($FoundUser) {  
+            $loginStrDisplayname  = mysql_result($Result1,0,'tk_display_name');
+          }
 date_default_timezone_set('PRC');
-    $action='添加了成员:'.$b;
+    $action='删除了成员:'.$b.'--'.$loginStrDisplayname;
               $timenow=date('Y-m-d H:i:s',time());
               $insertSQLLog=sprintf("INSERT into tk_log(tk_log_user,tk_log_action,tk_log_time,tk_log_type,tk_log_class)
+                VALUES(%s,'$action','$timenow','$tk_team_pid','1')",GetSQLValueString($_SESSION['MM_uid'], "int"));
  
                
               $Result2 = mysql_query($insertSQLLog, $tankdb) or die(mysql_error());}

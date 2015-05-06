@@ -110,6 +110,7 @@
     //插入项目负责人
     $tk_team_pid= $newID;//项目id
     $tk_team_uid= $_SESSION['MM_uid'];//用户id
+    $tk_team_disname=$_SESSION['MM_Displayname'];//组长显示名
     $tk_team_ulimit=3;//用户权限,组长是3
     $tk_team_del_status=1;//该用户在该项目中的删除状态
     $tk_team_jointeamtime=date('Y-m-d H:i:s');//该用户加入该项目的时间，PHP date() 函数会返回服
@@ -120,7 +121,7 @@
     $Result1 = mysql_query($addnewmemSQL, $tankdb) or die(mysql_error());
     //添加项目负责人的log记录
     date_default_timezone_set('PRC');
-    $action='添加了成员:'.$tk_team_uid;
+    $action='添加了成员:'.$tk_team_uid.' --'.$tk_team_disname;
               $timenow=date('Y-m-d H:i:s',time());
               $insertSQLLog=sprintf("INSERT into tk_log(tk_log_user,tk_log_action,tk_log_time,tk_log_type,tk_log_class)
                 VALUES(%s,'$action','$timenow','$tk_team_pid','1')",GetSQLValueString($_SESSION['MM_uid'], "int"));
@@ -142,8 +143,16 @@
         mysql_select_db($database_tankdb, $tankdb);
         $Result1 = mysql_query($addnewmemSQL, $tankdb) or die(mysql_error());
         //添加项目成员的log记录
+        $searchmemSQL="SELECT* FROM tk_user WHERE uid=$tk_team_uid";
+        mysql_select_db($database_tankdb, $tankdb);
+        $Result1 = mysql_query($searchmemSQL, $tankdb) or die(mysql_error());
+        
+        $FoundUser = mysql_num_rows($Result1);
+          if ($FoundUser) {  
+            $loginStrDisplayname  = mysql_result($Result1,0,'tk_display_name');
+          }
     date_default_timezone_set('PRC');
-    $action='添加了成员:'.$tk_team_uid;
+    $action='添加了成员:'.$tk_team_uid.'--'.$loginStrDisplayname;
               $timenow=date('Y-m-d H:i:s',time());
               $insertSQLLog=sprintf("INSERT into tk_log(tk_log_user,tk_log_action,tk_log_time,tk_log_type,tk_log_class)
                 VALUES(%s,'$action','$timenow','$tk_team_pid','1')",GetSQLValueString($_SESSION['MM_uid'], "int"));
