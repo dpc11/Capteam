@@ -98,8 +98,19 @@ if ($_SESSION['MM_rank'] < "4" && ($row_Recordset1['project_to_user'] <> $_SESSI
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
 //更新team表中的数据
 //先判断原来项目成员都有谁
-  $user_arr = $user_dao_obj->get_user_select_by_project($colname_DetailRS1);
+$arr[] = array(); //接收被删除成员的结果的数组
+  mysql_select_db($database_tankdb, $tankdb);
+$query_deleterecordset = "SELECT * FROM tk_team WHERE tk_team_pid=$colname_Recordset1";
+$Recordset2 = mysql_query($query_deleterecordset, $tankdb) or die(mysql_error());
 
+$totalRows_Recordset2 = mysql_num_rows($Recordset2);
+
+  $user_arr = $user_dao_obj->get_user_select_by_project($colname_DetailRS1);
+  while($row = mysql_fetch_array($Recordset2,MYSQL_ASSOC))
+{
+      $arr[]=$row;
+}
+print_r($arr);
 //删除原有的项目成员
 $deleteMemSQL = sprintf("DELETE from tk_team WHERE tk_team_pid = %s", GetSQLValueString($colname_Recordset1, "int"));
 mysql_select_db($database_tankdb, $tankdb);
