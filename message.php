@@ -83,6 +83,13 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 }
 $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recordset1, $queryString_Recordset1);
 ?>
+<script language="javascript">
+    function check_all(){
+    	 if ($('[name="all_items"]').attr("checked")=='checked') {
+                $('[type="checkbox"]').attr('checked','checked');
+        }
+    }
+</script>
 
   <?php require('head.php'); ?>
   <br />
@@ -92,7 +99,6 @@ $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recor
       <table  class="table table-striped table-hover glink" width="98%" >
         <thead>
           <tr>
-            <th><input type="checkbox" name="all_items" value=<?php echo 1; ?> >全选</th>  <!-- 全选多选框 -->
             <th><span class="font_big18 fontbold breakwordsfloat_left"><?php echo $multilingual_message; ?></span></th>
             <th><?php echo $multilingual_message_time; ?></th>
           </tr>
