@@ -24,6 +24,11 @@ if (isset($_GET['projectID'])) {
   $project_id = $_GET['projectID'];
 }
 
+$isNewWindow="1";
+if (isset($_GET['newWin'])) {
+  $isNewWindow = $_GET['newWin'];
+}
+
 if ($project_id <> "-1") {
   $inproject = " inner join tk_project on tk_document.tk_doc_pid=tk_project.id ";
 } else { $inproject = " ";}
@@ -123,17 +128,22 @@ $queryString_Recordset_actlog = sprintf("&totalRows_Recordset_actlog=%d%s", $tot
 		  </td>
 		  <?php } ?>
 
+      <?php if ($isNewWindow == 0) {?>
+
       <td width = "13%">
          <a class="mouse_over" onClick="javascript:history.go(-1);">
               <span class="glyphicon glyphicon-arrow-left"></span>
               <?php echo $multilingual_global_action_back; ?>
          </a>
       </td>
-    
+      <?php } ?>
 
+      <?php if ($isNewWindow == 1) {?>
 		  <td width="10%">
-		  <span class="glyphicon glyphicon-remove-circle"></span> <a onClick="window.opener.location.reload(); window.close();" class="mouse_hover"><?php echo $multilingual_global_action_close; ?></a>
+		    <span class="glyphicon glyphicon-remove-circle"></span> <a onClick="window.opener.location.reload(); window.close();" class="mouse_hover"><?php echo $multilingual_global_action_close; ?></a>
 		  </td>
+      <?php } ?>
+
 		  <td>&nbsp;
 		  </td>
         </tr>

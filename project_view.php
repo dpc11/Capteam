@@ -694,7 +694,7 @@ $(function() {
                           }
                           else 
                           {?>
-                          <a href="file_view.php?recordID=<?php echo $row_file_log['docid']; ?>">
+                          <a href="file_view.php?newWin=0&recordID=<?php echo $row_file_log['docid']; ?>">
                             <?php echo "【"; echo $row_file_log['tk_doc_title']; echo "】";?>
                           </a>
                           <?php } ?>
