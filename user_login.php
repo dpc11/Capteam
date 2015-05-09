@@ -5,6 +5,8 @@ if (!isset($_SESSION)) {
   session_start();
 }
 
+$errormsg=false;
+
 $loginFormAction = $_SERVER['PHP_SELF'];
 if (isset($_GET['accesscheck'])) {
   $_SESSION['PrevUrl'] = $_GET['accesscheck'];
@@ -78,7 +80,7 @@ if (isset($_POST['textfield'])) {
     header("Location: " . $MM_redirectLoginSuccess );
   }//if end
   else {
-    header("Location: ". $MM_redirectLoginFailed );
+    $errormsg=true;
   }
 }
 ?>
@@ -96,11 +98,12 @@ if (isset($_POST['textfield'])) {
 <script type="text/javascript" src="srcipt/jquery.js"></script>
 <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
 <script type="text/javascript" src="srcipt/lhgdialog.js"></script>
+<link href="skin/themes/base/custom.css" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript">
 
 J.check.rules = [
-	{ name: 'textfield', mid: 'username', requir: true, type: 'email' },
+	{ name: 'textfield', mid: 'username', requir: true, type: 'email', warn: '邮箱格式错误' },
 	{ name: 'textfield2', mid: 'passwordid', requir: true}
 ];
 
@@ -151,6 +154,7 @@ window.onload = function()
 
 <body>
 <?php require('head_sub.php'); ?>
+		
 <table width="50%" border="0" cellspacing="0" cellpadding="0" height="520px;" align="center">
     <tr>
       <td  style="width:30%">
@@ -161,16 +165,33 @@ window.onload = function()
       </td>
 	  
 	  <td style="width:40%;min-width:300px;">
+	  <div>
+			<legend  style="border-bottom-width: 3px;font-weight:bold;font-size:20px;">&nbsp;&nbsp;用户登陆</legend>
+		</div>
+		<?php  if($errormsg==true){ ?>
+		<div  style="width:5%;float:left;" > 
+		&nbsp;
+		</div>
+				<div id="errormsg"class="ui-state-error ui-corner-all" style="width:90%;float:left;margin-bottom:8px;" > 
+						<div style="width:11%;float:left;margin-top:10px;text-align:center;" >
+						<span class="ui-icon ui-icon-alert"style="margin:0 auto;" ></span>
+						</div>
+						<div  style="width:89%;float:left;padding-top:4px;padding-bottom:4px;">
+							<span>您输入的密码和账户名不匹配，请重新输入。<br>或者您忘记了密码？</span>
+						</div>
+				</div>
+		<?php }
+		?>
       <form id="form1" name="form1" method="POST" action="<?php echo $loginFormAction; ?>">
-	  
+	  <div style="padding-left:15px;" >
 	   <div class="form-group">
-    <label class="beauty-label" for="textfield"><?php echo $multilingual_userlogin_username; ?><span id="username" style="margin-left:10px;"></span></label>
-    <input type="text" class="form-control" id="textfield" name="textfield" placeholder="邮箱">
+    <label class="beauty-label" for="textfield" style="font-size:17px;font-weight:bold;"><?php echo $multilingual_userlogin_username; ?>&nbsp;&nbsp; ：&nbsp;&nbsp;</label><span id="username"></span>
+    <input type="text" class="form-control" id="textfield" name="textfield" placeholder="邮箱" value="<?php echo $loginUsername; ?>">
   </div>
   
   <div class="form-group">
-    <label class="beauty-label" for="textfield2"><?php echo $multilingual_userlogin_password; ?><span id="passwordid" style="margin-left:10px;"></span></label>
-    <input type="password" class="form-control" name="textfield2" id="textfield2" placeholder="密码">
+    <label class="beauty-label" for="textfield2" style="font-size:17px;font-weight:bold;">密&nbsp;&nbsp;&nbsp;&nbsp;码&nbsp;&nbsp; ：&nbsp;&nbsp;</label><span id="passwordid"  ></span>
+    <input type="password" class="form-control" name="textfield2" id="textfield2" placeholder="密码" value="<?php echo $loginUsername; ?>">
   </div>
   <div style="clear:both ">
 	<div style="width: 10%;float:right; ">
@@ -192,14 +213,15 @@ window.onload = function()
 	  </div>
 	  
   </div>
+  </div>
 	  </form>
       </td>
     </tr>
 
   </table>
 
-	<input  class="form-control"   type="text"  id="temp_textfield4_4" name="temp_textfield4_4" style="width:300px;z-index:3;position:absolute;" onblur='changemsg("temp_textfield4_4","textfield");' />
-	<input  class="form-control"   type="password"  id="temp_textfield5_5" name="temp_textfield5_5" style="width:300px;z-index:3;position:absolute;" onblur='changemsg("temp_textfield5_5","textfield2");'>
+	<input  class="form-control"   type="text"  id="temp_textfield4_4" name="temp_textfield4_4" style="width:300px;z-index:3;position:absolute;" onblur='changemsg("temp_textfield4_4","textfield");' placeholder="邮箱"  value="<?php echo $loginUsername; ?>" />
+	<input  class="form-control"   type="password"  id="temp_textfield5_5" name="temp_textfield5_5" style="width:300px;z-index:3;position:absolute;" onblur='changemsg("temp_textfield5_5","textfield2");' placeholder="密码" value="<?php echo $password; ?>" >
 
 <!--
 <div style="background:#F6F6F6; padding:15px; width:100%;" >
