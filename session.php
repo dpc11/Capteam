@@ -33,7 +33,7 @@ function isAuthorized($strUsers, $strGroups, $UserName, $UserGroup) {
 }*/
 
 $MM_restrictGoTo = "user_login.php";
-if (!(isset($_SESSION['MM_Username']))) {   
+if (!(isset($_SESSION['MM_Displayname']))) {   
   $MM_qsChar = "?";
   $MM_referrer = $_SERVER['PHP_SELF'];
   if (strpos($MM_restrictGoTo, "?")) $MM_qsChar = "&";

@@ -15,77 +15,43 @@ if (isset($_GET['accesscheck'])) {
 if (isset($_POST['textfield'])) {
   $loginUsername=$_POST['textfield'];
   $password=$_POST['textfield2'];
-  $tk_password = md5(crypt($password,substr($password,0,2)));
+  $tk_password =  md5(crypt($password,substr($password,0,2))); 
   $MM_fldUserAuthorization = "tk_user_status";
   $MM_redirectLoginSuccess = "index.php";
-  $MM_redirectLoginFailed = "user_error2.php";
   $MM_redirecttoReferrer = false;
   mysql_select_db($database_tankdb, $tankdb);
   	
   //$LoginRS__query=sprintf("SELECT tk_user_login, tk_user_pass, tk_display_name, uid, tk_user_status, tk_user_rank, tk_user_message, tk_user_lastuse FROM tk_user WHERE binary tk_user_login=%s AND (tk_user_pass=%s OR tk_user_pass=%s)",
   //GetSQLValueString($loginUsername, "text"), GetSQLValueString($tk_password, "text"), GetSQLValueString($password, "text")); 
-  $LoginRS__query=sprintf("SELECT tk_user_login, tk_user_pass, tk_display_name, uid, tk_user_lastuse FROM tk_user WHERE status =1 AND binary tk_user_login=%s AND (tk_user_pass=%s OR tk_user_pass=%s)",
-  GetSQLValueString($loginUsername, "text"), GetSQLValueString($tk_password, "text"), GetSQLValueString($password, "text")); 
+  $LoginRS__query=sprintf("SELECT tk_display_name, uid, tk_user_lastuse,status FROM tk_user WHERE tk_user_del_status =1 AND  tk_user_email=%s AND tk_user_pass=%s ",
+  GetSQLValueString($loginUsername, "text"), GetSQLValueString($tk_password, "text")); 
    
+  echo  $LoginRS__query;
   $LoginRS = mysql_query($LoginRS__query, $tankdb) or die(mysql_error());
   $loginFoundUser = mysql_num_rows($LoginRS);
   
  
   if ($loginFoundUser) {	
-
-    //$loginStrGroup  = mysql_result($LoginRS,0,'tk_user_status');
-    //$loginStrGroup  = "管理员";
 	$loginStrDisplayname  = mysql_result($LoginRS,0,'tk_display_name');
 	$loginStrpid  = mysql_result($LoginRS,0,'uid');
-	//$loginStrrank  = mysql_result($LoginRS,0,'tk_user_rank');
-  $loginStrrank = 5;
-	$loginStrlogin  = mysql_result($LoginRS,0,'tk_user_login');
-	//$loginStrmsg  = mysql_result($LoginRS,0,'tk_user_message');
-  $loginStrmsg = 0;
 	$loginStrlast  = mysql_result($LoginRS,0,'tk_user_lastuse');
-
-	//check_message( $loginStrpid );
-    
-    //declare two session variables and assign them
-    $_SESSION['MM_Username'] = $loginUsername;
-    //$_SESSION['MM_UserGroup'] = $loginStrGroup;
+	
 	$_SESSION['MM_Displayname'] = $loginStrDisplayname;	
 	$_SESSION['MM_uid'] = $loginStrpid;	
-	$_SESSION['MM_rank'] = $loginStrrank;	
-	$_SESSION['MM_msg'] = $loginStrmsg;	
 	$_SESSION['MM_last'] = $loginStrlast;
 	
-   //判断是否是老用户
-  /*if ($loginStrGroup == $multilingual_dd_role_admin) {
-  $userrank = "5";
-  } else if ($loginStrGroup == $multilingual_dd_role_general){
-  $userrank = "3";
-  } else if ($loginStrGroup == $multilingual_dd_role_disabled){
-  $userrank = "0";
-  }*/
-  //$userrank = "5";
-   
-  /*if ($loginStrrank == null) {
-  $updateSQL = sprintf("UPDATE tk_user SET tk_user_rank=%s WHERE tk_user_login=%s", 
-                       GetSQLValueString($userrank, "text"),                      
-                       GetSQLValueString($loginStrlogin, "text"));
-  mysql_select_db($database_tankdb, $tankdb);
-  $Result2 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
-  $_SESSION['MM_rank'] = $userrank;
-  }*/
-
-    if (isset($_SESSION['PrevUrl']) && false) {
+   if(mysql_result($LoginRS,0,'status')==0){//未激活
+   }else if (isset($_SESSION['PrevUrl']) && false) {
       $MM_redirectLoginSuccess = $_SESSION['PrevUrl'];	
-    }
     header("Location: " . $MM_redirectLoginSuccess );
+    }
   }//if end
   else {
     $errormsg=true;
   }
 }
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html PUBLIC >
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>WSS - <?php echo $multilingual_userlogin_title; ?></title>
@@ -120,6 +86,16 @@ function changemsg(UP,DOWN){
 		document.getElementById(DOWN).blur();
 
 }
+
+function changepsd(UP,DOWN){
+	
+		document.getElementById(DOWN).focus();
+		var contentmsg = document.getElementById(UP).value;		
+		document.getElementById(DOWN).value=contentmsg;
+		document.getElementById(DOWN).blur();
+
+}
+
 
 window.onresize = function()
 {	
@@ -191,7 +167,7 @@ window.onload = function()
   
   <div class="form-group">
     <label class="beauty-label" for="textfield2" style="font-size:17px;font-weight:bold;">密&nbsp;&nbsp;&nbsp;&nbsp;码&nbsp;&nbsp; ：&nbsp;&nbsp;</label><span id="passwordid"  ></span>
-    <input type="password" class="form-control" name="textfield2" id="textfield2" placeholder="密码" value="<?php echo $loginUsername; ?>">
+    <input type="password" class="form-control" name="textfield2" id="textfield2" placeholder="密码" value="<?php echo $password; ?>">
   </div>
   <div style="clear:both ">
 	<div style="width: 10%;float:right; ">
@@ -221,7 +197,7 @@ window.onload = function()
   </table>
 
 	<input  class="form-control"   type="text"  id="temp_textfield4_4" name="temp_textfield4_4" style="width:300px;z-index:3;position:absolute;" onblur='changemsg("temp_textfield4_4","textfield");' placeholder="邮箱"  value="<?php echo $loginUsername; ?>" />
-	<input  class="form-control"   type="password"  id="temp_textfield5_5" name="temp_textfield5_5" style="width:300px;z-index:3;position:absolute;" onblur='changemsg("temp_textfield5_5","textfield2");' placeholder="密码" value="<?php echo $password; ?>" >
+	<input  class="form-control"   type="password"  id="temp_textfield5_5" name="temp_textfield5_5" style="width:300px;z-index:3;position:absolute;" onblur='changepsd("temp_textfield5_5","textfield2");' placeholder="密码" value="<?php echo $password; ?>" >
 
 <!--
 <div style="background:#F6F6F6; padding:15px; width:100%;" >
