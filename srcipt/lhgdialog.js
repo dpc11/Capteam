@@ -41,23 +41,27 @@ dialog : (function()
 		{
 		    if( !d || 'object' != typeof d || !d.id || J('#lhg_'+d.id,tdoc) ) return;
 			if(d.cover) this.dcover(); else{ if(cover) cover = null; }
-			d.width = d.width || 600; d.height = d.height || 500; d.title = d.title || 'Dialog';
+			d.width = d.width || 600; d.height = d.height || 500; 
 			
-			var dinfo = { tit: d.title, page: d.page, link: d.link, html: d.html, win: window, top: twin }
+			d.title = d.title || 'Dialog';
+			var dinfo = { tit: d.title, page: d.page, link: d.link, html: d.html, win: window, top: twin }	;
+		
 			var cize = J.vsiz(twin), pos = J.spos(twin);
 			
 			var itop = d.top ? pos.y + d.top : Math.max( pos.y + ( cize.h - d.height - 20 ) / 2, 0 );
 			var ileft = d.left ? pos.x + d.left : Math.max( pos.x + ( cize.w - d.width - 20 ) / 2, 0 );
 			
-			var dfrm = J(tdoc).crte('iframe'); restyle(dfrm);
-			J(dfrm).attr({ id: 'lhg_' + d.id, frameBorder: 0 }).stcs({
-			    top: itop + 'px', left: ileft + 'px', position: 'absolute',
-				width: d.width + 'px', height: d.height + 'px', zIndex: getzi()
+			var dfrm = J(tdoc).crte('iframe'); 
+			restyle(dfrm);
+			J(dfrm).attr({ id: 'lhg_' + d.id, frameBorder: 0 ,width: d.width + 'px', height: d.height + 'px'}).stcs({
+			    top: itop + 'px', left: ileft + 'px', position: 'absolute', zIndex: getzi()
 			});
-			dfrm._dlgargs = dinfo; J(tdoc.body).apch(dfrm); var doc = dfrm.contentWindow.document;
+			dfrm._dlgargs = dinfo; 
+			J(tdoc.body).apch(dfrm); 
+			var doc = dfrm.contentWindow.document;
 			
 			doc.open();
-			doc.writeln([
+				doc.writeln([
 			    '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
 				'<html xmlns="http://www.w3.org/1999/xhtml">',
 				'<head>',
@@ -68,8 +72,8 @@ dialog : (function()
 					'</script>',
 				'</head>',
 				'<body>',
-				    '<div id="contain" class="contain">',
-					    '<div id="dtit" class="dlgtit"><span id="txt"></span><div id="xbtn"></div></div>',
+				    '<div id="contain"  class="contain">',
+					    '<div id="dtit"  style="display:none;" class="dlgtit"><span id="txt"></span><div id="xbtn"></div></div>',
 						'<div id="dinner" class="dlginner"></div>',
 						'<div id="dfoot" class="dlgfoot" style="display:none;"><ul id="btns"><li id="dark"></li></ul></div>',
 					'</div>',
@@ -77,6 +81,7 @@ dialog : (function()
 				'</body>',
 				'</html>'
 			].join(''));
+			
 			doc.close();
 		},
 		

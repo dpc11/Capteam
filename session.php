@@ -4,11 +4,9 @@ if (!isset($_SESSION)) {
 }
 
 
-
-$MM_authorizedUsers = $multilingual_dd_role_admin;
 $MM_donotCheckaccess = "true";
 
-// *** Restrict Access To Page: Grant or deny access to this page
+/*
 function isAuthorized($strUsers, $strGroups, $UserName, $UserGroup) { 
   // For security, start by assuming the visitor is NOT authorized. 
   $isValid = False; 
@@ -32,10 +30,10 @@ function isAuthorized($strUsers, $strGroups, $UserName, $UserGroup) {
     } 
   } 
   return $isValid; 
-}
+}*/
 
 $MM_restrictGoTo = "user_login.php";
-if (!((isset($_SESSION['MM_Username'])) && (isAuthorized("",$MM_authorizedUsers, $_SESSION['MM_Username'], $_SESSION['MM_UserGroup'])))) {   
+if (!(isset($_SESSION['MM_Displayname']))) {   
   $MM_qsChar = "?";
   $MM_referrer = $_SERVER['PHP_SELF'];
   if (strpos($MM_restrictGoTo, "?")) $MM_qsChar = "&";
@@ -43,12 +41,6 @@ if (!((isset($_SESSION['MM_Username'])) && (isAuthorized("",$MM_authorizedUsers,
   $MM_referrer .= "?" . $QUERY_STRING;
   $MM_restrictGoTo = $MM_restrictGoTo. $MM_qsChar . "accesscheck=" . urlencode($MM_referrer);
   header("Location: ". $MM_restrictGoTo); 
-  exit;
-}
-
-$restrictGoTo = "user_error3.php";
-if ($_SESSION['MM_rank'] < "1") {   
-  header("Location: ". $restrictGoTo); 
   exit;
 }
 ?>

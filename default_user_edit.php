@@ -23,17 +23,12 @@ if ($row_Recordset1['uid'] <> $_SESSION['MM_uid'] && $_SESSION['MM_rank'] < "5")
   header("Location: ". $restrictGoTo); 
   exit;
 }
-
+$userid=$_SESSION['MM_uid'];
 $editFormAction = $_SERVER['PHP_SELF'];
 if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
 
-if ( empty( $_POST['tk_user_remark'] ) ){
-$tk_user_remark = "tk_user_remark='',";
-}else{
-$tk_user_remark = sprintf("tk_user_remark=%s,", GetSQLValueString(str_replace("%","%%",$_POST['tk_user_remark']), "text"));
-}
 
 if ( empty( $_POST['tk_user_contact'] ) ){
 $tk_user_contact = "tk_user_contact='',";
@@ -48,16 +43,15 @@ $tk_user_email = sprintf("tk_user_email=%s", GetSQLValueString(str_replace("%","
 }
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
-  $updateSQL = sprintf("UPDATE tk_user SET tk_display_name=%s, tk_user_rank=%s, $tk_user_remark $tk_user_contact $tk_user_email WHERE uid=%s",
+  $updateSQL = sprintf("UPDATE tk_user SET tk_display_name=%s,$tk_user_contact $tk_user_email WHERE uid='$userid'",
                        
-                       GetSQLValueString($_POST['tk_display_name'], "text"),
-                       GetSQLValueString($_POST['tk_user_rank'], "text"),
-                       GetSQLValueString($_POST['ID'], "int"));
+                       GetSQLValueString($_POST['tk_display_name'], "text"));
 
   mysql_select_db($database_tankdb, $tankdb);
   $Result1 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
-
-  $updateGoTo = "user_view.php?recordID=$colname_Recordset1";
+ 
+  //alert("您已成功修改用户个人信息!");
+  $updateGoTo = "user_view.php?recordID=$colname_Recordset1";//
   if (isset($_SERVER['QUERY_STRING'])) {
     $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
     $updateGoTo .= $_SERVER['QUERY_STRING'];
@@ -117,11 +111,7 @@ window.onload = function()
                 </div>
               </div>
 			  
-			  
-
-
-
-
+	
 			  <div class="form-group col-xs-12">
                 <label for="tk_display_name"><?php echo $multilingual_user_name; ?><span id="display_name" class="red">*</span></label>
                 <div>
@@ -129,9 +119,6 @@ window.onload = function()
                 </div>
 				<span class="help-block"><?php echo $multilingual_user_tip_name; ?></span>
               </div>
-
-
-
 
 			  <div class="form-group col-xs-12">
                 <label for="tk_user_contact"><?php echo $multilingual_user_contact; ?></label>
@@ -144,8 +131,6 @@ window.onload = function()
               </div>
 
 
-
-
 			  <div class="form-group col-xs-12">
                 <label for="tk_user_email"><?php echo $multilingual_user_email; ?></label>
                 <div>
@@ -154,133 +139,6 @@ window.onload = function()
 				<span class="help-block"><?php echo $multilingual_user_tip_mail; ?></span>
               </div>
 
-
-
-
-
-			  <div class="form-group col-xs-12">
-                <label for="tk_user_remark"><?php echo $multilingual_user_remark; ?></label>
-                <div>
-				<textarea name="tk_user_remark" id="tk_user_remark" class="form-control" rows="5" placeholder="<?php echo $multilingual_user_remark;?>"><?php echo $row_Recordset1['tk_user_remark']; ?></textarea>
-                </div>
-				<span class="help-block"><?php echo $multilingual_user_tip_remark; ?></span>
-              </div>
-
-
-<?php if ($_SESSION['MM_rank'] > "4") { ?>
-			  <div class="form-group col-xs-12">
-                <label for="tk_user_rank"><?php echo $multilingual_user_role; ?></label>
-                <div>
-				<select name="tk_user_rank"  id="tk_user_rank" class="form-control">
-            <option value="0" <?php if (!(strcmp("0", htmlentities($row_Recordset1['tk_user_rank'], ENT_COMPAT, 'utf-8')))) {echo "SELECTED";} ?>><?php echo $multilingual_dd_role_disabled; ?></option>
-            <option value="1" <?php if (!(strcmp("1", htmlentities($row_Recordset1['tk_user_rank'], ENT_COMPAT, 'utf-8')))) {echo "SELECTED";} ?>><?php echo $multilingual_dd_role_readonly; ?></option>
-            <option value="2" <?php if (!(strcmp("2", htmlentities($row_Recordset1['tk_user_rank'], ENT_COMPAT, 'utf-8')))) {echo "SELECTED";} ?>><?php echo $multilingual_dd_role_guest; ?></option>
-            <option value="3" <?php if (!(strcmp("3", htmlentities($row_Recordset1['tk_user_rank'], ENT_COMPAT, 'utf-8')))) {echo "SELECTED";} ?>><?php echo $multilingual_dd_role_general; ?></option>
-            <option value="4" <?php if (!(strcmp("4", htmlentities($row_Recordset1['tk_user_rank'], ENT_COMPAT, 'utf-8')))) {echo "SELECTED";} ?>><?php echo $multilingual_dd_role_pm; ?></option>
-            <option value="5" <?php if (!(strcmp("5", htmlentities($row_Recordset1['tk_user_rank'], ENT_COMPAT, 'utf-8')))) {echo "SELECTED";} ?>><?php echo $multilingual_dd_role_admin; ?></option>
-          </select>
-
-                </div>
-				<span class="help-block">
-
-<table width="100%" border="1" cellspacing="0" cellpadding="5" class="rank_talbe">
-        <tr>
-          <td><?php echo $multilingual_user_role; ?></td>
-          <td align="center"><?php echo $multilingual_rank1; ?></td>
-          <td align="center"><?php echo $multilingual_rank2; ?></td>
-          <td align="center"><?php echo $multilingual_rank3; ?></td>
-          <td align="center"><?php echo $multilingual_rank4; ?></td>
-          <td align="center"><?php echo $multilingual_rank5; ?></td>
-          <td align="center"><?php echo $multilingual_rank6; ?></td>
-          <td align="center"><?php echo $multilingual_rank7; ?></td>
-          <td align="center"><?php echo $multilingual_rank8; ?></td>
-          <td align="center"><?php echo $multilingual_rank9; ?></td>
-        </tr>
-        <tr>
-          <td><?php echo $multilingual_dd_role_disabled; ?></td>
-          <td align="center"><div class="iconer"></div></td>
-          <td align="center"><div class="iconer"></div></td>
-          <td align="center"><div class="iconer"></div></td>
-          <td align="center"><div class="iconer"></div></td>
-          <td align="center"><div class="iconer"></div></td>
-          <td align="center"><div class="iconer"></div></td>
-          <td align="center"><div class="iconer"></div></td>
-          <td align="center"><div class="iconer"></div></td>
-          <td align="center"><div class="iconer"></div></td>
-        </tr>
-        <tr>
-          <td><?php echo $multilingual_dd_role_readonly; ?></td>
-          <td align="center"><div class="iconok"></div></td>
-          <td align="center"><div class="iconer"></div></td>
-          <td align="center"><div class="iconer"></div></td>
-          <td align="center"><div class="iconer"></div></td>
-          <td align="center"><div class="iconer"></div></td>
-          <td align="center"><div class="iconer"></div></td>
-          <td align="center"><div class="iconer"></div></td>
-          <td align="center"><div class="iconer"></div></td>
-          <td align="center"><div class="iconer"></div></td>
-        </tr>
-        <tr>
-          <td><?php echo $multilingual_dd_role_guest; ?></td>
-          <td align="center"><div class="iconok"></div></td>
-          <td align="center"><div class="iconok"></div></td>
-          <td align="center"><div class="iconok"></div></td>
-          <td align="center"><div class="iconok"></div></td>
-          <td align="center"><div class="iconer"></div></td>
-          <td align="center"><div class="iconer"></div></td>
-          <td align="center"><div class="iconer"></div></td>
-          <td align="center"><div class="iconer"></div></td>
-          <td align="center"><div class="iconer"></div></td>
-        </tr>
-        <tr>
-          <td><?php echo $multilingual_dd_role_general; ?></td>
-          <td align="center"><div class="iconok"></div></td>
-          <td align="center"><div class="iconok"></div></td>
-          <td align="center"><div class="iconok"></div></td>
-          <td align="center"><div class="iconok"></div></td>
-          <td align="center"><div class="iconok"></div></td>
-          <td align="center"><div class="iconer"></div></td>
-          <td align="center"><div class="iconer"></div></td>
-          <td align="center"><div class="iconer"></div></td>
-          <td align="center"><div class="iconer"></div></td>
-        </tr>
-        <tr>
-          <td><?php echo $multilingual_dd_role_pm; ?></td>
-          <td align="center"><div class="iconok"></div></td>
-          <td align="center"><div class="iconok"></div></td>
-          <td align="center"><div class="iconok"></div></td>
-          <td align="center"><div class="iconok"></div></td>
-          <td align="center"><div class="iconok"></div></td>
-          <td align="center"><div class="iconok"></div></td>
-          <td align="center"><div class="iconer"></div></td>
-          <td align="center"><div class="iconer"></div></td>
-          <td align="center"><div class="iconer"></div></td>
-        </tr>
-        <tr>
-          <td><?php echo $multilingual_dd_role_admin; ?></td>
-          <td align="center"><div class="iconok"></div></td>
-          <td align="center"><div class="iconok"></div></td>
-          <td align="center"><div class="iconok"></div></td>
-          <td align="center"><div class="iconok"></div></td>
-          <td align="center"><div class="iconok"></div></td>
-          <td align="center"><div class="iconok"></div></td>
-          <td align="center"><div class="iconok"></div></td>
-          <td align="center"><div class="iconok"></div></td>
-          <td align="center"><div class="iconok"></div></td>
-        </tr>
-      </table>
-</span>
-              </div>
-<?php } else { ?>
-          <input name="tk_user_rank" type="hidden" value="<?php echo $row_Recordset1['tk_user_rank'];?>"  />
-            
-		   <?php } ?>
-
-
-
-  
-
-           
 
 				</td>
           </tr>

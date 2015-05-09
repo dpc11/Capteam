@@ -1,11 +1,9 @@
 <?php require_once('config/tank_config.php'); ?>
 <?php require_once('session.php'); ?>
+<?php require_once('function/file_function.php'); ?>
+<?php require_once('function/file_log_function.php'); ?>
 <?php
 $restrictGoTo = "user_error3.php";
-if ($_SESSION['MM_rank'] < "2") {   
-  header("Location: ". $restrictGoTo); 
-  exit;
-}
 
 if (!function_exists("GetSQLValueString")) {
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
@@ -50,22 +48,25 @@ $pageurl = "-1";
 if (isset($_GET['url'])) {
   $pageurl = $_GET['url'];
 }
-
+$newName = $_SESSION['MM_uid'];
 $pageurl =strtr($pageurl,"!","&");
 
-if ((isset($_GET['delID'])) && ($_GET['delID'] != "") && ($_SESSION['MM_Username'] <> $multilingual_dd_user_readonly)) {
-  $deleteSQL = sprintf("DELETE FROM tk_document WHERE docid=%s",
+if ((isset($_GET['delID'])) && ($_GET['delID'] != "")) {
+	/*
+  $deleteSQL = sprintf("UPDATE tk_document SET tk_doc_del_status=-1 WHERE docid=%s",
                        GetSQLValueString($_GET['delID'], "int"));
 
   mysql_select_db($database_tankdb, $tankdb);
   $Result1 = mysql_query($deleteSQL, $tankdb) or die(mysql_error());
+*/
 
+	delete_doc(GetSQLValueString($_GET['delID'], "int"));
 
-  $deleteGoTo = $pageurl;
+  $log_id = delete_file_log(GetSQLValueString($_GET['delID'], "int"),$newName);
 
-  
+	$deleteGoTo = $pageurl;  
 
-  header(sprintf("Location: %s", $deleteGoTo));
+	header(sprintf("Location: %s", $deleteGoTo));
 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

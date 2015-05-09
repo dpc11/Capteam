@@ -24,41 +24,27 @@ if (isset($_GET['projectID'])) {
   $project_id = $_GET['projectID'];
 }
 
+$isNewWindow="1";
+if (isset($_GET['newWin'])) {
+  $isNewWindow = $_GET['newWin'];
+}
+
 if ($project_id <> "-1") {
-  $inproject = " inner join tk_project on tk_document.tk_doc_class1=tk_project.id ";
+  $inproject = " inner join tk_project on tk_document.tk_doc_pid=tk_project.id ";
 } else { $inproject = " ";}
-
-$filenames = "";
-if (isset($_GET['filetitle'])) {
-  $filenames = $_GET['filetitle'];
-}
-
-$pfiles = "-1"; //判断是否是项目文档
-if (isset($_GET['pfile'])) {
-  $pfiles = $_GET['pfile'];
-}
 
 mysql_select_db($database_tankdb, $tankdb);
 $query_DetailRS1 = sprintf("SELECT *, 
-tk_user1.tk_display_name as tk_display_name1, 
-tk_user2.tk_display_name as tk_display_name2 FROM tk_document 
+tk_user1.tk_display_name as tk_display_name1
+FROM tk_document 
 inner join tk_user as tk_user1 on tk_document.tk_doc_create=tk_user1.uid  
-inner join tk_user as tk_user2 on tk_document.tk_doc_edit=tk_user2.uid 
 $inproject 
-WHERE tk_document.docid = %s", GetSQLValueString($colname_DetailRS1, "int"));
-$query_limit_DetailRS1 = sprintf("%s LIMIT %d, %d", $query_DetailRS1, $startRow_DetailRS1, $maxRows_DetailRS1);
-$DetailRS1 = mysql_query($query_limit_DetailRS1, $tankdb) or die(mysql_error());
+WHERE tk_document.docid = %s  and tk_doc_del_status=1", GetSQLValueString($colname_DetailRS1, "int"));
+$DetailRS1 = mysql_query($query_DetailRS1, $tankdb) or die(mysql_error());
 $row_DetailRS1 = mysql_fetch_assoc($DetailRS1);
 
-if (isset($_GET['totalRows_DetailRS1'])) {
-  $totalRows_DetailRS1 = $_GET['totalRows_DetailRS1'];
-} else {
-  $all_DetailRS1 = mysql_query($query_DetailRS1);
-  $totalRows_DetailRS1 = mysql_num_rows($all_DetailRS1);
-}
-$totalPages_DetailRS1 = ceil($totalRows_DetailRS1/$maxRows_DetailRS1)-1;
 
-
+/*
 $docid = $colname_DetailRS1;
 $maxRows_Recordset_actlog = 10;
 $pageNum_Recordset_actlog = 0;
@@ -103,7 +89,7 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 }
 $queryString_Recordset_actlog = sprintf("&totalRows_Recordset_actlog=%d%s", $totalRows_Recordset_actlog, $queryString_Recordset_actlog);
 
-
+*/
 
 ?>
 <?php require('head.php'); ?>
@@ -135,22 +121,29 @@ $queryString_Recordset_actlog = sprintf("&totalRows_Recordset_actlog=%d%s", $tot
 		  <td width="13%">
 		  <a href="word.php?fileid=<?php echo $colname_DetailRS1; ?>" class="icon_word"><?php echo $multilingual_project_file_word; ?></a> 
 		  </td>
-		  <?php if($_SESSION['MM_rank'] > "1") { ?>
+		  <?php if($_SESSION['MM_uid'] == $row_DetailRS1['tk_doc_create'] ) { ?>
 		  <td width="10%">
-		  <span class="glyphicon glyphicon-pencil"></span> <a href="file_edit.php?editID=<?php echo $row_DetailRS1['docid']; ?>&projectID=<?php 
-	  if ( $pfiles== "1" || $colname_DetailRS1 == "-1") { 
-	  echo $project_id;
-	  } else {
-	  echo "-1";
-	  } ?>&pid=<?php echo $row_DetailRS1['tk_doc_class2']; ?>&folder=0<?php if ( $pfiles== "1") {
-	  echo "&pfile=1";
-	  }?>&pagetab=<?php echo $pagetabs;?>"><?php echo $multilingual_global_action_edit; ?></a>
+		  <span class="glyphicon glyphicon-pencil"></span> <a href="file_edit.php?editID=<?php echo $row_DetailRS1['docid']; ?>&projectID=<?php echo $project_id; ?>&pid=<?php echo $row_DetailRS1['tk_doc_parentdocid']; ?>&pagetab=<?php echo $pagetabs;?>"><?php echo $multilingual_global_action_edit; ?></a>
 
 		  </td>
 		  <?php } ?>
+
+      <?php if ($isNewWindow == 0) {?>
+
+      <td width = "13%">
+         <a class="mouse_over" onClick="javascript:history.go(-1);">
+              <span class="glyphicon glyphicon-arrow-left"></span>
+              <?php echo $multilingual_global_action_back; ?>
+         </a>
+      </td>
+      <?php } ?>
+
+      <?php if ($isNewWindow == 1) {?>
 		  <td width="10%">
-		  <span class="glyphicon glyphicon-remove-circle"></span> <a onClick="window.opener.location.reload(); window.close();" class="mouse_hover"><?php echo $multilingual_global_action_close; ?></a>
+		    <span class="glyphicon glyphicon-remove-circle"></span> <a onClick="window.opener.location.reload(); window.close();" class="mouse_hover"><?php echo $multilingual_global_action_close; ?></a>
 		  </td>
+      <?php } ?>
+
 		  <td>&nbsp;
 		  </td>
         </tr>
@@ -228,6 +221,4 @@ $queryString_Recordset_actlog = sprintf("&totalRows_Recordset_actlog=%d%s", $tot
 <?php require('foot.php'); ?>
 </body>
 </html>
-<?php
-mysql_free_result($DetailRS1);
-?>
+

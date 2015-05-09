@@ -22,7 +22,7 @@ if ((isset($_GET['doLogout'])) &&($_GET['doLogout']=="true")){
   $_SESSION['MM_msg'] = NULL;
   $_SESSION['mail'] = NULL;
   $_SESSION['MM_last'] = NULL;
-  $_SESSION['copytask'] = NULL;
+  //$_SESSION['copytask'] = NULL;
   //$_SESSION['urlback'] = NULL;
   unset($_SESSION['MM_Username']);
   unset($_SESSION['MM_UserGroup']);
@@ -34,7 +34,7 @@ if ((isset($_GET['doLogout'])) &&($_GET['doLogout']=="true")){
   unset($_SESSION['MM_msg']); 
   unset($_SESSION['mail']); 
   unset($_SESSION['MM_last']); 
-  unset($_SESSION['copytask']); 
+  //unset($_SESSION['copytask']); 
   //unset($_SESSION['urlback']);
 	
   $logoutGoTo = "user_login.php";

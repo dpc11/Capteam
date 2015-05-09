@@ -140,7 +140,7 @@ J.exend( J.check, {
 	    var einfo = []; if(!r.warn) r.warn = J(r.mid).html();
 		
 		if( r.requir && e.length == undefined && J(e).isnl() )
-		    einfo.push('&nbsp');
+		    einfo.push('必填内容，不能为空');
 		else if( !r.requir && ( e.length != undefined || J(e).isnl() ) )
 		    return [];
 		else
