@@ -77,30 +77,30 @@ if (!empty($_SERVER['QUERY_STRING'])) {
       array_push($newParams, $param);
     }
   }
-  if (count($newParams) != 0) {
-    $queryString_Recordset1 = "&" . htmlentities(implode("&", $newParams));
-  }
-}
-$queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recordset1, $queryString_Recordset1);
-?>
-<script language="javascript">
-    //该方法实现全选和取消全选
-    function check_all(){
-    	var a=document.getElementsByName('all_items');//获得全选的框
-         for (j=0;j<a.length;j++){
-    	     if(a[j].checked == true){
-                 var b=document.getElementsByName('item[]');//获得所有的checkbox变量
-                 for (i=0;i<b.length;i++){
-                     b[i].checked=true;
-                 }
-    	     }else{
-                 var b=document.getElementsByName('item[]');//获得所有的checkbox变量
-                 for (i=0;i<b.length;i++){
-                     b[i].checked=false;
-                 }
-    	     }
-          }
-    }
+	  if (count($newParams) != 0) {
+		$queryString_Recordset1 = "&" . htmlentities(implode("&", $newParams));
+	  }
+	}
+	$queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recordset1, $queryString_Recordset1);
+	?>
+	<script language="javascript">
+		//该方法实现全选和取消全选
+		function check_all(){
+			var a=document.getElementsByName('all_items');//获得全选的框
+			 for (j=0;j<a.length;j++){
+				 if(a[j].checked == true){
+					 var b=document.getElementsByName('item[]');//获得所有的checkbox变量
+					 for (i=0;i<b.length;i++){
+						 b[i].checked=true;
+					 }
+				 }else{
+					 var b=document.getElementsByName('item[]');//获得所有的checkbox变量
+					 for (i=0;i<b.length;i++){
+						 b[i].checked=false;
+					 }
+				 }
+			  }
+		}
 
 </script>
 
