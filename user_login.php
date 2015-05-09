@@ -87,43 +87,119 @@ if (isset($_POST['textfield'])) {
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>WSS - <?php echo $multilingual_userlogin_title; ?></title>
-<link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
+<script type="text/javascript" src="srcipt/lhgcore.js"></script>
+<script type="text/javascript" src="srcipt/lhgcheck.js"></script>
 <link href="skin/themes/base/tk_style.css" rel="stylesheet" type="text/css" />
+<link href="skin/themes/base/lhgdialog.css" rel="stylesheet" type="text/css" />
+<link href="skin/themes/base/lhgcheck.css" rel="stylesheet" type="text/css" />
+<link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
 <script type="text/javascript" src="srcipt/jquery.js"></script>
-<script src="bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript" src="srcipt/lhgdialog.js"></script>
+
+<script type="text/javascript">
+
+J.check.rules = [
+	{ name: 'textfield', mid: 'username', requir: true, type: 'email' },
+	{ name: 'textfield2', mid: 'passwordid', requir: true}
+];
+
+function register(){
+	
+	window.open('user_register.php','_self');
+}
+
+function changemsg(UP,DOWN){
+	
+		document.getElementById(DOWN).focus();
+		var contentmsg = document.getElementById(UP).value;
+		document.getElementById(DOWN).value=contentmsg;
+		document.getElementById(DOWN).blur();
+
+}
+
+window.onresize = function()
+{	
+    var x= $(textfield).offset(); 
+
+	document.getElementById("temp_textfield4_4").style.top=(x.top)+'px';
+	document.getElementById("temp_textfield4_4").style.left=(x.left)+'px';
+	document.getElementById("temp_textfield4_4").style.width=(document.getElementById("textfield").clientWidth+6)+'px';
+    x= $(textfield2).offset();
+	document.getElementById("temp_textfield5_5").style.top=(x.top)+'px';
+	document.getElementById("temp_textfield5_5").style.left=(x.left)+'px';
+	document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield2").clientWidth+6)+'px';		
+}
+
+window.onload = function()
+{
+    J.check.regform('form1');
+	
+    var x= $(textfield).offset(); 
+
+	document.getElementById("temp_textfield4_4").style.top=(x.top)+'px';
+	document.getElementById("temp_textfield4_4").style.left=(x.left)+'px';
+	document.getElementById("temp_textfield4_4").style.width=(document.getElementById("textfield").clientWidth+6)+'px';
+    x= $(textfield2).offset();
+	document.getElementById("temp_textfield5_5").style.top=(x.top)+'px';
+	document.getElementById("temp_textfield5_5").style.left=(x.left)+'px';	
+	document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield2").clientWidth+6)+'px';	
+}
+
+</script>
 </head>
 
 <body>
 <?php require('head_sub.php'); ?>
-<table width="70%" border="0" cellspacing="0" cellpadding="0" height="520px;" align="center">
+<table width="50%" border="0" cellspacing="0" cellpadding="0" height="520px;" align="center">
     <tr>
-      <td >
+      <td  style="width:30%">
       <div class="ping_logo"></div>
       </td>
 	  
-	  <td >
+	  <td  style="width:30%">
+      </td>
+	  
+	  <td style="width:40%;min-width:300px;">
       <form id="form1" name="form1" method="POST" action="<?php echo $loginFormAction; ?>">
 	  
 	   <div class="form-group">
-    <label class="beauty-label" for="textfield"><?php echo $multilingual_userlogin_username; ?></label>
-    <input type="text" class="form-control" id="textfield" name="textfield" placeholder="User name">
+    <label class="beauty-label" for="textfield"><?php echo $multilingual_userlogin_username; ?><span id="username" style="margin-left:10px;"></span></label>
+    <input type="text" class="form-control" id="textfield" name="textfield" placeholder="邮箱">
   </div>
   
   <div class="form-group">
-    <label class="beauty-label" for="textfield2"><?php echo $multilingual_userlogin_password; ?></label>
-    <input type="password" class="form-control" name="textfield2" id="textfield2" placeholder="Password">
+    <label class="beauty-label" for="textfield2"><?php echo $multilingual_userlogin_password; ?><span id="passwordid" style="margin-left:10px;"></span></label>
+    <input type="password" class="form-control" name="textfield2" id="textfield2" placeholder="密码">
+  </div>
+  <div style="clear:both ">
+	<div style="width: 10%;float:right; ">
+	 </div>
+	 <div style="width: 30%;float:right; ">
+	  <a class="beauty-label" href="#">忘记密码？</a>
+	 </div>
+     
   </div>
   
-  <button type="submit" class="btn btn-default" style="width: 120px;margin-top: 24px;"><?php echo $multilingual_userlogin_login; ?></button>
-  <div class="pull-right">
-      <label class="beauty-label" style="margin-top: 0;"><?php echo $multilingual_global_version; ?>: <?php echo $version; ?></label>
+  <div  style="clear:both ">
+	  <div style="width: 10%;margin-top: 24px;float:right; ">
+	 </div>
+	  <div style="width: 30%;margin-top: 24px;float:right; ">
+	  <button type="button" class="btn btn-default" style="width: 60px;float:right; " onclick="register();"><?php echo $multilingual_user_register; ?></button>
+	  </div>
+	  <div style="width: 40%;margin-top: 24px;float:right; ">
+	  <button type="submit" class="btn btn-default" style="width: 60px;float:right; "><?php echo $multilingual_userlogin_login; ?></button>
+	  </div>
+	  
   </div>
 	  </form>
       </td>
-	  
     </tr>
 
   </table>
+
+	<input  class="form-control"   type="text"  id="temp_textfield4_4" name="temp_textfield4_4" style="width:300px;z-index:3;position:absolute;" onblur='changemsg("temp_textfield4_4","textfield");' />
+	<input  class="form-control"   type="password"  id="temp_textfield5_5" name="temp_textfield5_5" style="width:300px;z-index:3;position:absolute;" onblur='changemsg("temp_textfield5_5","textfield2");'>
 
 <!--
 <div style="background:#F6F6F6; padding:15px; width:100%;" >
