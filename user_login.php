@@ -168,16 +168,21 @@ window.onload = function()
 	  <div>
 			<legend  style="border-bottom-width: 3px;font-weight:bold;font-size:20px;">&nbsp;&nbsp;用户登陆</legend>
 		</div>		
-  <div style="clear:both ">
-			<div class="ui-state-error ui-corner-all"  > 
-						<div style="width:8%;float:left;" >
-						<span class="ui-icon ui-icon-alert" ></span>
+		<?php  if($errormsg==true){ ?>
+		<div  style="width:5%;float:left;" > 
+		&nbsp;
+		</div>
+				<div id="errormsg"class="ui-state-error ui-corner-all" style="width:90%;float:left;margin-bottom:8px;" > 
+						<div style="width:11%;float:left;margin-top:10px;text-align:center;" >
+						<span class="ui-icon ui-icon-alert"style="margin:0 auto;" ></span>
 						</div>
-						<div  style="width:92%;float:left;">
+						<div  style="width:89%;float:left;padding-top:4px;padding-bottom:4px;">
 							<span>您输入的密码和账户名不匹配，请重新输入。<br>或者您忘记了密码？</span>
 						</div>
-			</div>
-			</div>
+				</div>
+		<?php }
+		?>
+=======
 
       <form id="form1" name="form1" method="POST" action="<?php echo $loginFormAction; ?>">
 	  <div style="padding-left:15px;" >
