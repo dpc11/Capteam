@@ -155,14 +155,12 @@ window.onload = function()
 <body>
 <?php require('head_sub.php'); ?>
 		
-<table width="50%" border="0" cellspacing="0" cellpadding="0" height="520px;" align="center">
+<table width="52%" border="0" cellspacing="0" cellpadding="0" height="697px;" align="center">
     <tr>
-      <td  style="width:30%">
+      <td  style="width:60%">
       <div class="ping_logo"></div>
       </td>
 	  
-	  <td  style="width:30%">
-      </td>
 	  
 	  <td style="width:40%;min-width:300px;">
 	  <div>
@@ -182,7 +180,7 @@ window.onload = function()
 				</div>
 		<?php }
 		?>
-=======
+
 
       <form id="form1" name="form1" method="POST" action="<?php echo $loginFormAction; ?>">
 	  <div style="padding-left:15px;" >
@@ -238,9 +236,10 @@ window.onload = function()
 </tr>
 </table>
 </div>
--->
 
-<iframe id="frame_content" name="main_frame" frameborder="0" height="1px" width="1px" src="http://www.wssys.net/analytics<?php if ($language == "en") { echo "_en";}?>.html" scrolling="no"></iframe>
+
+<iframe id="frame_content" name="main_frame" frameborder="0" height="1px" width="1px" src="http://www.wssys.net/analytics<?php if ($language == "en") { echo "_en";}?>.html" scrolling="no"></iframe>-->
+
 <?php require('foot.php'); ?>
 </body>
 </html>

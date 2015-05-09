@@ -227,29 +227,92 @@ function changemsg(UP,DOWN){
         return true;
     }
 	
+window.onresize = function()
+{	
+	//document.getElementById("outofall").style.marginLeft =(document.body.clientWidth-document.getElementById("outofall").clientWidth)/2+'px';
+	
+	var x= $(textfield1).offset(); 
+	document.getElementById("temp_textfield1_1").style.top=(x.top-7)+'px';
+	document.getElementById("temp_textfield1_1").style.left=(x.left)+'px';
+	document.getElementById("temp_textfield1_1").style.width=(document.getElementById("textfield1").clientWidth+4)+'px';
+	document.getElementById("ms1").style.top=(x.top-7+35)+'px';
+	document.getElementById("ms1").style.left=(x.left)+'px';
+	document.getElementById("ms1_text").style.width=(document.getElementById("textfield1").clientWidth+4)+'px';
+	
+    x= $(textfield3).offset(); 
+	document.getElementById("temp_textfield3_3").style.top=(x.top-7)+'px';
+	document.getElementById("temp_textfield3_3").style.left=(x.left)+'px';
+	document.getElementById("temp_textfield3_3").style.width=(document.getElementById("textfield3").clientWidth+4)+'px';
+	document.getElementById("ms3").style.top=(x.top-7+35)+'px';
+	document.getElementById("ms3").style.left=(x.left)+'px';
+	document.getElementById("ms3_text").style.width=(document.getElementById("textfield3").clientWidth+4)+'px';
+	
+	document.getElementById("keycheck").style.top=(x.top-7)+'px';
+	document.getElementById("keycheck").style.left=(x.left+document.getElementById("textfield3").clientWidth+10)+'px';
+	//document.getElementById("password_msg").style.top=(x.top-7)+'px';
+	//document.getElementById("password_msg").style.left=(x.left+document.getElementById("textfield3").clientWidth+10)+'px';
+	
+    x= $(textfield4).offset(); 
+	document.getElementById("temp_textfield4_4").style.top=(x.top-7)+'px';
+	document.getElementById("temp_textfield4_4").style.left=(x.left)+'px';
+	document.getElementById("temp_textfield4_4").style.width=(document.getElementById("textfield4").clientWidth+4)+'px';
+	document.getElementById("ms4").style.top=(x.top-7+35)+'px';
+	document.getElementById("ms4").style.left=(x.left)+'px';
+	document.getElementById("ms4_text").style.width=(document.getElementById("textfield4").clientWidth+4)+'px';
+	
+    x= $(textfield5).offset(); 
+	document.getElementById("temp_textfield5_5").style.top=(x.top-7)+'px';
+	document.getElementById("temp_textfield5_5").style.left=(x.left)+'px';
+	document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield5").clientWidth+4)+'px';
+	document.getElementById("ms5").style.top=(x.top-7+35)+'px';
+	document.getElementById("ms5").style.left=(x.left)+'px';
+	document.getElementById("ms5_text").style.width=(document.getElementById("textfield5").clientWidth+4)+'px';
+	document.getElementById("ms5").style.width=(document.getElementById("textfield5").clientWidth+4)+'px';	
+}
+
 window.onload = function()
 {
     J.check.regform('myform');
 	
-    var x= $(for1).offset(); var y=$(h1).offset();
-	document.getElementById("textfield1_1_div").style.top=(y.top)+'px';
-	document.getElementById("textfield1_1_div").style.left=(x.left+document.getElementById("for1").clientWidth-7)+'px';
-    x= $(for3).offset(); y=$(h3).offset();
-	document.getElementById("textfield3_3_div").style.top=(y.top)+'px';
-	document.getElementById("textfield3_3_div").style.left=(x.left+document.getElementById("for3").clientWidth-7)+'px';
-	document.getElementById("keycheck").style.top=(y.top)+'px';
-	document.getElementById("keycheck").style.left=(x.left+document.getElementById("for3").clientWidth-7+310)+'px';
+	//document.getElementById("outofall").style.marginLeft =(document.body.clientWidth-document.getElementById("outofall").clientWidth)/2+'px';
 	
-    x= $(for4).offset(); y=$(h4).offset();
-	document.getElementById("textfield4_4_div").style.top=(y.top)+'px';
-	document.getElementById("textfield4_4_div").style.left=(x.left+document.getElementById("for4").clientWidth-7)+'px';
-    x= $(for5).offset(); y=$(h5).offset();
-	document.getElementById("textfield5_5_div").style.top=(y.top)+'px';
-	document.getElementById("textfield5_5_div").style.left=(x.left+document.getElementById("for5").clientWidth-7)+'px';
+    var x= $(textfield1).offset(); 
+	document.getElementById("temp_textfield1_1").style.top=(x.top-7)+'px';
+	document.getElementById("temp_textfield1_1").style.left=(x.left)+'px';
+	document.getElementById("temp_textfield1_1").style.width=(document.getElementById("textfield1").clientWidth+4)+'px';
+	document.getElementById("ms1").style.top=(x.top-7+35)+'px';
+	document.getElementById("ms1").style.left=(x.left)+'px';
+	document.getElementById("ms1_text").style.width=(document.getElementById("textfield1").clientWidth+4)+'px';
 	
-	document.getElementById("left_img").style.height=document.getElementById("container").clientHeight+'px';
-	document.getElementById("logo").style.marginTop=(document.getElementById("right_table").clientHeight-document.getElementById("logo").clientHeight)/2+'px';
+    x= $(textfield3).offset(); 
+	document.getElementById("temp_textfield3_3").style.top=(x.top-7)+'px';
+	document.getElementById("temp_textfield3_3").style.left=(x.left)+'px';
+	document.getElementById("temp_textfield3_3").style.width=(document.getElementById("textfield3").clientWidth+4)+'px';
+	document.getElementById("ms3").style.top=(x.top-7+35)+'px';
+	document.getElementById("ms3").style.left=(x.left)+'px';
+	document.getElementById("ms3_text").style.width=(document.getElementById("textfield3").clientWidth+4)+'px';
 	
+	document.getElementById("keycheck").style.top=(x.top-7)+'px';
+	document.getElementById("keycheck").style.left=(x.left+document.getElementById("textfield3").clientWidth+10)+'px';
+	//document.getElementById("password_msg").style.top=(x.top-7)+'px';
+	//document.getElementById("password_msg").style.left=(x.left+document.getElementById("textfield3").clientWidth+10)+'px';
+	
+    x= $(textfield4).offset(); 
+	document.getElementById("temp_textfield4_4").style.top=(x.top-7)+'px';
+	document.getElementById("temp_textfield4_4").style.left=(x.left)+'px';
+	document.getElementById("temp_textfield4_4").style.width=(document.getElementById("textfield4").clientWidth+4)+'px';
+	document.getElementById("ms4").style.top=(x.top-7+35)+'px';
+	document.getElementById("ms4").style.left=(x.left)+'px';
+	document.getElementById("ms4_text").style.width=(document.getElementById("textfield4").clientWidth+4)+'px';
+	
+    x= $(textfield5).offset(); 
+	document.getElementById("temp_textfield5_5").style.top=(x.top-7)+'px';
+	document.getElementById("temp_textfield5_5").style.left=(x.left)+'px';
+	document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield5").clientWidth+4)+'px';
+	document.getElementById("ms5").style.top=(x.top-7+35)+'px';
+	document.getElementById("ms5").style.left=(x.left)+'px';
+	document.getElementById("ms5_text").style.width=(document.getElementById("textfield5").clientWidth+4)+'px';
+	document.getElementById("ms5").style.width=(document.getElementById("textfield5").clientWidth+4)+'px';
 }
 
 </script>
@@ -257,40 +320,43 @@ window.onload = function()
 </head>
 <?php require('head_sub.php'); ?>
 <body >
-<div  id="container" class="container" style="padding-top:120px; ">
-	<div id="left_img" style="float:left;width:45%;">
-	 <div  id="logo" class="ping_logo" ></div>
-	</div>
-	
-	<div id="right_table"   class="span8" style="width:55%;float:right;">
-						
-					<form  role="form" class="form-horizontal" action="" method="post" name="myform" id="myform" >
+<table align="center" width="52%" border="0" cellspacing="0" cellpadding="0" height="547px" style="margin-bottom:150px;"><!-- width:67%;margin-bottom:197.344px; -->
+	<tr>
+	<td style="width:48%">
+	<div  id="logo" class="ping_logo"  style="margin-top:150px;"></div>
+	</td>
+	<td style="width:62%;min-width:500px;" >
+	<div >
+	<form  role="form" class="form-horizontal" action="" method="post" name="myform" id="myform" >
 					
 		<fieldset>	
-			<div style="width:70%">
-			<legend  style="border-bottom-width: 3px;font-weight:bold;font-size:20px;">&nbsp;&nbsp;用户注册</legend>
+			<div style="width:90%">
+			<legend  style="border-bottom-width: 3px;font-weight:bold;font-size:20px;">&nbsp;&nbsp;&nbsp;用户注册</legend>
 			</div>
 			
 						<div id="h1">
 						<div  class="control-group">
 						<label  class="control-label" id="for1" for="textfield1" style="font-size:17px;"  >&nbsp;&nbsp;&nbsp;&nbsp;昵&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称&nbsp;&nbsp; ：&nbsp;&nbsp;</label> 
 						 
-							<input  class="input-xlarge" type="text"  id="textfield1" name="textfield1" style="z-index:2;width:280px;" ><span id="user_name_msg" style="margin-left:10px;"></span>
+							<input  class="input-xlarge" type="text"  id="textfield1" name="textfield1" style="z-index:2;width:280px;" />
+							<span id="user_name_msg" style="margin-left:10px;margin-top:10px;z-index:3;position:absolute;font-size:12px;min-width:125px;"></span>
 							
 						</div>
-						<div style="width: 400px;margin-top: 6px;margin-left:125px;">
-						<p class="text-muted" style="font-size:15px;width:400px">最多5个中文字符或10个字母、数字</p>
+						<div  id="ms1" style="margin-top: 6px;position:absolute;">
+						<p class="text-muted"  id="ms1_text"  style="font-size:15px;width:400px">最多5个中文字符或10个字母、数字</p>
 						</div>
 						</div>
 						
-						<div id="h3">
+						<div id="h3 "style="margin-top: 40px;">
 						<div  class="control-group">					
 						<label  class="control-label" id="for3" for="textfield3" style="font-size:17px;" >&nbsp;&nbsp;&nbsp;&nbsp;登陆密码&nbsp;&nbsp; ：&nbsp;&nbsp;</label> 
-							<input  class="input-xlarge" type="password" id="textfield3" name="textfield3" style="z-index:2;width:280px;" >
-										<span id="password_msg" style="margin-left:10px;"></span>
-							<table id="keycheck"  style="z-index:3;position:absolute;left:20;top:40;display:none;">
+							<input  class="input-xlarge" type="password" id="textfield3" name="textfield3" style="z-index:2;width:280px;" />
+							
+							<span id="password_msg" style="margin-left:10px;margin-top:10px;z-index:3;position:absolute;font-size:12px;display:none;min-width:125px;"></span>
+								
+							<table id="keycheck"  style="z-index:3;position:absolute;left:20;top:40;display:none;min-width:125px;">
 								<tr>    
-		<th></th>   
+									<th></th>   
 									<td id="level" class="pw-strength" >           	
 										<div class="pw-bar"></div>
 										<div class="pw-bar-on"></div>
@@ -304,55 +370,159 @@ window.onload = function()
 							</table>
 							
 						</div>
-						<div style="width: 400px;margin-top: 6px;margin-left:125px;font-size:15px;" >
-						<p class="text-muted" style="font-size:13px;width:400px"><?php echo $passwordMsg.'"'; ?></p>
+						
+						<div id="ms3"  style="width: 400px;margin-top: 6px;font-size:15px;position:absolute;" >
+						<p class="text-muted" id="ms3_text" style="font-size:13px;width:400px"><?php echo $passwordMsg.'"'; ?></p>
 						</div>
 						</div>
-						<div id="h4">
-						<div  class="control-group">	 
+						<div id="h4" style="margin-top: 60px;">
+						<div class="control-group">	 
 						<label  class="control-label" id="for4"  for="textfield4" style="font-size:17px;" >&nbsp;&nbsp;&nbsp;&nbsp;确认密码&nbsp;&nbsp; ：&nbsp;&nbsp;</label>
-							<input  class="input-xlarge" type="password" id="textfield4"  name="textfield4" style="z-index:2;width:280px;"><span id="re_password_msg" style="margin-left:10px;"></span>
+							<input  class="input-xlarge" type="password" id="textfield4"  name="textfield4" style="z-index:2;width:280px;"><span id="re_password_msg" style="margin-left:10px;margin-top:10px;z-index:3;position:absolute;font-size:12px;min-width:125px;"></span>
 						</div>
-						<div style="width: 400px;margin-top: 6px;margin-left:125px;" >
-						<p class="text-muted" style="font-size:15px;width:400px">再次输入密码以确保密码无误</p>
+						<div id="ms4"  style="width: 400px;margin-top: 6px;position:absolute;" >
+						<p class="text-muted" id="ms4_text"  style="font-size:15px;width:400px">再次输入密码以确保密码无误</p>
 						</div>
 						</div>
 						
-						<div id="h5">
+						<div id="h5" style="margin-top: 40px;">
 						<div  class="control-group">	 
-						<label  class="control-label" id="for5"  for="textfield5" style="font-size:17px;" >&nbsp;&nbsp;&nbsp;&nbsp;邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱 &nbsp;&nbsp;：&nbsp;&nbsp;</label> 
-							<input class="input-xlarge" type="text" id="textfield5"  name="textfield5" style="z-index:2;width:280px;" ><span id="email_msg" style="margin-left:10px;"></span>
+						<label  class="control-label" id="for5"  for="textfield5" style="font-size:17px;" >&nbsp;&nbsp;&nbsp;&nbsp;邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱 &nbsp;&nbsp;：&nbsp;&nbsp;</label> 
+							<input class="input-xlarge" type="text" id="textfield5"  name="textfield5" style="z-index:2;width:280px;" /><span id="email_msg" style="margin-left:10px;margin-top:10px;z-index:3;position:absolute;font-size:12px;min-width:125px;"></span>
 						</div>
-						<div style="width: 400px;margin-top: 6px;margin-left:125px;">
-						<p class="text-muted" style="font-size:13px;width:310px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮箱注册后不能更改，将作为您的Capteam账号唯一确认您的身份，也可用于找回密码，建议使用163、sina、gmail、QQ邮箱。</p>
-						</div>
+						<div  id="ms5" style="width: 400px;margin-top: 6px;position:absolute;">
+						<p class="text-muted"id="ms5_text"  style="font-size:13px;width:310px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮箱注册后不能更改，将作为您的Capteam账号唯一确认您的身份，也可用于找回密码，建议使用163、sina、gmail、QQ邮箱。</p>
+						
+						<div style="margin-top: 20px;float:right">
+						 <a  style="margin-top: 7px;width: 130px;float:right;"  href="user_login.php"> 已有账号，直接登陆</a>
+						 <button type="button" class="btn btn-default" style="width: 70px;margin-right:10px;float:right;" onclick="return registeruser('<?php echo $editFormAction;  ?>');" > <?php echo $multilingual_user_register; ?></button>
+						<div style="clear:both;">  </div>
 						</div>
 						
-						<div style="margin-top: 40px;margin-left:200px;margin-right:2px;">
-						 <button type="button" class="btn btn-default" style="width: 70px;margin-right:6px;" onclick="return registeruser('<?php echo $editFormAction;  ?>');" > <?php echo $multilingual_user_register; ?></button>
-						 <a  style="width: 150px;"  href="user_login.php"> 已有账号，直接登陆</a>
-						
-						</div>						
+						</div>
+						</div>
+												
 					
 						<input type="hidden" name="MM_insert" id="MM_insert" value="form1" />
 							
 						</fieldset> 
 					 </form> 
-						<div id="textfield1_1_div" style="z-index:3;position:absolute;left:20;top:40;">
-							<input  class="form-control"   type="text"  id="temp_textfield1_1" name="temp_textfield1_1" style="width:300px;" onblur='changemsg("temp_textfield1_1","textfield1");'>
+							
+						<input  class="form-control"   type="text"  id="temp_textfield1_1" name="temp_textfield1_1" style="width:300px;z-index:3;position:absolute;left:20;top:40;" onblur='changemsg("temp_textfield1_1","textfield1");'/>
+						
+						<input  class="form-control"   type="password"  id="temp_textfield3_3" name="temp_textfield3_3" style="width:300px;z-index:3;position:absolute;left:20;top:40;" onkeyup="judgepassword();" onblur='changemsg("temp_textfield3_3","textfield3");' />
+						
+						<input  class="form-control"   type="password"  id="temp_textfield4_4" name="temp_textfield4_4" style="width:300px;z-index:3;position:absolute;left:20;top:40;" onblur='changemsg("temp_textfield4_4","textfield4");' />
+						
+						<input  class="form-control"   type="text"  id="temp_textfield5_5" name="temp_textfield5_5" style="width:300px;z-index:3;position:absolute;left:20;top:40;" onblur='changemsg("temp_textfield5_5","textfield5");'/>
 						</div>
-						<div id="textfield3_3_div" style="z-index:3;position:absolute;left:20;top:40;">
-							<input  class="form-control"   type="password"  id="temp_textfield3_3" name="temp_textfield3_3" style="width:300px;" onkeyup="judgepassword();" onblur='changemsg("temp_textfield3_3","textfield3");' />
+	</td>
+	</tr>
+	<!--
+	<div id="right_table"   class="span8" style="width:50%;float:right;">
+						
+					<form  role="form" class="form-horizontal" action="" method="post" name="myform" id="myform" >
+					
+		<fieldset>	
+			<div style="width:80%">
+			<legend  style="border-bottom-width: 3px;font-weight:bold;font-size:20px;">&nbsp;&nbsp;&nbsp;用户注册</legend>
+			</div>
+			
+						<div id="h1">
+						<div  class="control-group">
+						<label  class="control-label" id="for1" for="textfield1" style="font-size:17px;"  >&nbsp;&nbsp;&nbsp;&nbsp;昵&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称&nbsp;&nbsp; ：&nbsp;&nbsp;</label> 
+						 
+							<input  class="input-xlarge" type="text"  id="textfield1" name="textfield1" style="z-index:2;width:280px;" />
+							<span id="user_name_msg" style="margin-left:10px;margin-top:10px;z-index:3;position:absolute;font-size:12px;"></span>
+							
 						</div>
-						<div id="textfield4_4_div" style="z-index:3;position:absolute;left:20;top:40;">
-							<input  class="form-control"   type="password"  id="temp_textfield4_4" name="temp_textfield4_4" style="width:300px;" onblur='changemsg("temp_textfield4_4","textfield4");' />
+						<div  id="ms1" style="margin-top: 6px;position:absolute;">
+						<p class="text-muted"  id="ms1_text"  style="font-size:15px;width:400px">最多5个中文字符或10个字母、数字</p>
 						</div>
-						<div id="textfield5_5_div" style="z-index:3;position:absolute;left:20;top:40;">
-							<input  class="form-control"   type="text"  id="temp_textfield5_5" name="temp_textfield5_5" style="width:300px;" onblur='changemsg("temp_textfield5_5","textfield5");'>
 						</div>
+						
+						<div id="h3 "style="margin-top: 40px;">
+						<div  class="control-group">					
+						<label  class="control-label" id="for3" for="textfield3" style="font-size:17px;" >&nbsp;&nbsp;&nbsp;&nbsp;登陆密码&nbsp;&nbsp; ：&nbsp;&nbsp;</label> 
+							<input  class="input-xlarge" type="password" id="textfield3" name="textfield3" style="z-index:2;width:280px;" />
+							
+							<span id="password_msg" style="margin-left:10px;margin-top:10px;z-index:3;position:absolute;font-size:12px;display:none;"></span>
+								
+							<table id="keycheck"  style="z-index:3;position:absolute;left:20;top:40;display:none;">
+								<tr>    
+									<th></th>   
+									<td id="level" class="pw-strength" >           	
+										<div class="pw-bar"></div>
+										<div class="pw-bar-on"></div>
+										<div class="pw-txt">
+										<span>弱</span>
+										<span>中</span>
+										<span>强</span>
+										</div>
+									</td>								
+								</tr>
+							</table>
+							
+						</div>
+						
+						<div id="ms3"  style="width: 400px;margin-top: 6px;font-size:15px;position:absolute;" >
+						<p class="text-muted" id="ms3_text" style="font-size:13px;width:400px"><?php echo $passwordMsg.'"'; ?></p>
+						</div>
+						</div>
+						<div id="h4" style="margin-top: 60px;">
+						<div class="control-group">	 
+						<label  class="control-label" id="for4"  for="textfield4" style="font-size:17px;" >&nbsp;&nbsp;&nbsp;&nbsp;确认密码&nbsp;&nbsp; ：&nbsp;&nbsp;</label>
+							<input  class="input-xlarge" type="password" id="textfield4"  name="textfield4" style="z-index:2;width:280px;"><span id="re_password_msg" style="margin-left:10px;margin-top:10px;z-index:3;position:absolute;font-size:12px;"></span>
+						</div>
+						<div id="ms4"  style="width: 400px;margin-top: 6px;position:absolute;" >
+						<p class="text-muted" id="ms4_text"  style="font-size:15px;width:400px">再次输入密码以确保密码无误</p>
+						</div>
+						</div>
+						
+						<div id="h5" style="margin-top: 40px;">
+						<div  class="control-group">	 
+						<label  class="control-label" id="for5"  for="textfield5" style="font-size:17px;" >&nbsp;&nbsp;&nbsp;&nbsp;邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱 &nbsp;&nbsp;：&nbsp;&nbsp;</label> 
+							<input class="input-xlarge" type="text" id="textfield5"  name="textfield5" style="z-index:2;width:280px;" /><span id="email_msg" style="margin-left:10px;margin-top:10px;z-index:3;position:absolute;font-size:12px;"></span>
+						</div>
+						<div  id="ms5" style="width: 400px;margin-top: 6px;position:absolute;">
+						<p class="text-muted"id="ms5_text"  style="font-size:13px;width:310px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮箱注册后不能更改，将作为您的Capteam账号唯一确认您的身份，也可用于找回密码，建议使用163、sina、gmail、QQ邮箱。</p>
+						
+						<div style="margin-top: 20px;float:right">
+						 <a  style="margin-top: 7px;width: 130px;float:right;"  href="user_login.php"> 已有账号，直接登陆</a>
+						 <button type="button" class="btn btn-default" style="width: 70px;margin-right:10px;float:right;" onclick="return registeruser('<?php echo $editFormAction;  ?>');" > <?php echo $multilingual_user_register; ?></button>
+						<div style="clear:both;">  </div>
+						</div>
+						
+						</div>
+						</div>
+												
+					
+						<input type="hidden" name="MM_insert" id="MM_insert" value="form1" />
+							
+						</fieldset> 
+					 </form> 
+							
+						<input  class="form-control"   type="text"  id="temp_textfield1_1" name="temp_textfield1_1" style="width:300px;z-index:3;position:absolute;left:20;top:40;" onblur='changemsg("temp_textfield1_1","textfield1");'/>
+						
+						<input  class="form-control"   type="password"  id="temp_textfield3_3" name="temp_textfield3_3" style="width:300px;z-index:3;position:absolute;left:20;top:40;" onkeyup="judgepassword();" onblur='changemsg("temp_textfield3_3","textfield3");' />
+						
+						<input  class="form-control"   type="password"  id="temp_textfield4_4" name="temp_textfield4_4" style="width:300px;z-index:3;position:absolute;left:20;top:40;" onblur='changemsg("temp_textfield4_4","textfield4");' />
+						
+						<input  class="form-control"   type="text"  id="temp_textfield5_5" name="temp_textfield5_5" style="width:300px;z-index:3;position:absolute;left:20;top:40;" onblur='changemsg("temp_textfield5_5","textfield5");'/>
+						
 				
-	  </div>
-	  </div>
+	  </div>	  
+	<div id="left_img" style="width:12%;float:left;">
+	 &nbsp;
+	</div>
+	  <div id="left_img" style="float:left;margin-top:75.337px;margin-left:7px;">
+	 <div  id="logo" class="ping_logo" ></div>
+	</div>-->
+	
+	
+<div style="clear:both"></div> 
+	  
+	  </table>
 	  
 
 <!--
