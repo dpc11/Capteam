@@ -1,7 +1,7 @@
 <?php require_once( 'config/tank_config.php'); ?>
 <?php require_once( 'session_unset.php'); ?>
 <?php require_once( 'session.php'); ?>
-<?php require_once( 'dao.php'); ?>
+<?php require_once( 'function/dao.php'); ?>
 
 <?php 
 //获取个人日程的数据库操作类
@@ -12,12 +12,12 @@ $data = $schedule_dao_obj->get_task_events($userid);
 ?>
 
 <?php require( 'head.php'); ?>
-<link rel="stylesheet" type="text/css" href="calendar/css/fullcalendar.css">
-<link rel="stylesheet" type="text/css" href="calendar/css/fancybox.css">
-<script src='srcipt/jquery-1.9.1.js'></script>
-<script src='srcipt/jquery-ui-1.10.4.min.js'></script>
-<script src='calendar/js/fullcalendar.js'></script>
-<script src='calendar/js/jquery.fancybox-1.3.1.pack.js'></script>
+<link rel="stylesheet" type="text/css" href="plug-in/calendar/css/fullcalendar.css">
+<link rel="stylesheet" type="text/css" href="plug-in/calendar/css/fancybox.css">
+<script src='js/jquery/jquery-1.9.1.js'></script>
+<script src='js/jquery/jquery-ui-1.10.4.min.js'></script>
+<script src='plug-in/calendar/js/fullcalendar.js'></script>
+<script src='plug-in/calendar/js/jquery.fancybox-1.3.1.pack.js'></script>
 <script type="text/javascript">
 $(function() {
 	$('#calendar').fullCalendar({

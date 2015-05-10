@@ -61,10 +61,10 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
 }
 ?>
 <?php require('head.php'); ?>
-<link href="skin/themes/base/custom.css" rel="stylesheet" type="text/css" />
-<link href="skin/themes/base/lhgcheck.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="srcipt/lhgcore.js"></script>
-<script type="text/javascript" src="srcipt/lhgcheck.js"></script>
+<link href="css/custom.css" rel="stylesheet" type="text/css" />
+<link href="css/lhgcore/lhgcheck.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/lhgcore/lhgcore.js"></script>
+<script type="text/javascript" src="js/lhgcore/lhgcheck.js"></script>
 <script type="text/javascript">
 J.check.rules = [
 	{ name: 'tk_display_name', mid: 'display_name', type: 'limit', requir: true, min: 2, max: 12, warn: '<?php echo $multilingual_user_namequired; ?>' }

@@ -299,10 +299,9 @@ $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recor
 
 ?>
 <?php require('head.php'); ?>
-<link href="skin/themes/base/custom.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="srcipt/jquery.js"></script>
-<script type="text/javascript" src="srcipt/js.js"></script>
-<script type="text/javascript" src="srcipt/jqueryd.js"></script>
+<link href="css/custom.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/juqery/jquery.js"></script>
+<script type="text/javascript" src="js/juqery/jqueryd.js"></script>
 <div class="subnav">
 
 <!--所有文件，我创建的文件-->

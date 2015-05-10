@@ -1,6 +1,6 @@
 <?php
-require_once('dao.php'); 
-require_once('function.class.php');
+require_once('function/dao.php'); 
+require_once('function/function.class.php');
 
 //获取用户信息数据库操作类
 $user_dao_obj = new  user_dao();

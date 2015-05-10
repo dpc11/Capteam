@@ -129,12 +129,11 @@ $tkstatus = mysql_query($query_tkstatus, $tankdb) or die(mysql_error());
 $row_tkstatus = mysql_fetch_assoc($tkstatus);
 $totalRows_tkstatus = mysql_num_rows($tkstatus);
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html PUBLIC >
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link href="skin/themes/base/lhgdialog.css" rel="stylesheet" type="text/css" />
-	<link href="skin/themes/base/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+	<link href="css/lhgcore/lhgdialog.css" rel="stylesheet" type="text/css" />
+	<link href="css/jquery/jquery-ui.min.css" rel="stylesheet" type="text/css" />
 	<title>log</title>
 	<script type="text/javascript">
 
@@ -158,14 +157,14 @@ function submitform()
 }
 	</script>
 	
-<link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
-<script type="text/javascript" src="srcipt/jquery.js"></script>
-<script src="bootstrap/js/bootstrap.js"></script>
+<link href="css/bootstrap/bootstrap.css" rel="stylesheet" media="screen">
+<script type="text/javascript" src="js/jquery/jquery.js"></script>
+<script src="js/bootstrap/bootstrap.js"></script>
 
-<script type="text/javascript" src="srcipt/jquery-ui-1.10.4.min.js"></script>
+<script type="text/javascript" src="js/jquery/jquery-ui-1.10.4.min.js"></script>
 
-<script charset="utf-8" src="editor/kindeditor.js"></script>
-<script charset="utf-8" src="editor/lang/zh_CN.js"></script>
+<script charset="utf-8" src="plug-in/editor/kindeditor.js"></script>
+<script charset="utf-8" src="plug-in/editor/lang/zh_CN.js"></script>
 <script>
         var editor;
         KindEditor.ready(function(K) {

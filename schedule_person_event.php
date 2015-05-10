@@ -18,10 +18,10 @@ function addform($uid){
 $date = $_GET['date'];
 ?>
 
-<link rel="stylesheet" type="text/css" href="calendar/css/jquery-ui.css">
-<link rel="stylesheet" href="bootstrap/css/datepicker3.css" type="text/css"/>
-<script type="text/javascript" src="bootstrap/js/bootstrap-datepicker.js"></script>
-<script type="text/javascript" src="bootstrap/js/locales/bootstrap-datepicker.zh-CN.js"></script>
+<link rel="stylesheet" type="text/css" href="plug-in/calendar/css/jquery-ui.css">
+<link rel="stylesheet" href="css/bootstrap/datepicker3.css" type="text/css"/>
+<script type="text/javascript" src="js/bootstrap/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="js/bootstrap/locales/bootstrap-datepicker.zh-CN.js"></script>
 <div class="fancy">
     <h3>新增日程</h3>
     <form id="add_form" action="schedule_person_opt.php?action=add" method="post">
@@ -174,10 +174,10 @@ function editform($id){
 	}
 ?>
 
-<link rel="stylesheet" type="text/css" href="calendar/css/jquery-ui.css">
-<link rel="stylesheet" href="bootstrap/css/datepicker3.css" type="text/css"/>
-<script type="text/javascript" src="bootstrap/js/bootstrap-datepicker.js"></script>
-<script type="text/javascript" src="bootstrap/js/locales/bootstrap-datepicker.zh-CN.js"></script>
+<link rel="stylesheet" type="text/css" href="plug-in/calendar/css/jquery-ui.css">
+<link rel="stylesheet" href="css/bootstrap/datepicker3.css" type="text/css"/>
+<script type="text/javascript" src="js/bootstrap/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="js/bootstrap/locales/bootstrap-datepicker.zh-CN.js"></script>
 
 <input type="hidden" name="id" id="eventid" value="<?php echo $id;?>" />
 <div class="fancy">
@@ -309,7 +309,7 @@ function editform($id){
 </div>
 <?php }?>
 
-<script type="text/javascript" src="calendar/js/jquery.form.min.js"></script>
+<script type="text/javascript" src="plug-in/calendar/js/jquery.form.min.js"></script>
 <script type="text/javascript">
 $(function(){
     

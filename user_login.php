@@ -1,32 +1,28 @@
 <?php require_once('config/tank_config.php'); ?>
 <?php
-// *** Validate request to login to this site.
 if (!isset($_SESSION)) {
   session_start();
 }
 
 $errormsg=false;
-
+$loginUsername="";
+$password="";
 $loginFormAction = $_SERVER['PHP_SELF'];
+$MM_redirectLoginSuccess="index.php";
 if (isset($_GET['accesscheck'])) {
   $_SESSION['PrevUrl'] = $_GET['accesscheck'];
+  $MM_redirectLoginSuccess = $_SESSION['PrevUrl'];	
 }
 
 if (isset($_POST['textfield'])) {
   $loginUsername=$_POST['textfield'];
   $password=$_POST['textfield2'];
   $tk_password =  md5(crypt($password,substr($password,0,2))); 
-  $MM_fldUserAuthorization = "tk_user_status";
-  $MM_redirectLoginSuccess = "index.php";
-  $MM_redirecttoReferrer = false;
-  mysql_select_db($database_tankdb, $tankdb);
-  	
-  //$LoginRS__query=sprintf("SELECT tk_user_login, tk_user_pass, tk_display_name, uid, tk_user_status, tk_user_rank, tk_user_message, tk_user_lastuse FROM tk_user WHERE binary tk_user_login=%s AND (tk_user_pass=%s OR tk_user_pass=%s)",
-  //GetSQLValueString($loginUsername, "text"), GetSQLValueString($tk_password, "text"), GetSQLValueString($password, "text")); 
+  
+
+  mysql_select_db($database_tankdb, $tankdb);  	
   $LoginRS__query=sprintf("SELECT tk_display_name, uid, tk_user_lastuse,status FROM tk_user WHERE tk_user_del_status =1 AND  tk_user_email=%s AND tk_user_pass=%s ",
-  GetSQLValueString($loginUsername, "text"), GetSQLValueString($tk_password, "text")); 
-   
-  echo  $LoginRS__query;
+  GetSQLValueString($loginUsername, "text"), GetSQLValueString($tk_password, "text"));    
   $LoginRS = mysql_query($LoginRS__query, $tankdb) or die(mysql_error());
   $loginFoundUser = mysql_num_rows($LoginRS);
   
@@ -41,11 +37,10 @@ if (isset($_POST['textfield'])) {
 	$_SESSION['MM_last'] = $loginStrlast;
 	
    if(mysql_result($LoginRS,0,'status')==0){//未激活
-   }else if (isset($_SESSION['PrevUrl']) && false) {
-      $MM_redirectLoginSuccess = $_SESSION['PrevUrl'];	
-    header("Location: " . $MM_redirectLoginSuccess );
+   }else {
+	  header("Location: " . $MM_redirectLoginSuccess );
     }
-  }//if end
+  }
   else {
     $errormsg=true;
   }
@@ -54,17 +49,17 @@ if (isset($_POST['textfield'])) {
 <!DOCTYPE html PUBLIC >
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>WSS - <?php echo $multilingual_userlogin_title; ?></title>
-<script type="text/javascript" src="srcipt/lhgcore.js"></script>
-<script type="text/javascript" src="srcipt/lhgcheck.js"></script>
-<link href="skin/themes/base/tk_style.css" rel="stylesheet" type="text/css" />
-<link href="skin/themes/base/lhgdialog.css" rel="stylesheet" type="text/css" />
-<link href="skin/themes/base/lhgcheck.css" rel="stylesheet" type="text/css" />
-<link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
-<script type="text/javascript" src="srcipt/jquery.js"></script>
-<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
-<script type="text/javascript" src="srcipt/lhgdialog.js"></script>
-<link href="skin/themes/base/custom.css" rel="stylesheet" type="text/css" />
+<title>Capteam - <?php echo $multilingual_userlogin_title; ?></title>
+<script type="text/javascript" src="js/lhgcore/lhgcore.js"></script>
+<script type="text/javascript" src="js/lhgcore/lhgcheck.js"></script>
+<link href="css/tk_style.css" rel="stylesheet" type="text/css" />
+<link href="css/lhgcore/lhgdialog.css" rel="stylesheet" type="text/css" />
+<link href="css/lhgcore/lhgcheck.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap/bootstrap.css" rel="stylesheet" media="screen">
+<script type="text/javascript" src="js/jquery/jquery.js"></script>
+<script type="text/javascript" src="js/bootstrap/bootstrap.js"></script>
+<script type="text/javascript" src="js/lhgcore/lhgdialog.js"></script>
+<link href="css/custom.css" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript">
 
@@ -129,7 +124,9 @@ window.onload = function()
 </head>
 
 <body>
-<?php require('head_sub.php'); ?>
+<div class="topbar" id="headerlink">
+    <div class="logo"><a href="index.php" class="logourl" >&nbsp;</a></div>
+</div>
 		
 <table width="52%" border="0" cellspacing="0" cellpadding="0" height="697px;" align="center">
     <tr>
@@ -211,10 +208,7 @@ window.onload = function()
 </td>
 </tr>
 </table>
-</div>
-
-
-<iframe id="frame_content" name="main_frame" frameborder="0" height="1px" width="1px" src="http://www.wssys.net/analytics<?php if ($language == "en") { echo "_en";}?>.html" scrolling="no"></iframe>-->
+</div>-->
 
 <?php require('foot.php'); ?>
 </body>

@@ -103,8 +103,8 @@ $totalRows_Recordset_task = mysql_num_rows($Recordset_task);
 
 $user_arr = get_user_select();
 ?>
-<link rel="stylesheet" href="bootstrap/css/bootstrap-multiselect.css" type="text/css"/>
-<script type="text/javascript" src="bootstrap/js/bootstrap-multiselect.js"></script>
+<link rel="stylesheet" href="css/bootstrap/bootstrap-multiselect.css" type="text/css"/>
+<script type="text/javascript" src="js/bootstrap/bootstrap-multiselect.js"></script>
 <!-- Initialize the plugin: -->
 <script type="text/javascript">
   $(document).ready(function() {

@@ -1,11 +1,4 @@
 <?php
-/***********************************************************************
-Class:        Mht File Maker
-Version:      1.2 beta
-Date:         02/11/2007
-Author:       Wudi <wudicgi@yahoo.de>
-Description:  The class can make .mht file.
-***********************************************************************/
 
 class MhtFileMaker{
     var $config = array();

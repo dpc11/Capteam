@@ -1,23 +1,22 @@
 <?php require_once('config/tank_config.php'); ?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html >
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Capteam- <?php echo $multilingual_register_title; ?></title>
-<script type="text/javascript" src="srcipt/lhgcore.js"></script>
-<script type="text/javascript" src="srcipt/lhgcheck.js"></script>
-<link href="skin/themes/base/tk_style.css" rel="stylesheet" type="text/css" />
-<link href="skin/themes/base/lhgdialog.css" rel="stylesheet" type="text/css" />
-<link href="skin/themes/base/lhgcheck.css" rel="stylesheet" type="text/css" />
-<link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
-<script type="text/javascript" src="srcipt/jquery.js"></script>
-<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
-<script type="text/javascript" src="srcipt/lhgdialog.js"></script>
+<script type="text/javascript" src="js/lhgcore/lhgcore.js"></script>
+<script type="text/javascript" src="js/lhgcore/lhgcheck.js"></script>
+<link href="css/tk_style.css" rel="stylesheet" type="text/css" />
+<link href="css/lhgcore/lhgdialog.css" rel="stylesheet" type="text/css" />
+<link href="css/lhgcore/lhgcheck.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap/bootstrap.css" rel="stylesheet" media="screen">
+<script type="text/javascript" src="js/jquery/jquery.js"></script>
+<script type="text/javascript" src="js/bootstrap/bootstrap.js"></script>
+<script type="text/javascript" src="js/lhgcore/lhgdialog.js"></script>
 <style type="text/css"> 
 .pw-strength {clear: both;position: relative;top: 8px;width: 110px;}
-.pw-bar{background: url(img/pwd-1.png) no-repeat;height: 9px;overflow: hidden;width: 110px;}
-.pw-bar-on{background:  url(img/pwd-2.png) no-repeat; width:0px; height:9px;position: absolute;top: 1px;left: 2px;transition: width .5s ease-in;-moz-transition: width .5s ease-in;-webkit-transition: width .5s ease-in;-o-transition: width .5s ease-in;}
+.pw-bar{background: url(images/register/pwd-1.png) no-repeat;height: 9px;overflow: hidden;width: 110px;}
+.pw-bar-on{background:  url(images/register/pwd-2.png) no-repeat; width:0px; height:9px;position: absolute;top: 1px;left: 2px;transition: width .5s ease-in;-moz-transition: width .5s ease-in;-webkit-transition: width .5s ease-in;-o-transition: width .5s ease-in;}
 .pw-weak .pw-defule{ width:0px;}
 .pw-weak .pw-bar-on {width: 60px;}
 .pw-medium .pw-bar-on {width: 120px;}
@@ -318,14 +317,16 @@ window.onload = function()
 </script>
 
 </head>
-<?php require('head_sub.php'); ?>
+<div class="topbar" id="headerlink">
+    <div class="logo"><a href="index.php" class="logourl" >&nbsp;</a></div>
+</div>
 <body >
-<table align="center" width="52%" border="0" cellspacing="0" cellpadding="0" height="547px" style="margin-bottom:150px;"><!-- width:67%;margin-bottom:197.344px; -->
+<table align="center" width="62%" border="0" cellspacing="0" cellpadding="0" height="547px" style="margin-bottom:150px;"><!-- width:67%;margin-bottom:197.344px; -->
 	<tr>
-	<td style="width:48%">
-	<div  id="logo" class="ping_logo"  style="margin-top:150px;"></div>
+	<td style="width:50%">
+	<div  id="logo" class="ping_logo"  style="margin-top:150px;margin-left:80px;"></div>
 	</td>
-	<td style="width:62%;min-width:500px;" >
+	<td style="width:50%;min-width:500px;" >
 	<div >
 	<form  role="form" class="form-horizontal" action="" method="post" name="myform" id="myform" >
 					

@@ -95,8 +95,8 @@ $queryString_Recordset_actlog = sprintf("&totalRows_Recordset_actlog=%d%s", $tot
 <?php require('head.php'); ?>
 
 
-<script type="text/javascript" src="srcipt/lhgcore.js"></script>
-<script type="text/javascript" src="srcipt/lhgdialog.js"></script>
+<script type="text/javascript" src="js/lhgcore/lhgcore.js"></script>
+<script type="text/javascript" src="js/lhgcore/lhgdialog.js"></script>
 
 <table width="100%">
   

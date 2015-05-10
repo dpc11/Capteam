@@ -43,7 +43,7 @@ $imgpreviewsize=1/2;
 body,html{ overflow:hidden;  }
 -->
 </style>
-<link href="skin/themes/base/tk_style.css" rel="stylesheet" type="text/css" />
+<link href="css/tk_style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
 function uploadtk(){
 	var woper = window.opener;

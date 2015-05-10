@@ -102,11 +102,11 @@ $coldate = $colyear_log.$colmonth_log.$colday_log;
 
 ?>
 <?php require('head.php'); ?>
-<script type="text/javascript" src="chart/js/swfobject.js"></script> 
+<script type="text/javascript" src="plug-in/chart/js/swfobject.js"></script> 
 <script type="text/javascript"> 
 var flashvars = {"data-file":"chart_pie_user.php?recordID=<?php echo $colname_Recordset_task; ?>"};  
 var params = {menu: "false",scale: "noScale",wmode:"opaque"};  
-swfobject.embedSWF("chart/open-flash-chart.swf", "chart", "600px", "230px", 
+swfobject.embedSWF("plug-in/chart/open-flash-chart.swf", "chart", "600px", "230px", 
  "9.0.0","expressInstall.swf", flashvars,params);  
  
  function   searchtask() 

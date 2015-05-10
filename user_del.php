@@ -1,5 +1,5 @@
 <?php require_once('config/tank_config.php'); ?>
-<?php require_once('session_admin.php'); ?>
+<?php require_once('session.php'); ?>
 <?php
 $restrictGoTo = "user_error3.php";
 if ($_SESSION['MM_rank'] < "5") {   
@@ -53,8 +53,7 @@ if ((isset($_GET['UID'])) && ($_GET['UID'] != "") && ($_SESSION['MM_Username'] <
   header(sprintf("Location: %s", $deleteGoTo));
 }
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html PUBLIC >
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title></title>

@@ -228,9 +228,9 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
 
 
 <?php require('head.php'); ?>
-<script type="text/javascript" src="srcipt/lhgcore.js"></script>
-<script type="text/javascript" src="srcipt/lhgdialog.js"></script>
-<script type="text/javascript" src="srcipt/lhgcheck.js"></script>
+<script type="text/javascript" src="js/lhgcore/lhgcore.js"></script>
+<script type="text/javascript" src="js/lhgcore/lhgdialog.js"></script>
+<script type="text/javascript" src="js/lhgcore/lhgcheck.js"></script>
 <script type="text/javascript">
     
     // 通过审核结果选项控制是否显示任务分数框
@@ -244,8 +244,8 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
         
     };
 </script>
-<script charset="utf-8" src="editor/kindeditor.js"></script>
-<script charset="utf-8" src="editor/lang/zh_CN.js"></script>
+<script charset="utf-8" src="plug-in/editor/kindeditor.js"></script>
+<script charset="utf-8" src="plug-in/editor/lang/zh_CN.js"></script>
 
 <form action="<?php echo $editFormAction; ?>" method="post" name="myform" id="myform">
 <table width="100%">

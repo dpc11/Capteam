@@ -32,8 +32,8 @@ while($row = mysql_fetch_array($ResultTaskCalendar))
   }
 ?>
     
-<link rel="stylesheet" type="text/css" href="calendar/css/jquery-ui.css">
-<script type="text/javascript" src="calendar/js/jquery.form.min.js"></script>
+<link rel="stylesheet" type="text/css" href="plug-in/calendar/css/jquery-ui.css">
+<script type="text/javascript" src="plug-in/calendar/js/jquery.form.min.js"></script>
 
 <!-- 显示详细任务日程 -->
 <div class="fancy">

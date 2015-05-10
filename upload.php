@@ -31,7 +31,7 @@ $imgpreviewsize=1/2;
 ?>
 <html>
 <head>
-<title>WSS - <?php echo $multilingual_upload_title; ?></title>
+<title>Capteam - <?php echo $multilingual_upload_title; ?></title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
 <style type="text/css">
@@ -39,7 +39,7 @@ $imgpreviewsize=1/2;
 body,html{ overflow:hidden;  }
 -->
 </style>
-<link href="skin/themes/base/tk_style.css" rel="stylesheet" type="text/css" />
+<link href="css/tk_style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
 function uploadtk(){
 	var woper = window.opener;

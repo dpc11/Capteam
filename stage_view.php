@@ -1,7 +1,7 @@
 <?php require_once('config/tank_config.php'); ?>
 <?php require_once('session_unset.php'); ?>
 <?php require_once('session.php'); ?>
-<?php require_once('dao.php'); ?>
+<?php require_once('function/dao.php'); ?>
 <?php require_once('function/stage_function.php'); ?>
 <?php require_once('function/file_log_function.php'); ?>
 <?php
@@ -300,13 +300,13 @@ if($row_Recordset_sumlog["sum_hour"] == null){
 ?>
 
 <?php require('head.php'); ?>
-<script type="text/javascript" src="srcipt/lhgcore.js"></script>
-<script type="text/javascript" src="srcipt/lhgdialog.js"></script>
-<script type="text/javascript" src="chart/js/swfobject.js"></script> 
+<script type="text/javascript" src="js/lhgcore/lhgcore.js"></script>
+<script type="text/javascript" src="js/lhgcore/lhgdialog.js"></script>
+<script type="text/javascript" src="plug-in/chart/js/swfobject.js"></script> 
 <script type="text/javascript"> 
 var flashvars = {"data-file":"chart_pie_project.php?recordID=<?php echo $row_DetailRS1['stageid']; ?>"};  
 var params = {menu: "false",scale: "noScale",wmode:"opaque"};  
-swfobject.embedSWF("chart/open-flash-chart.swf", "chart", "600px", "230px", 
+swfobject.embedSWF("plug-in/chart/open-flash-chart.swf", "chart", "600px", "230px", 
  "9.0.0","expressInstall.swf", flashvars,params);  
 </script>
 <script type="text/javascript">
@@ -403,7 +403,7 @@ document.getElementById('tab_' + i).className = (i == ".$tabid.") ? 'onhover' : 
                             $project_dao_obj = new project_dao();
                             $project_obj = $project_dao_obj->get_project_by_id($project_id);
                             $project_name=$project_obj->name; 
-                            $node_id_task=-1; 
+                            $node_id_task=$now_sid+100000; 
                             require_once( 'tree.php'); 
                             ?>
                         </td>

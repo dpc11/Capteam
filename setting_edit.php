@@ -1,6 +1,6 @@
 <?php require_once('config/tank_config.php'); ?>
 <?php require_once('session_unset.php'); ?>
-<?php require_once('session_admin.php'); ?>
+<?php require_once('session.php'); ?>
 <?php
 if (!function_exists("GetSQLValueString")) {
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
@@ -70,15 +70,14 @@ $Recordset1 = mysql_query($query_Recordset1, $tankdb) or die(mysql_error());
 $row_Recordset1 = mysql_fetch_assoc($Recordset1);
 $totalRows_Recordset1 = mysql_num_rows($Recordset1);
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html PUBLIC >
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>WSS - <?php echo $multilingual_announcement_edit_title; ?></title>
-<link href="skin/themes/base/tk_style.css" rel="stylesheet" type="text/css" />
-<link href="skin/themes/base/lhgcheck.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="srcipt/lhgcore.js"></script>
-<script type="text/javascript" src="srcipt/lhgcheck.js"></script>
+<title>Capteam - <?php echo $multilingual_announcement_edit_title; ?></title>
+<link href="css/tk_style.css" rel="stylesheet" type="text/css" />
+<link href="css/lhgcore/lhgcheck.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/lhgcore/lhgcore.js"></script>
+<script type="text/javascript" src="js/lhgcore/lhgcheck.js"></script>
 <script type="text/javascript">
 <!--
 J.check.rules = [
@@ -95,7 +94,13 @@ window.onload = function()
 </head>
 
 <body>
-<?php require('admin_head.php'); ?>
+<!-- admin head-->
+<div class="admin_topbar" id="headerlink">
+<div class="admin_logo"></div>
+<div class="logininfo"><div class="float_left"><?php echo $multilingual_head_hello; ?> <?php echo "$_SESSION['MM_Displayname']"; ?>, </div> 
+  &nbsp;&nbsp;<a href="index.php"><?php echo $multilingual_head_frontend; ?></a>&nbsp;&nbsp;<a href="<?php echo $logoutAction ?>"><?php echo $multilingual_head_logout; ?></a></div></div>
+  
+  
 <br />
 
 <form action="<?php echo $editFormAction; ?>" method="post" name="form1" id="form1">

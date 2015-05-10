@@ -1,7 +1,7 @@
 <?php require_once('config/tank_config.php'); ?>
 <?php require_once('session_unset.php'); ?>
 <?php require_once('session.php'); ?>
-<?php require_once('dao.php'); ?>
+<?php require_once('function/dao.php'); ?>
 <?php
 $task_dao_obj = new task_dao();
 
@@ -242,9 +242,9 @@ if (isset($_SERVER['QUERY_STRING'])) {
 
 
 <?php require('head.php'); ?>
-<link href="skin/themes/base/lhgcheck.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="srcipt/lhgcore.js"></script>
-<script type="text/javascript" src="srcipt/lhgcheck.js"></script>
+<link href="css/lhgcore/lhgcheck.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/lhgcore/lhgcore.js"></script>
+<script type="text/javascript" src="js/lhgcore/lhgcheck.js"></script>
 <script type="text/javascript">
     J.check.rules = [
         {
@@ -263,8 +263,8 @@ if (isset($_SERVER['QUERY_STRING'])) {
         J.check.regform('form1');
     }
 </script>
-<script charset="utf-8" src="editor/kindeditor.js"></script>
-<script charset="utf-8" src="editor/lang/zh_CN.js"></script>
+<script charset="utf-8" src="plug-in/editor/kindeditor.js"></script>
+<script charset="utf-8" src="plug-in/editor/lang/zh_CN.js"></script>
 <script>
     var editor;
     KindEditor.ready(function (K) {

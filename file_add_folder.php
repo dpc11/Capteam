@@ -61,16 +61,15 @@ $ptab = "&pagetab=".$pagetabs;
   header(sprintf("Location: %s", $insertGoTo));
 }
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html PUBLIC >
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>WSS - <?php echo $multilingual_project_file_addfolder; ?></title>
-<link href="skin/themes/base/lhgdialog.css" rel="stylesheet" type="text/css" />
-    <link href="skin/themes/base/lhgcheck.css" rel="stylesheet" type="text/css" />
+<link href="css/lhgcore/lhgdialog.css" rel="stylesheet" type="text/css" />
+    <link href="css/lhgcore/lhgcheck.css" rel="stylesheet" type="text/css" />
 
-    <script type="text/javascript" src="srcipt/lhgcore.js"></script>
-    <script type="text/javascript" src="srcipt/lhgcheck.js"></script>
+    <script type="text/javascript" src="js/lhgcore/lhgcore.js"></script>
+    <script type="text/javascript" src="js/lhgcore/lhgcheck.js"></script>
 <script type="text/javascript">
 var P = window.parent, D = P.loadinndlg();   
 function closreload(url)
@@ -95,12 +94,12 @@ window.onload = function()
 }
 </script>
 
-<link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
-<script type="text/javascript" src="srcipt/jquery.js"></script>
-<script src="bootstrap/js/bootstrap.js"></script>
+<link href="css/bootstrap/bootstrap.css" rel="stylesheet" media="screen">
+<script type="text/javascript" src="js/jquery/jquery.js"></script>
+<script src="js/bootstrap/bootstrap.js"></script>
 
-<script charset="utf-8" src="editor/kindeditor.js"></script>
-<script charset="utf-8" src="editor/lang/zh_CN.js"></script>
+<script charset="utf-8" src="plug-in/editor/kindeditor.js"></script>
+<script charset="utf-8" src="plug-in/editor/lang/zh_CN.js"></script>
 <script>
         var editor;
         KindEditor.ready(function(K) {

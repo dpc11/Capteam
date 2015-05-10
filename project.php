@@ -1,7 +1,7 @@
 <?php require_once('config/tank_config.php'); ?>
 <?php require_once('session_unset.php'); ?>
 <?php require_once('session.php'); ?>
-<?php require_once('dao.php');?>
+<?php require_once('function/dao.php');?>
 <?php 
 
 $currentPage = $_SERVER["PHP_SELF"];

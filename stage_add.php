@@ -247,15 +247,15 @@ $totalRows_tkstatus = mysql_num_rows($tkstatus);
 
 ?>
 <?php require('head.php'); ?>
-<link type="text/css" href="skin/themes/base/ui.all.css" rel="stylesheet" />
-        <link href="skin/themes/base/lhgcheck.css" rel="stylesheet" type="text/css" />
-        <script type="text/javascript" src="srcipt/lhgcore.js"></script>
-        <script type="text/javascript" src="srcipt/lhgcheck.js"></script>
-    <link rel="stylesheet" href="bootstrap/css/bootstrap-multiselect.css" type="text/css"/>
-    <script type="text/javascript" src="bootstrap/js/bootstrap-multiselect.js"></script>
-    <link rel="stylesheet" href="bootstrap/css/datepicker3.css" type="text/css"/>
-    <script type="text/javascript" src="bootstrap/js/bootstrap-datepicker.js"></script>
-    <script type="text/javascript" src="bootstrap/js/locales/bootstrap-datepicker.zh-CN.js"></script>
+<link type="text/css" href="css/ui/ui.all.css" rel="stylesheet" />
+        <link href="css/lhgcore/lhgcheck.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="js/lhgcore/lhgcore.js"></script>
+        <script type="text/javascript" src="js/lhgcore/lhgcheck.js"></script>
+    <link rel="stylesheet" href="css/bootstrap/bootstrap-multiselect.css" type="text/css"/>
+    <script type="text/javascript" src="js/bootstrap/bootstrap-multiselect.js"></script>
+    <link rel="stylesheet" href="css/bootstrap/datepicker3.css" type="text/css"/>
+    <script type="text/javascript" src="js/bootstrap/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="js/bootstrap/locales/bootstrap-datepicker.zh-CN.js"></script>
 <script type="text/javascript">
 	$(function() {
     $('#datepicker2').datepicker({
@@ -298,8 +298,8 @@ if(str == '-3')window.open('project_add.php');
 //-->
 </script>
 
-<script charset="utf-8" src="editor/kindeditor.js"></script>
-<script charset="utf-8" src="editor/lang/zh_CN.js"></script>
+<script charset="utf-8" src="plug-in/editor/kindeditor.js"></script>
+<script charset="utf-8" src="plug-in/editor/lang/zh_CN.js"></script>
 <script>
         var editor;
         KindEditor.ready(function(K) {

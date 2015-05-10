@@ -1,7 +1,7 @@
   <?php require_once('config/tank_config.php'); ?>
   <?php require_once('session_unset.php'); ?>
   <?php require_once('session.php'); ?>
-  <?php require_once('dao.php'); ?>
+  <?php require_once('function/dao.php'); ?>
   <?php require_once('function/file_log_function.php');?>
   <?php
   $currentPage = $_SERVER["PHP_SELF"];
@@ -326,8 +326,8 @@
   ?>
 
   <?php require('head.php'); ?>
-  <link rel="stylesheet" type="text/css" href="calendar/css/fullcalendar.css">
-<link rel="stylesheet" type="text/css" href="calendar/css/fancybox.css">
+  <link rel="stylesheet" type="text/css" href="plug-in/calendar/css/fullcalendar.css">
+<link rel="stylesheet" type="text/css" href="plug-in/calendar/css/fancybox.css">
 <style type="text/css">
     .fc-day
     {
@@ -338,10 +338,10 @@
         cursor: pointer; 
     }
 </style>
-<script src='srcipt/jquery-1.9.1.js'></script>
-<script src='srcipt/jquery-ui-1.10.4.min.js'></script>
-<script src='calendar/js/fullcalendar.js'></script>
-<script src='calendar/js/jquery.fancybox-1.3.1.pack.js'></script>
+<script src='js/jquery/jquery-1.9.1.js'></script>
+<script src='js/jquery/jquery-ui-1.10.4.min.js'></script>
+<script src='plug-in/calendar/js/fullcalendar.js'></script>
+<script src='plug-in/calendar/js/jquery.fancybox-1.3.1.pack.js'></script>
 <script type="text/javascript">
 $(function() {
   $('#calendar').fullCalendar({
@@ -363,9 +363,9 @@ $(function() {
   
 });
 </script>
-  <script type="text/javascript" src="srcipt/lhgcore.js"></script>
-  <script type="text/javascript" src="srcipt/lhgdialog.js"></script>
-  <script type="text/javascript" src="chart/js/swfobject.js"></script> 
+  <script type="text/javascript" src="js/lhgcore/lhgcore.js"></script>
+  <script type="text/javascript" src="js/lhgcore/lhgdialog.js"></script>
+  <script type="text/javascript" src="plug-in/chart/js/swfobject.js"></script> 
   <script type="text/javascript"> 
   var flashvars = {"data-file":"chart_pie_project.php?recordID=<?php echo $row_DetailRS1['id']; ?>"};  
   var params = {menu: "false",scale: "noScale",wmode:"opaque"};  
