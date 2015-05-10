@@ -354,7 +354,7 @@ a:focus {
 
 .topbar {
     background: #626262;
-    height: 42px;
+    height: 66px;
 }
 
 .logo {
@@ -366,6 +366,8 @@ a:focus {
     margin-top: 7px;
     margin-left: 20px;
     margin-right: 20px;
+	-webkit-transform: scale( 1.8 );
+	-webkit-transform-origin: 0 0;
 }
 
 .logo a {
@@ -453,12 +455,13 @@ a:focus {
 /*    background: url(../images/ui/foot_bg.jpg) repeat-x;*/
     border-top: 1px solid #ccc;
     bottom: 0px;
-    height: 36px;
+    height: 60px;
 }
 
 .wss_title {
-    margin: 0px auto 12px auto;
-    width: 600px;
+    margin: 14px auto 8px auto;
+    margin: 14px auto 8px auto;
+    width: 1000px;
     color: #666;
     font-size: 1.2em;
 }

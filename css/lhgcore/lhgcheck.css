@@ -8,9 +8,10 @@
 	background-image: url(../../images/lhgcore/info.gif);
 	background-repeat: no-repeat;
 	
+	
 }
 
-.chker{ color: #CD0A0A; font-weight:normal; background-position: 0 0; }
+.chker{ color: #CD0A0A; font-weight:normal; background-position: 0 0;}
 .chkok{ color: #89CB0A; font-weight:normal; background-position: 0 -16px; }
 
 /* chkaj是AJAX验证时等待时的样式 */

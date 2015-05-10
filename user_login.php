@@ -96,46 +96,58 @@ window.onresize = function()
 {	
     var x= $(textfield).offset(); 
 
+	document.getElementById("outdiv").style.height = (document.body.clientHeight-126) +'px';  
+	
 	document.getElementById("temp_textfield4_4").style.top=(x.top)+'px';
 	document.getElementById("temp_textfield4_4").style.left=(x.left)+'px';
-	document.getElementById("temp_textfield4_4").style.width=(document.getElementById("textfield").clientWidth+6)+'px';
+	document.getElementById("temp_textfield4_4").style.width=(document.getElementById("textfield").clientWidth+5)+'px';
     x= $(textfield2).offset();
 	document.getElementById("temp_textfield5_5").style.top=(x.top)+'px';
 	document.getElementById("temp_textfield5_5").style.left=(x.left)+'px';
-	document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield2").clientWidth+6)+'px';		
+	document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield2").clientWidth+5)+'px';		
 }
 
 window.onload = function()
 {
     J.check.regform('form1');
 	
+	document.getElementById("outdiv").style.height = (document.body.clientHeight-126) +'px';  
+	
     var x= $(textfield).offset(); 
 
 	document.getElementById("temp_textfield4_4").style.top=(x.top)+'px';
 	document.getElementById("temp_textfield4_4").style.left=(x.left)+'px';
-	document.getElementById("temp_textfield4_4").style.width=(document.getElementById("textfield").clientWidth+6)+'px';
+	document.getElementById("temp_textfield4_4").style.width=(document.getElementById("textfield").clientWidth+5)+'px';
     x= $(textfield2).offset();
 	document.getElementById("temp_textfield5_5").style.top=(x.top)+'px';
 	document.getElementById("temp_textfield5_5").style.left=(x.left)+'px';	
-	document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield2").clientWidth+6)+'px';	
+	document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield2").clientWidth+5)+'px';	
+	
 }
 
 </script>
 </head>
 
-<body>
-<div class="topbar" id="headerlink">
-    <div class="logo"><a href="index.php" class="logourl" >&nbsp;</a></div>
+<body ><center>
+<div class="topbar" id="headerlink" >
+    <div class="logo" id="logo" ><a href="index.php" class="logourl" >&nbsp;</a></div>
 </div>
-		
-<table width="52%" border="0" cellspacing="0" cellpadding="0" height="697px;" align="center">
+
+
+<div id="outdiv" style="min-width:1100px;min-height:500px;">
+<div style="width:820.833px;-webkit-transform: scale( 1.2,1.2 );" >
+	<!--  
+	<table width="52%" border="0" cellspacing="0" cellpadding="0" height="697px;" align="center">
+	
+	-->	
+<table width="100%" border="0" cellspacing="0" cellpadding="0" height="100%" align="center">
     <tr>
-      <td  style="width:60%">
+      <td  style="width:40%">
       <div class="ping_logo"></div>
       </td>
+	  <td style="width:20%;">&nbsp;</div>
 	  
-	  
-	  <td style="width:40%;min-width:300px;">
+	  <td style="width:40%;min-width:100px;">
 	  <div>
 			<legend  style="border-bottom-width: 3px;font-weight:bold;font-size:20px;">&nbsp;&nbsp;用户登陆</legend>
 		</div>		
@@ -159,12 +171,12 @@ window.onload = function()
 	  <div style="padding-left:15px;" >
 	   <div class="form-group">
     <label class="beauty-label" for="textfield" style="font-size:17px;font-weight:bold;"><?php echo $multilingual_userlogin_username; ?>&nbsp;&nbsp; ：&nbsp;&nbsp;</label><span id="username"></span>
-    <input type="text" class="form-control" id="textfield" name="textfield" placeholder="邮箱" value="<?php echo $loginUsername; ?>">
+    <input type="text" class="form-control" id="textfield"  style="width:300px;" name="textfield" placeholder="邮箱" value="<?php echo $loginUsername; ?>">
   </div>
   
   <div class="form-group">
     <label class="beauty-label" for="textfield2" style="font-size:17px;font-weight:bold;">密&nbsp;&nbsp;&nbsp;&nbsp;码&nbsp;&nbsp; ：&nbsp;&nbsp;</label><span id="passwordid"  ></span>
-    <input type="password" class="form-control" name="textfield2" id="textfield2" placeholder="密码" value="<?php echo $password; ?>">
+    <input type="password" class="form-control" name="textfield2"  style="width:300px;" id="textfield2" placeholder="密码" value="<?php echo $password; ?>">
   </div>
   <div style="clear:both ">
 	<div style="width: 10%;float:right; ">
@@ -181,7 +193,7 @@ window.onload = function()
 	  <div style="width: 30%;margin-top: 24px;float:right; ">
 	  <button type="button" class="btn btn-default" style="width: 60px;float:right; " onclick="register();"><?php echo $multilingual_user_register; ?></button>
 	  </div>
-	  <div style="width: 40%;margin-top: 24px;float:right; ">
+	  <div style="width: 30%;margin-top: 24px;float:right; ">
 	  <button type="submit" class="btn btn-default" style="width: 60px;float:right; "><?php echo $multilingual_userlogin_login; ?></button>
 	  </div>
 	  
@@ -192,24 +204,10 @@ window.onload = function()
     </tr>
 
   </table>
-
-	<input  class="form-control"   type="text"  id="temp_textfield4_4" name="temp_textfield4_4" style="width:300px;z-index:3;position:absolute;" onblur='changemsg("temp_textfield4_4","textfield");' placeholder="邮箱"  value="<?php echo $loginUsername; ?>" />
-	<input  class="form-control"   type="password"  id="temp_textfield5_5" name="temp_textfield5_5" style="width:300px;z-index:3;position:absolute;" onblur='changepsd("temp_textfield5_5","textfield2");' placeholder="密码" value="<?php echo $password; ?>" >
-
-<!--
-<div style="background:#F6F6F6; padding:15px; width:100%;" >
-<table width="480px" border="0" cellspacing="0" cellpadding="0" align="center">
-<tr>
-<td width="100px">
-<img src="skin/themes/base/images/getqrcode.jpg" width="82" height="82" />
-</td>
-<td valign="top">
-<span class="gray2 glink" style="line-height:150%;"><?php echo $multilingual_getqrcode; ?></span>
-</td>
-</tr>
-</table>
-</div>-->
-
+</div></div>
+<input  class="form-control"   type="text"  id="temp_textfield4_4" name="temp_textfield4_4" style="width:300px;z-index:3;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;" onblur='changemsg("temp_textfield4_4","textfield");' placeholder="邮箱"  value="<?php echo $loginUsername; ?>" />
+	<input  class="form-control"   type="password"  id="temp_textfield5_5" name="temp_textfield5_5" style="width:300px;z-index:3;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;" onblur='changepsd("temp_textfield5_5","textfield2");' placeholder="密码" value="<?php echo $password; ?>" >
+	
 <?php require('foot.php'); ?>
-</body>
+</center></body>
 </html>
