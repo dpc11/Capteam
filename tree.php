@@ -3,10 +3,10 @@ $str=get_tree( $project_id );
 $prjurl="project_view.php?recordID=".$project_id."&pagetab=allprj";
 ?>
 
-<link rel="StyleSheet" href="dtree/dtree.css" type="text/css" />
-<script type="text/javascript" src="dtree/dtree.js"></script>
+<link rel="StyleSheet" href="css/dtree/dtree.css" type="text/css" />
+<script type="text/javascript" src="js/dtree/dtree.js"></script>
 
-<body onLoad="javascript: d.openTo(<?php  if ($pagename == "project_view.php"){ echo "-1"; } else { echo $node_id_task; } ?>,true);">
+<body onLoad="javascript: d.openTo(<?php  if ($pagename == "project_view.php"){ echo "0"; } else { echo $node_id_task; } ?>,true);">
 
 <script type="text/javascript" language="javascript">    
  
@@ -37,11 +37,11 @@ if(frm != null && subWeb != null)
     8 fontbold"><?php echo $multilingual_project_view_wbs; ?></h5>
     
 <script type="text/javascript">
-        <!--
+
 		var r =<?php echo $str; ?>;
         
         d = new dTree('d');
-        d.add(0,-1,'<?php echo "<b>[".$multilingual_head_project."]".$project_name."</b>"; ?>','<?php  echo $prjurl; ?>');
+        d.add( 0 ,-1,'<?php echo "<b>[".$multilingual_head_project."]".$project_name."</b>"; ?>','<?php  echo $prjurl; ?>');
 
         for(i=0;i<r.length;i++)
         {

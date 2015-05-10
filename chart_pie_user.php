@@ -1,6 +1,6 @@
 <?php
 include_once ('config/tank_config.php');  
-include_once ('chart/php-ofc-library/open-flash-chart.php'); 
+include_once ('plug-in/chart/php-ofc-library/open-flash-chart.php'); 
 
 if (!function_exists("GetSQLValueString")) {
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 

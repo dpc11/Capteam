@@ -12,11 +12,7 @@ $totalRows_Recordset_anc = mysql_num_rows($Recordset_anc);
 /////////////////////////////////////////////////////////////////////////////////
 $message_count = check_message( $_SESSION['MM_uid'] );
 
-//$message_count = 0;
 $totalRows_Recordset_anc=0;
-
-
-
 
 
 
@@ -30,13 +26,13 @@ $pagename = end($pagename);
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Capteam</title>
-<link href="skin/themes/base/lhgdialog.css" rel="stylesheet" type="text/css" />
-<link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
-<link href="skin/themes/base/tk_style.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="srcipt/jquery.js"></script>
-<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
-<script type="text/javascript" src="srcipt/lhgcore.js"></script>
-<script type="text/javascript" src="srcipt/lhgdialog.js"></script>
+<link href="css/lhgcore/lhgdialog.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap/bootstrap.css" rel="stylesheet" media="screen">
+<link href="css/tk_style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery/jquery.js"></script>
+<script type="text/javascript" src="js/bootstrap/bootstrap.js"></script>
+<script type="text/javascript" src="js/lhgcore/lhgcore.js"></script>
+<script type="text/javascript" src="js/lhgcore/lhgdialog.js"></script>
 
 </head>
 <body>
@@ -46,7 +42,8 @@ if(strpos($_SERVER["HTTP_USER_AGENT"],"MSIE 8.0") || strpos($_SERVER["HTTP_USER_
 <div class="alert alert-warning" >
 <?php echo $multilingual_browser_check; ?>
 </div>
-<?php exit;} ?>
+<?php exit;
+} ?>
 
   <div class="topbar" id="headerlink" >
     <div class="logo"><a href="index.php" class="logourl" >&nbsp;</a></div>
@@ -72,13 +69,6 @@ if(strpos($_SERVER["HTTP_USER_AGENT"],"MSIE 8.0") || strpos($_SERVER["HTTP_USER_
 	  echo "nav_select";} ?>
 	  "><?php echo $multilingual_head_file; ?></a>
 	  
-<!--
-      <a href="default_user.php" class="
-	  <?php if($pagename == "default_user.php" || $pagename == "user_add.php" || $pagename == "user_view.php" || $pagename == "default_user_edit.php"){
-	  echo "nav_select";} ?>
-	  "><?php echo $multilingual_head_user; ?></a>
--->
-	  
       <a href="default_announcement.php" class="
 	  <?php if($pagename == "default_announcement.php" || $pagename == "announcement_add.php" || $pagename == "announcement_view.php" || $pagename == "announcement_edit.php"){
 	  echo "nav_select";} ?>
@@ -93,20 +83,12 @@ if(strpos($_SERVER["HTTP_USER_AGENT"],"MSIE 8.0") || strpos($_SERVER["HTTP_USER_
 
     <div class="logininfo2">
               <div class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo "{$_SESSION['MM_Displayname']}"; ?> <span class="caret"></span></a>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo $_SESSION['MM_Displayname']; ?> <span class="caret"></span></a>
                 <ul class="dropdown-menu pull-right">
 
-				  <li><a href="user_view.php?recordID=<?php echo "{$_SESSION['MM_uid']}"; ?>"><?php echo $multilingual_head_myprofile; ?></a></li>
-                  <?php if($_SESSION['MM_rank'] > "1") { ?>
-				  <li><a href="default_user_edit.php?UID=<?php echo "{$_SESSION['MM_uid']}"; ?>"><?php echo $multilingual_head_edituserinfo; ?></a></li>
-				  <?php }  ?>
-
-<!--
-				  <?php if ($_SESSION['MM_rank'] > "4") {  ?>
+				  <li><a href="user_view.php?recordID=<?php echo $_SESSION['MM_uid']; ?>"><?php echo $multilingual_head_myprofile; ?></a></li>
+				  <li><a href="default_user_edit.php?UID=<?php echo $_SESSION['MM_uid']; ?>"><?php echo $multilingual_head_edituserinfo; ?></a></li>
                   <li><a href="setting.php?type=setting"><?php echo $multilingual_head_backend; ?></a></li>
-				  <?php }  ?>
--->
-
                   <li><?php echo $multilingual_head_help; ?></li>
                   <li class="divider"></li>
                   <li><a href="<?php echo $logoutAction ?>"  ><?php echo $multilingual_head_logout; ?></a></li>
@@ -199,7 +181,7 @@ $.ajax({
 
 
 <script type="text/javascript">
-// <![CDATA[
+
 var textDiv = document.getElementById("rollText");
 var textList = textDiv.getElementsByTagName("a");
 if(textList.length > 1){
@@ -228,7 +210,6 @@ function MaxRoll(){
 		textDiv.style.top = 0;divTop = 0;newTop=0;MaxRoll();
 	}
 }
-// ]]>
 </script>
 
   </div>

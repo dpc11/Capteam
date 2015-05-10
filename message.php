@@ -1,7 +1,7 @@
 <?php require_once('config/tank_config.php'); ?>
 <?php require_once('session_unset.php'); ?>
 <?php require_once('session.php'); ?>
-<?php require_once('dao.php'); ?>
+<?php require_once('function/dao.php'); ?>
 <?php
 //创建Message数据库操作实体类
 $message_dao_obj = new message_dao();
@@ -22,8 +22,6 @@ $colname_Recordset1 = "-1";
 if (isset($_GET['select1'])) {
   $colname_Recordset1 = $_GET['select1'];
 }
-
-$new_msgid = $_SESSION['MM_msg'];
 
 $user_id= $_SESSION['MM_uid'];
 
@@ -53,7 +51,6 @@ $deleteResult1 = mysql_query($deleteSQL, $tankdb) or die(mysql_error());
 if($pageNum_Recordset1==0 && $row_Recordset1['meid']<>null){
 $message_id = $row_Recordset1['meid'];
 
-$_SESSION['MM_msg'] = $message_id;	
 $updateSQL = "UPDATE tk_user SET tk_user_message='$message_id' WHERE uid='$user_id'";
 $Result1 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
 }

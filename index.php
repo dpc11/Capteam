@@ -74,14 +74,6 @@ $(function(){
 </div><!--btn-group -->
 </div><!--float_left -->
 
-<!--新建任务d按钮
-<?php if($_SESSION['MM_rank'] > "2" ) { ?>
-<div class="float_right">
-		<button type="button" class="btn btn-default btn-sm" name="button2" id="button2" onclick="addtask();">
-		<span class="glyphicon glyphicon-plus-sign"></span> <?php echo $multilingual_default_newtask; ?>
-		</button>
-</div>
-<?php }  ?>  --> 
 <div class="clearboth"></div>
 </div><!--subnav -->
 <div class="pagemargin">

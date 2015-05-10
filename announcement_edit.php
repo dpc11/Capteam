@@ -48,9 +48,9 @@ $row_Recordset1 = mysql_fetch_assoc($Recordset1);
 $totalRows_Recordset1 = mysql_num_rows($Recordset1);
 ?>
 <?php require('head.php'); ?>
-    <link href="skin/themes/base/lhgcheck.css" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="srcipt/lhgcore.js"></script>
-    <script type="text/javascript" src="srcipt/lhgcheck.js"></script>
+    <link href="css/lhgcore/lhgcheck.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="js/lhgcore/lhgcore.js"></script>
+    <script type="text/javascript" src="js/lhgcore/lhgcheck.js"></script>
 <script type="text/javascript">
 J.check.rules = [
     { name: 'tk_anc_title', mid: 'anntitle', type: 'limit', requir: true, min: 2, max: 30, warn: '<?php echo $multilingual_announcement_titlerequired; ?>' }
@@ -62,8 +62,8 @@ window.onload = function()
     J.check.regform('form1');
 }
 </script>
-<script charset="utf-8" src="editor/kindeditor.js"></script>
-<script charset="utf-8" src="editor/lang/zh_CN.js"></script>
+<script charset="utf-8" src="plug-in/editor/kindeditor.js"></script>
+<script charset="utf-8" src="plug-in/editor/lang/zh_CN.js"></script>
 <script>
         var editor;
         KindEditor.ready(function(K) {
