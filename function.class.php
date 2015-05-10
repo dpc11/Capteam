@@ -144,6 +144,7 @@ function pinyin($zh){
 }    
 
 //add lastuser
+/*
 function pushlastuse($uid, $name, $myid){  
 global $tankdb;
 global $database_tankdb;
@@ -174,31 +175,26 @@ $rs_update_lastuse = mysql_query($update_lastuse, $tankdb) or die(mysql_error())
 $_SESSION['MM_last'] = $last_use_arr;
 
 return $last_use_arr;
-}
+}*/
 
 //add task
-function add_task( $ccuser = 0, $fuser, $tuser, $projectid, $type, $text, $priority, $temp, $start, $end, $hour, $status, $cuser, $luser, $taskid, $wbs, $wbsid, $nowuser, $tag, $remark ) {
+function add_task( $ccuser, $fuser, $tuser, $projectid, $stage_id, $text, $priority, $start, $end, $hour, $status, $tag,$csa_description ) {
 global $tankdb;
 global $database_tankdb;
 global $multilingual_log_addtask;
-$insertSQL = sprintf("INSERT INTO tk_task (test01, test02, csa_remark1, csa_from_user, csa_to_user, csa_project, csa_type, csa_text, csa_priority, csa_temp, csa_plan_st, csa_plan_et, csa_plan_hour, csa_remark2, csa_create_user, csa_last_user, csa_remark4, csa_remark5, csa_remark6, csa_project_sub, csa_remark7, test03, test04) VALUES (%s, $tag $remark %s, %s, %s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, '0', '', '', '')",
+$insertSQL = sprintf("INSERT INTO tk_task (csa_testto, csa_from_user, csa_to_user, csa_project, csa_project_stage, csa_text, csa_priority, csa_plan_st, csa_plan_et, csa_plan_hour, csa_tag,csa_description,csa_status) VALUES (%s, %s, %s, %s, %s,%s, %s, %s, %s, %s, %s, $csa_description, %s)",
                        GetSQLValueString($ccuser, "text"),
-					   GetSQLValueString($fuser, "text"),
-                       GetSQLValueString($tuser, "text"),
-                       GetSQLValueString($projectid, "text"),
-                       GetSQLValueString($type, "text"),
+					   GetSQLValueString($fuser, "int"),
+                       GetSQLValueString($tuser, "int"),
+                       GetSQLValueString($projectid, "int"),
+                       GetSQLValueString($stage_id, "int"),
                        GetSQLValueString($text, "text"),
                        GetSQLValueString($priority, "text"),
-                       GetSQLValueString($temp, "text"),
 					   GetSQLValueString($start, "text"),
 					   GetSQLValueString($end, "text"),
 					   GetSQLValueString($hour, "text"),
-					   GetSQLValueString($status, "text"),
-					   GetSQLValueString($cuser, "text"),
-					   GetSQLValueString($luser, "text"),
-					   GetSQLValueString($taskid, "text"),
-					   GetSQLValueString($wbs, "text"),
-					   GetSQLValueString($wbsid, "text"));
+					   GetSQLValueString($tag, "text"),
+					   GetSQLValueString($status, "int"));
 
 
 
@@ -206,6 +202,7 @@ $insertSQL = sprintf("INSERT INTO tk_task (test01, test02, csa_remark1, csa_from
   $Result1 = mysql_query($insertSQL, $tankdb) or die(mysql_error());
   
   $newID = mysql_insert_id();
+  /*
     $newName = $nowuser;
 
 $insertSQL2 = sprintf("INSERT INTO tk_log (tk_log_user, tk_log_action, tk_log_type, tk_log_class, tk_log_description) VALUES (%s, %s, %s , 1, '' )",
@@ -213,7 +210,7 @@ $insertSQL2 = sprintf("INSERT INTO tk_log (tk_log_user, tk_log_action, tk_log_ty
                        GetSQLValueString($multilingual_log_addtask, "text"),
                        GetSQLValueString($newID, "text"));  
   $Result2 = mysql_query($insertSQL2, $tankdb) or die(mysql_error());
-
+*/
   return $newID;
 }
 
@@ -221,49 +218,104 @@ $insertSQL2 = sprintf("INSERT INTO tk_log (tk_log_user, tk_log_action, tk_log_ty
 function get_tree( $projectid ) {
 global $tankdb;
 global $database_tankdb;
-
-
+/*开始操作数据库了，select语句*/
+$viewstageSQL1="SELECT * from tk_stage WHERE tk_stage_delestatus=1 AND tk_stage_pid=$projectid";
+//对数据库进行查询
 mysql_select_db($database_tankdb, $tankdb);
-$query_Recordset1 = "SELECT * FROM tk_task 
-inner join tk_task_tpye on tk_task.csa_type=tk_task_tpye.id 
-inner join tk_user on tk_task.csa_to_user=tk_user.uid 
-inner join tk_status on tk_task.csa_remark2=tk_status.id 
-WHERE csa_project = '$projectid' ORDER BY TID";
-$Recordset1 = mysql_query($query_Recordset1, $tankdb) or die(mysql_error());
-$row_Recordset1 = mysql_fetch_assoc($Recordset1);
-
-$FoundTask = mysql_num_rows($Recordset1);
+$Result_stage = mysql_query($viewstageSQL1, $tankdb) or die(mysql_error());
+$FoundTask = mysql_num_rows($Result_stage);
     
 if (!$FoundTask) {
- return 0;   
+ return 0;    
+}
+//对查到的数据进行遍历
+while($row_stage = mysql_fetch_array($Result_stage))
+  {
+    $pid = 0;//因为是阶段，所以父节点是0节点
+    $today_date = date('Y-m-d');//今天的日期，用于计算项目状态
+    //计算项目的状态
+      if($today_date < $row_stage['tk_stage_st']){
+        //表示项目还没有开始
+        $str = "<div style='background-color: #FF6666; width:100%; text-align:center;'>阶段未开始</div>";
+        $stage_statues = "阶段未开始";
+      }elseif ($today_date > $row_stage['tk_stage_et']) {
+        //表示项目已结结束
+        $str = "<div style='background-color: #B3B3B3; width:100%; text-align:center;'>阶段已结束</div>";
+        $stage_statues = "阶段已结束";
+      }else{
+        //表示项目正在进行中
+        $str = "<div style='background-color: #6ABD78; width:100%; text-align:center;'>阶段进行中</div>";
+        $stage_statues = "阶段进行中";
+      }
+  $str =  explode('background-color:', $str);
+  $str =  explode('width:', $str[1]);
+  $nodename = "<span style ='color:".$str[0]."'>■</span>"." [阶段]".$row_stage['tk_stage_title'];
+  $nodetitle = $stage_statues;  
+  $stage_id = $row_stage['stageid'];
+  //插入
+  $result[] = array('id'=>(100000+$row_stage['stageid']),'pid'=>$pid,'name'=>$nodename,'title'=>$nodetitle,);
+
+  //这里应该加上项目的操作
+ /*开始操作数据库了，select语句,返回该项目中所有阶段的id号和题目*/
+  $viewtaskSQL1="SELECT * from tk_task,tk_status WHERE tk_task.csa_status = tk_status.id AND tk_task.csa_del_status=1 AND tk_task.csa_project_stage=$stage_id";
+  //对数据库进行查询
+  mysql_select_db($database_tankdb, $tankdb);
+  $Result_task = mysql_query($viewtaskSQL1, $tankdb) or die(mysql_error());
+  while($row_task = mysql_fetch_array($Result_task)){
+      $pid = $stage_id+100000;//父节点是改阶段的menu id
+      $str = $row_task['task_status_display'];
+      $str =  explode('background-color:', $str);
+      $str =  explode('width:', $str[1]);
+
+      $nodename = "<span style ='color:".$str[0]."'>■</span>"." [任务]".$row_task['csa_text'];
+      $nodetitle = $row_task['task_status'];
+      $result[] = array('id'=>$row_task['tid'],'pid'=>$pid,'name'=>$nodename,'title'=>$nodetitle,);
+  }
 }
 
-$i=0;
-do{
-	if($row_Recordset1['csa_remark4']=="-1"){
-$pid= 0;
-	} else {
-$pid= $row_Recordset1['csa_remark4'];
-	}
+$str=json_encode($result);
+return $str;
+// mysql_select_db($database_tankdb, $tankdb);
+// $query_Recordset1 = "SELECT * FROM tk_task 
+// inner join tk_user on tk_task.csa_to_user=tk_user.uid 
+// inner join tk_status on tk_task.csa_status=tk_status.id 
+// WHERE csa_project = '$projectid' ORDER BY TID";
+// $Recordset1 = mysql_query($query_Recordset1, $tankdb) or die(mysql_error());
+// $row_Recordset1 = mysql_fetch_assoc($Recordset1);
+
+// $FoundTask = mysql_num_rows($Recordset1);
+    
+// if (!$FoundTask) {
+//  return 0;   
+ 
+// }
+
+// $i=0;
+// do{
+// 	if($row_Recordset1['csa_remark4']=="-1"){
+// $pid= 0;
+// 	} else {
+// $pid= $row_Recordset1['csa_remark4'];
+// 	}
 	
 
-$str = $row_Recordset1['task_status_display'];
-$str =  explode('background-color:', $str);
-$str =  explode('width:', $str[1]);
+// $str = $row_Recordset1['task_status_display'];
+// $str =  explode('background-color:', $str);
+// $str =  explode('width:', $str[1]);
 
 
 
-$nodename = "<span style ='color:".$str[0]."'>■</span>"." [".$row_Recordset1['task_tpye']."]".$row_Recordset1['csa_text'];
-$nodetitle = $row_Recordset1['task_status']." - ".$row_Recordset1['tk_display_name']." - ".$row_Recordset1['csa_text'];
+// $nodename = "<span style ='color:".$str[0]."'>■</span>"." [".$row_Recordset1['task_tpye']."]".$row_Recordset1['csa_text'];
+// $nodetitle = $row_Recordset1['task_status']." - ".$row_Recordset1['tk_display_name']." - ".$row_Recordset1['csa_text'];
 
 
-$result[] = array('id'=>$row_Recordset1['TID'],'pid'=>$pid,'name'=>$nodename,'title'=>$nodetitle,);
-$i++;
-} while ($row_Recordset1 = mysql_fetch_assoc($Recordset1)); 
+// $result[] = array('id'=>$row_Recordset1['TID'],'pid'=>$pid,'name'=>$nodename,'title'=>$nodetitle,);
+// $i++;
+// } while ($row_Recordset1 = mysql_fetch_assoc($Recordset1)); 
 
-$str=json_encode($result);
+// $str=json_encode($result);
 
-return $str;
+// return $str;
 }
 
 //get userinfo
@@ -271,7 +323,7 @@ function get_user($userid, $channel ="default"){
 global $tankdb;
 global $database_tankdb;
 
-$query_touser =  sprintf("SELECT * FROM tk_user WHERE uid = %s",
+$query_touser =  sprintf("SELECT * FROM tk_user WHERE uid = %s AND tk_user_del_status=1",
                        GetSQLValueString($userid, "int"));  
 $touser = mysql_query($query_touser, $tankdb) or die(mysql_error());
 $row_touser = mysql_fetch_assoc($touser);
@@ -361,8 +413,10 @@ $user_message_id = $_SESSION['MM_msg'];
 $count_message_SQL = sprintf("SELECT 
 							COUNT(meid) as count_msg   
 							FROM tk_message  							
-							WHERE meid > '$user_message_id' AND tk_mess_touser = '$userid'"
-								);
+                WHERE tk_mess_status = 1 AND tk_mess_touser = '$userid'"
+								);//选择未读的消息
+//WHERE tk_mess_status = 1 AND tk_mess_touser = '$userid'"
+//WHERE meid > '$user_message_id' AND tk_mess_touser = '$userid'"
 $count_message_RS = mysql_query($count_message_SQL, $tankdb) or die(mysql_error());
 $row_count_message = mysql_fetch_assoc($count_message_RS);
 //$_SESSION['MM_msg_con'] = $row_count_message['count_msg'];
@@ -380,21 +434,25 @@ global $multilingual_message_newtaskcomment;
 global $multilingual_message_exam;
 global $multilingual_message_edituser;
 global $multilingual_message_edittask;
+global $multilingual_message_newtaskcommit;
 
 global $multilingual_message_newtask_cc;
 global $multilingual_message_newtaskcomment_cc;
 global $multilingual_message_exam_cc;
 global $multilingual_message_edituser_cc;
 global $multilingual_message_edittask_cc;
+global $multilingual_message_newtaskcommit_cc;
 
 
-if($cc==0){
+if($cc==0){//是新建任务
 $msg_newtask = $multilingual_message_newtask;
 $msg_taskcomm = $multilingual_message_newtaskcomment;
+$msg_taskcommit = $multilingual_message_newtaskcommit;
 $msg_exam = $multilingual_message_exam;
 $msg_edituser = $multilingual_message_edituser;
 $msg_edittask = $multilingual_message_edittask;
-} else {
+} else {//是抄送
+$msg_taskcommit = $multilingual_message_newtaskcommit_cc;
 $msg_newtask = $multilingual_message_newtask_cc;
 $msg_taskcomm = $multilingual_message_newtaskcomment_cc;
 $msg_exam = $multilingual_message_exam_cc;
@@ -405,53 +463,61 @@ $msg_edittask = $multilingual_message_edittask_cc;
 $mail_create = get_item( 'mail_create' );  
 $mail_update = get_item( 'mail_update' );  
 $mail_comment = get_item( 'mail_comment' );  
-
+//新建任务
 if($type=="newtask"){
-$text = $msg_newtask." <a href='default_task_edit.php?editID=".$id."&pagetab=mtask'>".$title."</a>";
+$text = $msg_newtask." <a href='default_task_edit.php?editID=".$id."&pagetabs=mtask'>".$title."</a>";
 if($mail_create=="on" && $cc==0){
 send_mail($to,$from,$type,$id,$title);
 }
 }
-
+//评论任务
 else if($type=="taskcomm"){
-$text = $msg_taskcomm." <a href='default_task_edit.php?editID=".$id."&pagetab=mtask#comment'>".$title."</a>";
+$text = $msg_taskcomm." <a href='default_task_edit.php?editID=".$id."&pagetabs=mtask#comment'>".$title."</a>";
+if($mail_comment=="on" && $cc==0){
+send_mail($to,$from,$type,$id,$title);
+}
+}
+//提交任务
+else if($type=="taskcommit"){
+$text = $msg_taskcommit." <a href='default_task_edit.php?editID=".$id."&pagetabs=mtask#comment'>".$title."</a>";
 if($mail_comment=="on" && $cc==0){
 send_mail($to,$from,$type,$id,$title);
 }
 }
 
 else if($type=="logcomm"){
-$text = $msg_taskcomm." <a href='default_task_edit.php?editID=".$id."&pagetab=mtask#log'>".$title."</a>";
+$text = $msg_taskcomm." <a href='default_task_edit.php?editID=".$id."&pagetabs=mtask#log'>".$title."</a>";
 if($mail_comment=="on" && $cc==0){
 send_mail($to,$from,$type,$id,$title);
 }
 }
 
 else if($type=="examtask"){
-$text = $msg_exam." <a href='default_task_edit.php?editID=".$id."&pagetab=mtask'>".$title."</a>";
+$text = $msg_exam." <a href='default_task_edit.php?editID=".$id."&pagetabs=mtask'>".$title."</a>";
 if($mail_create=="on" && $cc==0){
 send_mail($to,$from,$type,$id,$title);
 }
 }
 
 else if($type=="edituser"){
-$text = $msg_edituser." <a href='default_task_edit.php?editID=".$id."&pagetab=mtask'>".$title."</a>";
+$text = $msg_edituser." <a href='default_task_edit.php?editID=".$id."&pagetabs=mtask'>".$title."</a>";
 if($mail_create=="on" && $cc==0){
 send_mail($to,$from,$type,$id,$title);
 }
 }
-
+//编辑任务
 else if($type=="edittask"){
-$text = $msg_edittask." <a href='default_task_edit.php?editID=".$id."&pagetab=ftask#log'>".$title."</a>";
+$text = $msg_edittask." <a href='default_task_edit.php?editID=".$id."&pagetabs=ftask#log'>".$title."</a>";
 if($mail_update=="on" && $cc==0){
 send_mail($to,$from,$type,$id,$title);
 }
 }
 
-$insert_msg_SQL = sprintf("INSERT INTO tk_message (tk_mess_touser, tk_mess_fromuser, tk_mess_title) VALUES (%s, %s, %s )",
+$insert_msg_SQL = sprintf("INSERT INTO tk_message (tk_mess_touser, tk_mess_fromuser, tk_mess_title,tk_task_id) VALUES (%s, %s, %s, %s)",
                        GetSQLValueString($to, "int"),
                        GetSQLValueString($from, "int"),
-                       GetSQLValueString($text, "text"));  
+                       GetSQLValueString($text, "text"),
+                       GetSQLValueString($id, "int"));  
 $insert_msg_RS = mysql_query($insert_msg_SQL, $tankdb) or die(mysql_error());
 
 	} //to no from
@@ -536,7 +602,7 @@ $loginStrpid  = mysql_result($LoginRS,0,'uid');
 }
 
 //task list
-function task_list( $to = "0", $from = "0", $create = "0", $prt = "", $temp = "", $status = "", $unstatus = "+", $type = "", $project = "", $taskid = "", $tasktitle = "", $tag = "", $exam = "", $years = "--", $months = "--", $sort= "csa_last_update", $order= "DESC", $page="0", $pagetab = "mtask" ) {
+function task_list( $to = "0", $from = "0", $create = "0", $prt = "", $temp = "", $status = "", $unstatus = "+", $type = "", $project = "", $taskid = "", $tasktitle = "", $tag = "", $exam = "", $years = "--", $months = "--", $sort= "csa_last_update", $order= "DESC", $page="0", $pagetabs = "mtask" ) {
 
 global $tankdb;
 global $database_tankdb;
@@ -609,17 +675,17 @@ $colexams = GetSQLValueString("%%" . str_replace("%","%%",$exam) . "%%", "text")
 				$where.= " tk_task.csa_temp = $coltemp AND";
 			}
 			
-			if(!empty($status) && $pagetab <> "etask")
+			if(!empty($status) && $pagetabs <> "etask")
 			{
 				$where.= " tk_status.task_status LIKE $colstatus AND";
 			}
 			
-			if($pagetab == "etask")
+			if($pagetabs == "etask")
 			{
 				$where.= " tk_status.task_status LIKE $colexams AND";
 			}
 			
-			if($unstatus  <> '+' && $pagetab <> "etask")
+			if($unstatus  <> '+' && $pagetabs <> "etask")
 			{
 				$where.= " tk_status.task_status NOT LIKE $colstatusf AND";
 			}
@@ -1180,13 +1246,16 @@ $tktype_arr[$row_tktype['id']]['task_tpye'] =  $row_tktype['task_tpye'];
 return $tktype_arr;
 }
 
-
-//get user
-function get_user_select() {
+//获得所有的用户信息
+function get_all_user_select() {
 global $tankdb;
 global $database_tankdb;
   
-$query_user ="SELECT * FROM tk_user WHERE tk_user_rank <> '0' ORDER BY CONVERT(tk_display_name USING gbk )";
+$query_user ="SELECT * FROM tk_user ORDER BY CONVERT(tk_display_name USING gbk )";
+// $query_user ="SELECT * 
+// FROM tk_user 
+// inner join tk_team on tk_team.tk_team_uid=tk_user.uid 
+// WHERE tk_team.tk_team_pid = $prjid ORDER BY CONVERT(tk_display_name USING gbk )";
 $userRS = mysql_query($query_user, $tankdb) or die(mysql_error());
 $row_user = mysql_fetch_assoc($userRS);
  
@@ -1195,6 +1264,34 @@ do {
 
 $user_arr[$row_user['uid']]['uid'] =  $row_user['uid'];
 $user_arr[$row_user['uid']]['name'] =  $row_user['tk_display_name'];
+$user_arr[$row_user['uid']]['email'] =  $row_user['tk_user_email'];
+$user_arr[$row_user['uid']]['phone_num'] =  $row_user['tk_user_contact'];
+} while ($row_user = mysql_fetch_assoc($userRS));     
+    
+return $user_arr;
+}
+
+//get user
+function get_user_select($prjid) {
+global $tankdb;
+global $database_tankdb;
+  
+//$query_user ="SELECT * FROM tk_user WHERE tk_user_rank <> '0' ORDER BY CONVERT(tk_display_name USING gbk )";
+$query_user ="SELECT * 
+FROM tk_user 
+inner join tk_team on tk_team.tk_team_uid=tk_user.uid 
+WHERE tk_team.tk_team_pid = $prjid ORDER BY CONVERT(tk_display_name USING gbk )";
+$userRS = mysql_query($query_user, $tankdb) or die(mysql_error());
+$row_user = mysql_fetch_assoc($userRS);
+ 
+$user_arr = array ();
+do { 
+
+$user_arr[$row_user['uid']]['uid'] =  $row_user['uid'];
+$user_arr[$row_user['uid']]['name'] =  $row_user['tk_display_name'];
+$user_arr[$row_user['uid']]['email'] =  $row_user['tk_user_email'];
+$user_arr[$row_user['uid']]['phone_num'] =  $row_user['tk_user_contact'];
+$user_arr[$row_user['uid']]['ulimit'] =  $row_user['tk_team_ulimit'];
 } while ($row_user = mysql_fetch_assoc($userRS));     
     
 return $user_arr;

@@ -9,7 +9,16 @@ $Recordset_anc = mysql_query($query_Recordset_anc, $tankdb) or die(mysql_error()
 $row_Recordset_anc = mysql_fetch_assoc($Recordset_anc);
 $totalRows_Recordset_anc = mysql_num_rows($Recordset_anc);
 
+/////////////////////////////////////////////////////////////////////////////////
 $message_count = check_message( $_SESSION['MM_uid'] );
+
+//$message_count = 0;
+$totalRows_Recordset_anc=0;
+
+
+
+
+
 
 $self =$_SERVER['PHP_SELF'];
 
@@ -20,13 +29,12 @@ $pagename = end($pagename);
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>WSS</title>
+<title>Capteam</title>
 <link href="skin/themes/base/lhgdialog.css" rel="stylesheet" type="text/css" />
 <link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen">
 <link href="skin/themes/base/tk_style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="srcipt/jquery.js"></script>
-<script type="text/javascript" src="srcipt/js.js"></script>
-<script src="bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
 <script type="text/javascript" src="srcipt/lhgcore.js"></script>
 <script type="text/javascript" src="srcipt/lhgdialog.js"></script>
 
@@ -41,10 +49,15 @@ if(strpos($_SERVER["HTTP_USER_AGENT"],"MSIE 8.0") || strpos($_SERVER["HTTP_USER_
 <?php exit;} ?>
 
   <div class="topbar" id="headerlink" >
-
     <div class="logo"><a href="index.php" class="logourl" >&nbsp;</a></div>
     <div class="nav_normal2">
-	<a href="index.php" class="
+    
+      <a href="project.php?pagetab=jprj" class="
+	  <?php if($pagename == "project.php" || $pagename == "project_add.php" || $pagename == "project_view.php" || $pagename == "project_edit.php"){
+	  echo "nav_select";} ?>
+	  "><?php echo $multilingual_head_project; ?></a>
+	  
+	  <a href="index.php" class="
 	  <?php if($pagename == "index.php" || $pagename == "default_task_edit.php" || $pagename == "default_task_plan.php" || $pagename == "default_task_add.php") {
 	  echo "nav_select";} ?>
 	  "><?php echo $multilingual_head_task; ?></a>
@@ -54,25 +67,27 @@ if(strpos($_SERVER["HTTP_USER_AGENT"],"MSIE 8.0") || strpos($_SERVER["HTTP_USER_
 	  echo "nav_select";} ?>
 	  "><?php echo $multilingual_head_feed; ?></a>
 	  
-      <a href="project.php" class="
-	  <?php if($pagename == "project.php" || $pagename == "project_add.php" || $pagename == "project_view.php" || $pagename == "project_edit.php"){
-	  echo "nav_select";} ?>
-	  "><?php echo $multilingual_head_project; ?></a>
-	  
       <a href="file.php" class="
 	  <?php if($pagename == "file.php" || $pagename == "file_add.php" || $pagename == "file_project.php" || $pagename == "file_edit.php" || $pagename == "file_view.php"){
 	  echo "nav_select";} ?>
 	  "><?php echo $multilingual_head_file; ?></a>
 	  
+<!--
       <a href="default_user.php" class="
 	  <?php if($pagename == "default_user.php" || $pagename == "user_add.php" || $pagename == "user_view.php" || $pagename == "default_user_edit.php"){
 	  echo "nav_select";} ?>
 	  "><?php echo $multilingual_head_user; ?></a>
+-->
 	  
       <a href="default_announcement.php" class="
 	  <?php if($pagename == "default_announcement.php" || $pagename == "announcement_add.php" || $pagename == "announcement_view.php" || $pagename == "announcement_edit.php"){
 	  echo "nav_select";} ?>
 	  "><?php echo $multilingual_head_announcement; ?></a>
+        
+      <a href="schedule_view.php" class="
+	  <?php if($pagename == "schedule_view.php" || $pagename == "schedule_task.php" || $pagename == "schedule_person.php" || $pagename == "schedule_course.php"){
+	  echo "nav_select";} ?>
+	  "><?php echo $multilingual_head_schedule; ?></a> 
     </div>
 
 
@@ -86,16 +101,18 @@ if(strpos($_SERVER["HTTP_USER_AGENT"],"MSIE 8.0") || strpos($_SERVER["HTTP_USER_
 				  <li><a href="default_user_edit.php?UID=<?php echo "{$_SESSION['MM_uid']}"; ?>"><?php echo $multilingual_head_edituserinfo; ?></a></li>
 				  <?php }  ?>
 
+<!--
 				  <?php if ($_SESSION['MM_rank'] > "4") {  ?>
                   <li><a href="setting.php?type=setting"><?php echo $multilingual_head_backend; ?></a></li>
 				  <?php }  ?>
+-->
 
                   <li><?php echo $multilingual_head_help; ?></li>
                   <li class="divider"></li>
                   <li><a href="<?php echo $logoutAction ?>"  ><?php echo $multilingual_head_logout; ?></a></li>
                 </ul>
 				 &nbsp;&nbsp;&nbsp;&nbsp;
-				  <script type="text/javascript">  
+				<script type="text/javascript">  
 var blinkTitle = function (option) {
     var title = null;
     var newTitle = null;
@@ -108,8 +125,8 @@ var blinkTitle = function (option) {
         title = option.title ? option.title : document.title;
         interval = option.interval ? option.interval : 600;
     } else {
-        newTitle = '<?php echo $multilingual_newmessage1;?> WSS';
-        title = '<?php echo $multilingual_newmessage2;?> WSS';
+        newTitle = '<?php echo $multilingual_newmessage1;?> Capteam';
+        title = '<?php echo $multilingual_newmessage2;?> Capteam';
         interval = 600;
     }
  
@@ -118,17 +135,12 @@ var blinkTitle = function (option) {
 var timer = setInterval(function() {
 step++;
 if (step==3) {step=1};
-if (step==1) {document.title='<?php echo $multilingual_newmessage1;?> WSS'};
-if (step==2) {document.title='<?php echo $multilingual_newmessage2;?> WSS'};
-
+if (step==1) {document.title='<?php echo $multilingual_newmessage1;?> Capteam'};
+if (step==2) {document.title='<?php echo $multilingual_newmessage2;?> Capteam'};
 }, 500);
 
 return [timer, _title];
-
-
-
     }
- 
     return {
         start: start
     }
@@ -139,7 +151,6 @@ return [timer, _title];
  */
 
 setInterval(function() {
-
 			
 $.ajax({
 		url:'message_check.php',
@@ -148,20 +159,16 @@ $.ajax({
 			resp = JSON.parse(resp);
 			if(resp!="0"){
 				blinkTitle.start();
-				$("#conmsg")[0].innerHTML=' <span class="label label-danger">' + resp + '</span>';
-				
-			}
-			
+				$("#conmsg")[0].innerHTML=' <span class="label label-danger">' + resp + '</span>';	
+			}	
 		}
 	})
-
 }, 120000);
-
-
-
 </script>  
-				 <a href="message.php" title = "<?php echo $multilingual_message; ?>" class="mouse_hover"><i class="glyphicon glyphicon-envelope icon-white"></i><span id="conmsg"><?php if($message_count > 0){ ?> <span class="label label-danger"><?php 
-				 echo $message_count; ?></span>
+                 <a href="message.php" title = "<?php echo $multilingual_message; ?>" class="mouse_hover">
+				 <i class="glyphicon glyphicon-envelope icon-white"></i>
+				 <span id="conmsg"><?php if($message_count > 0){ ?> <span class="label label-danger">
+				 <?php echo $message_count; ?></span>
 				 <script type="text/javascript">  
 				 blinkTitle.start();
 				 </script>
@@ -175,7 +182,7 @@ $.ajax({
  <?php if ($totalRows_Recordset_anc > 0) { // Show if recordset not empty ?> 
   <div class="anc_div"  >
 
-<div id="rollAD" style="height:20px; position:relative; overflow:hidden;">	
+<div id="rollAD" style="height:18px; position:relative; overflow:hidden;">	
 
 <div class="float_left"><strong><?php echo $multilingual_head_announcement; ?></strong>&nbsp;&nbsp;</div> 
 <div class="float_left">

@@ -1,12 +1,9 @@
 <?php require_once('config/tank_config.php'); ?>
 <?php require_once('session_unset.php'); ?>
 <?php require_once('session.php'); ?>
+<?php require_once('function/file_log_function.php'); ?>
 <?php
 $restrictGoTo = "user_error3.php";
-if ($_SESSION['MM_rank'] < "2") {   
-  header("Location: ". $restrictGoTo); 
-  exit;
-}
 
 $project_id = "-1";
 if (isset($_GET['projectID'])) {
@@ -62,10 +59,9 @@ $tk_doc_attachment = sprintf("tk_doc_attachment=%s,", GetSQLValueString(str_repl
 }
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
-  $updateSQL = sprintf("UPDATE tk_document SET tk_doc_title=%s, $tk_doc_description $tk_doc_attachment tk_doc_class2=%s, tk_doc_edit=%s WHERE docid=%s",
+  $updateSQL = sprintf("UPDATE tk_document SET tk_doc_title=%s, $tk_doc_description $tk_doc_attachment tk_doc_parentdocid=%s WHERE docid=%s",
                        GetSQLValueString($_POST['tk_doc_title'], "text"),
-					   GetSQLValueString($_POST['tk_doc_class2'], "text"),
-					   GetSQLValueString($_POST['tk_doc_edit'], "text"),
+					   GetSQLValueString($_POST['tk_doc_parentdocid'], "text"),
                        GetSQLValueString($_POST['docid'], "int"));
 
   mysql_select_db($database_tankdb, $tankdb);
@@ -74,28 +70,32 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
   $newID = $colname_Recordset1;
   $newName = $_SESSION['MM_uid'];
 
+  //插入log数据库
+  $log_id = update_log_file($project_id,$newName,$p_id,$colname_Recordset1);
+
+/*
 $insertSQL2 = sprintf("INSERT INTO tk_log (tk_log_user, tk_log_action, tk_log_type, tk_log_class, tk_log_description) VALUES (%s, %s, %s, 2, '')",
                        GetSQLValueString($newName, "text"),
                        GetSQLValueString($multilingual_log_editdoc, "text"),
                        GetSQLValueString($newID, "text"));  
 $Result2 = mysql_query($insertSQL2, $tankdb) or die(mysql_error());
+*/
+      $b01 ="-1";
+      if (isset($_POST["b01"])) {
+        $b01 = $_POST["b01"];
+      }
 
-$b01 ="-1";
-if (isset($_POST["b01"])) {
-  $b01 = $_POST["b01"];
-}
-
-if($b01 =="-1"){
-  $updateGoTo = "http://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']."?".$_SERVER["QUERY_STRING"];
-} else{
-  $updateGoTo = "file_view.php?recordID=$colname_Recordset1&folder=$fd&projectID=$project_id".$pf.$ptab;
-}
-  
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
-    
-  }
-  header(sprintf("Location: %s", $updateGoTo));
+      if($b01 =="-1"){
+        $updateGoTo = "http://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']."?".$_SERVER["QUERY_STRING"];
+      } else{
+        $updateGoTo = "file_view.php?recordID=$colname_Recordset1&folder=$fd&projectID=$project_id".$pf.$ptab;
+      }
+        
+        if (isset($_SERVER['QUERY_STRING'])) {
+          $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
+          
+        }
+        header(sprintf("Location: %s", $updateGoTo));
 }
 
 mysql_select_db($database_tankdb, $tankdb);
@@ -205,7 +205,7 @@ window.onload = function()
           
 
 
-		<input type="hidden" name="tk_doc_class2" id="tk_doc_class2" value="<?php echo $row_Recordset1['tk_doc_class2']; ?>"  />
+		<input type="hidden" name="tk_doc_parentdocid" id="tk_doc_parentdocid" value="<?php echo $row_Recordset1['tk_doc_parentdocid']; ?>"  />
         <input type="hidden" name="docid" id="docid" value="<?php echo $row_Recordset1['docid']; ?>"  />
 		<input name="tk_doc_edit" type="hidden" value="<?php echo "{$_SESSION['MM_uid']}"; ?>" />
 

@@ -55,8 +55,7 @@ $Recordset_sumtotal = mysql_query($query_Recordset_sumtotal, $tankdb) or die(mys
 $row_Recordset_sumtotal = mysql_fetch_assoc($Recordset_sumtotal);
 $t=$row_Recordset_sumtotal['sum_hour']; 
 
-$sql=sprintf("SELECT * , sum(csa_tb_manhour) as summ1 FROM tk_task_byday 								
-							inner join tk_task_tpye on tk_task_byday.csa_tb_backup4=tk_task_tpye.id								
+$sql=sprintf("SELECT * , sum(csa_tb_manhour) as summ1 FROM tk_task_byday 											
 								WHERE csa_tb_backup3 = %s GROUP BY csa_tb_backup4 ORDER BY summ1 DESC", GetSQLValueString($projectid, "int")); 
 
 $query = mysql_query($sql, $tankdb) or die(mysql_error());
