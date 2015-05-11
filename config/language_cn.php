@@ -257,6 +257,7 @@ $multilingual_tasktype_condition = "当前查询条件:";
 $multilingual_tasktype_moresearch = "高级搜索";
 $multilingual_tasktype_generalsearch = "关闭高级搜索";
 $multilingual_outofdate_title = "过期任务";
+$multilingual__near_outofdate_title = "即将过期任务";
 $multilingual_outofdate_p = "请优先处理或重新制定合理的时间";
 $multilingual_outofdate_outofdate = "已过期";
 $multilingual_outofdate_date = "天";
