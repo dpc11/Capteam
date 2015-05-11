@@ -146,6 +146,7 @@ $multilingual_foot_contact = "联系我们";
 // *** 编辑状态页(status_edit.php)
 // *** 任务类型列表页(task_type_list.php)
 // *** 编辑任务类型页(task_type_edit.php)
+$multilingual_default_task_update_time = "最后更新时间";
 $multilingual_default_title = "Beta";
 $multilingual_default_searchtask = "任务搜索";
 $multilingual_default_taskto = "任务指派给谁:";

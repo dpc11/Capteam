@@ -1100,7 +1100,7 @@ do {
 	  echo "class='sort_desc'";
 	  }
 	  ?>>
-	  <?php echo $multilingual_default_task_priority; ?></a></th>
+	  <?php echo $multilingual_default_task_update_time; ?></a></th>
 	  
       </tr>
     <tr>
