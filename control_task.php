@@ -432,12 +432,12 @@ $outday = GetSQLValueString($outday , "text");
 $outwhere = "";
 			$outwhere=' WHERE';
             
-            //查找指派给我的过期的任务
-			if($colname_Recordset1 <> '%')
-			{
-				$outwhere.= " tk_task.csa_to_user = $coltouser AND";
-			}
-									
+   //          //查找指派给我的过期的任务
+			// if($colname_Recordset1 <> '%')
+			// {
+			// 	$outwhere.= " tk_task.csa_to_user = $coltouser AND";
+			// }
+			$outwhere.= " tk_task.csa_to_user = $coltouser AND";			
 			// if($colcreate_Recordset1 <> '%')
 			// {
 			// 	$outwhere.= " tk_task.csa_from_user = $colcreateuser AND";
