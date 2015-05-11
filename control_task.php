@@ -423,6 +423,7 @@ $strssumbyday.="var "."sumbd".$row_Sumbyday['csa_tb_year']."='".$row_Sumbyday['S
 */
 
 if ($pagetabs <> "etask") {
+//查找过期任务
 $outday = date("Y-m-d");
 
 $outstfinish = GetSQLValueString("%" . $multilingual_dd_status_stfinish . "%", "text");

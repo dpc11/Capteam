@@ -48,12 +48,12 @@ $deleteSQL = sprintf("DELETE FROM tk_message WHERE tk_mess_touser = %s AND meid 
                        GetSQLValueString($row_Recordset2['meid'], "int"));
 $deleteResult1 = mysql_query($deleteSQL, $tankdb) or die(mysql_error());
 
-if($pageNum_Recordset1==0 && $row_Recordset1['meid']<>null){
-$message_id = $row_Recordset1['meid'];
+// if($pageNum_Recordset1==0 && $row_Recordset1['meid']<>null){
+// $message_id = $row_Recordset1['meid'];
 
-$updateSQL = "UPDATE tk_user SET tk_user_message='$message_id' WHERE uid='$user_id'";
-$Result1 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
-}
+// $updateSQL = "UPDATE tk_user SET tk_user_message='$message_id' WHERE uid='$user_id'";
+// $Result1 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
+// }
 
 if (isset($_GET['totalRows_Recordset1'])) {
   $totalRows_Recordset1 = $_GET['totalRows_Recordset1'];
