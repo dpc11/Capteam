@@ -19,8 +19,9 @@ $startRow_Recordset1 = $pageNum_Recordset1 * $maxRows_Recordset1;
 
 //<!--得到设置里的每页显示的任务过期数 -->   
 //<!--pageNum_timeout=0 为第一页 -->
-
+//显示的过期的任务最大数量
 $maxRows_timeout = get_item( 'maxrows_timeout' );
+//当前显示的过期任务的页面号
 $pageNum_timeout = 0;
 if (isset($_GET['pageNum_timeout'])) {
   $pageNum_timeout = $_GET['pageNum_timeout'];
@@ -205,7 +206,7 @@ $cc_tome = GetSQLValueString("%%" . str_replace("%","%%",$cc_tome) . "%%", "text
 			//抄送人
 			if($pagetabs == "cctome")
 			{
-				$where.= " tk_task.test01 LIKE $cc_tome AND";
+				$where.= " tk_task.csa_testto LIKE $cc_tome AND";
 			}
 
 //条件查询结果
@@ -441,7 +442,7 @@ $outwhere = "";
 			}
 			if($pagetabs == "cctome")
 			{
-				$outwhere.= " tk_task.test01 LIKE $cc_tome AND";
+				$outwhere.= " tk_task.csa_testto LIKE $cc_tome AND";
 			}
 			$outwhere.= " tk_status.task_status NOT LIKE $outstfinish AND";
 			$outwhere.= " tk_task.csa_plan_et <= $outday  AND csa_del_status=1";
@@ -572,6 +573,7 @@ function   exportexcel()
 ?>
 </script>
 <?php if ($pagetabs <> "etask") { // Show outofdate if recordset not empty ?>
+<!-- 此处显示过期的任务 -->
 <?php if ($totalRows_timeout > 0 && $outofdate=="on") { // Show outofdate if recordset not empty ?>
 
 <div class="panel panel-warning timeout_color pagemarginfix">
@@ -583,9 +585,8 @@ function   exportexcel()
         <tr>
             <td>
                 <a href="default_task_edit.php?editID=<?php echo $row_timeout['tid']; ?>" target="_parent">
-   <?php echo $row_timeout['tid']; ?> 
-   [<?php echo $row_timeout['task_tpye']; ?>] <?php echo $row_timeout['csa_text']; ?> 
-   </a>
+                [<?php echo $row_timeout['tid']; ?>] <?php echo $row_timeout['csa_text']; ?> 
+                </a>
             </td>
             <?php if($pagetabs <> "mtask"){ ?>
             <td>
