@@ -430,20 +430,21 @@ $outday = GetSQLValueString($outday , "text");
 
 $outwhere = "";
 			$outwhere=' WHERE';
-
+            
+            //查找指派给我的过期的任务
 			if($colname_Recordset1 <> '%')
 			{
 				$outwhere.= " tk_task.csa_to_user = $coltouser AND";
 			}
 									
-			if($colcreate_Recordset1 <> '%')
-			{
-				$outwhere.= " tk_task.csa_from_user = $colcreateuser AND";
-			}
-			if($pagetabs == "cctome")
-			{
-				$outwhere.= " tk_task.csa_testto LIKE $cc_tome AND";
-			}
+			// if($colcreate_Recordset1 <> '%')
+			// {
+			// 	$outwhere.= " tk_task.csa_from_user = $colcreateuser AND";
+			// }
+			// if($pagetabs == "cctome")
+			// {
+			// 	$outwhere.= " tk_task.csa_testto LIKE $cc_tome AND";
+			// }
 			$outwhere.= " tk_status.task_status NOT LIKE $outstfinish AND";
 			$outwhere.= " tk_task.csa_plan_et <= $outday  AND csa_del_status=1";
 
