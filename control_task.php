@@ -447,6 +447,8 @@ $outwhere = "";
 			// 	$outwhere.= " tk_task.csa_testto LIKE $cc_tome AND";
 			// }
 			$outwhere.= " tk_status.task_status NOT LIKE $outstfinish AND";
+			//设置过期时间不包括已完成、已验收的
+			$outwhere.= " tk_task.csa_status <> 3 AND tk_task.csa_status <> 4 AND";
 			$outwhere.= " tk_task.csa_plan_et <= $outday  AND csa_del_status=1";
 
 mysql_select_db($database_tankdb, $tankdb);
