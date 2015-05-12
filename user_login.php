@@ -46,7 +46,7 @@ if (isset($_POST['textfield'])) {
   }
 }
 ?>
-<!DOCTYPE html PUBLIC >
+<!DOCTYPE html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Capteam - <?php echo $multilingual_userlogin_title; ?></title>
@@ -60,72 +60,6 @@ if (isset($_POST['textfield'])) {
 <script type="text/javascript" src="js/bootstrap/bootstrap.js"></script>
 <script type="text/javascript" src="js/lhgcore/lhgdialog.js"></script>
 <link href="css/custom.css" rel="stylesheet" type="text/css" />
-
-<script type="text/javascript">
-
-J.check.rules = [
-	{ name: 'textfield', mid: 'username', requir: true, type: 'email', warn: '邮箱格式错误' },
-	{ name: 'textfield2', mid: 'passwordid', requir: true}
-];
-
-function register(){
-	
-	window.open('user_register.php','_self');
-}
-
-function changemsg(UP,DOWN){
-	
-		document.getElementById(DOWN).focus();
-		var contentmsg = document.getElementById(UP).value;
-		document.getElementById(DOWN).value=contentmsg;
-		document.getElementById(DOWN).blur();
-
-}
-
-function changepsd(UP,DOWN){
-	
-		document.getElementById(DOWN).focus();
-		var contentmsg = document.getElementById(UP).value;		
-		document.getElementById(DOWN).value=contentmsg;
-		document.getElementById(DOWN).blur();
-
-}
-
-
-window.onresize = function()
-{	
-    var x= $(textfield).offset(); 
-
-	document.getElementById("outdiv").style.height = (document.body.clientHeight-126) +'px';  
-	
-	document.getElementById("temp_textfield4_4").style.top=(x.top)+'px';
-	document.getElementById("temp_textfield4_4").style.left=(x.left)+'px';
-	document.getElementById("temp_textfield4_4").style.width=(document.getElementById("textfield").clientWidth+5)+'px';
-    x= $(textfield2).offset();
-	document.getElementById("temp_textfield5_5").style.top=(x.top)+'px';
-	document.getElementById("temp_textfield5_5").style.left=(x.left)+'px';
-	document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield2").clientWidth+5)+'px';		
-}
-
-window.onload = function()
-{
-    J.check.regform('form1');
-	
-	document.getElementById("outdiv").style.height = (document.body.clientHeight-126) +'px';  
-	
-    var x= $(textfield).offset(); 
-
-	document.getElementById("temp_textfield4_4").style.top=(x.top)+'px';
-	document.getElementById("temp_textfield4_4").style.left=(x.left)+'px';
-	document.getElementById("temp_textfield4_4").style.width=(document.getElementById("textfield").clientWidth+5)+'px';
-    x= $(textfield2).offset();
-	document.getElementById("temp_textfield5_5").style.top=(x.top)+'px';
-	document.getElementById("temp_textfield5_5").style.left=(x.left)+'px';	
-	document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield2").clientWidth+5)+'px';	
-	
-}
-
-</script>
 </head>
 
 <body ><center>
@@ -133,13 +67,8 @@ window.onload = function()
     <div class="logo" id="logo" ><a href="index.php" class="logourl" >&nbsp;</a></div>
 </div>
 
-
-<div id="outdiv" style="min-width:1100px;min-height:500px;">
+<div id="outdiv" style="min-width:1100px;min-height:500px;height:800px;">
 <div style="width:820.833px;-webkit-transform: scale( 1.2,1.2 );" >
-	<!--  
-	<table width="52%" border="0" cellspacing="0" cellpadding="0" height="697px;" align="center">
-	
-	-->	
 <table width="100%" border="0" cellspacing="0" cellpadding="0" height="100%" align="center">
     <tr>
       <td  style="width:40%">
@@ -211,3 +140,67 @@ window.onload = function()
 <?php require('foot.php'); ?>
 </center></body>
 </html>
+<script type="text/javascript">
+
+J.check.rules = [
+	{ name: 'textfield', mid: 'username', requir: true, type: 'email', warn: '邮箱格式错误' },
+	{ name: 'textfield2', mid: 'passwordid', requir: true}
+];
+
+function register(){
+	
+	window.open('user_register.php','_self');
+}
+
+function changemsg(UP,DOWN){
+	
+		document.getElementById(DOWN).focus();
+		var contentmsg = document.getElementById(UP).value;
+		document.getElementById(DOWN).value=contentmsg;
+		document.getElementById(DOWN).blur();
+
+}
+
+function changepsd(UP,DOWN){
+	
+		document.getElementById(DOWN).focus();
+		var contentmsg = document.getElementById(UP).value;		
+		document.getElementById(DOWN).value=contentmsg;
+		document.getElementById(DOWN).blur();
+
+}
+
+
+window.onresize = function()
+{	
+    var x= $(textfield).offset(); 
+
+	document.getElementById("outdiv").style.height = (document.body.clientHeight-126) +'px';  
+	
+	document.getElementById("temp_textfield4_4").style.top=(x.top)+'px';
+	document.getElementById("temp_textfield4_4").style.left=(x.left)+'px';
+	document.getElementById("temp_textfield4_4").style.width=(document.getElementById("textfield").clientWidth+5)+'px';
+    x= $(textfield2).offset();
+	document.getElementById("temp_textfield5_5").style.top=(x.top)+'px';
+	document.getElementById("temp_textfield5_5").style.left=(x.left)+'px';
+	document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield2").clientWidth+5)+'px';		
+}
+
+window.onload = function()
+{
+    J.check.regform('form1');
+	
+	document.getElementById("outdiv").style.height = (document.body.clientHeight-126) +'px';  
+	
+    var x= $(textfield).offset(); 
+
+	document.getElementById("temp_textfield4_4").style.top=(x.top)+'px';
+	document.getElementById("temp_textfield4_4").style.left=(x.left)+'px';
+	document.getElementById("temp_textfield4_4").style.width=(document.getElementById("textfield").clientWidth+5)+'px';
+    x= $(textfield2).offset();
+	document.getElementById("temp_textfield5_5").style.top=(x.top)+'px';
+	document.getElementById("temp_textfield5_5").style.left=(x.left)+'px';	
+	document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield2").clientWidth+5)+'px';	
+	
+}
+</script>

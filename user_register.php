@@ -1,18 +1,31 @@
 <?php require_once('config/tank_config.php'); ?>
 
+<?php   
+
+	$email="";
+	$passwordMsg="6-25位数字、字母和字符`-=\[];',./~!@#$%^&*()_+|?><:{}";
+	
+	$editFormAction = $_SERVER['PHP_SELF'];
+    if (isset($_SERVER['QUERY_STRING'])) {
+      $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
+    }
+?>
+
 <!DOCTYPE html >
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Capteam- <?php echo $multilingual_register_title; ?></title>
-<script type="text/javascript" src="js/lhgcore/lhgcore.js"></script>
-<script type="text/javascript" src="js/lhgcore/lhgcheck.js"></script>
 <link href="css/tk_style.css" rel="stylesheet" type="text/css" />
 <link href="css/lhgcore/lhgdialog.css" rel="stylesheet" type="text/css" />
 <link href="css/lhgcore/lhgcheck.css" rel="stylesheet" type="text/css" />
 <link href="css/bootstrap/bootstrap.css" rel="stylesheet" media="screen">
+
+<script type="text/javascript" src="js/lhgcore/lhgcore.js"></script>
+<script type="text/javascript" src="js/lhgcore/lhgcheck.js"></script>
+<script type="text/javascript" src="js/lhgcore/lhgdialog.js"></script>
 <script type="text/javascript" src="js/jquery/jquery.js"></script>
 <script type="text/javascript" src="js/bootstrap/bootstrap.js"></script>
-<script type="text/javascript" src="js/lhgcore/lhgdialog.js"></script>
+
 <style type="text/css"> 
 .pw-strength {clear: both;position: relative;top: 8px;width: 110px;}
 .pw-bar{background: url(images/register/pwd-1.png) no-repeat;height: 9px;overflow: hidden;width: 110px;}
@@ -23,7 +36,10 @@
 .pw-strong .pw-bar-on {width: 110px;}
 .pw-txt {padding-top: 0px;width: 110px;overflow: hidden;}
 .pw-txt span {color: #707070;float: left;font-size: 9px;text-align: center;width: 36px;}</style>
-<script type="text/javascript" > 
+
+
+
+<script > 
 
  function judgepassword(){ 
 	
@@ -132,20 +148,6 @@
 		return true;
 	}
 
-</script>
-
-<?php   
-
-	$email="";
-	$passwordMsg="6-25位数字、字母和字符`-=\[];',./~!@#$%^&*()_+|?><:{}";
-	
-	$editFormAction = $_SERVER['PHP_SELF'];
-    if (isset($_SERVER['QUERY_STRING'])) {
-      $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
-    }
-?>
- 
-<script type="text/javascript">	
 function registeruser(editFormAction)
 { 
 	var username=document.getElementById('textfield1').value;
@@ -164,10 +166,6 @@ function getstyle(DOWN){
 	
 	return "position:absolute;left:"+y+";top:"+x;
 }
-</script>
-
-
-<script type="text/javascript">
 
 J.check.rules = [
 	{ name: 'textfield1', mid: 'user_name_msg', requir: true, type: 'cusfn', cusfunc: 'checkname2()', warn: '昵称过长' },
@@ -189,6 +187,7 @@ function checkemail(){
   }
 });
 }
+
 function changemsg(UP,DOWN){
 	
 		document.getElementById(DOWN).focus();
@@ -225,115 +224,16 @@ function changemsg(UP,DOWN){
 		if (num > 10) { return false; }
         return true;
     }
-	
-window.onresize = function()
-{	
-	//document.getElementById("outofall").style.marginLeft =(document.body.clientWidth-document.getElementById("outofall").clientWidth)/2+'px';
-	document.getElementById("outdiv").style.height = (document.body.clientHeight-126) +'px';  
-	
-	var x= $(textfield1).offset(); 
-	document.getElementById("temp_textfield1_1").style.top=(x.top-7)+'px';
-	document.getElementById("temp_textfield1_1").style.left=(x.left-2)+'px';
-	document.getElementById("temp_textfield1_1").style.width=(document.getElementById("textfield1").clientWidth+6)+'px';
-	document.getElementById("ms1").style.top=(x.top-7+35)+'px';
-	document.getElementById("ms1").style.left=(x.left)+'px';
-	document.getElementById("ms1_text").style.width=(document.getElementById("textfield1").clientWidth+4)+'px';
-	
-    x= $(textfield3).offset(); 
-	document.getElementById("temp_textfield3_3").style.top=(x.top-7)+'px';
-	document.getElementById("temp_textfield3_3").style.left=(x.left-2)+'px';
-	document.getElementById("temp_textfield3_3").style.width=(document.getElementById("textfield3").clientWidth+6)+'px';
-	document.getElementById("ms3").style.top=(x.top-7+35)+'px';
-	document.getElementById("ms3").style.left=(x.left)+'px';
-	document.getElementById("ms3").style.width=(document.getElementById("textfield3").clientWidth+4)+'px';
-	document.getElementById("ms3_text").style.width=(document.getElementById("textfield3").clientWidth+4)+'px';
-	
-	document.getElementById("keycheck").style.top=(x.top-7)+'px';
-	document.getElementById("keycheck").style.left=(x.left+document.getElementById("textfield3").clientWidth+10)+'px';
-	document.getElementById("password_msg").style.top=(x.top-7)+'px';
-	document.getElementById("password_msg").style.left=(x.left+document.getElementById("textfield3").clientWidth+10)+'px';
-	
-    x= $(textfield4).offset(); 
-	document.getElementById("temp_textfield4_4").style.top=(x.top-7)+'px';
-	document.getElementById("temp_textfield4_4").style.left=(x.left-2)+'px';
-	document.getElementById("temp_textfield4_4").style.width=(document.getElementById("textfield4").clientWidth+6)+'px';
-	document.getElementById("ms4").style.top=(x.top-7+35)+'px';
-	document.getElementById("ms4").style.left=(x.left)+'px';
-	document.getElementById("ms4").style.width=(document.getElementById("textfield4").clientWidth+4)+'px';
-	document.getElementById("ms4_text").style.width=(document.getElementById("textfield4").clientWidth+4)+'px';
-	
-    x= $(textfield5).offset(); 
-	document.getElementById("temp_textfield5_5").style.top=(x.top-7)+'px';
-	document.getElementById("temp_textfield5_5").style.left=(x.left-2)+'px';
-	document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield5").clientWidth+6)+'px';
-	document.getElementById("ms5").style.top=(x.top-7+35)+'px';
-	document.getElementById("ms5").style.left=(x.left)+'px';
-	document.getElementById("ms5_text").style.width=(document.getElementById("textfield5").clientWidth+4)+'px';
-	document.getElementById("ms5").style.width=(document.getElementById("textfield5").clientWidth+4)+'px';	
-}
-
-window.onload = function()
-{
-    J.check.regform('myform');
-	
-document.getElementById("outdiv").style.height = (document.body.clientHeight-126) +'px';  
-	
-	var x= $(textfield1).offset(); 
-	document.getElementById("temp_textfield1_1").style.top=(x.top-7)+'px';
-	document.getElementById("temp_textfield1_1").style.left=(x.left-2)+'px';
-	document.getElementById("temp_textfield1_1").style.width=(document.getElementById("textfield1").clientWidth+6)+'px';
-	document.getElementById("ms1").style.top=(x.top-7+35)+'px';
-	document.getElementById("ms1").style.left=(x.left)+'px';
-	document.getElementById("ms1_text").style.width=(document.getElementById("textfield1").clientWidth+4)+'px';
-	document.getElementById("user_name_msg").style.top=(x.top-10)+'px';
-	document.getElementById("user_name_msg").style.left=(x.left+document.getElementById("textfield1").clientWidth+60)+'px';
-	
-    x= $(textfield3).offset(); 
-	document.getElementById("temp_textfield3_3").style.top=(x.top-7)+'px';
-	document.getElementById("temp_textfield3_3").style.left=(x.left-2)+'px';
-	document.getElementById("temp_textfield3_3").style.width=(document.getElementById("textfield3").clientWidth+6)+'px';
-	document.getElementById("ms3").style.top=(x.top-7+35)+'px';
-	document.getElementById("ms3").style.left=(x.left)+'px';
-	document.getElementById("ms3").style.width=(document.getElementById("textfield3").clientWidth+4)+'px';
-	document.getElementById("ms3_text").style.width=(document.getElementById("textfield3").clientWidth+4)+'px';
-	
-	document.getElementById("keycheck").style.top=(x.top-7)+'px';
-	document.getElementById("keycheck").style.left=(x.left+document.getElementById("textfield3").clientWidth+10)+'px';
-	document.getElementById("password_msg").style.top=(x.top-7)+'px';
-	document.getElementById("password_msg").style.left=(x.left+document.getElementById("textfield3").clientWidth+10)+'px';
-	
-    x= $(textfield4).offset(); 
-	document.getElementById("temp_textfield4_4").style.top=(x.top-7)+'px';
-	document.getElementById("temp_textfield4_4").style.left=(x.left-2)+'px';
-	document.getElementById("temp_textfield4_4").style.width=(document.getElementById("textfield4").clientWidth+6)+'px';
-	document.getElementById("ms4").style.top=(x.top-7+35)+'px';
-	document.getElementById("ms4").style.left=(x.left)+'px';
-	document.getElementById("ms4").style.width=(document.getElementById("textfield4").clientWidth+4)+'px';
-	document.getElementById("ms4_text").style.width=(document.getElementById("textfield4").clientWidth+4)+'px';
-	document.getElementById("re_password_msg").style.top=(x.top-7)+'px';
-	document.getElementById("re_password_msg").style.left=(x.left+document.getElementById("temp_textfield4_4").clientWidth+10)+'px';
-	
-    x= $(textfield5).offset(); 
-	document.getElementById("temp_textfield5_5").style.top=(x.top-7)+'px';
-	document.getElementById("temp_textfield5_5").style.left=(x.left-2)+'px';
-	document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield5").clientWidth+6)+'px';
-	document.getElementById("ms5").style.top=(x.top-7+35)+'px';
-	document.getElementById("ms5").style.left=(x.left)+'px';
-	document.getElementById("ms5_text").style.width=(document.getElementById("textfield5").clientWidth+4)+'px';
-	document.getElementById("ms5").style.width=(document.getElementById("textfield5").clientWidth+4)+'px';	
-	document.getElementById("email_msg").style.top=(x.top-7)+'px';
-	document.getElementById("email_msg").style.left=(x.left+document.getElementById("temp_textfield5_5").clientWidth+10)+'px';
-}
-
 </script>
-
 </head>
+
+<body >
+
+<center>
 <div class="topbar" id="headerlink">
     <div class="logo" ><a href="index.php" class="logourl" >&nbsp;</a></div>
 </div>
-<body ><center>
-
-<div id="outdiv" style="min-width:1200px;min-height:800px;">
+<div id="outdiv" style="min-width:1200px;min-height:804px;">
 <div style="width:979.167px;-webkit-transform: scale( 1.2,1.2 );" >
 
 <table align="center"  border="0" cellspacing="0" cellpadding="0" ><!-- width:67%;margin-bottom:197.344px; -->
@@ -421,9 +321,9 @@ document.getElementById("outdiv").style.height = (document.body.clientHeight-126
 	<span id="user_name_msg" style="margin-top:10px;z-index:3;position:absolute;font-size:12px;min-width:125px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;"></span>
 							
 	
-							<span id="password_msg" style="margin-top:10px;z-index:3;position:absolute;font-size:12px;display:none;min-width:125px;"></span>
+							<span id="password_msg" style="margin-top:10px;z-index:3;position:absolute;font-size:12px;display:none;min-width:125px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;"></span>
 								
-							<table id="keycheck"  style="z-index:3;position:absolute;left:20;top:40;display:none;min-width:125px;">
+							<table id="keycheck"  style="z-index:3;position:absolute;left:20;top:40;display:none;min-width:125px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;">
 								<tr>    
 									<th></th>   
 									<td id="level" class="pw-strength" >           	
@@ -438,33 +338,133 @@ document.getElementById("outdiv").style.height = (document.body.clientHeight-126
 								</tr>
 							</table>
 							
-	<span id="re_password_msg" style="margin-top:10px;z-index:3;position:absolute;font-size:12px;min-width:125px;"></span>
-	<span id="email_msg" style="margin-top:10px;z-index:3;position:absolute;font-size:12px;min-width:125px;"></span>
+	<span id="re_password_msg" style="margin-top:10px;z-index:3;position:absolute;font-size:12px;min-width:125px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;"></span>
+	<span id="email_msg" style="margin-top:10px;z-index:3;position:absolute;font-size:12px;min-width:125px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;"></span>
 	
 	
-						<input  class="form-control"   type="text"  id="temp_textfield1_1" name="temp_textfield1_1" style="width:300px;z-index:3;position:absolute;left:20;top:40;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;" onblur='changemsg("temp_textfield1_1","textfield1");'/>
+						<input  class="form-control"   type="text"  id="temp_textfield1_1" name="temp_textfield1_1" style="z-index:4;position:absolute;left:20;top:40;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;width:100px;" onblur='changemsg("temp_textfield1_1","textfield1");'/>
 						
-						<input  class="form-control"   type="password"  id="temp_textfield3_3" name="temp_textfield3_3" style="width:300px;z-index:3;position:absolute;left:20;top:40;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;" onkeyup="judgepassword();" onblur='changemsg("temp_textfield3_3","textfield3");' />
+						<input  class="form-control"   type="password"  id="temp_textfield3_3" name="temp_textfield3_3" style="z-index:4;position:absolute;left:20;top:40;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;" onkeyup="judgepassword();" onblur='changemsg("temp_textfield3_3","textfield3");' />
 						
-						<input  class="form-control"   type="password"  id="temp_textfield4_4" name="temp_textfield4_4" style="width:300px;z-index:3;position:absolute;left:20;top:40;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;" onblur='changemsg("temp_textfield4_4","textfield4");' />
+						<input  class="form-control"   type="password"  id="temp_textfield4_4" name="temp_textfield4_4" style="z-index:4;position:absolute;left:20;top:40;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;" onblur='changemsg("temp_textfield4_4","textfield4");' />
 						
-						<input  class="form-control"   type="text"  id="temp_textfield5_5" name="temp_textfield5_5" style="width:300px;z-index:3;position:absolute;left:20;top:40;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;" onblur='changemsg("temp_textfield5_5","textfield5");'/>
-<!--
-<div style="background:#F6F6F6; padding:15px; width:100%;" >
-<table width="480px" border="0" cellspacing="0" cellpadding="0" align="center">
-<tr>
-<td width="100px">
-<img src="skin/themes/base/images/getqrcode.jpg" width="82" height="82" />
-</td>
-<td valign="top">
-<span class="gray2 glink" style="line-height:150%;"><?php echo $multilingual_getqrcode; ?></span>
-</td>
-</tr>
-</table>
-</div>
+						<input  class="form-control"   type="text"  id="temp_textfield5_5" name="temp_textfield5_5" style="z-index:4;position:absolute;left:20;top:40;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;" onblur='changemsg("temp_textfield5_5","textfield5");'/>
 
 
-<iframe id="frame_content" name="main_frame" frameborder="0" height="1px" width="1px" src="http://www.wssys.net/analytics<?php if ($language == "en") { echo "_en";}?>.html" scrolling="no"></iframe> ?>-->
+<script>
+window.onload = function()
+{
+
+    J.check.regform('myform');
+	
+	document.getElementById("outdiv").style.height = (document.body.clientHeight-126) +'px';  
+	
+	var x= $("textfield1").offset(); 
+	document.getElementById("temp_textfield1_1").style.top=(x.top-7)+'px';
+	document.getElementById("temp_textfield1_1").style.left=(x.left-2+13)+'px';
+	document.getElementById("temp_textfield1_1").style.width=(document.getElementById("textfield1").clientWidth+6)+'px';
+	document.getElementById("ms1").style.top=(x.top-7+35)+'px';
+	document.getElementById("ms1").style.left=(x.left+13)+'px';
+	document.getElementById("ms1_text").style.width=(document.getElementById("textfield1").clientWidth+4)+'px';
+	document.getElementById("user_name_msg").style.top=(x.top-7)+'px';
+	document.getElementById("user_name_msg").style.left=(x.left+document.getElementById("textfield1").clientWidth+80)+'px';
+	
+    x= $("textfield3").offset(); 
+	document.getElementById("temp_textfield3_3").style.top=(x.top-7)+'px';
+	document.getElementById("temp_textfield3_3").style.left=(x.left-2+13)+'px';
+	document.getElementById("temp_textfield3_3").style.width=(document.getElementById("textfield3").clientWidth+6)+'px';
+	document.getElementById("ms3").style.top=(x.top-7+35)+'px';
+	document.getElementById("ms3").style.left=(x.left+13)+'px';
+	document.getElementById("ms3").style.width=(document.getElementById("textfield3").clientWidth+4)+'px';
+	document.getElementById("ms3_text").style.width=(document.getElementById("textfield3").clientWidth+4)+'px';
+	
+	document.getElementById("keycheck").style.top=(x.top-2)+'px';
+	document.getElementById("keycheck").style.left=(x.left+document.getElementById("textfield3").clientWidth+90)+'px';
+	document.getElementById("password_msg").style.top=(x.top-7)+'px';
+	document.getElementById("password_msg").style.left=(x.left+document.getElementById("textfield3").clientWidth+80)+'px';
+	
+    x= $("textfield4").offset(); 
+	document.getElementById("temp_textfield4_4").style.top=(x.top-7)+'px';
+	document.getElementById("temp_textfield4_4").style.left=(x.left-2+13)+'px';
+	document.getElementById("temp_textfield4_4").style.width=(document.getElementById("textfield4").clientWidth+6)+'px';
+	document.getElementById("ms4").style.top=(x.top-7+35)+'px';
+	document.getElementById("ms4").style.left=(x.left+13)+'px';
+	document.getElementById("ms4").style.width=(document.getElementById("textfield4").clientWidth+4)+'px';
+	document.getElementById("ms4_text").style.width=(document.getElementById("textfield4").clientWidth+4)+'px';
+	document.getElementById("re_password_msg").style.top=(x.top-7)+'px';
+	document.getElementById("re_password_msg").style.left=(x.left+document.getElementById("temp_textfield4_4").clientWidth+80)+'px';
+	
+    x= $("textfield5").offset(); 
+	document.getElementById("temp_textfield5_5").style.top=(x.top-7)+'px';
+	document.getElementById("temp_textfield5_5").style.left=(x.left-2+13)+'px';
+	document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield5").clientWidth+6)+'px';
+	document.getElementById("ms5").style.top=(x.top-7+35)+'px';
+	document.getElementById("ms5").style.left=(x.left+13)+'px';
+	document.getElementById("ms5_text").style.width=(document.getElementById("textfield5").clientWidth+4)+'px';
+	document.getElementById("ms5").style.width=(document.getElementById("textfield5").clientWidth+4)+'px';	
+	document.getElementById("email_msg").style.top=(x.top-7)+'px';
+	document.getElementById("email_msg").style.left=(x.left+document.getElementById("temp_textfield5_5").clientWidth+80)+'px';
+}
+
+window.onresize = function()
+{	
+	document.getElementById("outdiv").style.height = (document.body.clientHeight-126) +'px';  
+	
+	var x= $(textfield1).offset(); 
+	document.getElementById("temp_textfield1_1").style.top=(x.top-7)+'px';
+	document.getElementById("temp_textfield1_1").style.left=(x.left-2)+'px';
+	document.getElementById("temp_textfield1_1").style.width=(document.getElementById("textfield1").clientWidth+6)+'px';
+	document.getElementById("ms1").style.top=(x.top-7+35)+'px';
+	document.getElementById("ms1").style.left=(x.left)+'px';
+	document.getElementById("ms1_text").style.width=(document.getElementById("textfield1").clientWidth+4)+'px';
+	document.getElementById("user_name_msg").style.top=(x.top-7)+'px';
+	document.getElementById("user_name_msg").style.left=(x.left+document.getElementById("textfield1").clientWidth+80)+'px';
+	
+    x= $(textfield3).offset(); 
+	document.getElementById("temp_textfield3_3").style.top=(x.top-7)+'px';
+	document.getElementById("temp_textfield3_3").style.left=(x.left-2)+'px';
+	document.getElementById("temp_textfield3_3").style.width=(document.getElementById("textfield3").clientWidth+6)+'px';
+	document.getElementById("ms3").style.top=(x.top-7+35)+'px';
+	document.getElementById("ms3").style.left=(x.left)+'px';
+	document.getElementById("ms3").style.width=(document.getElementById("textfield3").clientWidth+4)+'px';
+	document.getElementById("ms3_text").style.width=(document.getElementById("textfield3").clientWidth+4)+'px';
+	
+	document.getElementById("keycheck").style.top=(x.top-2)+'px';
+	document.getElementById("keycheck").style.left=(x.left+document.getElementById("textfield3").clientWidth+90)+'px';
+	document.getElementById("password_msg").style.top=(x.top-7)+'px';
+	document.getElementById("password_msg").style.left=(x.left+document.getElementById("textfield3").clientWidth+80)+'px';
+	
+    x= $(textfield4).offset(); 
+	document.getElementById("temp_textfield4_4").style.top=(x.top-7)+'px';
+	document.getElementById("temp_textfield4_4").style.left=(x.left-2)+'px';
+	document.getElementById("temp_textfield4_4").style.width=(document.getElementById("textfield4").clientWidth+6)+'px';
+	document.getElementById("ms4").style.top=(x.top-7+35)+'px';
+	document.getElementById("ms4").style.left=(x.left)+'px';
+	document.getElementById("ms4").style.width=(document.getElementById("textfield4").clientWidth+4)+'px';
+	document.getElementById("ms4_text").style.width=(document.getElementById("textfield4").clientWidth+4)+'px';
+	document.getElementById("re_password_msg").style.top=(x.top-7)+'px';
+	document.getElementById("re_password_msg").style.left=(x.left+document.getElementById("temp_textfield4_4").clientWidth+80)+'px';
+	
+    x= $(textfield5).offset(); 
+	document.getElementById("temp_textfield5_5").style.top=(x.top-7)+'px';
+	document.getElementById("temp_textfield5_5").style.left=(x.left-2)+'px';
+	document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield5").clientWidth+6)+'px';
+	document.getElementById("ms5").style.top=(x.top-7+35)+'px';
+	document.getElementById("ms5").style.left=(x.left)+'px';
+	document.getElementById("ms5_text").style.width=(document.getElementById("textfield5").clientWidth+4)+'px';
+	document.getElementById("ms5").style.width=(document.getElementById("textfield5").clientWidth+4)+'px';	
+	document.getElementById("email_msg").style.top=(x.top-7)+'px';
+	document.getElementById("email_msg").style.left=(x.left+document.getElementById("temp_textfield5_5").clientWidth+80)+'px';	
+}
+</script>
+
+
+
 <?php require('foot.php'); ?>
-</center></body>
+
+</center>
+
+</body>
+
+
 </html>
