@@ -28,6 +28,13 @@ if (isset($_GET['pageNum_timeout'])) {
 }
 $startRow_timeout = $pageNum_timeout * $maxRows_timeout;
 
+//当前显示的即将过期任务的页面号
+$pageNum_nearout = 0;
+if (isset($_GET['pageNum_nearout'])) {
+  $pageNum_nearout = $_GET['pageNum_nearout'];
+}
+$startRow_nearout = $pageNum_nearout * $maxRows_timeout;
+
 
 //<!--设置执行人 %表示不限执行人 -->  
 $colname_Recordset1 = "%";
@@ -498,6 +505,101 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 $queryString_timeout = sprintf("&totalRows_timeout=%d%s", $totalRows_timeout, $queryString_timeout);
 }
 
+
+
+
+
+
+
+if ($pagetabs <> "etask") {
+//查找即将过期任务
+$outday = date("Y-m-d");
+//设置即将过期的时间为剩下两天
+$nearday = date("Y-m-d",strtotime('-2 day')); 
+
+$outstfinish = GetSQLValueString("%" . $multilingual_dd_status_stfinish . "%", "text");
+//将日期转化为文本
+$outday = GetSQLValueString($outday , "text");
+$nearday = GetSQLValueString($nearday , "text");
+
+$outwhere = "";
+			$outwhere=' WHERE';
+            
+   //          //查找指派给我的过期的任务
+			// if($colname_Recordset1 <> '%')
+			// {
+			// 	$outwhere.= " tk_task.csa_to_user = $coltouser AND";
+			// }
+			$outwhere.= " tk_task.csa_to_user = $coltouser AND";			
+			// if($colcreate_Recordset1 <> '%')
+			// {
+			// 	$outwhere.= " tk_task.csa_from_user = $colcreateuser AND";
+			// }
+			// if($pagetabs == "cctome")
+			// {
+			// 	$outwhere.= " tk_task.csa_testto LIKE $cc_tome AND";
+			// }
+			$outwhere.= " tk_status.task_status NOT LIKE $outstfinish AND";
+			//设置即将过期的任务为进行中的任务
+			$outwhere.= " tk_task.csa_status =2 AND";
+			$outwhere.= " tk_task.csa_plan_et <= $outday AND tk_task.csa_plan_et >= $nearday AND csa_del_status=1";
+
+mysql_select_db($database_tankdb, $tankdb);
+$query_nearout = "SELECT *, 
+							
+							tk_project.project_name as project_name_prt,
+							tk_user1.tk_display_name as tk_display_name1, 
+							tk_user2.tk_display_name as tk_display_name2
+							
+							FROM tk_task  
+							inner join tk_project on tk_task.csa_project=tk_project.id
+							
+							inner join tk_user as tk_user1 on tk_task.csa_to_user=tk_user1.uid 
+							inner join tk_user as tk_user2 on tk_task.csa_from_user=tk_user2.uid 
+							
+							inner join tk_status on tk_task.csa_status=tk_status.id
+							
+							$outwhere 
+														
+							ORDER BY csa_plan_et DESC";
+$query_limit_nearout = sprintf("%s LIMIT %d, %d", $query_nearout, $startRow_nearout, $maxRows_timeout);
+$nearout = mysql_query($query_limit_nearout, $tankdb) or die(mysql_error());
+$row_nearout = mysql_fetch_assoc($nearout);
+
+if (isset($_GET['totalRows_nearout'])) {
+  $totalRows_nearout = $_GET['totalRows_nearout'];
+} else {
+  $all_nearout = mysql_query($query_nearout);
+  $totalRows_nearout = mysql_num_rows($all_nearout);
+}
+$totalPages_nearout = ceil($totalRows_nearout/$maxRows_timeout)-1;
+
+$queryString_nearout = "";
+if (!empty($_SERVER['QUERY_STRING'])) {
+  $params = explode("&", $_SERVER['QUERY_STRING']);
+  $newParams = array();
+  foreach ($params as $param) {
+    if (stristr($param, "pageNum_nearout") == false && 
+        stristr($param, "totalRows_nearout") == false) {
+      array_push($newParams, $param);
+    }
+  }
+  if (count($newParams) != 0) {
+    $queryString_nearout = "&" . htmlentities(implode("&", $newParams));
+  }
+}
+$queryString_nearout = sprintf("&totalRows_nearout=%d%s", $totalRows_nearout, $queryString_nearout);
+}
+
+
+
+
+
+
+
+
+
+
 //任务状态的所有搜索条件
 mysql_select_db($database_tankdb, $tankdb);
 $query_tkstatus = "SELECT id, task_status, task_status_display FROM tk_status ORDER BY id ASC";
@@ -652,7 +754,7 @@ function   exportexcel()
 
 <!-- 此处显示即将过期的任务 -->
 <?php if ($pagetabs <> "etask") { // Show outofdate if recordset not empty ?>
-<?php if ($totalRows_timeout > 0 && $outofdate=="on") { // Show outofdate if recordset not empty ?>
+<?php if ($totalRows_nearout > 0 && $outofdate=="on") { // Show outofdate if recordset not empty ?>
 
 <div class="panel panel-warning timeout_color pagemarginfix">
   <!-- Default panel contents -->
@@ -662,23 +764,23 @@ function   exportexcel()
          <?php do { ?>
         <tr>
             <td>
-                <a href="default_task_edit.php?editID=<?php echo $row_timeout['tid']; ?>" target="_parent">
-                [<?php echo $row_timeout['tid']; ?>] <?php echo $row_timeout['csa_text']; ?> 
+                <a href="default_task_edit.php?editID=<?php echo $row_nearout['tid']; ?>" target="_parent">
+                [<?php echo $row_nearout['tid']; ?>] <?php echo $row_nearout['csa_text']; ?> 
                 </a>
             </td>
             <?php if($pagetabs <> "mtask"){ ?>
             <td>
-                <a href="user_view.php?recordID=<?php echo $row_timeout['csa_to_user']; ?> "><?php echo $multilingual_default_task_to; ?>: <?php echo $row_timeout['tk_display_name1']; ?></a>
+                <a href="user_view.php?recordID=<?php echo $row_nearout['csa_to_user']; ?> "><?php echo $multilingual_default_task_to; ?>: <?php echo $row_nearout['tk_display_name1']; ?></a>
             </td>
             <?php } ?>
             <td class="gray">
                 <?php 
-	  $live_days = (strtotime(date("Y-m-d")) - strtotime($row_timeout['csa_plan_et']))/86400;
+	  $live_days = (strtotime(date("Y-m-d")) - strtotime($row_nearout['csa_plan_et']))/86400;
 	  echo $multilingual_outofdate_outofdate.": ".$live_days." ".$multilingual_outofdate_date;
 	  ?>
             </td>
         </tr>
-        <?php } while ($row_timeout = mysql_fetch_assoc($timeout)); ?>
+        <?php } while ($row_nearout = mysql_fetch_assoc($nearout)); ?>
     </table>
    
    
@@ -688,29 +790,29 @@ function   exportexcel()
 <tr>
 <td>   <table border="0">
         <tr>
-          <td><?php if ($pageNum_timeout > 0) { // Show if not first page ?>
+          <td><?php if ($pageNum_nearout > 0) { // Show if not first page ?>
 		  
 			<!--第一页 -->
-              <a href="<?php printf("%s?pageNum_timeout=%d%s", $currentPage, 0, $queryString_timeout); ?>"><?php echo $multilingual_global_first; ?></a>
+              <a href="<?php printf("%s?pageNum_nearout=%d%s", $currentPage, 0, $queryString_nearout); ?>"><?php echo $multilingual_global_first; ?></a>
               <?php } // Show if not first page ?></td>
-          <td><?php if ($pageNum_timeout > 0) { // Show if not first page ?>
+          <td><?php if ($pageNum_nearout > 0) { // Show if not first page ?>
              
 			 <!--上一页 -->
-			 <a href="<?php printf("%s?pageNum_timeout=%d%s", $currentPage, max(0, $pageNum_timeout - 1), $queryString_timeout); ?>"><?php echo $multilingual_global_previous; ?></a>
+			 <a href="<?php printf("%s?pageNum_nearout=%d%s", $currentPage, max(0, $pageNum_nearout - 1), $queryString_nearout); ?>"><?php echo $multilingual_global_previous; ?></a>
               <?php } // Show if not first page ?></td>
-          <td><?php if ($pageNum_timeout < $totalPages_timeout) { // Show if not last page ?>
+          <td><?php if ($pageNum_nearout < $totalPages_nearout) { // Show if not last page ?>
               
 			  <!--下一页 -->
-			  <a href="<?php printf("%s?pageNum_timeout=%d%s", $currentPage, min($totalPages_timeout, $pageNum_timeout + 1), $queryString_timeout); ?>"><?php echo $multilingual_global_next; ?></a>
+			  <a href="<?php printf("%s?pageNum_nearout=%d%s", $currentPage, min($totalPages_nearout, $pageNum_nearout + 1), $queryString_nearout); ?>"><?php echo $multilingual_global_next; ?></a>
               <?php } // Show if not last page ?></td>
-          <td><?php if ($pageNum_timeout < $totalPages_timeout) { // Show if not last page ?>
+          <td><?php if ($pageNum_nearout < $totalPages_nearout) { // Show if not last page ?>
              
 			<!--最后一页 -->
-			 <a href="<?php printf("%s?pageNum_timeout=%d%s", $currentPage, $totalPages_timeout, $queryString_timeout); ?>"><?php echo $multilingual_global_last; ?></a>
+			 <a href="<?php printf("%s?pageNum_nearout=%d%s", $currentPage, $totalPages_nearout, $queryString_nearout); ?>"><?php echo $multilingual_global_last; ?></a>
               <?php } // Show if not last page ?></td>
         </tr>
       </table></td>
-<td align="right">   <?php echo ($startRow_timeout + 1) ?> <?php echo $multilingual_global_to; ?> <?php echo min($startRow_timeout + $maxRows_timeout, $totalRows_timeout) ?> (<?php echo $multilingual_global_total; ?> <?php echo $totalRows_timeout ?> <?php echo $multilingual_outofdate_totle; ?>)&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td align="right">   <?php echo ($startRow_nearout + 1) ?> <?php echo $multilingual_global_to; ?> <?php echo min($startRow_nearout + $maxRows_nearout, $totalRows_nearout) ?> (<?php echo $multilingual_global_total; ?> <?php echo $totalRows_nearout ?> <?php echo $multilingual_outofdate_totle; ?>)&nbsp;&nbsp;&nbsp;&nbsp;</td>
 </tr>
 </table>
 </div>
