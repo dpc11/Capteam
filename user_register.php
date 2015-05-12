@@ -13,7 +13,7 @@
 
 <!DOCTYPE html >
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8;user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"  />
 <title>Capteam- <?php echo $multilingual_register_title; ?></title>
 <link href="css/tk_style.css" rel="stylesheet" type="text/css" />
 <link href="css/lhgcore/lhgdialog.css" rel="stylesheet" type="text/css" />
@@ -234,20 +234,20 @@ function changemsg(UP,DOWN){
 	
 			var x= $(textfield1).offset(); 
 			document.getElementById("temp_textfield1_1").style.top=(x.top-7)+'px';
-			document.getElementById("temp_textfield1_1").style.left=(x.left-2+13)+'px';
+			document.getElementById("temp_textfield1_1").style.left=(x.left-2)+'px';
 			document.getElementById("temp_textfield1_1").style.width=(document.getElementById("textfield1").clientWidth+6)+'px';
 			document.getElementById("ms1").style.top=(x.top-7+35)+'px';
-			document.getElementById("ms1").style.left=(x.left+13)+'px';
+			document.getElementById("ms1").style.left=(x.left)+'px';
 			document.getElementById("ms1_text").style.width=(document.getElementById("textfield1").clientWidth+4)+'px';
 			document.getElementById("user_name_msg").style.top=(x.top-7)+'px';
 			document.getElementById("user_name_msg").style.left=(x.left+document.getElementById("textfield1").clientWidth+80)+'px';
 			
 			x= $(textfield3).offset(); 
 			document.getElementById("temp_textfield3_3").style.top=(x.top-7)+'px';
-			document.getElementById("temp_textfield3_3").style.left=(x.left-2+13)+'px';
+			document.getElementById("temp_textfield3_3").style.left=(x.left-2)+'px';
 			document.getElementById("temp_textfield3_3").style.width=(document.getElementById("textfield3").clientWidth+6)+'px';
 			document.getElementById("ms3").style.top=(x.top-7+35)+'px';
-			document.getElementById("ms3").style.left=(x.left+13)+'px';
+			document.getElementById("ms3").style.left=(x.left)+'px';
 			document.getElementById("ms3").style.width=(document.getElementById("textfield3").clientWidth+4)+'px';
 			document.getElementById("ms3_text").style.width=(document.getElementById("textfield3").clientWidth+4)+'px';
 			
@@ -258,10 +258,10 @@ function changemsg(UP,DOWN){
 			
 			x= $(textfield4).offset(); 
 			document.getElementById("temp_textfield4_4").style.top=(x.top-7)+'px';
-			document.getElementById("temp_textfield4_4").style.left=(x.left-2+13)+'px';
+			document.getElementById("temp_textfield4_4").style.left=(x.left-2)+'px';
 			document.getElementById("temp_textfield4_4").style.width=(document.getElementById("textfield4").clientWidth+6)+'px';
 			document.getElementById("ms4").style.top=(x.top-7+35)+'px';
-			document.getElementById("ms4").style.left=(x.left+13)+'px';
+			document.getElementById("ms4").style.left=(x.left)+'px';
 			document.getElementById("ms4").style.width=(document.getElementById("textfield4").clientWidth+4)+'px';
 			document.getElementById("ms4_text").style.width=(document.getElementById("textfield4").clientWidth+4)+'px';
 			document.getElementById("re_password_msg").style.top=(x.top-7)+'px';
@@ -269,10 +269,10 @@ function changemsg(UP,DOWN){
 			
 			x= $(textfield5).offset(); 
 			document.getElementById("temp_textfield5_5").style.top=(x.top-7)+'px';
-			document.getElementById("temp_textfield5_5").style.left=(x.left-2+13)+'px';
+			document.getElementById("temp_textfield5_5").style.left=(x.left-2)+'px';
 			document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield5").clientWidth+6)+'px';
 			document.getElementById("ms5").style.top=(x.top-7+35)+'px';
-			document.getElementById("ms5").style.left=(x.left+13)+'px';
+			document.getElementById("ms5").style.left=(x.left)+'px';
 			document.getElementById("ms5_text").style.width=(document.getElementById("textfield5").clientWidth+4)+'px';
 			document.getElementById("ms5").style.width=(document.getElementById("textfield5").clientWidth+4)+'px';	
 			document.getElementById("email_msg").style.top=(x.top-7)+'px';
@@ -424,7 +424,7 @@ function changemsg(UP,DOWN){
 						</div>
 						
 	
-	<span id="user_name_msg" style="margin-top:10px;z-index:3;position:absolute;font-size:12px;min-width:125px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;"></span>
+	<span id="user_name_msg" style="margin-top:10px;z-index:3;position:absolute;font-size:12px;min-width:130px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;"></span>
 							
 	
 							<span id="password_msg" style="margin-top:10px;z-index:3;position:absolute;font-size:12px;display:none;min-width:125px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;"></span>

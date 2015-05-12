@@ -147,7 +147,7 @@ window.onresize = function()
 	  
 	  <td style="width:40%;min-width:100px;">
 	  <div>
-			<legend  style="border-bottom-width: 3px;font-weight:bold;font-size:20px;">&nbsp;&nbsp;用户登陆</legend>
+			<legend  style="border-bottom-width: 3px;font-weight:bold;font-size:20px;">&nbsp;&nbsp;用户登录</legend>
 		</div>		
 		<?php  if($errormsg==true){ ?>
 		<div  style="width:5%;float:left;" > 
