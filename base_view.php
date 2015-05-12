@@ -28,7 +28,7 @@
 
 <style> 
 #displayRoom{background:white;position:relative;float:left;clear:both;padding:30px 0px 0px 20px;margin-left:20px;margin-top:10px;} 
-.row{display:inline-block;float:left;width:15em;margin-right: 30px;margin-left: 30px;clear:none;top:0;background:white;} 
+.row{display:inline-block;float:left;width:16em;margin-right: 30px;margin-left: 30px;clear:none;top:0;background:white;} 
 .row span{display:block;width:15em;clear:none;background:white;height:15em;line-height:30px;margin-right: 30px;margin-bottom:30px;text-align:center;} 
 span.usr{text-decoration:none; 
 color:#000; 
@@ -40,15 +40,17 @@ padding:1em;
 text-decoration: none; 
 overflow-y:auto;
 padding: 1em; /* Firefox */ 
+padding-left: 2em;
+padding-right: 1.7em;
 -moz-box-shadow: 5px 5px 7px rgba(33,33,33,1); /* Safari+Chrome */ 
 -webkit-box-shadow: 5px 5px 7px rgba(33,33,33,.7); /* Opera */ 
 box-shadow: 5px 5px 7px rgba(33,33,33,.7);
-cursor:pointer;display:block;width:15em;clear:none;height:15em;line-height:30px;margin-right: 2em;margin-bottom:30px;text-align:center;} 
+cursor:pointer;display:block;width:15em;clear:none;height:15em;line-height:30px;margin-right: 2em;margin-bottom:30px;text-align:left;} 
 span.usr.catch{background:#ffc!important;}
 
 /* 设置滚动条的样式 */
 ::-webkit-scrollbar {
-    width: 12px;
+    width: 0px;
 }
 /* 滚动槽 */
 ::-webkit-scrollbar-track {
@@ -287,15 +289,23 @@ span.usr.catch{background:#ffc!important;}
                      $id_seq = $id_seq + 1;?>
                     <div class="row"style="margin-right:0px"> 
                         <span id="parent<?php echo $row_board['board_seq']; ?>">
-                            <span class="usr" id="<?php echo $id_seq; ?>"><?php echo $row_board['board_content']; ?></span>
+                            <span class="usr" id="<?php echo $id_seq; ?>">
+                                <p style="margin: 0px;margin-bottom: 10px;">
+                                    <a href="base_delete.php?delID=<?php echo $row_board['board_id']; ?>&pid=<?php echo $pid; ?>">
+                                        <img src="images/ui/base_close.png" style="float: right;margin-left: 140px;position: absolute;" width="8px">
+                                    </a>
+                                    <a href="">
+                                        <img src="images/ui/base_edit.png" style="float: left;margin-left: -15px;margin-top: -2px;position: absolute;" height="10px">
+                                    </a>
+                                </p><?php echo $row_board['board_content']; ?></span>
                         </span>
                     </div>
                 <?php } ?>
                 <div class="row"style="margin-right:0px"> 
-                    <span><span class="usr" id="12"><button class="btn btn-primary"  style="display:inline-block;-moz-box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+                    <span><span class="usr" id="add"><button class="btn btn-primary"  style="display:inline-block;-moz-box-shadow: 0 1px 2px rgba(0,0,0,0.5);
                     background-color: #ffc;border-color: #ffc;
                     text-shadow: 0 -1px 1px rgba(0,0,0,0.25);width:130px;clear:none;
-                    height:129px;line-height:30px;margin-top:20px;text-align:center;background-image: url(images/ui/add.png);"; type="button"; ></button></span></span> 
+                    height:129px;line-height:30px;margin-top: 15px;margin-left: 2px;text-align:center;background-image: url(images/ui/add.png);"; type="button"; ></button></span></span> 
                     <div class="modal" id="mymodal">
                         <div 
                         style="margin-top: 80px;"
