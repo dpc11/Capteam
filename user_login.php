@@ -50,31 +50,100 @@ if (isset($_POST['textfield'])) {
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Capteam - <?php echo $multilingual_userlogin_title; ?></title>
-<script type="text/javascript" src="js/lhgcore/lhgcore.js"></script>
-<script type="text/javascript" src="js/lhgcore/lhgcheck.js"></script>
 <link href="css/tk_style.css" rel="stylesheet" type="text/css" />
 <link href="css/lhgcore/lhgdialog.css" rel="stylesheet" type="text/css" />
 <link href="css/lhgcore/lhgcheck.css" rel="stylesheet" type="text/css" />
 <link href="css/bootstrap/bootstrap.css" rel="stylesheet" media="screen">
+<link href="css/custom.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="js/lhgcore/lhgcore.js"></script>
+<script type="text/javascript" src="js/lhgcore/lhgcheck.js"></script>
 <script type="text/javascript" src="js/jquery/jquery.js"></script>
 <script type="text/javascript" src="js/bootstrap/bootstrap.js"></script>
 <script type="text/javascript" src="js/lhgcore/lhgdialog.js"></script>
-<link href="css/custom.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+
+J.check.rules = [
+	{ name: 'textfield', mid: 'username', requir: true, type: 'email', warn: '邮箱格式错误' },
+	{ name: 'textfield2', mid: 'passwordid', requir: true}
+];
+
+function register(){
+	
+	window.open('user_register.php','_self');
+}
+
+function changemsg(UP,DOWN){
+	
+		document.getElementById(DOWN).focus();
+		var contentmsg = document.getElementById(UP).value;
+		document.getElementById(DOWN).value=contentmsg;
+		document.getElementById(DOWN).blur();
+
+}
+
+function changepsd(UP,DOWN){
+	
+		document.getElementById(DOWN).focus();
+		var contentmsg = document.getElementById(UP).value;		
+		document.getElementById(DOWN).value=contentmsg;
+		document.getElementById(DOWN).blur();
+
+}
+
+	$(window).load(function()
+	{
+
+    J.check.regform('form1');
+	
+	document.getElementById("outdiv").style.height = ( $(window).height()-126) +'px';
+	document.getElementById("innerdiv").style.paddingTop = (document.getElementById("outdiv").clientHeight-300*1.2)/2 +'px'; 
+	document.getElementById("capteamfoot").style.width = document.getElementById("innerdiv").clientWidth +'px'; 
+	
+    var x= $(textfield).offset(); 
+	document.getElementById("temp_textfield4_4").style.top=(x.top)+'px';
+	document.getElementById("temp_textfield4_4").style.left=(x.left)+'px';
+	document.getElementById("temp_textfield4_4").style.width=(document.getElementById("textfield").clientWidth+5)+'px';
+    x= $(textfield2).offset();
+	document.getElementById("temp_textfield5_5").style.top=(x.top)+'px';
+	document.getElementById("temp_textfield5_5").style.left=(x.left)+'px';	
+	document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield2").clientWidth+5)+'px';
+	});
+window.onresize = function()
+{	
+
+	document.getElementById("outdiv").style.height = ($(window).height()-126) +'px';  
+	document.getElementById("innerdiv").style.paddingTop = (document.getElementById("outdiv").clientHeight-300*1.2)/2 +'px'; 
+	
+    var x= $(textfield).offset(); 	
+	document.getElementById("temp_textfield4_4").style.top=(x.top)+'px';
+	document.getElementById("temp_textfield4_4").style.left=(x.left)+'px';
+	document.getElementById("temp_textfield4_4").style.width=(document.getElementById("textfield").clientWidth+5)+'px';
+    x= $(textfield2).offset();
+	document.getElementById("temp_textfield5_5").style.top=(x.top)+'px';
+	document.getElementById("temp_textfield5_5").style.left=(x.left)+'px';
+	document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield2").clientWidth+5)+'px';		
+}
+
+</script>
+
 </head>
 
-<body ><center>
+<body>
 <div class="topbar" id="headerlink" >
     <div class="logo" id="logo" ><a href="index.php" class="logourl" >&nbsp;</a></div>
 </div>
 
-<div id="outdiv" style="min-width:1100px;min-height:500px;height:800px;">
-<div style="width:820.833px;-webkit-transform: scale( 1.2,1.2 );" >
+<center>
+<div id="outdiv" style="min-width:1200px;min-height:500px;height:500px;">
+<div id="innerdiv" style="width:820.833px;-webkit-transform: scale( 1.2,1.2 );height:300px;" >
 <table width="100%" border="0" cellspacing="0" cellpadding="0" height="100%" align="center">
     <tr>
       <td  style="width:40%">
       <div class="ping_logo"></div>
       </td>
-	  <td style="width:20%;">&nbsp;</div>
+	  <td style="width:20%;">&nbsp;</td>
 	  
 	  <td style="width:40%;min-width:100px;">
 	  <div>
@@ -136,71 +205,8 @@ if (isset($_POST['textfield'])) {
 </div></div>
 <input  class="form-control"   type="text"  id="temp_textfield4_4" name="temp_textfield4_4" style="width:300px;z-index:3;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;" onblur='changemsg("temp_textfield4_4","textfield");' placeholder="邮箱"  value="<?php echo $loginUsername; ?>" />
 	<input  class="form-control"   type="password"  id="temp_textfield5_5" name="temp_textfield5_5" style="width:300px;z-index:3;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;" onblur='changepsd("temp_textfield5_5","textfield2");' placeholder="密码" value="<?php echo $password; ?>" >
-	
+
 <?php require('foot.php'); ?>
-</center></body>
+</center>	
+</body>
 </html>
-<script type="text/javascript">
-
-J.check.rules = [
-	{ name: 'textfield', mid: 'username', requir: true, type: 'email', warn: '邮箱格式错误' },
-	{ name: 'textfield2', mid: 'passwordid', requir: true}
-];
-
-function register(){
-	
-	window.open('user_register.php','_self');
-}
-
-function changemsg(UP,DOWN){
-	
-		document.getElementById(DOWN).focus();
-		var contentmsg = document.getElementById(UP).value;
-		document.getElementById(DOWN).value=contentmsg;
-		document.getElementById(DOWN).blur();
-
-}
-
-function changepsd(UP,DOWN){
-	
-		document.getElementById(DOWN).focus();
-		var contentmsg = document.getElementById(UP).value;		
-		document.getElementById(DOWN).value=contentmsg;
-		document.getElementById(DOWN).blur();
-
-}
-
-
-window.onresize = function()
-{	
-    var x= $(textfield).offset(); 
-
-	document.getElementById("outdiv").style.height = (document.body.clientHeight-126) +'px';  
-	
-	document.getElementById("temp_textfield4_4").style.top=(x.top)+'px';
-	document.getElementById("temp_textfield4_4").style.left=(x.left)+'px';
-	document.getElementById("temp_textfield4_4").style.width=(document.getElementById("textfield").clientWidth+5)+'px';
-    x= $(textfield2).offset();
-	document.getElementById("temp_textfield5_5").style.top=(x.top)+'px';
-	document.getElementById("temp_textfield5_5").style.left=(x.left)+'px';
-	document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield2").clientWidth+5)+'px';		
-}
-
-window.onload = function()
-{
-    J.check.regform('form1');
-	
-	document.getElementById("outdiv").style.height = (document.body.clientHeight-126) +'px';  
-	
-    var x= $(textfield).offset(); 
-
-	document.getElementById("temp_textfield4_4").style.top=(x.top)+'px';
-	document.getElementById("temp_textfield4_4").style.left=(x.left)+'px';
-	document.getElementById("temp_textfield4_4").style.width=(document.getElementById("textfield").clientWidth+5)+'px';
-    x= $(textfield2).offset();
-	document.getElementById("temp_textfield5_5").style.top=(x.top)+'px';
-	document.getElementById("temp_textfield5_5").style.left=(x.left)+'px';	
-	document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield2").clientWidth+5)+'px';	
-	
-}
-</script>
