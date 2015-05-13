@@ -96,7 +96,7 @@ function changepsd(UP,DOWN){
 	{
 
     J.check.regform('form1');
-	
+/*	
 	document.getElementById("outdiv").style.height = ( $(window).height()-126) +'px';
 	document.getElementById("innerdiv").style.paddingTop = (document.getElementById("outdiv").clientHeight-300*1.2)/2 +'px'; 
 	
@@ -108,8 +108,12 @@ function changepsd(UP,DOWN){
 	document.getElementById("temp_textfield5_5").style.top=(x.top)+'px';
 	document.getElementById("temp_textfield5_5").style.left=(x.left)+'px';	
 	document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield2").clientWidth+5)+'px';
+	
+	
+		window.scrollTo(document.body.scrollWidth,0);*/
+		$(window).resize();
 	});
-window.onresize = function()
+$(window).resize(function()
 {	
 
 	document.getElementById("outdiv").style.height = ($(window).height()-126) +'px';  
@@ -122,14 +126,17 @@ window.onresize = function()
     x= $(textfield2).offset();
 	document.getElementById("temp_textfield5_5").style.top=(x.top)+'px';
 	document.getElementById("temp_textfield5_5").style.left=(x.left)+'px';
-	document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield2").clientWidth+5)+'px';		
-}
+	document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield2").clientWidth+5)+'px';	
+
+
+		window.scrollTo(document.body.scrollWidth,0);	
+});
 
 </script>
 
 </head>
 
-<body>
+<body style="min-width:1200px;">
 <div class="topbar" id="headerlink" >
     <div class="logo" id="logo" ><a href="index.php" class="logourl" >&nbsp;</a></div>
 </div>

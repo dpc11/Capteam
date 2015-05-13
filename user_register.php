@@ -233,13 +233,13 @@ function changemsg(UP,DOWN){
 		
 			document.getElementById("outdiv").style.height = ($(window).height() -126+24) +'px';  
 			document.getElementById("innerdiv").style.paddingTop = ((document.getElementById("outdiv").clientHeight-23-485*1.2))/2 +'px'; 
-			
+/*			
 			var x= $(textfield1).offset(); 
 			document.getElementById("temp_textfield1_1").style.top=(x.top-7)+'px';
-			document.getElementById("temp_textfield1_1").style.left=(x.left-2+13)+'px';
+			document.getElementById("temp_textfield1_1").style.left=(x.left-2)+'px';
 			document.getElementById("temp_textfield1_1").style.width=(document.getElementById("textfield1").clientWidth+6)+'px';
 			document.getElementById("ms1").style.top=(x.top-7+35)+'px';
-			document.getElementById("ms1").style.left=(x.left+13)+'px';
+			document.getElementById("ms1").style.left=(x.left)+'px';
 			document.getElementById("ms1_text").style.width=(document.getElementById("textfield1").clientWidth+4)+'px';
 			document.getElementById("user_name_msg").style.top=(x.top-7)+'px';
 			document.getElementById("user_name_msg").style.left=(x.left+document.getElementById("textfield1").clientWidth+80)+'px';
@@ -279,6 +279,9 @@ function changemsg(UP,DOWN){
 			document.getElementById("ms5").style.width=(document.getElementById("textfield5").clientWidth+4)+'px';	
 			document.getElementById("email_msg").style.top=(x.top-7)+'px';
 			document.getElementById("email_msg").style.left=(x.left+document.getElementById("temp_textfield5_5").clientWidth+80)+'px';
+			
+		window.scrollTo(document.body.scrollWidth,0);*/
+		$(window).resize();
 	});
 
 	$(window).resize(function()
@@ -332,6 +335,8 @@ function changemsg(UP,DOWN){
 	document.getElementById("ms5").style.width=(document.getElementById("textfield5").clientWidth+4)+'px';	
 	document.getElementById("email_msg").style.top=(x.top-7)+'px';
 	document.getElementById("email_msg").style.left=(x.left+document.getElementById("temp_textfield5_5").clientWidth+80)+'px';	
+	
+		window.scrollTo(document.body.scrollWidth,0);
 });
 </script>
 </head>
