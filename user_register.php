@@ -14,7 +14,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8;user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"  />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8;user-scalable=no;initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0"  />
 <title>Capteam- <?php echo $multilingual_register_title; ?></title>
 <link href="css/tk_style.css" rel="stylesheet" type="text/css" />
 <link href="css/lhgcore/lhgdialog.css" rel="stylesheet" type="text/css" />
@@ -226,14 +226,22 @@ function changemsg(UP,DOWN){
         return true;
     }
 	
+	var r=1;
+	var rateW=1;
+	var rateH=1;
+	
 	$(window).load(function()
 	{
 
+		rateW=window.screen.width /1920;
+		rateH=window.screen.height/1080;
+		
 		J.check.regform("myform");
 		
+			
 			document.getElementById("outdiv").style.height = ($(window).height() -126+24) +'px';  
 			document.getElementById("innerdiv").style.paddingTop = ((document.getElementById("outdiv").clientHeight-23-485*1.2))/2 +'px'; 
-/*			
+			
 			var x= $(textfield1).offset(); 
 			document.getElementById("temp_textfield1_1").style.top=(x.top-7)+'px';
 			document.getElementById("temp_textfield1_1").style.left=(x.left-2)+'px';
@@ -279,16 +287,25 @@ function changemsg(UP,DOWN){
 			document.getElementById("ms5").style.width=(document.getElementById("textfield5").clientWidth+4)+'px';	
 			document.getElementById("email_msg").style.top=(x.top-7)+'px';
 			document.getElementById("email_msg").style.left=(x.left+document.getElementById("temp_textfield5_5").clientWidth+80)+'px';
-			
+		
+				
+		/*var r = window.screen.width /1920; 
+		$(document.body).css("-webkit-transform","scale(" + r + ")"); 
+		$(document.body).css("-webkit-transform-origin","center 0"); 
+		
 		window.scrollTo(document.body.scrollWidth,0);*/
 		$(window).resize();
+		
 	});
 
 	$(window).resize(function()
 {	
+		 
+		$(document.body).css("-webkit-transform","scale(" + r + ")"); 
+		$(document.body).css("-webkit-transform-origin","center 0"); 
+		
 			document.getElementById("outdiv").style.height = ($(window).height() -126) +'px';  
 			document.getElementById("innerdiv").style.paddingTop = ((document.getElementById("outdiv").clientHeight-23-485*1.2))/2 +'px'; 
-			
 			
 	var x= $(textfield1).offset(); 
 	document.getElementById("temp_textfield1_1").style.top=(x.top-7)+'px';
@@ -336,12 +353,25 @@ function changemsg(UP,DOWN){
 	document.getElementById("email_msg").style.top=(x.top-7)+'px';
 	document.getElementById("email_msg").style.left=(x.left+document.getElementById("temp_textfield5_5").clientWidth+80)+'px';	
 	
+			
 		window.scrollTo(document.body.scrollWidth,0);
+		
+		var r = window.screen.width /1920; 
+		$(document.body).css("-webkit-transform","scale(" + r + ")"); 
+		$(document.body).css("-webkit-transform-origin","center 0"); 
+	
+		
+		var r = 1920/window.screen.width ; 
+		
+		document.body.style.height =document.body.clientHeight*rateH +'px';  
+		//document.getElementById("headerlink").style.width=$(window).width*1920/window.screen.width+'px'; 
+		//$(document.body).css("-webkit-transform-origin","center 0"); 
+
 });
 </script>
 </head>
 
-<body style="min-width:1400px;">
+<body>
 <div class="topbar" id="headerlink">
     <div class="logo" ><a href="index.php" class="logourl" >&nbsp;</a></div>
 </div>
@@ -463,14 +493,9 @@ function changemsg(UP,DOWN){
 						
 						<input  class="form-control"   type="text"  id="temp_textfield5_5" name="temp_textfield5_5" style="z-index:4;position:absolute;left:20;top:40;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;" onblur='changemsg("temp_textfield5_5","textfield5");'/>
 
-
-
-
-
  
 <?php require('foot.php'); ?>
 </center>
-
 </body>
 
 
