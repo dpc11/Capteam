@@ -11,7 +11,8 @@
     }
 ?>
 
-<!DOCTYPE html >
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8;user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"  />
 <title>Capteam- <?php echo $multilingual_register_title; ?></title>
@@ -230,24 +231,25 @@ function changemsg(UP,DOWN){
 
 		J.check.regform("myform");
 		
-			document.getElementById("outdiv").style.height = (document.body.clientHeight-126) +'px';  
-	
+			document.getElementById("outdiv").style.height = ($(window).height() -126+24) +'px';  
+			document.getElementById("innerdiv").style.paddingTop = ((document.getElementById("outdiv").clientHeight-23-485*1.2))/2 +'px'; 
+			
 			var x= $(textfield1).offset(); 
 			document.getElementById("temp_textfield1_1").style.top=(x.top-7)+'px';
-			document.getElementById("temp_textfield1_1").style.left=(x.left-2)+'px';
+			document.getElementById("temp_textfield1_1").style.left=(x.left-2+13)+'px';
 			document.getElementById("temp_textfield1_1").style.width=(document.getElementById("textfield1").clientWidth+6)+'px';
 			document.getElementById("ms1").style.top=(x.top-7+35)+'px';
-			document.getElementById("ms1").style.left=(x.left)+'px';
+			document.getElementById("ms1").style.left=(x.left+13)+'px';
 			document.getElementById("ms1_text").style.width=(document.getElementById("textfield1").clientWidth+4)+'px';
 			document.getElementById("user_name_msg").style.top=(x.top-7)+'px';
 			document.getElementById("user_name_msg").style.left=(x.left+document.getElementById("textfield1").clientWidth+80)+'px';
 			
 			x= $(textfield3).offset(); 
 			document.getElementById("temp_textfield3_3").style.top=(x.top-7)+'px';
-			document.getElementById("temp_textfield3_3").style.left=(x.left-2)+'px';
+			document.getElementById("temp_textfield3_3").style.left=(x.left-2+13)+'px';
 			document.getElementById("temp_textfield3_3").style.width=(document.getElementById("textfield3").clientWidth+6)+'px';
 			document.getElementById("ms3").style.top=(x.top-7+35)+'px';
-			document.getElementById("ms3").style.left=(x.left)+'px';
+			document.getElementById("ms3").style.left=(x.left+13)+'px';
 			document.getElementById("ms3").style.width=(document.getElementById("textfield3").clientWidth+4)+'px';
 			document.getElementById("ms3_text").style.width=(document.getElementById("textfield3").clientWidth+4)+'px';
 			
@@ -258,10 +260,10 @@ function changemsg(UP,DOWN){
 			
 			x= $(textfield4).offset(); 
 			document.getElementById("temp_textfield4_4").style.top=(x.top-7)+'px';
-			document.getElementById("temp_textfield4_4").style.left=(x.left-2)+'px';
+			document.getElementById("temp_textfield4_4").style.left=(x.left-2+13)+'px';
 			document.getElementById("temp_textfield4_4").style.width=(document.getElementById("textfield4").clientWidth+6)+'px';
 			document.getElementById("ms4").style.top=(x.top-7+35)+'px';
-			document.getElementById("ms4").style.left=(x.left)+'px';
+			document.getElementById("ms4").style.left=(x.left+13)+'px';
 			document.getElementById("ms4").style.width=(document.getElementById("textfield4").clientWidth+4)+'px';
 			document.getElementById("ms4_text").style.width=(document.getElementById("textfield4").clientWidth+4)+'px';
 			document.getElementById("re_password_msg").style.top=(x.top-7)+'px';
@@ -269,20 +271,22 @@ function changemsg(UP,DOWN){
 			
 			x= $(textfield5).offset(); 
 			document.getElementById("temp_textfield5_5").style.top=(x.top-7)+'px';
-			document.getElementById("temp_textfield5_5").style.left=(x.left-2)+'px';
+			document.getElementById("temp_textfield5_5").style.left=(x.left-2+13)+'px';
 			document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield5").clientWidth+6)+'px';
 			document.getElementById("ms5").style.top=(x.top-7+35)+'px';
-			document.getElementById("ms5").style.left=(x.left)+'px';
+			document.getElementById("ms5").style.left=(x.left+13)+'px';
 			document.getElementById("ms5_text").style.width=(document.getElementById("textfield5").clientWidth+4)+'px';
 			document.getElementById("ms5").style.width=(document.getElementById("textfield5").clientWidth+4)+'px';	
 			document.getElementById("email_msg").style.top=(x.top-7)+'px';
 			document.getElementById("email_msg").style.left=(x.left+document.getElementById("temp_textfield5_5").clientWidth+80)+'px';
 	});
 
-	window.onresize = function()
+	$(window).resize(function()
 {	
-	document.getElementById("outdiv").style.height = (document.body.clientHeight-126) +'px';  
-	
+			document.getElementById("outdiv").style.height = ($(window).height() -126) +'px';  
+			document.getElementById("innerdiv").style.paddingTop = ((document.getElementById("outdiv").clientHeight-23-485*1.2))/2 +'px'; 
+			
+			
 	var x= $(textfield1).offset(); 
 	document.getElementById("temp_textfield1_1").style.top=(x.top-7)+'px';
 	document.getElementById("temp_textfield1_1").style.left=(x.left-2)+'px';
@@ -328,33 +332,31 @@ function changemsg(UP,DOWN){
 	document.getElementById("ms5").style.width=(document.getElementById("textfield5").clientWidth+4)+'px';	
 	document.getElementById("email_msg").style.top=(x.top-7)+'px';
 	document.getElementById("email_msg").style.left=(x.left+document.getElementById("temp_textfield5_5").clientWidth+80)+'px';	
-}
+});
 </script>
 </head>
 
-<body >
+<body style="min-width:1400px;">
 <div class="topbar" id="headerlink">
     <div class="logo" ><a href="index.php" class="logourl" >&nbsp;</a></div>
-	<div style="clear:both"></div> 
 </div>
-
 <center>
-<div id="outdiv" style="min-width:1200px;min-height:804px;">
-<div style="width:979.167px;-webkit-transform: scale( 1.2,1.2 );" >
+<div id="outdiv" style="min-width:1200px;min-height:650px;">
 
-<table align="center"  border="0" cellspacing="0" cellpadding="0" ><!-- width:67%;margin-bottom:197.344px; -->
+<div id="innerdiv" style="width:980.167px;-webkit-transform: scale( 1.2 )translate(-82.0833px,0);-webkit-transform-origin: 0 0;height:485px;" >
+<table width="100%" border="0" cellspacing="0" cellpadding="0" height="100%" ><!-- width:67%;margin-bottom:197.344px; -->
 	<tr>
-	<td style="width:50%">
-	<div  id="logo" class="ping_logo"  style="margin-top:150px;margin-left:80px;"></div>
+	<td style="width:50%;">
+	<div style="width:100%;height:100%;padding-left:79.733px;padding-top:65px;">
+	<div  class="ping_logo" ></div>
+	</div>
 	</td>
-	<td style="width:50%;min-width:490px;" >
-	<div >
-	<form  role="form" class="form-horizontal" action="" method="post" name="myform" id="myform" >
-					
-		<fieldset>	
+	<td style="width:50%;min-width:490px;" valign="top" >
 			<div style="width:90%">
 			<legend  style="border-bottom-width: 3px;font-weight:bold;font-size:20px;">&nbsp;&nbsp;&nbsp;用户注册</legend>
 			</div>
+	<form  role="form" class="form-horizontal" action="" method="post" name="myform" id="myform" >
+	<div >
 			
 						<div id="h1">
 						<div  class="control-group">
@@ -370,9 +372,9 @@ function changemsg(UP,DOWN){
 						<label  class="control-label" id="for3" for="textfield3" style="font-size:17px;" >&nbsp;&nbsp;&nbsp;&nbsp;登陆密码&nbsp;&nbsp; ：&nbsp;&nbsp;</label> 
 							<input  class="input-xlarge" type="password" id="textfield3" name="textfield3" style="z-index:2;width:280px;" />
 							
+						</div>						
 						</div>
 						
-						</div>
 						<div id="h4" style="margin-top: 64px;">
 						<div class="control-group">	 
 						<label  class="control-label" id="for4"  for="textfield4" style="font-size:17px;" >&nbsp;&nbsp;&nbsp;&nbsp;确认密码&nbsp;&nbsp; ：&nbsp;&nbsp;</label>
@@ -390,17 +392,17 @@ function changemsg(UP,DOWN){
 												
 					
 						<input type="hidden" name="MM_insert" id="MM_insert" value="form1" />
-							
-						</fieldset> 
-					 </form> 
 						
 						</div>
+					 </form> 
+						
 	</td>
 	</tr>	
-<div style="clear:both"></div> 
 	  
 	  </table>
-	</div></div>  
+	</div>	
+	</div> 
+	
 						<div  id="ms1" style="margin-top: 8px;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;">
 						<p class="text-muted"  id="ms1_text"  style="font-size:15px;width:400px;text-align:left">最多5个中文字符或10个字母、数字</p>
 						</div>
@@ -427,9 +429,9 @@ function changemsg(UP,DOWN){
 	<span id="user_name_msg" style="margin-top:10px;z-index:3;position:absolute;font-size:12px;min-width:130px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;"></span>
 							
 	
-							<span id="password_msg" style="margin-top:10px;z-index:3;position:absolute;font-size:12px;display:none;min-width:125px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;"></span>
+							<span id="password_msg" style="margin-top:10px;z-index:3;position:absolute;font-size:12px;display:block;min-width:130px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;"></span>
 								
-							<table id="keycheck"  style="z-index:3;position:absolute;left:20;top:40;display:none;min-width:125px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;">
+							<table id="keycheck"  style="z-index:3;position:absolute;left:20;top:40;display:none;min-width:130px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;">
 								<tr>    
 									<th></th>   
 									<td id="level" class="pw-strength" >           	
@@ -444,8 +446,8 @@ function changemsg(UP,DOWN){
 								</tr>
 							</table>
 							
-	<span id="re_password_msg" style="margin-top:10px;z-index:3;position:absolute;font-size:12px;min-width:125px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;"></span>
-	<span id="email_msg" style="margin-top:10px;z-index:3;position:absolute;font-size:12px;min-width:125px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;"></span>
+	<span id="re_password_msg" style="margin-top:10px;z-index:3;position:absolute;font-size:12px;min-width:130px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;"></span>
+	<span id="email_msg" style="margin-top:10px;z-index:3;position:absolute;font-size:12px;min-width:130px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;"></span>
 	
 	
 						<input  class="form-control"   type="text"  id="temp_textfield1_1" name="temp_textfield1_1" style="z-index:4;position:absolute;left:20;top:40;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;width:100px;" onblur='changemsg("temp_textfield1_1","textfield1");'/>
@@ -460,10 +462,9 @@ function changemsg(UP,DOWN){
 
 
 
-</center>
-
-
+ 
 <?php require('foot.php'); ?>
+</center>
 
 </body>
 

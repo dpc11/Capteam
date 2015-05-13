@@ -66,7 +66,7 @@ if (isset($_POST['textfield'])) {
 
 J.check.rules = [
 	{ name: 'textfield', mid: 'username', requir: true, type: 'email', warn: '邮箱格式错误' },
-	{ name: 'textfield2', mid: 'passwordid', requir: true}
+	{ name: 'textfield', mid: 'passwordid', requir: true}
 ];
 
 function register(){
@@ -99,7 +99,6 @@ function changepsd(UP,DOWN){
 	
 	document.getElementById("outdiv").style.height = ( $(window).height()-126) +'px';
 	document.getElementById("innerdiv").style.paddingTop = (document.getElementById("outdiv").clientHeight-300*1.2)/2 +'px'; 
-	document.getElementById("capteamfoot").style.width = document.getElementById("innerdiv").clientWidth +'px'; 
 	
     var x= $(textfield).offset(); 
 	document.getElementById("temp_textfield4_4").style.top=(x.top)+'px';
@@ -137,7 +136,7 @@ window.onresize = function()
 
 <center>
 <div id="outdiv" style="min-width:1200px;min-height:500px;height:500px;">
-<div id="innerdiv" style="width:820.833px;-webkit-transform: scale( 1.2,1.2 );height:300px;" >
+<div id="innerdiv" style="width:820.833px;-webkit-transform: scale( 1.2 );height:300px;" >
 <table width="100%" border="0" cellspacing="0" cellpadding="0" height="100%" align="center">
     <tr>
       <td  style="width:40%">

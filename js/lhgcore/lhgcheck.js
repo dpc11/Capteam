@@ -118,7 +118,6 @@ J.exend( J.check, {
 			else return true;
 		});
     },
-	
 	blurchk : function()
 	{
 	    for( var i = 0; i < J.check.rules.length; i++ )
