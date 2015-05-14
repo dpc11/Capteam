@@ -9,8 +9,8 @@
         $pid = $_GET['pid'];
     }
   
-      if(isset($_GET['tk_stage_desc'])){
-        $tk_stage_desc = $_GET['tk_stage_desc'];
+      if(isset($_POST['tk_stage_desc'])){
+        $tk_stage_desc = $_POST['tk_stage_desc'];
     }
   mysql_select_db($database_tankdb, $tankdb);
 
