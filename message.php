@@ -100,102 +100,126 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 		}
 
 </script>
+<!-- 用ajax更新message数据库 -->
+<script type="text/javascript">
+function ajax_update_message(meid)
+{
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("POST","message_update.php",true);
+xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+xmlhttp.send("meid="+meid);
+}
+</script>
 
-  <?php require('head.php'); ?>
-  <br />
-  <div class="pagemargin">
-  <?php if ($totalRows_Recordset1 > 0) { // Show if recordset not empty ?>
-   
-      <table  class="table table-striped table-hover glink" width="98%" >
-        <thead>
-          <tr>
-            <th><input type="checkbox" name="all_items" id=="all_items" onclick="check_all()"></th>  <!-- 全选多选框 -->
-            <th><span class="font_big18 fontbold breakwordsfloat_left"><?php echo $multilingual_message; ?></span></th>
-            <th><?php echo $multilingual_message_time; ?></th>
-          </tr>
-        </thead>
-		<tbody>
+<?php require('head.php'); ?>
+<br />
+<div class="pagemargin">
+<?php if ($totalRows_Recordset1 > 0) { // Show if recordset not empty ?>
 
-        <form name="form1" id="form1" method="post">
-        <?php do { ?>
-          <tr>
-            <td><input type="checkbox" name="item[]" value=<?php echo $row_Recordset1['meid']; ?> ></td>  <!-- 删除多选框 -->
-            <td class="task_title5">
-            <div  class="text_overflow_450  <?php if($row_Recordset1['tk_mess_status'] == 1) {echo "fontbold"; } ?>">
-                <a href="user_view.php?recordID=<?php echo $row_Recordset1['tk_mess_fromuser']; ?>">
-			        <?php echo $row_Recordset1['tk_display_name']; ?></a> <!-- 显示用户 -->
-			        <?php echo $row_Recordset1['tk_mess_title']; ?>   <!-- 显示内容 -->
-			        <?php $message_dao_obj->update_message_read($row_Recordset1['meid']); ?>   <!-- 显示内容 -->
-			 </div>
-			 </td>
-            
-            <td><?php echo $row_Recordset1['tk_mess_time']; ?>&nbsp; </td>   <!-- 显示时间 -->
-          </tr>
-          <?php } while ($row_Recordset1 = mysql_fetch_assoc($Recordset1)); ?>
-          <input type="submit" value="删除">
-          </form>
-
-		  </tbody>
-      </table>
-      <?php if ( $totalRows_Recordset1 > $maxRows_Recordset1) { ?>
-      <table  width="98%">
-          <tr>
-              <td align="center" class="gray">
-                  <?php echo $multilingual_message_nomore;  ?>
-              </td>
-          </tr>
-      </table>
-      <?php } ?>
-<!--
-    <table class="rowcon" border="0" align="center">
+  <table  class="table table-striped table-hover glink" width="98%" >
+    <thead>
       <tr>
-        <td>  <table border="0">
-          <tr>
-            
-            <td valign="bottom">
-              <table border="0">
-                <tr>
-                  <td><?php if ($pageNum_Recordset1 > 0) { // Show if not first page ?>
-                    <a href="<?php printf("%s?pageNum_Recordset1=%d%s", $currentPage, 0, $queryString_Recordset1); ?>"><?php echo $multilingual_global_first; ?></a>
-                    <?php } // Show if not first page ?></td>
-                  <td><?php if ($pageNum_Recordset1 > 0) { // Show if not first page ?>
-                    <a href="<?php printf("%s?pageNum_Recordset1=%d%s", $currentPage, max(0, $pageNum_Recordset1 - 1), $queryString_Recordset1); ?>"><?php echo $multilingual_global_previous; ?></a>
-                    <?php } // Show if not first page ?></td>
-                  <td><?php if ($pageNum_Recordset1 < $totalPages_Recordset1) { // Show if not last page ?>
-                    <a href="<?php printf("%s?pageNum_Recordset1=%d%s", $currentPage, min($totalPages_Recordset1, $pageNum_Recordset1 + 1), $queryString_Recordset1); ?>"><?php echo $multilingual_global_next; ?></a>
-                    <?php } // Show if not last page ?></td>
-                  <td><?php if ($pageNum_Recordset1 < $totalPages_Recordset1) { // Show if not last page ?>
-                    <a href="<?php printf("%s?pageNum_Recordset1=%d%s", $currentPage, $totalPages_Recordset1, $queryString_Recordset1); ?>"><?php echo $multilingual_global_last; ?></a>
-                    <?php } // Show if not last page ?></td>
-                </tr>
-              </table>
-            </td>
-            
-            
-          </tr>
-        </table></td>
-        <td align="right" valign="bottom"><?php echo ($startRow_Recordset1 + 1) ?> <?php echo $multilingual_global_to; ?> <?php echo min($startRow_Recordset1 + $maxRows_Recordset1, $totalRows_Recordset1) ?> (<?php echo $multilingual_global_total; ?> <?php echo $totalRows_Recordset1 ?>)</td>
+        <th><input type="checkbox" name="all_items" id=="all_items" onclick="check_all()"></th>  <!-- 全选多选框 -->
+        <th><span class="font_big18 fontbold breakwordsfloat_left"><?php echo $multilingual_message; ?></span></th>
+        <th><?php echo $multilingual_message_time; ?></th>
       </tr>
-    </table>
--->
-    <?php } else { // Show if recordset empty ?>  
-  <div class="alert alert-warning" style="margin:6px;">
-    <table>
-	<tr>
-	<td valign="top">
-	<?php echo $multilingual_message_nomsg; ?>
-	</td>
+    </thead>
+	<tbody>
 
-	</tr>
-	</table>
-	</div>
-  </div>
-  </div>
+    <form name="form1" id="form1" method="post">
+    <?php do { ?>
+      <tr>
+        <td><input type="checkbox" name="item[]" value=<?php echo $row_Recordset1['meid']; ?> ></td>  <!-- 删除多选框 -->
+        <td class="task_title5">
+        <div  class="text_overflow_450  <?php if($row_Recordset1['tk_mess_status'] == 1 || $row_Recordset1['tk_mess_status'] == 2) {echo "fontbold"; } ?>" onclick="ajax_update_message(<?php echo$row_Recordset1['meid']; ?>)">
+            <a href="user_view.php?recordID=<?php echo $row_Recordset1['tk_mess_fromuser']; ?>" onclick="ajax_update_message(<?php echo$row_Recordset1['meid']; ?>)">
+		        <?php echo $row_Recordset1['tk_display_name']; ?></a> <!-- 显示用户 -->
+		        <?php echo $row_Recordset1['tk_mess_title']; ?>   <!-- 显示内容 -->
+		        <?php $message_dao_obj->update_message($row_Recordset1['meid'],1,2); ?>   <!-- 显示内容,将消息从已读改为半已读-->
+		 </div>
+		 </td>
+        
+        <td><?php echo $row_Recordset1['tk_mess_time']; ?>&nbsp; </td>   <!-- 显示时间 -->
+      </tr>
+      <?php } while ($row_Recordset1 = mysql_fetch_assoc($Recordset1)); ?>
+      <input type="submit" value="删除">
+      </form>
+
+	  </tbody>
+  </table>
+  <?php if ( $totalRows_Recordset1 > $maxRows_Recordset1) { ?>
+  <table  width="98%">
+      <tr>
+          <td align="center" class="gray">
+              <?php echo $multilingual_message_nomore;  ?>
+          </td>
+      </tr>
+  </table>
+  <?php } ?>
+<!--
+<table class="rowcon" border="0" align="center">
+  <tr>
+    <td>  <table border="0">
+      <tr>
+        
+        <td valign="bottom">
+          <table border="0">
+            <tr>
+              <td><?php if ($pageNum_Recordset1 > 0) { // Show if not first page ?>
+                <a href="<?php printf("%s?pageNum_Recordset1=%d%s", $currentPage, 0, $queryString_Recordset1); ?>"><?php echo $multilingual_global_first; ?></a>
+                <?php } // Show if not first page ?></td>
+              <td><?php if ($pageNum_Recordset1 > 0) { // Show if not first page ?>
+                <a href="<?php printf("%s?pageNum_Recordset1=%d%s", $currentPage, max(0, $pageNum_Recordset1 - 1), $queryString_Recordset1); ?>"><?php echo $multilingual_global_previous; ?></a>
+                <?php } // Show if not first page ?></td>
+              <td><?php if ($pageNum_Recordset1 < $totalPages_Recordset1) { // Show if not last page ?>
+                <a href="<?php printf("%s?pageNum_Recordset1=%d%s", $currentPage, min($totalPages_Recordset1, $pageNum_Recordset1 + 1), $queryString_Recordset1); ?>"><?php echo $multilingual_global_next; ?></a>
+                <?php } // Show if not last page ?></td>
+              <td><?php if ($pageNum_Recordset1 < $totalPages_Recordset1) { // Show if not last page ?>
+                <a href="<?php printf("%s?pageNum_Recordset1=%d%s", $currentPage, $totalPages_Recordset1, $queryString_Recordset1); ?>"><?php echo $multilingual_global_last; ?></a>
+                <?php } // Show if not last page ?></td>
+            </tr>
+          </table>
+        </td>
+        
+        
+      </tr>
+    </table></td>
+    <td align="right" valign="bottom"><?php echo ($startRow_Recordset1 + 1) ?> <?php echo $multilingual_global_to; ?> <?php echo min($startRow_Recordset1 + $maxRows_Recordset1, $totalRows_Recordset1) ?> (<?php echo $multilingual_global_total; ?> <?php echo $totalRows_Recordset1 ?>)</td>
+  </tr>
+</table>
+-->
+<?php } else { // Show if recordset empty ?>  
+<div class="alert alert-warning" style="margin:6px;">
+<table>
+    <tr>
+        <td valign="top">
+        <?php echo $multilingual_message_nomsg; ?>
+        </td>
+    </tr>
+</table>
+</div>
+</div>
+</div>
 <?php } // Show if recordset empty ?>  
   <p>&nbsp;</p>
   </div><!--pagemargin结束 -->
   <?php require('foot.php'); ?>
-  
+  <div id="myDiv"></div>
 </body>
 </html>
 <?php

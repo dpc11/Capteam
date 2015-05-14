@@ -13,6 +13,9 @@ if (isset($_GET['accesscheck'])) {
   $_SESSION['PrevUrl'] = $_GET['accesscheck'];
   $MM_redirectLoginSuccess = $_SESSION['PrevUrl'];	
 }
+if (isset($_SESSION['PrevUrl'])) {
+  $MM_redirectLoginSuccess = $_SESSION['PrevUrl'];	
+}
 
 if (isset($_POST['textfield'])) {
   $loginUsername=$_POST['textfield'];
@@ -25,20 +28,22 @@ if (isset($_POST['textfield'])) {
   GetSQLValueString($loginUsername, "text"), GetSQLValueString($tk_password, "text"));    
   $LoginRS = mysql_query($LoginRS__query, $tankdb) or die(mysql_error());
   $loginFoundUser = mysql_num_rows($LoginRS);
-  
- 
+   
   if ($loginFoundUser) {	
 	$loginStrDisplayname  = mysql_result($LoginRS,0,'tk_display_name');
 	$loginStrpid  = mysql_result($LoginRS,0,'uid');
 	$loginStrlast  = mysql_result($LoginRS,0,'tk_user_lastuse');
 	
+   if(mysql_result($LoginRS,0,'status')==0){//未激活
+   
+   }else {
+	   
 	$_SESSION['MM_Displayname'] = $loginStrDisplayname;	
 	$_SESSION['MM_uid'] = $loginStrpid;	
 	$_SESSION['MM_last'] = $loginStrlast;
 	
-   if(mysql_result($LoginRS,0,'status')==0){//未激活
-   }else {
-	  header("Location: " . $MM_redirectLoginSuccess );
+	  header("Location: " . "index.php" );
+	  exit;
     }
   }
   else {
@@ -66,7 +71,7 @@ if (isset($_POST['textfield'])) {
 
 J.check.rules = [
 	{ name: 'textfield', mid: 'username', requir: true, type: 'email', warn: '邮箱格式错误' },
-	{ name: 'textfield', mid: 'passwordid', requir: true}
+	{ name: 'textfield2', mid: 'passwordid', requir: true}
 ];
 
 function register(){
@@ -91,62 +96,31 @@ function changepsd(UP,DOWN){
 		document.getElementById(DOWN).blur();
 
 }
-
-	var r =1;
+ 
+	var r = 1;
+	
 	$(window).load(function()
 	{
 
 	if(window.screen.width!=1920||window.screen.height!=1080){
-/*
-		document.getElementById("containdiv").style.display="none";
-		$("#headerlink").css("-webkit-transform","scale(" + r + ")"); 
-		$("#headerlink").css("-webkit-transform-origin","0 0"); 
-		$("#headerlink").css("width",($(document).width()/$(window).width())*100/r+"%"); 
-		 
-		$("#foot_div").css("float","left"); 
-		$("#foot_div").css("-webkit-transform","scale(" + r + ")"); 
-		$("#foot_div").css("-webkit-transform-origin","0 0"); 
-		$("#foot_div").css("width",($(document).width()/$(window).width())*100/r+"%"); 
+		r = window.screen.height/1080
+		$("body").css("min-width",1200*r+"px");
+		//$("#centerdiv").css("min-width",1260*r+"px");  
+		$("#contain_other").css("min-width",1100*r+"px");  
+		$("#contain_other").css("min-height",480*r+"px"); 
+		$("#headerlink").css("min-width",1200*r+"px"); 
 		
 		document.getElementById("contain_other").style.display="block";
-		$("#contain_other").css("min-width",1000*r+"px"); 
-		$("#contain_other").css("min-height",500*r+"px"); 
-		document.getElementById("frame_div").width=1000*window.screen.height/1080;
-		document.getElementById("frame_div").height=500*window.screen.height/1080;
-		document.getElementById("contain_other").style.height=($(window).height()-$("#headerlink").height()-$("#foot_div").height())+"px";
+		document.getElementById("frame_div").width=1200*r+"px";
+		document.getElementById("frame_div").height=480*r+"px";
 		
-		document.getElementById("iframe_mm").style.marginTop=(document.getElementById("contain_other").clientHeight-document.getElementById("frame_div").clientHeight)*r+"px";
-
 		
-		window.scrollTo(document.body.scrollWidth,0);*/
-		
-		document.getElementById("contain_other").style.display="block";
-		$("#contain_other").css("min-width",1000*r+"px"); 
-		$("#contain_other").css("min-height",500*r+"px"); 
-		document.getElementById("frame_div").width=1000*window.screen.height/1080;
-		document.getElementById("frame_div").height=500*window.screen.height/1080;
-		
-		r = window.screen.height/1080 ; 
-	
-		$("#headerlink").css("width",document.getElementById("contain_other").clientWidth/r+"px"); 
-		$("#headerlink").css("-webkit-transform","scale(" + r + ")"); 
-		$("#headerlink").css("-webkit-transform-origin","0 0"); 
-		$("#headerlink").css("width",document.getElementById("contain_other").clientWidth/r+"px"); 
-		 
-		$("#foot_div").css("width",document.getElementById("contain_other").clientWidth/r+"px"); 
-		$("#foot_div").css("float","left");  
-		$("#foot_div").css("-webkit-transform","scale(" + r + ")"); 
-		$("#foot_div").css("-webkit-transform-origin","0 0"); 
-		
-		document.getElementById("contain_other").style.height=($(window).height()-$("#headerlink").height()-$("#foot_div").height())+"px";
-		
-		document.getElementById("iframe_mm").style.marginTop=(document.getElementById("contain_other").clientHeight-document.getElementById("frame_div").clientHeight)*r+"px";
-		window.scrollTo(document.body.scrollWidth,0);
-		
-		//$(window).resize();
+		$(window).resize();
 	}else{
-		
+		$("body").css("min-width","1200px"); 
+		$("#containdiv").css("min-width","1200px"); 
 		document.getElementById("containdiv").style.display="block";
+		document.getElementById("foot_div").style.display="block";
     J.check.regform('form1');
 		$(window).resize();
 	}
@@ -154,34 +128,34 @@ function changepsd(UP,DOWN){
 $(window).resize(function()
 {	
 if(window.screen.width!=1920||window.screen.height!=1080){
-	location.reload();
-	/*	r = 1080/window.screen.height ; 
-		$("#headerlink").css("width",($(window).scrollLeft()+$(window).width())/$(window).width()*100/r+"%"); 	
-		$("#foot_div").css("width",($(window).scrollLeft()+$(window).width())/$(window).width()*100/r+"%"); 
-		
-		$("#headerlink").css("-webkit-transform","scale(" + r + ")"); 
-		$("#headerlink").css("-webkit-transform-origin","0 0"); 
-		 
-		//$("#foot_div").css("float","center"); 
-		$("#foot_div").css("-webkit-transform","scale(" + r + ")"); 
-		$("#foot_div").css("-webkit-transform-origin","0 0"); 
-		
-		r = window.screen.height/1080 ; 
+	//location.reload();
+	
+	r = window.screen.height/1080 ; 
 	
 		$("#headerlink").css("-webkit-transform","scale(" + r + ")"); 
 		$("#headerlink").css("-webkit-transform-origin","0 0"); 
-		$("#headerlink").css("width",($(window).scrollLeft()+$(window).width())/$(window).width()*100/r+"%"); 
+		$("#headerlink").css("width",document.getElementById("contain_other").clientWidth/r+"px"); 
 		 
+		$("#foot_div").css("width",document.getElementById("contain_other").clientWidth/r+"px"); 
 		$("#foot_div").css("float","left");  
 		$("#foot_div").css("-webkit-transform","scale(" + r + ")"); 
-		$("#foot_div").css("-webkit-transform-origin","0 0"); 
-		$("#foot_div").css("width",($(window).scrollLeft()+$(window).width())/$(window).width()*100/r+"%"); 
+		$("#foot_div").css("-webkit-transform-origin","bottom left"); 
 		
-		document.getElementById("contain_other").style.height=($(window).height()-$("#headerlink").height()-$("#foot_div").height())+"px";
+		document.getElementById("contain_other").style.height=($(window).height()-126)+"px";
+
+		if(document.getElementById("contain_other").clientHeight>document.getElementById("frame_div").clientHeight){
+		document.getElementById("contain_other").style.paddingTop=(document.getElementById("contain_other").clientHeight-document.getElementById("frame_div").clientHeight)/2*r+"px";
+		}
+		// $("body").css("height",(126/r+document.getElementById("contain_other").clientHeight)*r+"px"); 
 		
-		document.getElementById("iframe_mm").style.marginTop=(document.getElementById("contain_other").clientHeight-document.getElementById("frame_div").clientHeight)*r+"px";
-		window.scrollTo(document.body.scrollWidth,0);*/
+		
+		document.getElementById("foot_div").style.visibility="visible ";
+		
+		window.scrollTo(document.body.scrollWidth,0);
+		
 	}else{
+		
+		document.getElementById("foot_div").style.visibility="visible ";
 	document.getElementById("outdiv").style.height = ( $(window).height()-126) +'px';
 	document.getElementById("innerdiv").style.paddingTop = (document.getElementById("outdiv").clientHeight-300*1.2)/2 +'px'; 
 	
@@ -194,38 +168,17 @@ if(window.screen.width!=1920||window.screen.height!=1080){
 	document.getElementById("temp_textfield5_5").style.left=(x.left)+'px';	
 	document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield2").clientWidth+5)+'px';
 	
+	x= $(textfield_label).offset();
+	document.getElementById("username").style.top=(x.top+3)+'px';
+	document.getElementById("username").style.left=(x.left+document.getElementById("textfield_label").clientWidth+13)+'px';
+	
+	x= $(textfield2_label).offset();
+	document.getElementById("passwordid").style.top=(x.top+3)+'px';
+	document.getElementById("passwordid").style.left=(x.left+document.getElementById("textfield2_label").clientWidth+13)+'px';
+	
 	
 		window.scrollTo(document.body.scrollWidth,0);
 	}
-	/*document.getElementById("outdiv").style.height = ($(window).height()-126) +'px';  
-	document.getElementById("innerdiv").style.paddingTop = (document.getElementById("outdiv").clientHeight-300*1.2)/2 +'px'; 
-	
-    var x= $(textfield).offset(); 	
-	document.getElementById("temp_textfield4_4").style.top=(x.top)+'px';
-	document.getElementById("temp_textfield4_4").style.left=(x.left)+'px';
-	document.getElementById("temp_textfield4_4").style.width=(document.getElementById("textfield").clientWidth+5)+'px';
-    x= $(textfield2).offset();
-	document.getElementById("temp_textfield5_5").style.top=(x.top)+'px';
-	document.getElementById("temp_textfield5_5").style.left=(x.left)+'px';
-	document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield2").clientWidth+5)+'px';	
-
-*/
-		//window.scrollTo(document.body.scrollWidth,0);
-		//x= $(totaldiv).offset();
-		//var r = window.screen.height /1080; 
-		//$("#totaldiv").css("-webkit-transform","scale(" + r + ")"); 
-		//$("#headerlink").css("-webkit-transform","translate(" +document.getElementById("totaldiv").clientWidth/2*(1-r)-x.left+ "px,0)");
-		//$("#totaldiv").css("-webkit-transform-origin","0 0"); 
-		//$("body").css("height",document.body.clientHeight*r+"px");
-		
-		//$("#headerlink").css("left","0px"); 
-/*
-		var r = 1920/window.screen.width ; 
-		$("#headerlink").css("width",$(window).width()*1920/window.screen.width+"px"); 
-		$("#headerlink").css("-webkit-transform","translate(" + (window.screen.width-1920)/2 + "px,0)");
-		$("#foot_div").css("width",$(window).width()*1920/window.screen.width+"px"); 
-		$("#foot_div").css("-webkit-transform","translate(" + (window.screen.width-1920)/2 + "px,0)");
-		*/
 });
 
 </script>
@@ -233,11 +186,10 @@ if(window.screen.width!=1920||window.screen.height!=1080){
 </head>
 
 <body >
-<div id="totaldiv">
 <div class="topbar" id="headerlink" >
     <div class="logo" id="logo" ><a href="index.php" class="logourl" >&nbsp;</a></div>
 </div>
-<center>
+<center id="centerdiv">
 <div id="containdiv" style="display:none;">
 <div id="outdiv" style="min-width:1200px;min-height:500px;height:500px;">
 <div id="innerdiv" style="width:820.833px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;height:300px;" >
@@ -271,12 +223,12 @@ if(window.screen.width!=1920||window.screen.height!=1080){
       <form id="form1" name="form1" method="POST" action="<?php echo $loginFormAction; ?>">
 	  <div style="padding-left:15px;" >
 	   <div class="form-group">
-    <label class="beauty-label" for="textfield" style="font-size:17px;font-weight:bold;"><?php echo $multilingual_userlogin_username; ?>&nbsp;&nbsp; ：&nbsp;&nbsp;</label><span id="username"></span>
+    <label class="beauty-label" id="textfield_label"  for="textfield" style="font-size:17px;font-weight:bold;"><?php echo $multilingual_userlogin_username; ?>&nbsp;&nbsp; ：&nbsp;&nbsp;</label>
     <input type="text" class="form-control" id="textfield"  style="width:300px;" name="textfield" placeholder="邮箱" value="<?php echo $loginUsername; ?>">
   </div>
   
   <div class="form-group">
-    <label class="beauty-label" for="textfield2" style="font-size:17px;font-weight:bold;">密&nbsp;&nbsp;&nbsp;&nbsp;码&nbsp;&nbsp; ：&nbsp;&nbsp;</label><span id="passwordid"  ></span>
+    <label class="beauty-label" for="textfield2" id="textfield2_label"  style="font-size:17px;font-weight:bold;">密&nbsp;&nbsp;&nbsp;&nbsp;码&nbsp;&nbsp; ：&nbsp;&nbsp;</label>
     <input type="password" class="form-control" name="textfield2"  style="width:300px;" id="textfield2" placeholder="密码" value="<?php echo $password; ?>">
   </div>
   <div style="clear:both ">
@@ -295,7 +247,7 @@ if(window.screen.width!=1920||window.screen.height!=1080){
 	  <button type="button" class="btn btn-default" style="width: 60px;float:right; " onclick="register();"><?php echo $multilingual_user_register; ?></button>
 	  </div>
 	  <div style="width: 30%;margin-top: 24px;float:right; ">
-	  <button type="submit" class="btn btn-default" style="width: 60px;float:right; "><?php echo $multilingual_userlogin_login; ?></button>
+	  <button type="submit" id="login" class="btn btn-default" style="width: 60px;float:right; "><?php echo $multilingual_userlogin_login; ?></button>
 	  </div>
 	  
   </div>
@@ -306,18 +258,31 @@ if(window.screen.width!=1920||window.screen.height!=1080){
 
   </table>
 </div></div>
+
+<span id="username" style="z-index:3;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;min-width:150px;"></span>
+<span id="passwordid"  style="z-index:3;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;min-width:150px;"></span>
+
 <input  class="form-control"   type="text"  id="temp_textfield4_4" name="temp_textfield4_4" style="width:300px;z-index:3;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;" onblur='changemsg("temp_textfield4_4","textfield");' placeholder="邮箱"  value="<?php echo $loginUsername; ?>" />
 	<input  class="form-control"   type="password"  id="temp_textfield5_5" name="temp_textfield5_5" style="width:300px;z-index:3;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;" onblur='changepsd("temp_textfield5_5","textfield2");' placeholder="密码" value="<?php echo $password; ?>" >
 
 </div>
 
-<div id="contain_other" align="center" style="margin:0 auto;display:none;overflow:hidden;">
-<div id="iframe_mm" >
-              <iFrame  id="frame_div" src="user_login_contain.php" width="820" height="600" scrolling="no"  frameborder="no">
+<div id="contain_other" align="center" style="display:none;overflow:hidden;">
+              <iFrame  id="frame_div" src="user_login_contain.php" scrolling="no"  frameborder="no">
              </iFrame>
 			 </div>
+
+
+<div class="foot" id="foot_div" style="visibility:hidden;" >
+    <div class="wss_title" id="foot_title" style="font-size: 22px;">
+
+        <div class="wss_ver" id="capteamfoot">
+            © 2014 - 2015 Capteam 大学生团队协作管理平台 &nbsp;&nbsp;|&nbsp;&nbsp; 北京交通大学软件学院
+        </div>
+    </div>
 </div>
-<?php require('foot.php'); ?>
+
+
 </center> 	
 </body>
 </html>

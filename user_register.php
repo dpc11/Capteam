@@ -157,7 +157,7 @@ function registeruser(editFormAction)
 	var email=document.getElementById('textfield5').value;
 
 	
-	J.dialog.get({ id: "registerDILOG", title:'提示', width:'700', height:'500',page: 'register_real.php?textfield1='+username+'&&textfield3='+password+'&&textfield5='+email ,cover: true ,max: false, min: false,lock: true, background: '#000', opacity: 0.5, drag: false,resize: false});
+	J.dialog.get({ id: "registerDILOG", title:'提示', width:'700', height:'500',page: 'user_register_real.php?textfield1='+username+'&&textfield3='+password+'&&textfield5='+email ,cover: true ,max: false, min: false,lock: true, background: '#000', opacity: 0.5, drag: false,resize: false});
 	
 	return false;
 }

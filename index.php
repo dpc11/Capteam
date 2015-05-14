@@ -1,7 +1,8 @@
-<?php require_once('config/tank_config.php'); ?>
+<?php require_once('config/tank_config.php');  ?>
 <?php require_once('session_unset.php'); ?>
 <?php require_once('session.php'); ?>
 <?php 
+
 $url_this = $_SERVER["QUERY_STRING"] ;
 
 $current_url = current(explode("&sort",$url_this));
