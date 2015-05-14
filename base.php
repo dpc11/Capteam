@@ -1,4 +1,4 @@
-<?php require_once('config/tank_config.php'); ?>
+﻿<?php require_once('config/tank_config.php'); ?>
 <?php require_once('session_unset.php'); ?>
 <?php require_once('session.php'); ?>
 <?php require_once('function/board_function.php'); ?>
@@ -12,6 +12,7 @@
 
     $board_info = get_board_info($pid);
     $board_num =mysql_num_rows($board_info);
+
 ?>
 
 <?php require('head.php');  ?>
@@ -28,7 +29,7 @@
 <style> 
 #displayRoom{background:white;position:relative;float:left;clear:both;padding:30px 0px 0px 20px;margin-left:20px;margin-top:10px;} 
 .row{display:inline-block;float:left;width:16em;margin-right: 30px;margin-left: 30px;clear:none;top:0;background:white;} 
-.row span{display:block;width:15em;clear:none;background:white;height:15em;line-height:30px;margin-right: 30px;margin-bottom:30px;text-align:center;} 
+.row span{width:15em;line-height:30px;margin-bottom:30px;text-align:center;} 
 span.usr{text-decoration:none; 
 color:#000; 
 background:#ffc; 
@@ -177,6 +178,7 @@ span.usr.catch{background:#ffc!important;}
                 //有元素接纳，两者互换 
                 var destP = dropTarget.parentNode; 
                 var sourceP = curTarget.parentNode;
+
                 var curBID = curTarget.parentNode.id;
                 var desBID = dropTarget.parentNode.id;
                 $.ajax( {
@@ -188,6 +190,7 @@ span.usr.catch{background:#ffc!important;}
                         else;
                         }
                  });
+
                 destP.appendChild(curTarget); 
                 sourceP.appendChild(dropTarget); 
                 dropTarget.className = 'usr'; 
@@ -277,14 +280,10 @@ span.usr.catch{background:#ffc!important;}
             width : '100%',
             height: '150px',
             items:[
-        'source', '|', 'undo', 'redo', '|', 'preview', 'print', 'template', 'cut', 'copy', 'paste',
-        'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
-        'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
-        'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/',
-        'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
-        'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image',
-        'flash', 'media', 'insertfile', 'table', 'hr', 'map', 'code', 'pagebreak', 'anchor', 
-        'link', 'unlink', '|', 'about'
+        'source', '|', 'undo', 'redo', '|',
+         'insertorderedlist', 'insertunorderedlist', '|', 'fullscreen',
+        'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'bold',
+        'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat'
            ]
         });
       });
@@ -316,11 +315,15 @@ span.usr.catch{background:#ffc!important;}
 
                 <?php while($row_board = mysql_fetch_assoc($board_info)){ 
                    $id_seq = $id_seq + 1;?>
+                   
+  
                    <div class="row"style="margin-right:0px"> 
+                    <input type="hidden" id="ID" name="ID" value="<?php echo $row_board['board_id']; ?>" />
                     <span id="parent<?php echo $row_board['board_seq']; ?>">
                         <span class="usr" id="<?php echo $id_seq; ?>">
                             <p style="margin: 0px;margin-bottom: 10px;">
-                                <a href="base_delete.php?delID=<?php echo $row_board['board_id']; ?>&pid=<?php echo $pid; ?>">
+                                <a  onclick="ch1(<?php echo $row_board['board_id']; ?>)">
+                                     <input type="hidden" id="ID" name="ID" value="<?php echo $row_board['board_id']; ?>" />
                                     <img src="images/ui/base_close.png" style="float: right;margin-left: 150px;position: absolute;" width="8px">
                                 </a>
                                 <a href="">
@@ -336,8 +339,21 @@ span.usr.catch{background:#ffc!important;}
                         </span>
                     </span>
                 </div>
+                    <script language="javascript">
+                                      function ch1(data) {
+                                       // var data = data;
+                            if (confirm("您确定要删除吗?")) {
+                               // window.location = "show_news.php?flag=1&id={$row['news_id']}";  href="base_delete.php?delID=<?php echo $row_board['board_id']; ?>&pid=<?php echo $pid; ?>"    
+                               window.location = "base_delete.php?delID="+data+"&pid=<?php echo $pid; ?>";
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        }
+                    </script>
                 <?php } ?>
                 <div class="row"style="margin-right:0px"> 
+
                     <span><span class="usr" id="add"><button class="btn btn-primary"  style="display:inline-block;-moz-box-shadow: 0 1px 2px rgba(0,0,0,0.5);
                         background-color: #ffc;border-color: #ffc;
                         text-shadow: 0 -1px 1px rgba(0,0,0,0.25);width:130px;clear:none;
@@ -351,6 +367,7 @@ span.usr.catch{background:#ffc!important;}
     </table>
 
 <?php require( 'foot.php'); ?>
+ <form action="<?php echo "baselog.php?pid=".$pid ?>"  method="post" name="form1" id="form1">
 <div class="modal" id="mymodal">
     <div 
     style="margin-top: 80px;"
@@ -365,7 +382,7 @@ span.usr.catch{background:#ffc!important;}
      </div>
      <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-        <button type="button" class="btn btn-primary">保存</button>
+        <button type="submit" class="btn btn-primary">保存</button>
     </div>
 </div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->
@@ -377,6 +394,7 @@ span.usr.catch{background:#ffc!important;}
   });
 });
 </script> 
+ </form>
 </body>
 
 </html>
