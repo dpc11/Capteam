@@ -45,7 +45,7 @@ if(strpos($_SERVER["HTTP_USER_AGENT"],"MSIE 8.0") || strpos($_SERVER["HTTP_USER_
 <?php exit;
 } ?>
 
-  <div class="topbar" id="headerlink" >
+  <div class="topbar" id="headerlink" name="headerlink">
     <div class="logo"><a href="index.php" class="logourl" >&nbsp;</a></div>
     <div class="nav_normal2">
     

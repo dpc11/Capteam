@@ -15,6 +15,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8;user-scalable=no;initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0"  />
+<meta name="renderer" content="webkit"> 
 <title>Capteam- <?php echo $multilingual_register_title; ?></title>
 <link href="css/tk_style.css" rel="stylesheet" type="text/css" />
 <link href="css/lhgcore/lhgdialog.css" rel="stylesheet" type="text/css" />
@@ -239,7 +240,7 @@ function changemsg(UP,DOWN){
 		J.check.regform("myform");
 		
 			
-			document.getElementById("outdiv").style.height = ($(window).height() -126+24) +'px';  
+			/*document.getElementById("outdiv").style.height = ($(window).height() -126+24) +'px';  
 			document.getElementById("innerdiv").style.paddingTop = ((document.getElementById("outdiv").clientHeight-23-485*1.2))/2 +'px'; 
 			
 			var x= $(textfield1).offset(); 
@@ -289,7 +290,7 @@ function changemsg(UP,DOWN){
 			document.getElementById("email_msg").style.left=(x.left+document.getElementById("temp_textfield5_5").clientWidth+80)+'px';
 		
 				
-		/*var r = window.screen.width /1920; 
+		var r = window.screen.width /1920; 
 		$(document.body).css("-webkit-transform","scale(" + r + ")"); 
 		$(document.body).css("-webkit-transform-origin","center 0"); 
 		
@@ -300,9 +301,9 @@ function changemsg(UP,DOWN){
 
 	$(window).resize(function()
 {	
-		 
-		$(document.body).css("-webkit-transform","scale(" + r + ")"); 
-		$(document.body).css("-webkit-transform-origin","center 0"); 
+		
+		$("#totaldiv").css("-webkit-transform","scale(" + r + ")"); 
+		//$("#totaldiv").css("-webkit-transform-origin","center 0");
 		
 			document.getElementById("outdiv").style.height = ($(window).height() -126) +'px';  
 			document.getElementById("innerdiv").style.paddingTop = ((document.getElementById("outdiv").clientHeight-23-485*1.2))/2 +'px'; 
@@ -355,23 +356,22 @@ function changemsg(UP,DOWN){
 	
 			
 		window.scrollTo(document.body.scrollWidth,0);
+		//$(document.body).css("height", document.body.scrollHeight*window.screen.height/1080+"px"); 
+		//$(window).height=$(window).height*1080/window.screen.height+"px"
 		
 		var r = window.screen.width /1920; 
-		$(document.body).css("-webkit-transform","scale(" + r + ")"); 
-		$(document.body).css("-webkit-transform-origin","center 0"); 
+		$("#totaldiv").css("-webkit-transform","scale(" + r + ")"); 
+		//$("#totaldiv").css("-webkit-transform-origin","center 0"); 
 	
 		
 		var r = 1920/window.screen.width ; 
-		
-		document.body.style.height =document.body.clientHeight*rateH +'px';  
-		//document.getElementById("headerlink").style.width=$(window).width*1920/window.screen.width+'px'; 
-		//$(document.body).css("-webkit-transform-origin","center 0"); 
 
 });
 </script>
 </head>
 
 <body>
+<div id="totaldiv">
 <div class="topbar" id="headerlink">
     <div class="logo" ><a href="index.php" class="logourl" >&nbsp;</a></div>
 </div>
@@ -496,6 +496,7 @@ function changemsg(UP,DOWN){
  
 <?php require('foot.php'); ?>
 </center>
+</div>
 </body>
 
 

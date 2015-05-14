@@ -92,100 +92,12 @@ function changepsd(UP,DOWN){
 
 }
 
-	var r =1;
+	
 	$(window).load(function()
 	{
-
-	if(window.screen.width!=1920||window.screen.height!=1080){
-/*
-		document.getElementById("containdiv").style.display="none";
-		$("#headerlink").css("-webkit-transform","scale(" + r + ")"); 
-		$("#headerlink").css("-webkit-transform-origin","0 0"); 
-		$("#headerlink").css("width",($(document).width()/$(window).width())*100/r+"%"); 
-		 
-		$("#foot_div").css("float","left"); 
-		$("#foot_div").css("-webkit-transform","scale(" + r + ")"); 
-		$("#foot_div").css("-webkit-transform-origin","0 0"); 
-		$("#foot_div").css("width",($(document).width()/$(window).width())*100/r+"%"); 
-		
-		document.getElementById("contain_other").style.display="block";
-		$("#contain_other").css("min-width",1000*r+"px"); 
-		$("#contain_other").css("min-height",500*r+"px"); 
-		document.getElementById("frame_div").width=1000*window.screen.height/1080;
-		document.getElementById("frame_div").height=500*window.screen.height/1080;
-		document.getElementById("contain_other").style.height=($(window).height()-$("#headerlink").height()-$("#foot_div").height())+"px";
-		
-		document.getElementById("iframe_mm").style.marginTop=(document.getElementById("contain_other").clientHeight-document.getElementById("frame_div").clientHeight)*r+"px";
-
-		
-		window.scrollTo(document.body.scrollWidth,0);*/
-		
-		document.getElementById("contain_other").style.display="block";
-		$("#contain_other").css("min-width",1000*r+"px"); 
-		$("#contain_other").css("min-height",500*r+"px"); 
-		document.getElementById("frame_div").width=1000*window.screen.height/1080;
-		document.getElementById("frame_div").height=500*window.screen.height/1080;
-		
-		r = window.screen.height/1080 ; 
-	
-		$("#headerlink").css("width",document.getElementById("contain_other").clientWidth/r+"px"); 
-		$("#headerlink").css("-webkit-transform","scale(" + r + ")"); 
-		$("#headerlink").css("-webkit-transform-origin","0 0"); 
-		$("#headerlink").css("width",document.getElementById("contain_other").clientWidth/r+"px"); 
-		 
-		$("#foot_div").css("width",document.getElementById("contain_other").clientWidth/r+"px"); 
-		$("#foot_div").css("float","left");  
-		$("#foot_div").css("-webkit-transform","scale(" + r + ")"); 
-		$("#foot_div").css("-webkit-transform-origin","0 0"); 
-		
-		document.getElementById("contain_other").style.height=($(window).height()-$("#headerlink").height()-$("#foot_div").height())+"px";
-		
-		document.getElementById("iframe_mm").style.marginTop=(document.getElementById("contain_other").clientHeight-document.getElementById("frame_div").clientHeight)*r+"px";
-		window.scrollTo(document.body.scrollWidth,0);
-		
-		//$(window).resize();
-	}else{
-		
-		document.getElementById("containdiv").style.display="block";
     J.check.regform('form1');
-		$(window).resize();
-	}
-	});
-$(window).resize(function()
-{	
-if(window.screen.width!=1920||window.screen.height!=1080){
-	location.reload();
-	/*	r = 1080/window.screen.height ; 
-		$("#headerlink").css("width",($(window).scrollLeft()+$(window).width())/$(window).width()*100/r+"%"); 	
-		$("#foot_div").css("width",($(window).scrollLeft()+$(window).width())/$(window).width()*100/r+"%"); 
-		
-		$("#headerlink").css("-webkit-transform","scale(" + r + ")"); 
-		$("#headerlink").css("-webkit-transform-origin","0 0"); 
-		 
-		//$("#foot_div").css("float","center"); 
-		$("#foot_div").css("-webkit-transform","scale(" + r + ")"); 
-		$("#foot_div").css("-webkit-transform-origin","0 0"); 
-		
-		r = window.screen.height/1080 ; 
 	
-		$("#headerlink").css("-webkit-transform","scale(" + r + ")"); 
-		$("#headerlink").css("-webkit-transform-origin","0 0"); 
-		$("#headerlink").css("width",($(window).scrollLeft()+$(window).width())/$(window).width()*100/r+"%"); 
-		 
-		$("#foot_div").css("float","left");  
-		$("#foot_div").css("-webkit-transform","scale(" + r + ")"); 
-		$("#foot_div").css("-webkit-transform-origin","0 0"); 
-		$("#foot_div").css("width",($(window).scrollLeft()+$(window).width())/$(window).width()*100/r+"%"); 
-		
-		document.getElementById("contain_other").style.height=($(window).height()-$("#headerlink").height()-$("#foot_div").height())+"px";
-		
-		document.getElementById("iframe_mm").style.marginTop=(document.getElementById("contain_other").clientHeight-document.getElementById("frame_div").clientHeight)*r+"px";
-		window.scrollTo(document.body.scrollWidth,0);*/
-	}else{
-	document.getElementById("outdiv").style.height = ( $(window).height()-126) +'px';
-	document.getElementById("innerdiv").style.paddingTop = (document.getElementById("outdiv").clientHeight-300*1.2)/2 +'px'; 
-	
-    var x= $(textfield).offset(); 
+	 var x= $(textfield).offset(); 
 	document.getElementById("temp_textfield4_4").style.top=(x.top)+'px';
 	document.getElementById("temp_textfield4_4").style.left=(x.left)+'px';
 	document.getElementById("temp_textfield4_4").style.width=(document.getElementById("textfield").clientWidth+5)+'px';
@@ -195,52 +107,24 @@ if(window.screen.width!=1920||window.screen.height!=1080){
 	document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield2").clientWidth+5)+'px';
 	
 	
-		window.scrollTo(document.body.scrollWidth,0);
-	}
-	/*document.getElementById("outdiv").style.height = ($(window).height()-126) +'px';  
-	document.getElementById("innerdiv").style.paddingTop = (document.getElementById("outdiv").clientHeight-300*1.2)/2 +'px'; 
-	
-    var x= $(textfield).offset(); 	
-	document.getElementById("temp_textfield4_4").style.top=(x.top)+'px';
-	document.getElementById("temp_textfield4_4").style.left=(x.left)+'px';
-	document.getElementById("temp_textfield4_4").style.width=(document.getElementById("textfield").clientWidth+5)+'px';
-    x= $(textfield2).offset();
-	document.getElementById("temp_textfield5_5").style.top=(x.top)+'px';
-	document.getElementById("temp_textfield5_5").style.left=(x.left)+'px';
-	document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield2").clientWidth+5)+'px';	
-
-*/
-		//window.scrollTo(document.body.scrollWidth,0);
 		//x= $(totaldiv).offset();
-		//var r = window.screen.height /1080; 
-		//$("#totaldiv").css("-webkit-transform","scale(" + r + ")"); 
+		var r = window.screen.height /1080; 
+		$("body").css("-webkit-transform","scale(" + r + ")"); 
 		//$("#headerlink").css("-webkit-transform","translate(" +document.getElementById("totaldiv").clientWidth/2*(1-r)-x.left+ "px,0)");
-		//$("#totaldiv").css("-webkit-transform-origin","0 0"); 
+		$("body").css("-webkit-transform-origin","0 0"); 
 		//$("body").css("height",document.body.clientHeight*r+"px");
 		
 		//$("#headerlink").css("left","0px"); 
-/*
-		var r = 1920/window.screen.width ; 
-		$("#headerlink").css("width",$(window).width()*1920/window.screen.width+"px"); 
-		$("#headerlink").css("-webkit-transform","translate(" + (window.screen.width-1920)/2 + "px,0)");
-		$("#foot_div").css("width",$(window).width()*1920/window.screen.width+"px"); 
-		$("#foot_div").css("-webkit-transform","translate(" + (window.screen.width-1920)/2 + "px,0)");
-		*/
-});
+		
+	});
 
 </script>
 
 </head>
 
 <body >
-<div id="totaldiv">
-<div class="topbar" id="headerlink" >
-    <div class="logo" id="logo" ><a href="index.php" class="logourl" >&nbsp;</a></div>
-</div>
 <center>
-<div id="containdiv" style="display:none;">
-<div id="outdiv" style="min-width:1200px;min-height:500px;height:500px;">
-<div id="innerdiv" style="width:820.833px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;height:300px;" >
+<div id="innerdiv" style="width:820.833px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;height:400px;" >
 <table width="100%" border="0" cellspacing="0" cellpadding="0" height="100%" align="center">
     <tr>
       <td  style="width:40%">
@@ -305,19 +189,10 @@ if(window.screen.width!=1920||window.screen.height!=1080){
     </tr>
 
   </table>
-</div></div>
+</div>
 <input  class="form-control"   type="text"  id="temp_textfield4_4" name="temp_textfield4_4" style="width:300px;z-index:3;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;" onblur='changemsg("temp_textfield4_4","textfield");' placeholder="邮箱"  value="<?php echo $loginUsername; ?>" />
 	<input  class="form-control"   type="password"  id="temp_textfield5_5" name="temp_textfield5_5" style="width:300px;z-index:3;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;" onblur='changepsd("temp_textfield5_5","textfield2");' placeholder="密码" value="<?php echo $password; ?>" >
 
-</div>
-
-<div id="contain_other" align="center" style="margin:0 auto;display:none;overflow:hidden;">
-<div id="iframe_mm" >
-              <iFrame  id="frame_div" src="user_login_contain.php" width="820" height="600" scrolling="no"  frameborder="no">
-             </iFrame>
-			 </div>
-</div>
-<?php require('foot.php'); ?>
-</center> 	
+</center>
 </body>
 </html>
