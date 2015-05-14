@@ -1,5 +1,9 @@
 <?php require_once('config/tank_config.php'); ?>
 <?php
+if (!isset($_SESSION)) {
+  session_start();
+}
+
 $errormsg=false;
 $loginUsername="";
 $password="";
@@ -7,6 +11,9 @@ $loginFormAction = $_SERVER['PHP_SELF'];
 $MM_redirectLoginSuccess="index.php";
 if (isset($_GET['accesscheck'])) {
   $_SESSION['PrevUrl'] = $_GET['accesscheck'];
+  $MM_redirectLoginSuccess = $_SESSION['PrevUrl'];	
+}
+if (isset($_SESSION['PrevUrl'])) {
   $MM_redirectLoginSuccess = $_SESSION['PrevUrl'];	
 }
 
@@ -21,20 +28,22 @@ if (isset($_POST['textfield'])) {
   GetSQLValueString($loginUsername, "text"), GetSQLValueString($tk_password, "text"));    
   $LoginRS = mysql_query($LoginRS__query, $tankdb) or die(mysql_error());
   $loginFoundUser = mysql_num_rows($LoginRS);
-  
- 
+   
   if ($loginFoundUser) {	
 	$loginStrDisplayname  = mysql_result($LoginRS,0,'tk_display_name');
 	$loginStrpid  = mysql_result($LoginRS,0,'uid');
 	$loginStrlast  = mysql_result($LoginRS,0,'tk_user_lastuse');
 	
+   if(mysql_result($LoginRS,0,'status')==0){//未激活
+   
+   }else {
+	   
 	$_SESSION['MM_Displayname'] = $loginStrDisplayname;	
 	$_SESSION['MM_uid'] = $loginStrpid;	
 	$_SESSION['MM_last'] = $loginStrlast;
 	
-   if(mysql_result($LoginRS,0,'status')==0){//未激活
-   }else {
-	  header("Location: " . $MM_redirectLoginSuccess );
+	  header("Location: " . "index.php" );
+	  exit;
     }
   }
   else {
@@ -159,6 +168,14 @@ if(window.screen.width!=1920||window.screen.height!=1080){
 	document.getElementById("temp_textfield5_5").style.left=(x.left)+'px';	
 	document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield2").clientWidth+5)+'px';
 	
+	x= $(textfield_label).offset();
+	document.getElementById("username").style.top=(x.top+3)+'px';
+	document.getElementById("username").style.left=(x.left+document.getElementById("textfield_label").clientWidth+13)+'px';
+	
+	x= $(textfield2_label).offset();
+	document.getElementById("passwordid").style.top=(x.top+3)+'px';
+	document.getElementById("passwordid").style.left=(x.left+document.getElementById("textfield2_label").clientWidth+13)+'px';
+	
 	
 		window.scrollTo(document.body.scrollWidth,0);
 	}
@@ -206,12 +223,12 @@ if(window.screen.width!=1920||window.screen.height!=1080){
       <form id="form1" name="form1" method="POST" action="<?php echo $loginFormAction; ?>">
 	  <div style="padding-left:15px;" >
 	   <div class="form-group">
-    <label class="beauty-label" for="textfield" style="font-size:17px;font-weight:bold;"><?php echo $multilingual_userlogin_username; ?>&nbsp;&nbsp; ：&nbsp;&nbsp;</label><span id="username"></span>
+    <label class="beauty-label" id="textfield_label"  for="textfield" style="font-size:17px;font-weight:bold;"><?php echo $multilingual_userlogin_username; ?>&nbsp;&nbsp; ：&nbsp;&nbsp;</label>
     <input type="text" class="form-control" id="textfield"  style="width:300px;" name="textfield" placeholder="邮箱" value="<?php echo $loginUsername; ?>">
   </div>
   
   <div class="form-group">
-    <label class="beauty-label" for="textfield2" style="font-size:17px;font-weight:bold;">密&nbsp;&nbsp;&nbsp;&nbsp;码&nbsp;&nbsp; ：&nbsp;&nbsp;</label><span id="passwordid"  ></span>
+    <label class="beauty-label" for="textfield2" id="textfield2_label"  style="font-size:17px;font-weight:bold;">密&nbsp;&nbsp;&nbsp;&nbsp;码&nbsp;&nbsp; ：&nbsp;&nbsp;</label>
     <input type="password" class="form-control" name="textfield2"  style="width:300px;" id="textfield2" placeholder="密码" value="<?php echo $password; ?>">
   </div>
   <div style="clear:both ">
@@ -241,6 +258,10 @@ if(window.screen.width!=1920||window.screen.height!=1080){
 
   </table>
 </div></div>
+
+<span id="username" style="z-index:3;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;min-width:150px;"></span>
+<span id="passwordid"  style="z-index:3;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;min-width:150px;"></span>
+
 <input  class="form-control"   type="text"  id="temp_textfield4_4" name="temp_textfield4_4" style="width:300px;z-index:3;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;" onblur='changemsg("temp_textfield4_4","textfield");' placeholder="邮箱"  value="<?php echo $loginUsername; ?>" />
 	<input  class="form-control"   type="password"  id="temp_textfield5_5" name="temp_textfield5_5" style="width:300px;z-index:3;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;" onblur='changepsd("temp_textfield5_5","textfield2");' placeholder="密码" value="<?php echo $password; ?>" >
 

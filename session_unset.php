@@ -4,9 +4,9 @@ if (!isset($_SESSION)) {
   session_start();
 }
 
-$logoutAction = $_SERVER['PHP_SELF']."?doLogout=true";
+$logoutAction = $_SERVER['PHP_SELF']."?doLogout=true"; 
 if ((isset($_SERVER['QUERY_STRING'])) && ($_SERVER['QUERY_STRING'] != "")){
-  $logoutAction .="&". htmlentities($_SERVER['QUERY_STRING']);
+  $logoutAction .="&". htmlentities($_SERVER['QUERY_STRING']); 
 }
 
 if ((isset($_GET['doLogout'])) &&($_GET['doLogout']=="true")){
@@ -22,7 +22,6 @@ if ((isset($_GET['doLogout'])) &&($_GET['doLogout']=="true")){
   unset($_SESSION['urlthis']);
   unset($_SESSION['MM_last']); 
   unset($_SESSION['urlback']);
-	
   $logoutGoTo = "user_login.php";
   if ($logoutGoTo) {
     header("Location: $logoutGoTo");

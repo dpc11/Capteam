@@ -314,10 +314,10 @@ a:focus {
 }
 
 .nav_select {
-    background: #7C7C7C!important;
+    background-image: url(../images/ui/selected.png) !important;/**/
     color: #F5F5F5!important;
     display: block;
-    height: 42px!important;
+    height: 66px!important;
     line-height: 42px!important;
 }
 
@@ -380,7 +380,11 @@ a:focus {
     display: block;
 }
 
-.nav_normal2 {}
+.nav_normal2 {
+	margin-left:350px;
+	font-family : 黑体,微软雅黑;
+	font-size: 30px;
+}
 
 .nav_normal2 a {
     width: 100px;
@@ -390,8 +394,7 @@ a:focus {
     line-height: 42px;
     text-decoration: none;
     color: #E4E4E4;
-    font-size: 1.2em;
-    padding-top: 1px;
+    padding-top: 10px;
 }
 
 .nav_normal2 a:hover {
@@ -416,14 +419,14 @@ a:focus {
 }
 
 .pagemargin {
-    margin: 0px auto 10px auto;
+    margin: 0px auto 20px auto;
     width: 99%;
 }
 
 .subnav {
     width: 98%;
     padding-left: 15px;
-    margin: 15px auto 8px 0px;
+    margin: 20px auto 14px 0px;
 }
 
 .subnav_item ul {}
@@ -913,9 +916,9 @@ a:focus {
 
 .tasktab {
     width: 99%;
-    border: 1px #ccc solid;
+    border: 2px #ccc solid;
     background: #E1E1E1;
-    margin-left: 7px;
+    margin-left: 20px;
 }
 
 .tasktab_height {
