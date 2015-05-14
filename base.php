@@ -13,8 +13,6 @@
     $board_info = get_board_info($pid);
     $board_num =mysql_num_rows($board_info);
 
-
-
 ?>
 
 <?php require('head.php');  ?>
@@ -317,11 +315,15 @@ span.usr.catch{background:#ffc!important;}
 
                 <?php while($row_board = mysql_fetch_assoc($board_info)){ 
                    $id_seq = $id_seq + 1;?>
+                   
+  
                    <div class="row"style="margin-right:0px"> 
+                    <input type="hidden" id="ID" name="ID" value="<?php echo $row_board['board_id']; ?>" />
                     <span id="parent<?php echo $row_board['board_seq']; ?>">
                         <span class="usr" id="<?php echo $id_seq; ?>">
                             <p style="margin: 0px;margin-bottom: 10px;">
-                                <a href="base_delete.php?delID=<?php echo $row_board['board_id']; ?>&pid=<?php echo $pid; ?>">
+                                <a  onclick="ch1(<?php echo $row_board['board_id']; ?>)">
+                                     <input type="hidden" id="ID" name="ID" value="<?php echo $row_board['board_id']; ?>" />
                                     <img src="images/ui/base_close.png" style="float: right;margin-left: 150px;position: absolute;" width="8px">
                                 </a>
                                 <a href="">
@@ -337,6 +339,18 @@ span.usr.catch{background:#ffc!important;}
                         </span>
                     </span>
                 </div>
+                    <script language="javascript">
+                                      function ch1(data) {
+                                       // var data = data;
+                            if (confirm("您确定要删除吗?")) {
+                               // window.location = "show_news.php?flag=1&id={$row['news_id']}";  href="base_delete.php?delID=<?php echo $row_board['board_id']; ?>&pid=<?php echo $pid; ?>"    
+                               window.location = "base_delete.php?delID="+data+"&pid=<?php echo $pid; ?>";
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        }
+                    </script>
                 <?php } ?>
                 <div class="row"style="margin-right:0px"> 
 

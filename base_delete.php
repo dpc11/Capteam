@@ -12,7 +12,7 @@
       mysql_select_db($database_tankdb, $tankdb);
       $Result = mysql_query($deleteBoardSQL, $tankdb) or die(mysql_error());
 
-      $deleteGoTo = "base_view.php?pid=$p_id";
+      $deleteGoTo = "base.php?pid=$p_id";
       if (isset($_SERVER['QUERY_STRING'])) {
         $deleteGoTo .= (strpos($deleteGoTo, '?')) ? "&" : "?";
         $deleteGoTo .= $_SERVER['QUERY_STRING'];
