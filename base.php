@@ -1,4 +1,4 @@
-<?php require_once('config/tank_config.php'); ?>
+﻿<?php require_once('config/tank_config.php'); ?>
 <?php require_once('session_unset.php'); ?>
 <?php require_once('session.php'); ?>
 <?php require_once('function/board_function.php'); ?>
