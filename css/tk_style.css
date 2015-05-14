@@ -298,8 +298,8 @@ a:focus {
     text-align: center;
     margin-top: 5px;
     margin-left: 5px;
-    height: 34px;
-    line-height: 34px;
+    height: 66px;
+    line-height: 42px;
     text-decoration: none;
     color: #000;
 }
@@ -309,8 +309,8 @@ a:focus {
     border-top: 1px solid #999;
     border-left: 1px solid #999;
     border-right: 1px solid #999;
-    height: 33px;
-    line-height: 33px;
+    height: 66px;
+    line-height: 42px;
 }
 
 .nav_select {
@@ -322,8 +322,8 @@ a:focus {
 }
 
 .nav_select a:hover {
-    height: 40px!important;
-    line-height: 40px!important;
+    height: 66px!important;
+    line-height: 42px!important;
 }
 
 .nav_normal_sub {
@@ -390,11 +390,11 @@ a:focus {
     width: 100px;
     float: left;
     text-align: center;
-    height: 42px;
+    height: 66px;
     line-height: 42px;
     text-decoration: none;
     color: #E4E4E4;
-    padding-top: 10px;
+    padding-top: 12px;
 }
 
 .nav_normal2 a:hover {
@@ -406,8 +406,10 @@ a:focus {
     float: right;
     font-weight: normal;
     color: #F5F5F5;
-    margin: 12px 30px auto auto;
-    font-size: 14px;
+    margin: 15px 46px 0px 0px;
+	font-family : 黑体,微软雅黑;
+	font-size: 30px;
+	width:150px;
 }
 
 .logininfo2 a {
@@ -419,14 +421,15 @@ a:focus {
 }
 
 .pagemargin {
-    margin: 0px auto 20px auto;
-    width: 99%;
+    padding: 0 0 0 0;
+    width: 98%;
 }
 
 .subnav {
     width: 98%;
-    padding-left: 15px;
-    margin: 20px auto 14px 0px;
+    padding-left: 30px;
+    margin: 25px auto 18px 0px;
+	font-family : 微软雅黑;
 }
 
 .subnav_item ul {}
@@ -609,15 +612,65 @@ a:focus {
     white-space: nowrap;
     text-align: center;
 }
-
+/* 左侧标题样式*/
+.toptable .topic{
+	font-family: 微软雅黑,黑体;
+	height:60px;
+	background: #949494;
+	color:gray;
+	font-size:18px;
+}
+.toptable .topic a{
+	font-family: 微软雅黑,黑体;
+	height:60px;
+	background: #949494;
+	color:gray;
+	font-size:18px;
+}
+/*右侧标题样式*/
 .trhover_1 {
-    background: #E9E9E9;
-    line-height: 26px;
-    height: 26px;
-    border-right: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
+
+	font-family: 微软雅黑,黑体;
+	height:60px;
+	background: #949494;
+	color:gray;
+	font-size:18px;	
+    border-right: 1px solid #ccc;/*竖框线*/
+    border-bottom: 1px solid #ccc;/*下框线*/
 }
 
+.trhover_1 a{
+
+	font-family: 微软雅黑,黑体;
+	height:60px;
+	background: #949494;
+	color:gray;
+	font-size:18px;	
+}
+
+.toptable .status{
+	width:120px;
+}
+.toptable .status a{
+	font-family: 微软雅黑,黑体;
+	height:60px;
+	background: #949494;
+	color:gray;
+	font-size:18px;
+}
+/*
+.right_topic{
+	width:1000px;
+}
+.right_topic a{
+	font-family: 微软雅黑,黑体;
+	height:60px;
+	background: #949494;
+	color:gray;
+	font-size:18px;
+}*/
+
+/*所有行样式*/
 .maintable {
     width: 100%;
     border-collapse: separate;
@@ -635,8 +688,7 @@ a:focus {
 .maintable a {
     text-decoration: none;
     color: #0076AE;
-    font-weight: bold;
-    font-size: 12px;
+    font-size: 20px;
 }
 
 .maintable a:hover {
@@ -650,6 +702,7 @@ a:focus {
 
 .even {
     background: #E8ECF0;
+	
 }
 
 .trhover {
@@ -849,7 +902,10 @@ a:focus {
 
 .week_style {}
 
-.week_style_padtd {}
+.week_style_padtd {
+
+    /*background: black; 所有行*/
+}
 
 .weekend_style {
     background: #F5F5F5;
@@ -897,13 +953,16 @@ a:focus {
 
 .condition {
     width: 100%;
-    background: #F5F5F5;
+    background: #F7F7F7;
     border-bottom: #ccc 1px solid;
+	padding-bottom:12px;
+	padding-top:7px;
+	padding-left:3px;
 }
 
 .condition span {
     margin: 0px 5px;
-    padding: 5px 0px;
+    padding: 1px 0px;
     display: block;
 }
 
@@ -916,33 +975,40 @@ a:focus {
 
 .tasktab {
     width: 99%;
-    border: 2px #ccc solid;
-    background: #E1E1E1;
-    margin-left: 20px;
+    border: 2px #E7E7E7 solid;
+    background: #F5F5F5;
+	margin:0px 30px 20px 30px;
 }
 
+/**/
 .tasktab_height {
-    height: 54px;
+    height: 60px;
+	/*font-size:30px;*/
 }
 
+/*左侧标题样式*/
 .tasktab_bl {
     width: 100%;
     background: #D0D7DF;
 }
+/*左侧行样式*/
+.tbody_bl {
+    width: 30%;
+    overflow: hidden;
+    float: left;	
+	font-family : 黑体,微软雅黑;
+	font-size: 30px;
+}
 
+/*右侧标题样式*/
 .tasktab_br {
     width: 1500px;
     max-width: 1500px;
 }
 
-.tbody_bl {
-    width: 45%;
-    overflow: hidden;
-    float: left;
-}
-
+/*右侧行样式*/
 .tbody_br {
-    width: 55%;
+    width: 70%;
     overflow-x: auto;
     overflow-y: hidden;
     background: #FFF;
@@ -1292,6 +1358,31 @@ a:focus {
 .taskform {
     padding: 0px;
     margin: 0px;
+	font-family:微软雅黑;
+}
+
+.taskform  select{
+	height: 43px;
+	font-size: 19px;
+	padding:7px 10px 5px 8px;
+	margin:8px 0px 3px 8px;
+	background-color:rgba(255, 255, 255, 0.3);
+}
+
+.taskform  input{
+	height: 43px;
+	font-size: 19px;
+	padding:7px 10px 5px 8px;
+	margin:8px 0px 3px 8px;
+	background-color:rgba(255, 255, 255, 0.3);
+}
+
+.taskform  .btn{
+	height: 43px;
+	font-size: 19px;
+	padding:7px 15px 10px 13px;
+	margin:8px 0px 3px 8px;
+	background-color:rgba(255, 255, 255, 0.3);
 }
 
 .structure {
@@ -1371,8 +1462,9 @@ a:focus {
 .btn {
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
-    padding: 5px 12px;
-    cursor: pointer
+    padding: 10px 14px;
+    cursor: pointer;
+	font-size: 20px;
 }
 
 .btn_ok {

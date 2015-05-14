@@ -852,7 +852,7 @@ function   exportexcel()
 <form id="form1" name="myform" method="get" class="taskform form-inline">
 
 
-<select class="form-control input-sm" name="select_year" id="select_year" >
+<select class="form-control input-lg " name="select_year" id="select_year" >
 <option value="--"><?php echo $multilingual_taskf_year; ?></option>
 <?php for($i = 2009; $i <= 2050; $i++) { ?>
          <option value="<?php echo $i; ?>" <?php 
@@ -867,7 +867,7 @@ else if (!(strcmp($i, date("Y")))) {echo "selected=\"selected\"";} ?>><?php echo
 
 
 
-<select class="form-control input-sm"  name="textfield" id="textfield">
+<select class="form-control input-lg"  name="textfield" id="textfield">
 <option value="--"><?php echo $multilingual_taskf_month; ?></option>
 <?php for($i = 1; $i <= 12; $i++) { ?>
          <option value="<?php $xi = $i; if($i<=9){$xi ="0".$i;}   echo $xi; ?>" <?php 
@@ -882,7 +882,7 @@ else if (!(strcmp($i, date("n")))) {echo "selected=\"selected\"";} ?>><?php echo
 
 
 <!--选择任务的状态-->
-<select class="form-control input-sm" name="select_st" id="select_st">
+<select class="form-control input-lg" name="select_st" id="select_st">
 		<!--所有状态-->
         <option value=""><?php echo $multilingual_taskf_status; ?></option>
 		
@@ -908,7 +908,7 @@ else if (!(strcmp($i, date("n")))) {echo "selected=\"selected\"";} ?>><?php echo
       </select>
 	    
 	  <!--//优先级搜索选项-->
-	  <select class="form-control input-sm" name="select_prt" id="select_prt">
+	  <select class="form-control input-lg" name="select_prt" id="select_prt">
         <option value=""><?php echo $multilingual_taskf_priority; ?></option>//全部优先级
         <option value="<?php echo $multilingual_dd_priority_p5; ?>" <?php if (isset($_SESSION['ser_tkprt'])) {	
 		if (!(strcmp($multilingual_dd_priority_p5, "{$_SESSION['ser_tkprt']}"))) {
@@ -1034,7 +1034,7 @@ do {
 	  <button type="submit" name="search" id="search"  class="btn btn-default btn-sm" onclick= "return   searchtask(); " /><span class="glyphicon glyphicon-filter" style="display:inline;"></span> 
 	  <?php echo $multilingual_global_filterbtn; ?>
 	  </button>
-	  <button type="button" class="btn btn-link btn-sm" name="export" id="export"  onclick= "return   exportexcel(); " ><?php echo $multilingual_global_excel; ?></button>
+	  <button type="button" class="btn btn-default" name="export" id="export"  onclick= "return   exportexcel(); " ><?php echo $multilingual_global_excel; ?></button>
 	</form>
 	</span>
 	<?php if($pagetabs == "alltask") { // Show searchbox if page is alltask ?>
@@ -1044,7 +1044,7 @@ do {
 		    <option value="tit"><?php echo $multilingual_tasks_title; ?></option>
 		    <option value="tag"><?php echo $multilingual_tasks_tag; ?></option>
 	      </select>
-		  <input class="form-control input-sm" type="text" name="inputval" id="inputval" value="" />
+		  <input class="form-control input-lg" type="text" name="inputval" id="inputval" value="" />
 		  <input style="display:none" type="text" name="pagetab" value="alltask" />
 		  <input style="display:none" type="text" name="select4" value="%" />
 		  <input style="display:none" type="text" name="select_year" value="--" />
@@ -1065,23 +1065,8 @@ do {
 
  <thead  class="toptable tasktab_tl">
     <tr>
-      <th width="15%;"   class="tasktab_height"><a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=TID&order=<?php 
-	  if ( $sortlist <> "TID"){
-	  echo "DESC";
-	  }else if( $sortlist == "TID" && $orderlist == "DESC"){
-	  echo "ASC";
-	  } else {
-	  echo "DESC";
-	  }
-	  ?>" 
-	  <?php 
-	  if($sortlist=="TID" && $orderlist=="ASC"){
-	  echo "class='sort_asc'";
-	  } else if ($sortlist=="TID" && $orderlist=="DESC"){
-	  echo "class='sort_desc'";
-	  }
-	  ?>><?php echo $multilingual_default_task_id; ?></a></th>      
-      <th width="65%;" >	  
+      <th width="10%;"   class="topic">No.</th>      
+      <th width="60%;" class="topic" >	  
 	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_text&order=<?php 
 	  if ( $sortlist <> "csa_text"){
 	  echo "DESC";
@@ -1098,7 +1083,7 @@ do {
 	  echo "class='sort_desc'";
 	  }
 	  ?>><?php echo $multilingual_default_task_title; ?></a></th>
-      <th width="20%"><a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_to_user&order=<?php 
+      <th width="30%" class="topic"><a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_to_user&order=<?php 
 	  if ( $sortlist <> "csa_to_user"){
 	  echo "DESC";
 	  }else if( $sortlist == "csa_to_user" && $orderlist == "DESC"){
@@ -1146,7 +1131,7 @@ do {
      <thead  class="toptable " >
 	 <!--状态-->
     <tr>
-      <th rowspan="2" width="100px">
+      <th rowspan="2"  class="status">
 	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_status&order=<?php 
 	  if ( $sortlist <> "csa_status"){
 	  echo "DESC";
@@ -1165,9 +1150,9 @@ do {
 	  ?>>
 	  <?php echo $multilingual_default_task_status; ?></a></th>
 	  <!--工作量-->
-      <th rowspan="2" width="80px" class="tasktab_height"><?php echo $multilingual_default_task_planpv; ?></th>    
+      <th rowspan="2" width="80px" ><?php echo $multilingual_default_task_planpv; ?></th>    
 	  <!--计划开始时间-->
-	  <th rowspan="2" width="110px">
+	  <th rowspan="2" width="70px"  >
 	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_plan_st&order=<?php 
 	  if ( $sortlist <> "csa_plan_st"){
 	  echo "DESC";
@@ -1186,7 +1171,7 @@ do {
 	  ?>>
 	  <?php echo $multilingual_default_task_planstart; ?></a></th>
 	  <!--计划完成时间-->
-      <th rowspan="2" width="110px">
+      <th rowspan="2" width="110px" >
 	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_plan_et&order=<?php 
 	  if ( $sortlist <> "csa_plan_et"){
 	  echo "DESC";
@@ -1205,7 +1190,7 @@ do {
 	  ?>>
 	  <?php echo $multilingual_default_task_planend; ?></a></th>
 	  <!--所属项目-->
-      <th rowspan="2" width="200px">
+      <th rowspan="2" width="200px" >
 	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_project&order=<?php 
 	  if ( $sortlist <> "csa_project"){
 	  echo "DESC";
@@ -1224,7 +1209,7 @@ do {
 	  ?>>
 	  <?php echo $multilingual_default_task_project; ?></a></th>
 	  <!--所属阶段-->
-      <th rowspan="2" width="200px">
+      <th rowspan="2" width="200px" >
 	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=ser_stage&order=<?php 
 	  if ( $sortlist <> "ser_stage"){
 	  echo "DESC";
@@ -1243,7 +1228,7 @@ do {
 	  ?>>
 	  <?php echo $multilingual_default_task_stage; ?></a></th>
 	  <!--来自-->
-      <th rowspan="2" width="80px">
+      <th rowspan="2" width="80px" >
 	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_from_user&order=<?php 
 	  if ( $sortlist <> "csa_from_user"){
 	  echo "DESC";
@@ -1262,7 +1247,7 @@ do {
 	  ?>>
 	  <?php echo $multilingual_default_task_from; ?></a></th>
 	  <!--优先级-->
-      <th rowspan="2" width="70px">
+      <th rowspan="2" width="70px" >
 	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_priority&order=<?php 
 	  if ( $sortlist <> "csa_priority"){
 	  echo "DESC";

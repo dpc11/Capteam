@@ -92,8 +92,16 @@ if(strpos($_SERVER["HTTP_USER_AGENT"],"MSIE 8.0") || strpos($_SERVER["HTTP_USER_
                   <li><?php echo $multilingual_head_help; ?></li>
                   <li class="divider"></li>
                   <li><a href="<?php echo $logoutAction ?>"  ><?php echo $multilingual_head_logout; ?></a></li>
-                </ul>
-				 &nbsp;&nbsp;&nbsp;&nbsp;
+				  </ul>
+				 <a href="message.php" title = "<?php echo $multilingual_message; ?>" class="mouse_hover">
+				 <i class="glyphicon glyphicon-envelope icon-white"></i>
+				 <span id="conmsg"><?php if($message_count > 0){ ?> <span class="label label-danger">
+				 <?php echo $message_count; ?></span>
+				 <script type="text/javascript">  
+				 blinkTitle.start();
+				 </script>
+                     <?php  } ?></span></a>
+              </div>
 				<script type="text/javascript">  
 var blinkTitle = function (option) {
     var title = null;
@@ -147,15 +155,7 @@ $.ajax({
 	})
 }, 120000);
 </script>  
-                 <a href="message.php" title = "<?php echo $multilingual_message; ?>" class="mouse_hover">
-				 <i class="glyphicon glyphicon-envelope icon-white"></i>
-				 <span id="conmsg"><?php if($message_count > 0){ ?> <span class="label label-danger">
-				 <?php echo $message_count; ?></span>
-				 <script type="text/javascript">  
-				 blinkTitle.start();
-				 </script>
-                     <?php  } ?></span></a>
-              </div><!-- /dropdown -->
+                 
 			  
 </div>
 
@@ -214,7 +214,7 @@ function MaxRoll(){
 
   </div>
   </div>
-<?php } // Show if recordset not empty ?>
+<?php } ?>
   
   
   

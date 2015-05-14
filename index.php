@@ -56,29 +56,29 @@ $(function(){
 <div class="float_left" style="width:85%">
 <div class="btn-group">
 <!--我参与的任务 -->
-  <a type="button" class="btn btn-default btn-sm <?php if($pagetabs == "mtask") { echo "active";} ?>" href="<?php echo $pagename; ?>?select=&select_project=&select_year=<?php echo date("Y");?>&textfield=<?php echo date("m");?>&select3=-1&select4=<?php echo "{$_SESSION['MM_uid']}"; ?>&select_prt=&select_temp=&inputtitle=&select1=-1&select2=%&create_by=%&select_type=&inputid=&inputtag=&pagetab=mtask">
+  <a type="button" class="btn btn-default btn-lg <?php if($pagetabs == "mtask") { echo "active";} ?>" href="<?php echo $pagename; ?>?select=&select_project=&select_year=<?php echo date("Y");?>&textfield=<?php echo date("m");?>&select3=-1&select4=<?php echo "{$_SESSION['MM_uid']}"; ?>&select_prt=&select_temp=&inputtitle=&select1=-1&select2=%&create_by=%&select_type=&inputid=&inputtag=&pagetab=mtask">
   <?php echo $multilingual_user_mytask;?>
   </a>
 <!--我创建的任务 -->
-  <a type="button" class="btn btn-default btn-sm <?php if($pagetabs == "ctask") { echo "active";} ?>" href="<?php echo $pagename; ?>?select=&select_project=&select_year=<?php echo date("Y");?>&textfield=<?php echo date("m");?>&select3=-1&select4=%&select_prt=&select_temp=&inputtitle=&select1=-1&select2=%&create_by=<?php echo "{$_SESSION['MM_uid']}"; ?>&select_type=&inputid=&inputtag=&pagetab=ctask"><?php echo $multilingual_default_createme;?></a>
+  <a type="button" class="btn btn-default btn-lg <?php if($pagetabs == "ctask") { echo "active";} ?>" href="<?php echo $pagename; ?>?select=&select_project=&select_year=<?php echo date("Y");?>&textfield=<?php echo date("m");?>&select3=-1&select4=%&select_prt=&select_temp=&inputtitle=&select1=-1&select2=%&create_by=<?php echo "{$_SESSION['MM_uid']}"; ?>&select_type=&inputid=&inputtag=&pagetab=ctask"><?php echo $multilingual_default_createme;?></a>
  
 <!--抄送给我的任务 --> 
-  <a type="button" class="btn btn-default btn-sm <?php if($pagetabs == "cctome") { echo "active";} ?>" href="<?php echo $pagename; ?>?select=&select_project=&select_year=<?php echo date("Y");?>&textfield=<?php echo date("m");?>&select3=-1&select4=%&select_prt=&select_temp=&inputtitle=&select1=-1&select2=%&select_type=&inputid=&inputtag=&pagetab=cctome"><?php echo $multilingual_default_task_cctome_title;?></a>
+  <a type="button" class="btn btn-default btn-lg<?php if($pagetabs == "cctome") { echo "active";} ?>" href="<?php echo $pagename; ?>?select=&select_project=&select_year=<?php echo date("Y");?>&textfield=<?php echo date("m");?>&select3=-1&select4=%&select_prt=&select_temp=&inputtitle=&select1=-1&select2=%&select_type=&inputid=&inputtag=&pagetab=cctome"><?php echo $multilingual_default_task_cctome_title;?></a>
 
  <!--待我审核的任务 --> 
   <?php if($exam_totaltask>0) { ?>
-  <a type="button" class="btn btn-default btn-sm <?php if($pagetabs == "etask") { echo "active";} ?>" href="<?php echo $pagename; ?>?select=&select_project=&select_year=--&textfield=--&select3=-1&select4=%&select_prt=&select_temp=&select_exam=3&inputtitle=&select1=-1&select2=<?php echo "{$_SESSION['MM_uid']}"; ?>&select_type=&inputid=&inputtag=&pagetab=etask"><?php echo $multilingual_exam_wait."(".$exam_totaltask.")"; ?></a>
+  <a type="button" class="btn btn-default btn-lg <?php if($pagetabs == "etask") { echo "active";} ?>" href="<?php echo $pagename; ?>?select=&select_project=&select_year=--&textfield=--&select3=-1&select4=%&select_prt=&select_temp=&select_exam=3&inputtitle=&select1=-1&select2=<?php echo "{$_SESSION['MM_uid']}"; ?>&select_type=&inputid=&inputtag=&pagetab=etask"><?php echo $multilingual_exam_wait."(".$exam_totaltask.")"; ?></a>
   <?php } ?>
 
  <!--所有任务 --> 
-  <a type="button" class="btn btn-default btn-sm <?php if($pagetabs == "alltask") { echo "active";} ?>" href="<?php echo $pagename; ?>?select=&select_project=&select_year=<?php echo date("Y");?>&textfield=<?php echo date("m");?>&select3=-1&select4=%&select_prt=&select_temp=&inputtitle=&select1=-1&select2=%&create_by=%&select_type=&inputid=&inputtag=&pagetab=alltask"><?php echo $multilingual_default_alltask;?></a>
+  <a type="button" class="btn btn-default btn-lg <?php if($pagetabs == "alltask") { echo "active";} ?>" href="<?php echo $pagename; ?>?select=&select_project=&select_year=<?php echo date("Y");?>&textfield=<?php echo date("m");?>&select3=-1&select4=%&select_prt=&select_temp=&inputtitle=&select1=-1&select2=%&create_by=%&select_type=&inputid=&inputtag=&pagetab=alltask"><?php echo $multilingual_default_alltask;?></a>
 </div><!--btn-group -->
 </div><!--float_left -->
 
 <div class="clearboth"></div>
 </div><!--subnav -->
 <div class="pagemargin">
-<?php require('control_task.php'); ?>
+<?php require('task_list.php'); ?>
 </div>
 <?php require('foot.php'); ?>
 
