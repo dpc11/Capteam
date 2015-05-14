@@ -1,9 +1,5 @@
 <?php require_once('config/tank_config.php'); ?>
 <?php
-if (!isset($_SESSION)) {
-  session_start();
-}
-
 $errormsg=false;
 $loginUsername="";
 $password="";
@@ -66,7 +62,7 @@ if (isset($_POST['textfield'])) {
 
 J.check.rules = [
 	{ name: 'textfield', mid: 'username', requir: true, type: 'email', warn: '邮箱格式错误' },
-	{ name: 'textfield', mid: 'passwordid', requir: true}
+	{ name: 'textfield2', mid: 'passwordid', requir: true}
 ];
 
 function register(){
@@ -91,64 +87,29 @@ function changepsd(UP,DOWN){
 		document.getElementById(DOWN).blur();
 
 }
-
-	var r =1;
+ 
+	var r = 1;
+	
 	$(window).load(function()
 	{
 
 	if(window.screen.width!=1920||window.screen.height!=1080){
-/*
-		document.getElementById("containdiv").style.display="none";
-		$("#headerlink").css("-webkit-transform","scale(" + r + ")"); 
-		$("#headerlink").css("-webkit-transform-origin","0 0"); 
-		$("#headerlink").css("width",($(document).width()/$(window).width())*100/r+"%"); 
-		 
-		$("#foot_div").css("float","left"); 
-		$("#foot_div").css("-webkit-transform","scale(" + r + ")"); 
-		$("#foot_div").css("-webkit-transform-origin","0 0"); 
-		$("#foot_div").css("width",($(document).width()/$(window).width())*100/r+"%"); 
+		r = window.screen.height/1080
+		$("body").css("min-width",1200*r+"px");
+		//$("#centerdiv").css("min-width",1260*r+"px");  
+		$("#contain_other").css("min-width",1100*r+"px");  
+		$("#contain_other").css("min-height",480*r+"px"); 
+		$("#headerlink").css("min-width",1200*r+"px"); 
 		
 		document.getElementById("contain_other").style.display="block";
-		$("#contain_other").css("min-width",1000*r+"px"); 
-		$("#contain_other").css("min-height",500*r+"px"); 
-		document.getElementById("frame_div").width=1000*window.screen.height/1080;
-		document.getElementById("frame_div").height=500*window.screen.height/1080;
-		document.getElementById("contain_other").style.height=($(window).height()-$("#headerlink").height()-$("#foot_div").height())+"px";
+		document.getElementById("frame_div").width=1200*r+"px";
+		document.getElementById("frame_div").height=480*r+"px";
 		
-		document.getElementById("iframe_mm").style.marginTop=(document.getElementById("contain_other").clientHeight-document.getElementById("frame_div").clientHeight)*r+"px";
-
 		
-		window.scrollTo(document.body.scrollWidth,0);*/
-		
-		document.getElementById("contain_other").style.display="block";
-		$("#contain_other").css("min-width",1000*r+"px"); 
-		$("#contain_other").css("min-height",500*r+"px"); 
-		document.getElementById("frame_div").width=1000*window.screen.height/1080;
-		document.getElementById("frame_div").height=500*window.screen.height/1080;
-		
-		r = window.screen.height/1080 ; 
-	
-		$("#headerlink").css("width",document.getElementById("contain_other").clientWidth/r+"px"); 
-		$("#headerlink").css("-webkit-transform","scale(" + r + ")"); 
-		$("#headerlink").css("-webkit-transform-origin","0 0"); 
-		$("#headerlink").css("width",document.getElementById("contain_other").clientWidth/r+"px"); 
-		 
-		$("#foot_div").css("width",document.getElementById("contain_other").clientWidth/r+"px"); 
-		$("#foot_div").css("float","left");  
-		$("#foot_div").css("-webkit-transform","scale(" + r + ")"); 
-		$("#foot_div").css("-webkit-transform-origin","0 0"); 
-		
-		document.getElementById("contain_other").style.height=($(window).height()-$("#headerlink").height()-$("#foot_div").height())+"px";
-		
-		document.getElementById("iframe_mm").style.marginTop=(document.getElementById("contain_other").clientHeight-document.getElementById("frame_div").clientHeight)*r+"px";
-		
-		document.getElementById("foot_div").style.display="block";
-		
-		window.scrollTo(document.body.scrollWidth,0);
-		
-		//$(window).resize();
+		$(window).resize();
 	}else{
-		
+		$("body").css("min-width","1200px"); 
+		$("#containdiv").css("min-width","1200px"); 
 		document.getElementById("containdiv").style.display="block";
 		document.getElementById("foot_div").style.display="block";
     J.check.regform('form1');
@@ -158,34 +119,34 @@ function changepsd(UP,DOWN){
 $(window).resize(function()
 {	
 if(window.screen.width!=1920||window.screen.height!=1080){
-	location.reload();
-	/*	r = 1080/window.screen.height ; 
-		$("#headerlink").css("width",($(window).scrollLeft()+$(window).width())/$(window).width()*100/r+"%"); 	
-		$("#foot_div").css("width",($(window).scrollLeft()+$(window).width())/$(window).width()*100/r+"%"); 
-		
-		$("#headerlink").css("-webkit-transform","scale(" + r + ")"); 
-		$("#headerlink").css("-webkit-transform-origin","0 0"); 
-		 
-		//$("#foot_div").css("float","center"); 
-		$("#foot_div").css("-webkit-transform","scale(" + r + ")"); 
-		$("#foot_div").css("-webkit-transform-origin","0 0"); 
-		
-		r = window.screen.height/1080 ; 
+	//location.reload();
+	
+	r = window.screen.height/1080 ; 
 	
 		$("#headerlink").css("-webkit-transform","scale(" + r + ")"); 
 		$("#headerlink").css("-webkit-transform-origin","0 0"); 
-		$("#headerlink").css("width",($(window).scrollLeft()+$(window).width())/$(window).width()*100/r+"%"); 
+		$("#headerlink").css("width",document.getElementById("contain_other").clientWidth/r+"px"); 
 		 
+		$("#foot_div").css("width",document.getElementById("contain_other").clientWidth/r+"px"); 
 		$("#foot_div").css("float","left");  
 		$("#foot_div").css("-webkit-transform","scale(" + r + ")"); 
-		$("#foot_div").css("-webkit-transform-origin","0 0"); 
-		$("#foot_div").css("width",($(window).scrollLeft()+$(window).width())/$(window).width()*100/r+"%"); 
+		$("#foot_div").css("-webkit-transform-origin","bottom left"); 
 		
-		document.getElementById("contain_other").style.height=($(window).height()-$("#headerlink").height()-$("#foot_div").height())+"px";
+		document.getElementById("contain_other").style.height=($(window).height()-126)+"px";
+
+		if(document.getElementById("contain_other").clientHeight>document.getElementById("frame_div").clientHeight){
+		document.getElementById("contain_other").style.paddingTop=(document.getElementById("contain_other").clientHeight-document.getElementById("frame_div").clientHeight)/2*r+"px";
+		}
+		// $("body").css("height",(126/r+document.getElementById("contain_other").clientHeight)*r+"px"); 
 		
-		document.getElementById("iframe_mm").style.marginTop=(document.getElementById("contain_other").clientHeight-document.getElementById("frame_div").clientHeight)*r+"px";
-		window.scrollTo(document.body.scrollWidth,0);*/
+		
+		document.getElementById("foot_div").style.visibility="visible ";
+		
+		window.scrollTo(document.body.scrollWidth,0);
+		
 	}else{
+		
+		document.getElementById("foot_div").style.visibility="visible ";
 	document.getElementById("outdiv").style.height = ( $(window).height()-126) +'px';
 	document.getElementById("innerdiv").style.paddingTop = (document.getElementById("outdiv").clientHeight-300*1.2)/2 +'px'; 
 	
@@ -201,35 +162,6 @@ if(window.screen.width!=1920||window.screen.height!=1080){
 	
 		window.scrollTo(document.body.scrollWidth,0);
 	}
-	/*document.getElementById("outdiv").style.height = ($(window).height()-126) +'px';  
-	document.getElementById("innerdiv").style.paddingTop = (document.getElementById("outdiv").clientHeight-300*1.2)/2 +'px'; 
-	
-    var x= $(textfield).offset(); 	
-	document.getElementById("temp_textfield4_4").style.top=(x.top)+'px';
-	document.getElementById("temp_textfield4_4").style.left=(x.left)+'px';
-	document.getElementById("temp_textfield4_4").style.width=(document.getElementById("textfield").clientWidth+5)+'px';
-    x= $(textfield2).offset();
-	document.getElementById("temp_textfield5_5").style.top=(x.top)+'px';
-	document.getElementById("temp_textfield5_5").style.left=(x.left)+'px';
-	document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield2").clientWidth+5)+'px';	
-
-*/
-		//window.scrollTo(document.body.scrollWidth,0);
-		//x= $(totaldiv).offset();
-		//var r = window.screen.height /1080; 
-		//$("#totaldiv").css("-webkit-transform","scale(" + r + ")"); 
-		//$("#headerlink").css("-webkit-transform","translate(" +document.getElementById("totaldiv").clientWidth/2*(1-r)-x.left+ "px,0)");
-		//$("#totaldiv").css("-webkit-transform-origin","0 0"); 
-		//$("body").css("height",document.body.clientHeight*r+"px");
-		
-		//$("#headerlink").css("left","0px"); 
-/*
-		var r = 1920/window.screen.width ; 
-		$("#headerlink").css("width",$(window).width()*1920/window.screen.width+"px"); 
-		$("#headerlink").css("-webkit-transform","translate(" + (window.screen.width-1920)/2 + "px,0)");
-		$("#foot_div").css("width",$(window).width()*1920/window.screen.width+"px"); 
-		$("#foot_div").css("-webkit-transform","translate(" + (window.screen.width-1920)/2 + "px,0)");
-		*/
 });
 
 </script>
@@ -237,11 +169,10 @@ if(window.screen.width!=1920||window.screen.height!=1080){
 </head>
 
 <body >
-<div id="totaldiv">
 <div class="topbar" id="headerlink" >
     <div class="logo" id="logo" ><a href="index.php" class="logourl" >&nbsp;</a></div>
 </div>
-<center>
+<center id="centerdiv">
 <div id="containdiv" style="display:none;">
 <div id="outdiv" style="min-width:1200px;min-height:500px;height:500px;">
 <div id="innerdiv" style="width:820.833px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;height:300px;" >
@@ -299,7 +230,7 @@ if(window.screen.width!=1920||window.screen.height!=1080){
 	  <button type="button" class="btn btn-default" style="width: 60px;float:right; " onclick="register();"><?php echo $multilingual_user_register; ?></button>
 	  </div>
 	  <div style="width: 30%;margin-top: 24px;float:right; ">
-	  <button type="submit" class="btn btn-default" style="width: 60px;float:right; "><?php echo $multilingual_userlogin_login; ?></button>
+	  <button type="submit" id="login" class="btn btn-default" style="width: 60px;float:right; "><?php echo $multilingual_userlogin_login; ?></button>
 	  </div>
 	  
   </div>
@@ -315,15 +246,13 @@ if(window.screen.width!=1920||window.screen.height!=1080){
 
 </div>
 
-<div id="contain_other" align="center" style="margin:0 auto;display:none;overflow:hidden;">
-<div id="iframe_mm" >
-              <iFrame  id="frame_div" src="user_login_contain.php" width="820" height="600" scrolling="no"  frameborder="no">
+<div id="contain_other" align="center" style="display:none;overflow:hidden;">
+              <iFrame  id="frame_div" src="user_login_contain.php" scrolling="no"  frameborder="no">
              </iFrame>
 			 </div>
-</div>
 
 
-<div class="foot" id="foot_div" style="display:none;" >
+<div class="foot" id="foot_div" style="visibility:hidden;" >
     <div class="wss_title" id="foot_title" style="font-size: 22px;">
 
         <div class="wss_ver" id="capteamfoot">

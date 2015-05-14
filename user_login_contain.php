@@ -7,44 +7,10 @@ if (!isset($_SESSION)) {
 $errormsg=false;
 $loginUsername="";
 $password="";
-$loginFormAction = $_SERVER['PHP_SELF'];
-$MM_redirectLoginSuccess="index.php";
-if (isset($_GET['accesscheck'])) {
-  $_SESSION['PrevUrl'] = $_GET['accesscheck'];
-  $MM_redirectLoginSuccess = $_SESSION['PrevUrl'];	
-}
 
-if (isset($_POST['textfield'])) {
-  $loginUsername=$_POST['textfield'];
-  $password=$_POST['textfield2'];
-  $tk_password =  md5(crypt($password,substr($password,0,2))); 
-  
+$loginUsername=$_POST['textfield'];
+$password=$_POST['textfield2'];
 
-  mysql_select_db($database_tankdb, $tankdb);  	
-  $LoginRS__query=sprintf("SELECT tk_display_name, uid, tk_user_lastuse,status FROM tk_user WHERE tk_user_del_status =1 AND  tk_user_email=%s AND tk_user_pass=%s ",
-  GetSQLValueString($loginUsername, "text"), GetSQLValueString($tk_password, "text"));    
-  $LoginRS = mysql_query($LoginRS__query, $tankdb) or die(mysql_error());
-  $loginFoundUser = mysql_num_rows($LoginRS);
-  
- 
-  if ($loginFoundUser) {	
-	$loginStrDisplayname  = mysql_result($LoginRS,0,'tk_display_name');
-	$loginStrpid  = mysql_result($LoginRS,0,'uid');
-	$loginStrlast  = mysql_result($LoginRS,0,'tk_user_lastuse');
-	
-	$_SESSION['MM_Displayname'] = $loginStrDisplayname;	
-	$_SESSION['MM_uid'] = $loginStrpid;	
-	$_SESSION['MM_last'] = $loginStrlast;
-	
-   if(mysql_result($LoginRS,0,'status')==0){//未激活
-   }else {
-	  header("Location: " . $MM_redirectLoginSuccess );
-    }
-  }
-  else {
-    $errormsg=true;
-  }
-}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -92,12 +58,18 @@ function changepsd(UP,DOWN){
 
 }
 
+function login(){
+	window.parent.document.getElementById("textfield").value=document.getElementById("textfield").value;
+	window.parent.document.getElementById("textfield2").value=document.getElementById("textfield2").value;
+	window.parent.document.getElementById("login").click();
+	return false;
+}
 	
 	$(window).load(function()
 	{
     J.check.regform('form1');
 	
-	 var x= $(textfield).offset(); 
+	var x= $(textfield).offset(); 
 	document.getElementById("temp_textfield4_4").style.top=(x.top)+'px';
 	document.getElementById("temp_textfield4_4").style.left=(x.left)+'px';
 	document.getElementById("temp_textfield4_4").style.width=(document.getElementById("textfield").clientWidth+5)+'px';
@@ -114,14 +86,10 @@ function changepsd(UP,DOWN){
 	document.getElementById("passwordid").style.top=(x.top+3)+'px';
 	document.getElementById("passwordid").style.left=(x.left+document.getElementById("textfield2_label").clientWidth+13)+'px';
 	
-		//x= $(totaldiv).offset();
 		var r = window.screen.height /1080; 
 		$("body").css("-webkit-transform","scale(" + r + ")"); 
-		//$("#headerlink").css("-webkit-transform","translate(" +document.getElementById("totaldiv").clientWidth/2*(1-r)-x.left+ "px,0)");
 		$("body").css("-webkit-transform-origin","0 0"); 
-		//$("body").css("height",document.body.clientHeight*r+"px");
 		
-		//$("#headerlink").css("left","0px"); 
 		
 	});
 
@@ -129,7 +97,7 @@ function changepsd(UP,DOWN){
 
 </head>
 
-<body >
+<body style="width:1000px;height:500px;">
 <center>
 <div id="innerdiv" style="width:820.833px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;height:400px;" >
 <table width="100%" border="0" cellspacing="0" cellpadding="0" height="100%" align="center">
@@ -159,7 +127,7 @@ function changepsd(UP,DOWN){
 		?>
 
 
-      <form id="form1" name="form1" method="POST" action="<?php echo $loginFormAction; ?>">
+      <form id="form1" name="form1" method="POST" action="">
 	  <div style="padding-left:15px;" >
 	   <div class="form-group">
     <label class="beauty-label" for="textfield" id="textfield_label"  style="font-size:17px;font-weight:bold;"><?php echo $multilingual_userlogin_username; ?>&nbsp;&nbsp; ：&nbsp;&nbsp;</label>
@@ -186,7 +154,7 @@ function changepsd(UP,DOWN){
 	  <button type="button" class="btn btn-default" style="width: 60px;float:right; " onclick="register();"><?php echo $multilingual_user_register; ?></button>
 	  </div>
 	  <div style="width: 30%;margin-top: 24px;float:right; ">
-	  <button type="submit" class="btn btn-default" style="width: 60px;float:right; "><?php echo $multilingual_userlogin_login; ?></button>
+	  <button type="submit" class="btn btn-default" style="width: 60px;float:right; " onclick="return login();"><?php echo $multilingual_userlogin_login; ?></button>
 	  </div>
 	  
   </div>
