@@ -22,7 +22,6 @@
 
 
 <head> 
-<link href="base.css" rel="stylesheet" type="text/css" />
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
@@ -37,15 +36,25 @@ display:block;
 height:15em; 
 width:15em; 
 padding:1em;  
-text-decoration: none; 
-overflow-y:auto;
-padding: 1em; /* Firefox */ 
-padding-left: 2em;
-padding-right: 1.7em;
+
 -moz-box-shadow: 5px 5px 7px rgba(33,33,33,1); /* Safari+Chrome */ 
 -webkit-box-shadow: 5px 5px 7px rgba(33,33,33,.7); /* Opera */ 
 box-shadow: 5px 5px 7px rgba(33,33,33,.7);
 cursor:pointer;display:block;width:15em;clear:none;height:15em;line-height:30px;margin-right: 2em;margin-bottom:30px;text-align:left;} 
+
+span.usr_text{
+    width: 150px;
+    height: 140px;
+    margin: 0px;
+    margin-left: 3px;
+    margin-top: 5px;
+    background: rgba(255,255,255,0);
+    text-align: left;
+    text-decoration: none; 
+    overflow-y:auto;
+    position: absolute;
+}
+
 span.usr.catch{background:#ffc!important;}
 
 /* 设置滚动条的样式 */
@@ -72,8 +81,8 @@ span.usr.catch{background:#ffc!important;}
 
 </head> 
 <body>
+<!--<script type="text/javascript" src="js/jquery/jquery.js"></script>-->
 <script type="text/javascript" src="js/jquery/jquery-1.9.1.js"></script>
-<script type="text/javascript" src="js/jquery/jquery.js"></script>
 <script type="text/javascript">
     var curTarget = null; //鼠标拖拽的目标元素 
     var curPos = null; 
@@ -255,90 +264,86 @@ span.usr.catch{background:#ffc!important;}
 
 </script> 
 
+<script src="js/bootstrap/bootstrap-transition.js"></script>
+<script src="js/bootstrap/bootstrap-modal.js"></script>
 
 
-    <script charset="utf-8" src="editor/kindeditor.js"></script>
-    <script charset="utf-8" src="editor/lang/zh_CN.js"></script>
+    <script charset="utf-8" src="plug-in/editor/kindeditor.js"></script>
+<script charset="utf-8" src="plug-in/editor/lang/zh_CN.js"></script>
+<script>
+        var editor;
+        KindEditor.ready(function(K) {
+                editor = K.create('#tk_stage_desc', {
+            width : '100%',
+            height: '150px',
+            items:[
+        'source', '|', 'undo', 'redo', '|', 'preview', 'print', 'template', 'cut', 'copy', 'paste',
+        'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
+        'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+        'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/',
+        'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+        'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image',
+        'flash', 'media', 'insertfile', 'table', 'hr', 'map', 'code', 'pagebreak', 'anchor', 
+        'link', 'unlink', '|', 'about'
+           ]
+        });
+      });
+</script>
       
-    <input type="hidden" id="boardNum" name="boardNum" value="<?php echo $board_num; ?>" />
+<input type="hidden" id="boardNum" name="boardNum" value="<?php echo $board_num; ?>" />
 
-    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-        <tr>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+     <!-- 左边20%的宽度的树或者说明  -->
+        <td width="20%" class="input_task_right_bg" valign="top">
+            <table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
+                <tr>
+                    <td valign="top" class="gray2">
+                        <h4 style="margin-top:40px; margin-left: 5px;"><strong><?php echo $multilingual_stage_view_nowbs; ?></strong></h4>
+                        <p>
+                            <?php echo $multilingual_stage_add_text; ?>
+                        </p>
 
-            <!-- 左边20%的宽度的树或者说明  -->
-            <td width="20%" class="input_task_right_bg" valign="top">
-                <table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
-                    <tr>
-                        <td valign="top" class="gray2">
-                            <h4 style="margin-top:40px; margin-left: 5px;"><strong><?php echo $multilingual_stage_view_nowbs; ?></strong></h4>
-                            <p>
-                                <?php echo $multilingual_stage_add_text; ?>
-                            </p>
+                    </td>
+                </tr>
+            </table>
+        </td>
 
-                        </td>
-                    </tr>
-                </table>
-            </td>
+        <!-- 右边80%宽度的主体内容 -->
+        <td  id="tb" position=relative width="80%" valign="top" >
 
-            <!-- 右边80%宽度的主体内容 -->
-            <td  id="tb" position=relative width="80%" valign="top" >
-            		 
             <div id="displayRoom"> 
 
                 <?php while($row_board = mysql_fetch_assoc($board_info)){ 
-                     $id_seq = $id_seq + 1;?>
-                    <div class="row"style="margin-right:0px"> 
-                        <span id="parent<?php echo $row_board['board_seq']; ?>">
-                            <span class="usr" id="<?php echo $id_seq; ?>">
-                                <p style="margin: 0px;margin-bottom: 10px;">
-                                    <a href="base_delete.php?delID=<?php echo $row_board['board_id']; ?>&pid=<?php echo $pid; ?>">
-                                        <img src="images/ui/base_close.png" style="float: right;margin-left: 140px;position: absolute;" width="8px">
-                                    </a>
-                                    <a href="">
-                                        <img src="images/ui/base_edit.png" style="float: left;margin-left: -15px;margin-top: -2px;position: absolute;" height="10px">
-                                    </a>
-                                </p><?php echo $row_board['board_content']; ?></span>
+                   $id_seq = $id_seq + 1;?>
+                   <div class="row"style="margin-right:0px"> 
+                    <span id="parent<?php echo $row_board['board_seq']; ?>">
+                        <span class="usr" id="<?php echo $id_seq; ?>">
+                            <p style="margin: 0px;margin-bottom: 10px;">
+                                <a href="base_delete.php?delID=<?php echo $row_board['board_id']; ?>&pid=<?php echo $pid; ?>">
+                                    <img src="images/ui/base_close.png" style="float: right;margin-left: 150px;position: absolute;" width="8px">
+                                </a>
+                                <a href="">
+                                    <img src="images/ui/base_edit.png" style="float: left;margin-top: -2px;position: absolute;" height="10px">
+                                </a>
+                            </p><span class="usr_text" ><?php echo $row_board['board_content']; ?></span>
+                                <!--<div class="form-group col-xs-12">
+                                    <label for="tk_stage_desc"><?php echo $multilingual_default_task_description; ?><span  id="tk_stage_title_msg"></span></label>
+                                <div>
+                                    <textarea id="tk_stage_desc" name="tk_stage_desc" style="width: 155px;height: 150px;background: #ffc;border: 0px;" ></textarea>-->
+                                <!--</div>
+                            </div>-->
                         </span>
-                    </div>
+                    </span>
+                </div>
                 <?php } ?>
                 <div class="row"style="margin-right:0px"> 
                     <span><span class="usr" id="add"><button class="btn btn-primary"  style="display:inline-block;-moz-box-shadow: 0 1px 2px rgba(0,0,0,0.5);
-                    background-color: #ffc;border-color: #ffc;
-                    text-shadow: 0 -1px 1px rgba(0,0,0,0.25);width:130px;clear:none;
-                    height:129px;line-height:30px;margin-top: 15px;margin-left: 2px;text-align:center;background-image: url(images/ui/add.png);"; type="button"; ></button></span></span> 
-                    <div class="modal" id="mymodal">
-                        <div 
-                        style="margin-top: 80px;"
-                    class="modal-dialog">
-                            <div class="modal-content"style="align="center";">
-                                <div class="modal-header">
-                                    <button type="button"style="height:10em;width:10em;" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                                    <h4 class="modal-title">添加新的标签</h4>
-                                </div>
-                                <div class="modal-body">
-                                    
-                                    <input  input name="descri" type="textarea" id="eqment_descri" style="width:300px; height:150px;" onfocus="this.value=''" placeholder="这里输入文字" size="22"/>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                    <button type="button" class="btn btn-primary">保存</button>
-                                </div>
-                            </div><!-- /.modal-content -->
-                        </div><!-- /.modal-dialog -->
-                    </div><!-- /.modal -->
-
-                    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
-                    <script src="http://cdn.bootcss.com/bootstrap/2.3.1/js/bootstrap-transition.js"></script>
-                    <script src="http://cdn.bootcss.com/bootstrap/2.3.1/js/bootstrap-modal.js"></script>
-                    <script>
-                      $(function(){
-                        $(".btn").click(function(){
-                          $("#mymodal").modal("toggle");
-                        });
-                      });
-                    </script> 
-                </div> 
-             </div>
+                        background-color: #ffc;border-color: #ffc;
+                        text-shadow: 0 -1px 1px rgba(0,0,0,0.25);width:130px;clear:none;
+                        height:129px;line-height:30px;margin-top: 15px;margin-left: 13px;text-align:center;background-image: url(images/ui/add.png);"; type="button"; ></button></span></span> 
+                    </div> 
+                </div>
             </td>
 
         </tr>
@@ -346,6 +351,32 @@ span.usr.catch{background:#ffc!important;}
     </table>
 
 <?php require( 'foot.php'); ?>
+<div class="modal" id="mymodal">
+    <div 
+    style="margin-top: 80px;"
+    class="modal-dialog">
+    <div class="modal-content"style="align="center";">
+        <div class="modal-header">
+            <h4 class="modal-title">添加新的标签</h4>
+        </div>
+        <div class="modal-body">
+         <textarea id="tk_stage_desc" name="tk_stage_desc" ></textarea> 
+        <!-- <div>nihao</div> -->
+     </div>
+     <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary">保存</button>
+    </div>
+</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script>
+  $(function(){
+    $(".btn").click(function(){
+      $("#mymodal").modal("toggle");
+  });
+});
+</script> 
 </body>
 
 </html>
