@@ -386,12 +386,13 @@ class message_dao
         $Result1 = mysql_query($deleteSQL, $tankdb) or die(mysql_error());
     }
     //把某条消息置为已读
-    public function update_message_read($mid)
+    public function update_message($mid,$status1,$status2)
     {
         global $tankdb;
         global $database_tankdb;
-        //1表示未读，0表示已读
-        $deleteSQL = sprintf("UPDATE tk_message set tk_mess_status = 0 WHERE meid=%s",GetSQLValueString($mid, "int"));
+        //1表示未读，0表示已读,2表示半已读
+        //把status1的状态改成status2
+        $deleteSQL = sprintf("UPDATE tk_message set tk_mess_status = %s WHERE meid=%s and tk_mess_status = %s",GetSQLValueString($status2, "int"),GetSQLValueString($mid, "int"),GetSQLValueString($status1, "int"));
         mysql_select_db($database_tankdb, $tankdb);
         $Result1 = mysql_query($deleteSQL, $tankdb) or die(mysql_error());
     }
