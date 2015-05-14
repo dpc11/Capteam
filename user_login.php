@@ -141,12 +141,16 @@ function changepsd(UP,DOWN){
 		document.getElementById("contain_other").style.height=($(window).height()-$("#headerlink").height()-$("#foot_div").height())+"px";
 		
 		document.getElementById("iframe_mm").style.marginTop=(document.getElementById("contain_other").clientHeight-document.getElementById("frame_div").clientHeight)*r+"px";
+		
+		document.getElementById("foot_div").style.display="block";
+		
 		window.scrollTo(document.body.scrollWidth,0);
 		
 		//$(window).resize();
 	}else{
 		
 		document.getElementById("containdiv").style.display="block";
+		document.getElementById("foot_div").style.display="block";
     J.check.regform('form1');
 		$(window).resize();
 	}
@@ -317,7 +321,18 @@ if(window.screen.width!=1920||window.screen.height!=1080){
              </iFrame>
 			 </div>
 </div>
-<?php require('foot.php'); ?>
+
+
+<div class="foot" id="foot_div" style="display:none;" >
+    <div class="wss_title" id="foot_title" style="font-size: 22px;">
+
+        <div class="wss_ver" id="capteamfoot">
+            © 2014 - 2015 Capteam 大学生团队协作管理平台 &nbsp;&nbsp;|&nbsp;&nbsp; 北京交通大学软件学院
+        </div>
+    </div>
+</div>
+
+
 </center> 	
 </body>
 </html>

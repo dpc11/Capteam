@@ -66,7 +66,7 @@ if (isset($_POST['textfield'])) {
 
 J.check.rules = [
 	{ name: 'textfield', mid: 'username', requir: true, type: 'email', warn: '邮箱格式错误' },
-	{ name: 'textfield', mid: 'passwordid', requir: true}
+	{ name: 'textfield2', mid: 'passwordid', requir: true}
 ];
 
 function register(){
@@ -106,6 +106,13 @@ function changepsd(UP,DOWN){
 	document.getElementById("temp_textfield5_5").style.left=(x.left)+'px';	
 	document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield2").clientWidth+5)+'px';
 	
+	x= $(textfield_label).offset();
+	document.getElementById("username").style.top=(x.top+3)+'px';
+	document.getElementById("username").style.left=(x.left+document.getElementById("textfield_label").clientWidth+13)+'px';
+	
+	x= $(textfield2_label).offset();
+	document.getElementById("passwordid").style.top=(x.top+3)+'px';
+	document.getElementById("passwordid").style.left=(x.left+document.getElementById("textfield2_label").clientWidth+13)+'px';
 	
 		//x= $(totaldiv).offset();
 		var r = window.screen.height /1080; 
@@ -155,12 +162,12 @@ function changepsd(UP,DOWN){
       <form id="form1" name="form1" method="POST" action="<?php echo $loginFormAction; ?>">
 	  <div style="padding-left:15px;" >
 	   <div class="form-group">
-    <label class="beauty-label" for="textfield" style="font-size:17px;font-weight:bold;"><?php echo $multilingual_userlogin_username; ?>&nbsp;&nbsp; ：&nbsp;&nbsp;</label><span id="username"></span>
+    <label class="beauty-label" for="textfield" id="textfield_label"  style="font-size:17px;font-weight:bold;"><?php echo $multilingual_userlogin_username; ?>&nbsp;&nbsp; ：&nbsp;&nbsp;</label>
     <input type="text" class="form-control" id="textfield"  style="width:300px;" name="textfield" placeholder="邮箱" value="<?php echo $loginUsername; ?>">
   </div>
   
   <div class="form-group">
-    <label class="beauty-label" for="textfield2" style="font-size:17px;font-weight:bold;">密&nbsp;&nbsp;&nbsp;&nbsp;码&nbsp;&nbsp; ：&nbsp;&nbsp;</label><span id="passwordid"  ></span>
+    <label class="beauty-label" for="textfield2"  id="textfield2_label" style="font-size:17px;font-weight:bold;">密&nbsp;&nbsp;&nbsp;&nbsp;码&nbsp;&nbsp; ：&nbsp;&nbsp;</label>
     <input type="password" class="form-control" name="textfield2"  style="width:300px;" id="textfield2" placeholder="密码" value="<?php echo $password; ?>">
   </div>
   <div style="clear:both ">
@@ -190,6 +197,9 @@ function changepsd(UP,DOWN){
 
   </table>
 </div>
+<span id="username" style="z-index:3;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;min-width:150px;"></span>
+<span id="passwordid"  style="z-index:3;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;min-width:150px;"></span>
+
 <input  class="form-control"   type="text"  id="temp_textfield4_4" name="temp_textfield4_4" style="width:300px;z-index:3;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;" onblur='changemsg("temp_textfield4_4","textfield");' placeholder="邮箱"  value="<?php echo $loginUsername; ?>" />
 	<input  class="form-control"   type="password"  id="temp_textfield5_5" name="temp_textfield5_5" style="width:300px;z-index:3;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;" onblur='changepsd("temp_textfield5_5","textfield2");' placeholder="密码" value="<?php echo $password; ?>" >
 
