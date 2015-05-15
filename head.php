@@ -35,7 +35,7 @@ $pagename = end($pagename);
 <script type="text/javascript" src="js/lhgcore/lhgdialog.js"></script>
 
 </head>
-<body>
+<body style="min-width:1510px;">
 <?php
 if(strpos($_SERVER["HTTP_USER_AGENT"],"MSIE 8.0") || strpos($_SERVER["HTTP_USER_AGENT"],"MSIE 7.0") || strpos($_SERVER["HTTP_USER_AGENT"],"MSIE 6.0") ){
 ?>

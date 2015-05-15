@@ -420,9 +420,9 @@ a:focus {
     text-decoration: none;
 }
 
-.pagemargin {
-    padding: 0 0 0 0;
-    width: 98%;
+.pagemargin {    
+    padding: 0px 30px 20px 30px;
+    width: 100%;
 }
 
 .subnav {
@@ -605,7 +605,6 @@ a:focus {
 
 .toptable {
     width: 100%;
-    background: #000;
 }
 
 .toptable tr th {
@@ -616,25 +615,24 @@ a:focus {
 .toptable .topic{
 	font-family: 微软雅黑,黑体;
 	height:60px;
-	background: #949494;
-	color:gray;
-	font-size:18px;
+	background: rgba(153, 153, 153, 0.72);
+	color:rgb(78, 78, 78);
+	font-size:20px;
 }
 .toptable .topic a{
 	font-family: 微软雅黑,黑体;
 	height:60px;
-	background: #949494;
-	color:gray;
-	font-size:18px;
+	color:rgb(78, 78, 78);
+	font-size:20px;
 }
 /*右侧标题样式*/
 .trhover_1 {
 
 	font-family: 微软雅黑,黑体;
 	height:60px;
-	background: #949494;
-	color:gray;
-	font-size:18px;	
+	background: rgba(153, 153, 153, 0.72);
+	color:rgb(78, 78, 78);
+	font-size:20px;	
     border-right: 1px solid #ccc;/*竖框线*/
     border-bottom: 1px solid #ccc;/*下框线*/
 }
@@ -643,21 +641,66 @@ a:focus {
 
 	font-family: 微软雅黑,黑体;
 	height:60px;
-	background: #949494;
-	color:gray;
-	font-size:18px;	
+	color:rgb(78, 78, 78);
+	font-size:20px;	
 }
-
 .toptable .status{
-	width:120px;
+	width:150px;
+	background: rgba(153, 153, 153, 0.72);
+	color:rgb(78, 78, 78);
 }
 .toptable .status a{
 	font-family: 微软雅黑,黑体;
 	height:60px;
-	background: #949494;
-	color:gray;
-	font-size:18px;
+	color:rgb(78, 78, 78);
+	font-size:20px;
 }
+
+.toptable .planpv{
+	width:80px;
+	background: rgba(153, 153, 153, 0.72);
+	color:rgb(78, 78, 78);
+}
+.toptable .planpv a{
+	font-family: 微软雅黑,黑体;
+	height:60px;
+	color:rgb(78, 78, 78);
+	font-size:20px;
+}
+.toptable .time{
+	width:70px;
+	background: rgba(153, 153, 153, 0.72);
+	color:rgb(78, 78, 78);
+}
+.toptable .time a{
+	font-family: 微软雅黑,黑体;
+	height:60px;
+	color:rgb(78, 78, 78);
+	font-size:20px;
+}
+.toptable .attr{
+	width:100px;
+	background: rgba(153, 153, 153, 0.72);
+	color:rgb(78, 78, 78);
+}
+.toptable .attr a{
+	font-family: 微软雅黑,黑体;
+	height:60px;
+	color:rgb(78, 78, 78);
+	font-size:20px;
+}
+.toptable .lasttime{
+	width:130px;
+	background: rgba(153, 153, 153, 0.72);
+	color:rgb(78, 78, 78);
+}
+.toptable .lasttime a{
+	font-family: 微软雅黑,黑体;
+	height:60px;
+	color:rgb(78, 78, 78);
+	font-size:20px;
+}
+
 /*
 .right_topic{
 	width:1000px;
@@ -677,21 +720,28 @@ a:focus {
 }
 
 .maintable tr td {
-    line-height: 26px;
-    height: 26px;
+    line-height: 45px;
+    height: 45px;
     white-space: nowrap;
     border-right: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
     text-align: center;
+	font-family: 微软雅黑,黑体;
+	font-size:18px;
+	color:rgba(0, 0, 0, 0.6);
 }
 
 .maintable a {
+	color: rgba(0, 0, 0, 0.6);
     text-decoration: none;
-    color: #0076AE;
     font-size: 20px;
 }
 
+.tasktab_t2 tr:hover {
+	background:rgba(0, 135, 241, 0.16);
+}
 .maintable a:hover {
+    color: #0076AE;
     text-decoration: underline;
 }
 
@@ -700,7 +750,7 @@ a:focus {
     font-weight: normal;
 }
 
-.even {
+/*.even {
     background: #E8ECF0;
 	
 }
@@ -708,7 +758,7 @@ a:focus {
 .trhover {
     color: #000;
     background: #D6E5F2;
-}
+}*/
 
 .trhover div {}
 
@@ -903,7 +953,6 @@ a:focus {
 .week_style {}
 
 .week_style_padtd {
-
     /*background: black; 所有行*/
 }
 
@@ -974,10 +1023,10 @@ a:focus {
 }
 
 .tasktab {
-    width: 99%;
+    width: 100%;
+	min-width:1400px;
     border: 2px #E7E7E7 solid;
     background: #F5F5F5;
-	margin:0px 30px 20px 30px;
 }
 
 /**/
@@ -989,26 +1038,31 @@ a:focus {
 /*左侧标题样式*/
 .tasktab_bl {
     width: 100%;
-    background: #D0D7DF;
+    background: #FFF;
 }
 /*左侧行样式*/
 .tbody_bl {
-    width: 30%;
+    width: 550px;
     overflow: hidden;
     float: left;	
 	font-family : 黑体,微软雅黑;
 	font-size: 30px;
 }
-
+.even_line {
+    background-color:rgba(177, 187, 196, 0.16);
+}
+.odd_line {
+    background-color:white;
+}
 /*右侧标题样式*/
 .tasktab_br {
     width: 1500px;
-    max-width: 1500px;
 }
 
 /*右侧行样式*/
 .tbody_br {
-    width: 70%;
+    float:left;
+	max-width:1282px;
     overflow-x: auto;
     overflow-y: hidden;
     background: #FFF;
