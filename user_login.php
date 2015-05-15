@@ -156,8 +156,11 @@ if(window.screen.width!=1920||window.screen.height!=1080){
 	}else{
 		
 		document.getElementById("foot_div").style.visibility="visible ";
-	document.getElementById("outdiv").style.height = ( $(window).height()-126) +'px';
+	document.getElementById("outdiv").style.height = ( $(window).height()-186) +'px';
 	document.getElementById("innerdiv").style.paddingTop = (document.getElementById("outdiv").clientHeight-300*1.2)/2 +'px'; 
+
+		$("#foot_top").css("min-height",document.getElementById("headerlink").clientHeight+document.getElementById("centerdiv").clientHeight60+"px"); 
+		$("#foot_div").css("margin-top","60px"); 
 	
     var x= $(textfield).offset(); 
 	document.getElementById("temp_textfield4_4").style.top=(x.top)+'px';
@@ -186,6 +189,7 @@ if(window.screen.width!=1920||window.screen.height!=1080){
 </head>
 
 <body >
+<div  id="foot_top" style="height:100%; width:100%; padding-bottom:60px;">
 <div class="topbar" id="headerlink" >
     <div class="logo" id="logo" ><a href="index.php" class="logourl" >&nbsp;</a></div>
 </div>
@@ -273,6 +277,8 @@ if(window.screen.width!=1920||window.screen.height!=1080){
 			 </div>
 
 
+</center> 	
+<center>
 <div class="foot" id="foot_div" style="visibility:hidden;" >
     <div class="wss_title" id="foot_title" style="font-size: 22px;">
 
