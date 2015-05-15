@@ -1,6 +1,6 @@
 <?php require_once('config/tank_config.php');  ?>
 <?php require_once('session_unset.php'); ?>
-<?php require_once('session.php'); ?>
+<?php require_once('session.php');  ?>
 <?php 
 
 $url_this = $_SERVER["QUERY_STRING"] ;
@@ -55,6 +55,9 @@ $(function(){
 <div class="subnav">
 <div class="float_left" style="width:85%">
 <div class="btn-group">
+<!--所有任务 --> 
+  <a type="button" class="btn btn-default btn-lg <?php if($pagetabs == "alltask") { echo "active";} ?>" href="<?php echo $pagename; ?>?select=&select_project=&select_year=<?php echo date("Y");?>&textfield=<?php echo date("m");?>&select3=-1&select4=%&select_prt=&select_temp=&inputtitle=&select1=-1&select2=%&create_by=%&select_type=&inputid=&inputtag=&pagetab=alltask"><?php echo $multilingual_default_alltask;?></a>
+ 
 <!--我参与的任务 -->
   <a type="button" class="btn btn-default btn-lg <?php if($pagetabs == "mtask") { echo "active";} ?>" href="<?php echo $pagename; ?>?select=&select_project=&select_year=<?php echo date("Y");?>&textfield=<?php echo date("m");?>&select3=-1&select4=<?php echo "{$_SESSION['MM_uid']}"; ?>&select_prt=&select_temp=&inputtitle=&select1=-1&select2=%&create_by=%&select_type=&inputid=&inputtag=&pagetab=mtask">
   <?php echo $multilingual_user_mytask;?>
@@ -70,15 +73,13 @@ $(function(){
   <a type="button" class="btn btn-default btn-lg <?php if($pagetabs == "etask") { echo "active";} ?>" href="<?php echo $pagename; ?>?select=&select_project=&select_year=--&textfield=--&select3=-1&select4=%&select_prt=&select_temp=&select_exam=3&inputtitle=&select1=-1&select2=<?php echo "{$_SESSION['MM_uid']}"; ?>&select_type=&inputid=&inputtag=&pagetab=etask"><?php echo $multilingual_exam_wait."(".$exam_totaltask.")"; ?></a>
   <?php } ?>
 
- <!--所有任务 --> 
-  <a type="button" class="btn btn-default btn-lg <?php if($pagetabs == "alltask") { echo "active";} ?>" href="<?php echo $pagename; ?>?select=&select_project=&select_year=<?php echo date("Y");?>&textfield=<?php echo date("m");?>&select3=-1&select4=%&select_prt=&select_temp=&inputtitle=&select1=-1&select2=%&create_by=%&select_type=&inputid=&inputtag=&pagetab=alltask"><?php echo $multilingual_default_alltask;?></a>
 </div><!--btn-group -->
 </div><!--float_left -->
 
 <div class="clearboth"></div>
 </div><!--subnav -->
 <div class="pagemargin">
-<?php require('task_list.php'); ?>
+<?php  require('task_list.php'); ?>
 </div>
 <?php require('foot.php'); ?>
 

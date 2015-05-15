@@ -1,4 +1,5 @@
 <?php 
+
 $phpself =$_SERVER['PHP_SELF'];
 $temp = explode("/",$phpself);
 $pagenames = end($temp);
@@ -262,8 +263,9 @@ $row_Recordset1 = mysql_fetch_assoc($Recordset1);
 
 
 
-//为什么会初始总行数
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+$R_list=1;
+
 if (isset($_GET['totalRows_Recordset1'])) {
   $totalRows_Recordset1 = $_GET['totalRows_Recordset1'];
 } else {
@@ -838,12 +840,6 @@ function   exportexcel()
 
 
 
-
-
-
-
-
-
 <div class="tasktab">
 <div class="clearboth"></div>
 <?php if($pagetabs <> "etask"){ // Show search bar ?>
@@ -1063,10 +1059,10 @@ do {
 
 <table  border="0" cellspacing="0" cellpadding="0" align="center"  class="maintable tasktab_bl" >
 
- <thead  class="toptable tasktab_tl">
+ <thead  class="toptable tasktab_tl" >
     <tr>
-      <th width="10%;"   class="topic">No.</th>      
-      <th width="60%;" class="topic" >	  
+      <th width="15%;"   class="topic">No.</th>      
+      <th width="55%;" class="topic" >	  
 	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_text&order=<?php 
 	  if ( $sortlist <> "csa_text"){
 	  echo "DESC";
@@ -1101,18 +1097,21 @@ do {
 	  ?>><?php echo $multilingual_default_task_to; ?></a></th>
       </tr>
    </thead>
-   <tbody>
+   <tbody >
         <?php do { ?>
-        <tr  title="<?php echo $row_Recordset1['csa_text']; ?>" >
+        <tr  title="<?php echo $row_Recordset1['csa_text']; ?>" class="<?php if($R_list%2==1){ echo "odd_line"; }else{echo "even_line"; } ?>" >
       <td class="week_style_padtd"   ><?php echo $row_Recordset1['tid']; ?></td>
-      <td class="week_style_padtd" ><a href="default_task_edit.php?editID=<?php echo $row_Recordset1['tid']; ?>&pagetab=<?php echo $pagetabs; ?>"  target="_parent"> <?php echo $row_Recordset1['csa_text']; ?></a></td>
+      <td class="week_style_padtd" 
+	data-ellipsis="true"
+	data-ellipsis-max-width="200px"><a href="default_task_edit.php?editID=<?php echo $row_Recordset1['tid']; ?>&pagetab=<?php echo $pagetabs; ?>"  target="_parent"> <?php echo $row_Recordset1['csa_text']; ?></a></td>
       <td class="week_style_padtd" >
 	  <a href="user_view.php?recordID=<?php echo $row_Recordset1['csa_to_user']; ?>" target="_parent">
 	  <?php echo $row_Recordset1['tk_display_name1']; ?></a></td>
       </tr>
-    <?php
+    <?php 	$R_list++;
 } while ($row_Recordset1 = mysql_fetch_assoc($Recordset1));
-  $rows = mysql_num_rows($Recordset1);
+
+	$rows = mysql_num_rows($Recordset1);
   if($rows > 0) {
       mysql_data_seek($Recordset1, 0);
 	  $row_Recordset1 = mysql_fetch_assoc($Recordset1);
@@ -1124,13 +1123,15 @@ do {
   
 </div>
 
+<script src="js/jquery/jquery.ellipsis.js"></script>
+<script src="js/jquery/jquery.ellipsis.unobtrusive.js"></script>
 <!--table right -->
 <div class="tbody_br"  id="tbody_br"  >
   <table  border="0" cellspacing="0" cellpadding="0" align="center"  class="maintable tasktab_br" >
    
      <thead  class="toptable " >
 	 <!--状态-->
-    <tr>
+    <tr class="righttable_head" >
       <th rowspan="2"  class="status">
 	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_status&order=<?php 
 	  if ( $sortlist <> "csa_status"){
@@ -1149,10 +1150,29 @@ do {
 	  }
 	  ?>>
 	  <?php echo $multilingual_default_task_status; ?></a></th>
-	  <!--工作量-->
-      <th rowspan="2" width="80px" ><?php echo $multilingual_default_task_planpv; ?></th>    
+	  <!--优先级-->
+      <th rowspan="2" class="attr">
+	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_priority&order=<?php 
+	  if ( $sortlist <> "csa_priority"){
+	  echo "DESC";
+	  }else if( $sortlist == "csa_priority" && $orderlist == "DESC"){
+	  echo "ASC";
+	  } else {
+	  echo "DESC";
+	  }
+	  ?>#fromsite" 
+	  <?php 
+	  if($sortlist=="csa_priority" && $orderlist=="ASC"){
+	  echo "class='sort_asc'";
+	  } else if ($sortlist=="csa_priority" && $orderlist=="DESC"){
+	  echo "class='sort_desc'";
+	  }
+	  ?>>
+	  <?php echo $multilingual_default_task_priority; ?></a></th>
+	   <!--工作量-->
+      <th rowspan="2" class="planpv"><?php echo $multilingual_default_task_planpv; ?></th>    
 	  <!--计划开始时间-->
-	  <th rowspan="2" width="70px"  >
+	  <th rowspan="2"  class="time" >
 	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_plan_st&order=<?php 
 	  if ( $sortlist <> "csa_plan_st"){
 	  echo "DESC";
@@ -1171,7 +1191,7 @@ do {
 	  ?>>
 	  <?php echo $multilingual_default_task_planstart; ?></a></th>
 	  <!--计划完成时间-->
-      <th rowspan="2" width="110px" >
+      <th rowspan="2"  class="time"  >
 	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_plan_et&order=<?php 
 	  if ( $sortlist <> "csa_plan_et"){
 	  echo "DESC";
@@ -1190,7 +1210,7 @@ do {
 	  ?>>
 	  <?php echo $multilingual_default_task_planend; ?></a></th>
 	  <!--所属项目-->
-      <th rowspan="2" width="200px" >
+      <th rowspan="2" class="attr"  >
 	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_project&order=<?php 
 	  if ( $sortlist <> "csa_project"){
 	  echo "DESC";
@@ -1209,7 +1229,7 @@ do {
 	  ?>>
 	  <?php echo $multilingual_default_task_project; ?></a></th>
 	  <!--所属阶段-->
-      <th rowspan="2" width="200px" >
+      <th rowspan="2" class="attr" >
 	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=ser_stage&order=<?php 
 	  if ( $sortlist <> "ser_stage"){
 	  echo "DESC";
@@ -1228,7 +1248,7 @@ do {
 	  ?>>
 	  <?php echo $multilingual_default_task_stage; ?></a></th>
 	  <!--来自-->
-      <th rowspan="2" width="80px" >
+      <th rowspan="2" class="attr" >
 	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_from_user&order=<?php 
 	  if ( $sortlist <> "csa_from_user"){
 	  echo "DESC";
@@ -1246,30 +1266,8 @@ do {
 	  }
 	  ?>>
 	  <?php echo $multilingual_default_task_from; ?></a></th>
-	  <!--优先级-->
-      <th rowspan="2" width="70px" >
-	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_priority&order=<?php 
-	  if ( $sortlist <> "csa_priority"){
-	  echo "DESC";
-	  }else if( $sortlist == "csa_priority" && $orderlist == "DESC"){
-	  echo "ASC";
-	  } else {
-	  echo "DESC";
-	  }
-	  ?>#fromsite" 
-	  <?php 
-	  if($sortlist=="csa_priority" && $orderlist=="ASC"){
-	  echo "class='sort_asc'";
-	  } else if ($sortlist=="csa_priority" && $orderlist=="DESC"){
-	  echo "class='sort_desc'";
-	  }
-	  ?>>
-	  <?php echo $multilingual_default_task_priority; ?></a></th>
-	  
-      </tr>
-    <tr>
 	<!--上次更新时间-->
-      <th rowspan="2" width="70px">
+      <th rowspan="2" class="lasttime">
 	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_last_update&order=<?php 
 	  if ( $sortlist <> "csa_last_update"){
 	  echo "DESC";
@@ -1289,12 +1287,17 @@ do {
 	  <?php echo $multilingual_default_task_update_time; ?></a></th>
 	  
       </tr>
-    <tr>
    </thead>     
-<tbody>
-     <?php do { ?>
-     <tr>
+<tbody class="tasktab_t2">
+     <?php 
+	 $R_list=1;
+	 do { ?>
+     <tr  class="<?php if($R_list%2==1){ echo "odd_line"; }else{echo "even_line"; } ?>">
          <td class="week_style_padtd"  width="100px" align="center"><?php echo $row_Recordset1['task_status_display']; ?></td>
+		 
+       <td class="week_style_padtd" width="70px" align="center">
+	   <?php echo $row_Recordset1['csa_priority']; ?>
+	   </td>
          <td class="week_style_padtd" width="80px" align="center">
        
        <?php echo $row_Recordset1['csa_plan_hour']; ?>&nbsp;
@@ -1325,9 +1328,6 @@ do {
 	   <a href="user_view.php?recordID=<?php echo $row_Recordset1['csa_from_user']; ?>" target="_parent">
 	   <?php echo $row_Recordset1['tk_display_name2']; ?></a>
 	   </td>
-       <td class="week_style_padtd" width="70px" align="center">
-	   <?php echo $row_Recordset1['csa_priority']; ?>
-	   </td>
        
       <td class="week_style_padtd" width="112px" align="center"><span 
 	   <?php 
@@ -1345,7 +1345,7 @@ do {
        </td>
 	  
     </tr>
-     <?php
+     <?php $R_list++;
 } while ($row_Recordset1 = mysql_fetch_assoc($Recordset1));
   $rows = mysql_num_rows($Recordset1);
   if($rows > 0) {
