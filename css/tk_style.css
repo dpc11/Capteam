@@ -24,17 +24,22 @@ html {
 }
 
 body {
-    font-size: 12px;
+    font-size: 18px;
+	font-family: 微软雅黑,黑体;
 }
 
 table {
-    font-size: 12px;
+    font-size: 20px;
+	font-family: 微软雅黑,黑体;
 }
 
 p {
     margin: 5px;
 }
-
+.search_warning{
+	text-align:center;
+	font-size:24px;
+}
 .dropdown_style {
     background: #FFF;
     color: red;
@@ -462,8 +467,13 @@ a:focus {
     border-top: 1px solid #ccc;
     bottom: 0px;
     height: 60px;
+	margin-top:-60px;
 }
-
+.foot_top{
+	height:100%;
+	width:100%;
+	padding-bottom:60px;
+}
 .wss_title {
     margin: 14px auto 8px auto;
     margin: 14px auto 8px auto;
@@ -775,7 +785,9 @@ a:focus {
 
 .rowcon {
     width: 99%;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
+    margin-right: 80px;
+    margin-top: 20px;
 }
 
 .rowcon td a {
@@ -1024,7 +1036,7 @@ a:focus {
 
 .tasktab {
     width: 100%;
-	min-width:1400px;
+	min-width:1600px;
     border: 2px #E7E7E7 solid;
     background: #F5F5F5;
 }
@@ -1062,7 +1074,7 @@ a:focus {
 /*右侧行样式*/
 .tbody_br {
     float:left;
-	max-width:1282px;
+	width:600px;
     overflow-x: auto;
     overflow-y: hidden;
     background: #FFF;
@@ -1421,6 +1433,7 @@ a:focus {
 	padding:7px 10px 5px 8px;
 	margin:8px 0px 3px 8px;
 	background-color:rgba(255, 255, 255, 0.3);
+	float:left;
 }
 
 .taskform  input{

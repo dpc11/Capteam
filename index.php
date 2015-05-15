@@ -29,30 +29,30 @@ $exam_totaltask=$row_Recordset_sumtotal['count_task'];
 ?>
 
 <?php require('head.php'); ?>
-
-<script type="text/javascript">
-$(function(){
+<script>
+$(window).load(function()
+{
+	
 	var $hov_t = $('.toptable tr th')
 	$hov_t.addClass('trhover_1')	   
 	$hov_t.hover(function(){
 		$(this).addClass('thhover')							
 	},function(){
 		$(this).removeClass('thhover')
-		})		   
-})
+		});	
+		document.getElementById("tbody_br").style.width=document.getElementById("tasktab").clientWidth-550+"px";
+		$("#foot_top").css("min-height",document.getElementById("pagemargin").clientHeight+document.getElementById("subnav").clientHeight+66+60+"px"); 
 
-$(function(){
-	$('.maintable tr:even').addClass('even')
-	var $j = $('.maintable tr');
-	$j.hover(function(){
-		$(this).addClass('trhover')								  
-	},function(){
-		$(this).removeClass('trhover')
-		});
-})
+});
+$(window).resize(function()
+{
+		
+		document.getElementById("tbody_br").style.width=document.getElementById("tasktab").clientWidth-550+"px";
+		$("#foot_top").css("min-height",document.getElementById("pagemargin").clientHeight+document.getElementById("subnav").clientHeight+66+60+"px"); 
+});
 </script>
 
-<div class="subnav">
+<div class="subnav" id="subnav">
 <div class="float_left" style="width:85%">
 <div class="btn-group">
 <!--所有任务 --> 
@@ -78,8 +78,9 @@ $(function(){
 
 <div class="clearboth"></div>
 </div><!--subnav -->
-<div class="pagemargin">
+<div class="pagemargin" id="pagemargin">
 <?php  require('task_list.php'); ?>
+</div>
 </div>
 <?php require('foot.php'); ?>
 

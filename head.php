@@ -21,8 +21,8 @@ $self =$_SERVER['PHP_SELF'];
 $pagename = explode("/",$self);
 $pagename = end($pagename);
 ?>
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Capteam</title>
@@ -35,7 +35,9 @@ $pagename = end($pagename);
 <script type="text/javascript" src="js/lhgcore/lhgdialog.js"></script>
 
 </head>
-<body style="min-width:1510px;">
+<body id="docbody" style="min-width:1510px;">
+<div id="foot_top" class="foot_top">
+<div class="clearboth"></div>
 <?php
 if(strpos($_SERVER["HTTP_USER_AGENT"],"MSIE 8.0") || strpos($_SERVER["HTTP_USER_AGENT"],"MSIE 7.0") || strpos($_SERVER["HTTP_USER_AGENT"],"MSIE 6.0") ){
 ?>

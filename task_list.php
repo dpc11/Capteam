@@ -135,7 +135,7 @@ if (isset($_GET['searchby'])) {
 }
 
 //设置排序标准
-$sortlist = "csa_last_update";
+$sortlist = "csa_plan_st";
 if (isset($_GET['sort'])) {
   $sortlist = $_GET['sort'];
 }
@@ -840,7 +840,7 @@ function   exportexcel()
 
 
 
-<div class="tasktab">
+<div class="tasktab" id="tasktab">
 <div class="clearboth"></div>
 <?php if($pagetabs <> "etask"){ // Show search bar ?>
 <div class="condition">
@@ -848,7 +848,7 @@ function   exportexcel()
 <form id="form1" name="myform" method="get" class="taskform form-inline">
 
 
-<select class="form-control input-lg " name="select_year" id="select_year" >
+<select class="form-control " style="width:110px;" name="select_year" id="select_year" >
 <option value="--"><?php echo $multilingual_taskf_year; ?></option>
 <?php for($i = 2009; $i <= 2050; $i++) { ?>
          <option value="<?php echo $i; ?>" <?php 
@@ -863,7 +863,7 @@ else if (!(strcmp($i, date("Y")))) {echo "selected=\"selected\"";} ?>><?php echo
 
 
 
-<select class="form-control input-lg"  name="textfield" id="textfield">
+<select class="form-control"  style="width:110px;" name="textfield" id="textfield">
 <option value="--"><?php echo $multilingual_taskf_month; ?></option>
 <?php for($i = 1; $i <= 12; $i++) { ?>
          <option value="<?php $xi = $i; if($i<=9){$xi ="0".$i;}   echo $xi; ?>" <?php 
@@ -878,9 +878,9 @@ else if (!(strcmp($i, date("n")))) {echo "selected=\"selected\"";} ?>><?php echo
 
 
 <!--选择任务的状态-->
-<select class="form-control input-lg" name="select_st" id="select_st">
+<select class="form-control"  style="width:110px;" name="select_st" id="select_st">
 		<!--所有状态-->
-        <option value=""><?php echo $multilingual_taskf_status; ?></option>
+        <option value="">所有</option>
 		
 		<!--6种状态 1--未开始；2--进行中； 3--已完成； 4--已验收； 5--被驳回； 6--已过期-->
         <?php
@@ -904,8 +904,8 @@ else if (!(strcmp($i, date("n")))) {echo "selected=\"selected\"";} ?>><?php echo
       </select>
 	    
 	  <!--//优先级搜索选项-->
-	  <select class="form-control input-lg" name="select_prt" id="select_prt">
-        <option value=""><?php echo $multilingual_taskf_priority; ?></option>//全部优先级
+	  <select class="form-control"style="width:120px;" name="select_prt" id="select_prt">
+        <option value="">所有</option>//全部优先级
         <option value="<?php echo $multilingual_dd_priority_p5; ?>" <?php if (isset($_SESSION['ser_tkprt'])) {	
 		if (!(strcmp($multilingual_dd_priority_p5, "{$_SESSION['ser_tkprt']}"))) {
 			echo "selected=\"selected\"";
@@ -941,8 +941,8 @@ else if (!(strcmp($i, date("n")))) {echo "selected=\"selected\"";} ?>><?php echo
 	  
 	  
 	  	<!--查找该用户所属的所有项目-->	  
-	  <select class="form-control input-sm" name="select_project" id="select_project" onclic=>
-        <option value=""><?php echo $multilingual_taskf_project; ?></option>
+	  <select class="form-control " style="width:200px;"  name="select_project" id="select_project" onclic=>
+        <option value="">所有项目</option>
         <?php
 		if(mysql_num_rows($Recordset_project)>0){
 		do {  
@@ -968,13 +968,13 @@ else if (!(strcmp($i, date("n")))) {echo "selected=\"selected\"";} ?>><?php echo
 	  
 	  
 	  <!--查找选定项目中的所有阶段-->  
-	  <select class="form-control input-sm" name="select_stage" id="select_stage">
+	  <select class="form-control "style="width:200px;"  name="select_stage" id="select_stage">
         <option value=""><?php echo $multilingual_taskf_stage; ?></option>
       </select>
 	  
 	  <!--执行人-->  
 	  <?php if ($pagetabs <> "mtask") {  ?>
-	  <select class="form-control input-sm" id="select4" name="select4">
+	  <select class="form-control " style="width:160px;" id="select4" name="select4">
         <option value="%"><?php echo $multilingual_taskf_touser; ?></option>
 		<!-- 不限执行人 -->
         <?php
@@ -1002,7 +1002,7 @@ else if(!(strcmp($row_Recordset2['uid'], "{$_SESSION['MM_uid']}"))) {
 	  <?php } ?>
 
 	  <!--查找创建人--> 
-	  <select  class="form-control input-sm" name="create_by" id="create_by" <?php if ($pagetabs <> "alltask") { echo "style='display:none'"; }?>>
+	  <select  class="form-control " style="width:160px;" name="create_by" id="create_by" <?php if ($pagetabs <> "alltask") { echo "style='display:none'"; }?>>
       <option value="%"><?php echo $multilingual_taskf_createuser; ?></option>
       <?php
 do {  
@@ -1036,20 +1036,21 @@ do {
 	<?php if($pagetabs == "alltask") { // Show searchbox if page is alltask ?>
 	<span>
 <form id="form2" name="myform2" method="get" class="taskform form-inline">
-		  <select class="form-control input-sm"  name="searchby" id="searchby" >
+		  <select class="form-control "  style="width:200px;float:left;" name="searchby" id="searchby" >
 		    <option value="tit"><?php echo $multilingual_tasks_title; ?></option>
 		    <option value="tag"><?php echo $multilingual_tasks_tag; ?></option>
 	      </select>
-		  <input class="form-control input-lg" type="text" name="inputval" id="inputval" value="" />
+		  <input class="form-control " type="text" style="width:200px;float:left;"name="inputval" id="inputval" value="" />
 		  <input style="display:none" type="text" name="pagetab" value="alltask" />
 		  <input style="display:none" type="text" name="select4" value="%" />
 		  <input style="display:none" type="text" name="select_year" value="--" />
 		  <input style="display:none" type="text" name="textfield" value="--" />
 
-		  <button type="submit" name="search1" id="search1" class="btn btn-default btn-sm" /><span class="glyphicon glyphicon-search" style="display:inline;"></span> <?php echo $multilingual_global_searchbtn; ?></button>
+		  <button type="submit" style="width:110px;float:left;" name="search1" id="search1" class="btn btn-default btn-sm" /><span class="glyphicon glyphicon-search" style="display:inline;"></span> <?php echo $multilingual_global_searchbtn; ?></button>
           </form>
 		  </span>
 <?php }  // Show searchbox if page is alltask ?>
+<div  class="clearboth"> </div>
 </div>
 <?php } // Show search bar ?>
 <?php if ($totalRows_Recordset1 > 0) { // Show task list if recordset not empty ?>
@@ -1100,7 +1101,7 @@ do {
    <tbody >
         <?php do { ?>
         <tr  title="<?php echo $row_Recordset1['csa_text']; ?>" class="<?php if($R_list%2==1){ echo "odd_line"; }else{echo "even_line"; } ?>" >
-      <td class="week_style_padtd"   ><?php echo $row_Recordset1['tid']; ?></td>
+      <td class="week_style_padtd"   ><?php echo $R_list; ?></td>
       <td class="week_style_padtd" 
 	data-ellipsis="true"
 	data-ellipsis-max-width="200px"><a href="default_task_edit.php?editID=<?php echo $row_Recordset1['tid']; ?>&pagetab=<?php echo $pagetabs; ?>"  target="_parent"> <?php echo $row_Recordset1['csa_text']; ?></a></td>
@@ -1367,16 +1368,16 @@ do {
 <td>  <table border="0">
   <tr>
     <td><?php if ($pageNum_Recordset1 > 0) { // Show if not first page ?>
-        <a href="<?php printf("%s?pageNum_Recordset1=%d%s", $currentPage, 0, $queryString_Recordset1); ?>#task"><?php echo $multilingual_global_first; ?></a>
+        <a href="<?php printf("%s?pageNum_Recordset1=%d%s", $currentPage, 0, $queryString_Recordset1); ?>"><?php echo $multilingual_global_first; ?></a>
         <?php } // Show if not first page ?></td>
     <td><?php if ($pageNum_Recordset1 > 0) { // Show if not first page ?>
-        <a href="<?php printf("%s?pageNum_Recordset1=%d%s", $currentPage, max(0, $pageNum_Recordset1 - 1), $queryString_Recordset1); ?>#task"><?php echo $multilingual_global_previous; ?></a>
+        <a href="<?php printf("%s?pageNum_Recordset1=%d%s", $currentPage, max(0, $pageNum_Recordset1 - 1), $queryString_Recordset1); ?>"><?php echo $multilingual_global_previous; ?></a>
         <?php } // Show if not first page ?></td>
     <td><?php if ($pageNum_Recordset1 < $totalPages_Recordset1) { // Show if not last page ?>
-        <a href="<?php printf("%s?pageNum_Recordset1=%d%s", $currentPage, min($totalPages_Recordset1, $pageNum_Recordset1 + 1), $queryString_Recordset1); ?>#task"><?php echo $multilingual_global_next; ?></a>
+        <a href="<?php printf("%s?pageNum_Recordset1=%d%s", $currentPage, min($totalPages_Recordset1, $pageNum_Recordset1 + 1), $queryString_Recordset1); ?>"><?php echo $multilingual_global_next; ?></a>
         <?php } // Show if not last page ?></td>
     <td><?php if ($pageNum_Recordset1 < $totalPages_Recordset1) { // Show if not last page ?>
-        <a href="<?php printf("%s?pageNum_Recordset1=%d%s", $currentPage, $totalPages_Recordset1, $queryString_Recordset1); ?>#task"><?php echo $multilingual_global_last; ?></a>
+        <a href="<?php printf("%s?pageNum_Recordset1=%d%s", $currentPage, $totalPages_Recordset1, $queryString_Recordset1); ?>"><?php echo $multilingual_global_last; ?></a>
         <?php } // Show if not last page ?></td>
   </tr>
 </table>
@@ -1388,7 +1389,7 @@ do {
 <?php } // Show nextpage if task list recordset not empty ?>
 
 <?php if ($totalRows_Recordset1 == 0) { // Show tips if recordset empty ?>
-<div class="alert alert-warning" style="margin:6px;">
+<div class="alert alert-warning search_warning" style="margin:6px;">
   <?php echo $multilingual_default_sorrytipup; ?>
 </div>
 <?php } // Show tips if recordset empty ?>
