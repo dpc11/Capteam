@@ -9,9 +9,15 @@
         $pid = $_GET['pid'];
     }
     $id_seq=0;
+    $bid = "-1";
 
     $board_info = get_board_info($pid);
     $board_num =mysql_num_rows($board_info);
+
+    $editID = "-1";
+        if (isset($_POST['edit_board_id'])) {
+    $editID = $_POST['edit_board_id'];
+}
 ?>
 
 <?php require('head.php');  ?>
@@ -265,16 +271,15 @@ span.usr.catch{background:#ffc!important;}
 
 </script> 
 
-
 <script src="js/bootstrap/bootstrap-transition.js"></script>
 <script src="js/bootstrap/bootstrap-modal.js"></script>
 
 <script charset="utf-8" src="plug-in/editor/kindeditor.js"></script>
 <script charset="utf-8" src="plug-in/editor/lang/zh_CN.js"></script>
-    <script>
-        var editor;
+<script>
+        var editor1;
         KindEditor.ready(function(K) {
-                editor = K.create('#tk_stage_desc', {
+                editor1 = K.create('#tk_stage_desc', {
             width : '100%',
             height: '150px',
             items:[
@@ -286,6 +291,43 @@ span.usr.catch{background:#ffc!important;}
         });
       });
 </script>
+<script>
+        var editor2;
+        KindEditor.ready(function(K) {
+                editor2 = K.create('#tk_edit_content', {
+            width : '100%',
+            height: '150px',
+            items:[
+        'source', '|', 'undo', 'redo', '|',
+         'insertorderedlist', 'insertunorderedlist', '|', 'fullscreen',
+        'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'bold',
+        'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat'
+           ]
+        });
+      });
+
+                        function eb(data) {
+                                       // var data = data;
+                            var obj = document.getElementById("edit_board_id");
+                            var obj2 = document.getElementById("tk_edit_content");
+                            obj.value=data;
+                            $.ajax( {
+                                    type: "post",
+                                    url : "base_edit_getContent.php",
+                                    data: {"cur_board":data},
+                                    success: function(getdata){//如果调用php成功,data为执行php文件后的返回值
+                                        //document.getElementById("tk_edit_content").innerHTML=getdata;
+                                       // $("#tk_edit_content").html(getdata);
+                                       // obj2.value=getdata;
+                                       //$("#document.body").html("getdata");
+                                        editor2.html(getdata);
+                                    }
+                             });
+
+                            $("#editmodal").modal("toggle");
+                        }
+                    </script>
+
       
     <input type="hidden" id="boardNum" name="boardNum" value="<?php echo $board_num; ?>" />
 
@@ -323,7 +365,15 @@ span.usr.catch{background:#ffc!important;}
                                      <input type="hidden" id="ID" name="ID" value="<?php echo $row_board['board_id']; ?>" />
                                     <img src="images/ui/base_close.png" style="float: right;margin-left: 150px;position: absolute;" width="8px">
                                 </a>
-                                <a href="">
+                                <!--<a href="#editmodal" role="button" class="edit" data-toggle="modal" <?php $bid=$row_board['board_id'] ?> >-->
+                                <a role="button"  onclick="eb(<?php echo $row_board['board_id']; ?>)">
+                                   <!-- <script>
+                                      $(function(){
+                                        $(".edit").click(function(){
+                                          $("#editmodal").modal("toggle");
+                                      });
+                                    });
+                                    </script> -->
                                     <img src="images/ui/base_edit.png" style="float: left;margin-top: -2px;position: absolute;" height="10px">
                                 </a>
                                 </p><span class="usr_text" ><?php echo $row_board['board_content']; ?></span>
@@ -348,10 +398,11 @@ span.usr.catch{background:#ffc!important;}
                             }
                         }
                     </script>
+                   
                 <?php } ?>
                 <div class="row"style="margin-right:0px"> 
                     <!--<div class="row"style="margin-right:0px"> -->
-                <span><span class="usr" id="add"><button class="btn btn-primary"  style="display:inline-block;-moz-box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+                <span><span class="usr" id="add"><button  data-toggle="modal" data-target="#mymodal" class="btn btn-primary"  style="display:inline-block;-moz-box-shadow: 0 1px 2px rgba(0,0,0,0.5);
                         background-color: #ffc;border-color: #ffc;
                         text-shadow: 0 -1px 1px rgba(0,0,0,0.25);width:130px;clear:none;
                         height:129px;line-height:30px;margin-top: 15px;margin-left: 13px;text-align:center;background-image: url(images/ui/add.png);"; type="button"; ></button></span></span> 
@@ -370,6 +421,30 @@ span.usr.catch{background:#ffc!important;}
     </table>
 
 <?php require( 'foot.php'); ?>
+<form action="<?php echo "base_edit.php?pid=".$pid ?>"  method="post" name="form2" id="form2">
+<div class="modal" id="editmodal">
+    <div 
+    style="margin-top: 80px;"
+    class="modal-dialog">
+    <div class="modal-content"style="align="center";">
+        <div class="modal-header">
+            <h4 class="modal-title">编辑标签</h4>
+            <input type="hidden" id="edit_board_id" name="edit_board_id"  />
+        </div>
+        <div class="modal-body">
+         <textarea id="tk_edit_content" name="tk_edit_content" ></textarea> 
+        <!-- <div>nihao</div> -->
+     </div>
+     <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="submit" class="btn btn-primary">保存</button>
+    </div>
+</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+</form>
+
 <form action="<?php echo "baselog.php?pid=".$pid ?>"  method="post" name="form1" id="form1">
 <div class="modal" id="mymodal">
     <div 
@@ -389,15 +464,18 @@ span.usr.catch{background:#ffc!important;}
     </div>
 </div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+</div><!-- /.modal 
 <script>
   $(function(){
     $(".btn").click(function(){
       $("#mymodal").modal("toggle");
   });
 });
-</script> 
+</script> -->
+
  </form>
+
+ 
 </body>
 
 </html>
