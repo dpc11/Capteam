@@ -45,8 +45,6 @@ if (isset($_GET['select4'])) {
 	$colname_Recordset1 = $_GET['select4'];
 	$_SESSION['ser_touser'] = $colname_Recordset1;
 }
-
-
 //<!--设置创建人 %表示不限创建人--> 
 $colcreate_Recordset1 = "%";
 $_SESSION['ser_createuser'] = $colcreate_Recordset1;
@@ -109,8 +107,7 @@ if (isset($_GET['select_st'])) {
 		case "未开始":$colstatus_Recordset1=6; $_SESSION['ser_status'] = "未开始"; break;
 	}
 } else {
-	$colstatus_Recordset1 = 1; 
-	$_SESSION['ser_status'] = "进行中";
+	$_SESSION['ser_status'] = "";
 }
 
 //<!--选择某一项目--> 
@@ -130,6 +127,26 @@ if (isset($_GET['select_stage'])) {
 	$_SESSION['ser_stage'] = $colstage_Recordset1;
 }
 
+if($pagetabs=="mtask"){
+	$colname_Recordset1 = $_SESSION['MM_uid'];
+	$_SESSION['ser_touser'] = $colname_Recordset1;
+	$_SESSION['ser_createuser'] ="%";
+	$colcreate_Recordset1="%";
+}
+if($pagetabs=="ctask"){
+	$colcreate_Recordset1 = $_SESSION['MM_uid'];
+	$_SESSION['ser_createuser'] = $colcreate_Recordset1;
+	$_SESSION['ser_touser'] ="%";
+	$colname_Recordset1 ="%";
+}
+if($pagetabs == "etask"){			
+	$colcreate_Recordset1 = $_SESSION['MM_uid'];
+	$_SESSION['ser_createuser'] = $colcreate_Recordset1;
+	$_SESSION['ser_touser'] ="%";
+	$colname_Recordset1 ="%";
+	$_SESSION['ser_status']= "已完成";
+	$colstatus_Recordset1=4;
+}
 //<!--搜索条件--> 
 $searchcontain="";
 $searchby = "";
@@ -218,7 +235,6 @@ $cc_tome = GetSQLValueString("%%" . str_replace("%","%%",$cc_tome) . "%%", "text
 		{
 			$where.= " tk_task.csa_testto LIKE $cc_tome AND ";
 		}
-
 //条件查询结果
 mysql_select_db($database_tankdb, $tankdb);
 $query_Recordset1 = sprintf("SELECT *, tk_status.task_status_display,
@@ -263,7 +279,7 @@ $query_Recordset1 = sprintf("SELECT *, tk_status.task_status_display,
 							GetSQLValueString($sortlist, "defined", $sortlist, "NULL"),
 							GetSQLValueString($orderlist, "defined", $orderlist, "NULL")
 							);
-						
+
 $query_limit_Recordset1 = sprintf("%s LIMIT %d, %d", $query_Recordset1, $startRow_Recordset1, $maxRows_Recordset1);
 $Recordset1 = mysql_query($query_limit_Recordset1, $tankdb) or die(mysql_error());
 $row_Recordset1 = mysql_fetch_assoc($Recordset1);
@@ -831,7 +847,6 @@ $totalRows_Recordset2 = mysql_num_rows($Recordset2);
 
 <div class="tasktab" id="tasktab">
 	<div class="clearboth">
-		<?php if($pagetabs <> "etask"){ // Show search bar ?>
 			<div class="condition">
 				<span>
 					<form id="form1" name="myform" method="get" class="taskform form-inline">
@@ -872,7 +887,8 @@ $totalRows_Recordset2 = mysql_num_rows($Recordset2);
 							<?php  }?>
 						</select>
 						<!--选择任务的状态-->
-						<select class="form-control"  style="width:110px;" name="select_st" id="select_st">
+						<select class="form-control"  name="select_st" id="select_st" 
+						<?php if ($pagetabs == "etask") { echo "style=\"display:none;style=\"width:110px;\""; }else { echo "style=\"width:110px;\"";} ?>>
 							<!--所有状态-->
 							<option value=""
 								<?php  
@@ -966,8 +982,8 @@ $totalRows_Recordset2 = mysql_num_rows($Recordset2);
 							} ?>>所有阶段</option>
 						</select>
 						<!--执行人-->  
-						<?php if ($pagetabs <> "mtask") {  ?>
-							<select class="form-control " style="width:160px;" id="select4" name="select4">
+							<select class="form-control "  id="select4" name="select4" 
+						<?php if ($pagetabs == "mtask") { echo "style=\"display:none;style=\"width:160px;\""; }else { echo "style=\"width:160px;\"";} ?>>
 								<option value="%"
 									<?php if($_SESSION['ser_status']=="%"){
 										echo "selected=\"selected\"";
@@ -992,9 +1008,8 @@ $totalRows_Recordset2 = mysql_num_rows($Recordset2);
 									$row_Recordset2 = mysql_fetch_assoc($Recordset2);
 								} ?>
 							</select>
-						<?php } ?>
 						<!--查找创建人--> 
-						<select  class="form-control " style="width:160px;" name="create_by" id="create_by" <?php if ($pagetabs <> "alltask") { echo "style='display:none'"; }?>>
+						<select  class="form-control " name="create_by" id="create_by" <?php if ($pagetabs == "ctask" || $pagetabs == "etask") { echo "style=\"display:none;style=\"width:160px;\""; }else{ echo "style=\"width:160px;\""; } ?>>
 							<option value="%"<?php if($_SESSION['ser_createuser']=="%"){
 								echo "selected=\"selected\"";
 							} ?>><?php echo $multilingual_taskf_createuser; ?></option>
@@ -1054,7 +1069,6 @@ $totalRows_Recordset2 = mysql_num_rows($Recordset2);
 				<?php }  // Show searchbox if page is alltask ?>
 				<div  class="clearboth"> </div>
 			</div>
-		<?php } // Show search bar ?>
 		
 		<?php if ($totalRows_Recordset1 > 0) { // Show task list if recordset not empty ?>
 			<!--table left -->
