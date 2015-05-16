@@ -9,7 +9,6 @@ $pagetabs = "alltask";
 if (isset($_GET['pagetab'])) {
 	$pagetabs = $_GET['pagetab'];
 }
-
 //<!--得到设置里的每页显示的任务数 -->
 $maxRows_Recordset1 = get_item( 'maxrows_task' );
 $pageNum_Recordset1 = 0;
@@ -113,6 +112,7 @@ if (isset($_GET['select_st'])) {
 	$colstatus_Recordset1 = 1; 
 	$_SESSION['ser_status'] = "进行中";
 }
+
 //<!--选择某一项目--> 
 $colproject_Recordset1 = "";
 $_SESSION['ser_project'] = $colproject_Recordset1;
@@ -125,12 +125,13 @@ if (isset($_GET['select_project'])) {
 //<!--选择某一阶段--> 
 $colstage_Recordset1 = "";
 $_SESSION['ser_stage'] = $colstage_Recordset1;
-if (isset($_GET['ser_stage'])) {
-	$colstage_Recordset1 = $_GET['ser_stage'];
+if (isset($_GET['select_stage'])) {
+	$colstage_Recordset1 = $_GET['select_stage'];
 	$_SESSION['ser_stage'] = $colstage_Recordset1;
 }
 
 //<!--搜索条件--> 
+$searchcontain="";
 $searchby = "";
 $colinputtitle_Recordset1 = "";
 $colinputtag_Recordset1 = "";
@@ -138,8 +139,10 @@ if (isset($_GET['searchby'])) {
 	$searchby= $_GET['searchby'];
 	if($searchby == "tit"){
 		$colinputtitle_Recordset1 =  $_GET['inputval'];
+		$searchcontain=$_GET['inputval'];
 	} else if($searchby == "tag"){
 		$colinputtag_Recordset1 = $_GET['inputval'];
+		$searchcontain=$_GET['inputval'];
 	}  
 }
 
@@ -154,7 +157,7 @@ $orderlist = "ASC";
 if (isset($_GET['order'])) {
   $orderlist= $_GET['order'];
 }
-	
+
 $coltouser = GetSQLValueString($colname_Recordset1, "int");
 $colcreateuser = GetSQLValueString($colcreate_Recordset1, "int");
 $colstatus = GetSQLValueString($colstatus_Recordset1, "int");
@@ -639,6 +642,23 @@ $totalRows_Recordset2 = mysql_num_rows($Recordset2);
 		return   false; 
 		  
 	} 
+	
+	function prepare()
+	{
+		$(form2)[0][2].value=$(form1)[0][0].value;
+		$(form2)[0][3].value=$(form1)[0][1].value;
+		$(form2)[0][4].value=$(form1)[0][2].value;
+		$(form2)[0][5].value=$(form1)[0][3].value;
+		$(form2)[0][6].value=$(form1)[0][4].value;
+		$(form2)[0][7].value=$(form1)[0][5].value;
+		$(form2)[0][8].value=$(form1)[0][6].value;
+		$(form2)[0][9].value=$(form1)[0][7].value;
+		$(form2)[0][10].value=$(form1)[0][8].value;
+		$(form2)[0][11].value=$(form1)[0][9].value;
+		$(form2)[0][12].value=$(form1)[0][10].value;
+		$(form2)[0][13].value=$(form1)[0][11].value;
+		return   true; 
+	}
 </script>
 
 <!-- 此处显示过期的任务 -->
@@ -947,26 +967,37 @@ $totalRows_Recordset2 = mysql_num_rows($Recordset2);
 							}
 							?>
 						</select>
-									
 						<input name="pagetab" id="pagetab" value="<?php echo $pagetabs; ?>" style="display:none" />
+						<input name="sort" id="sort" value="<?php echo $sortlist; ?>" style="display:none" />
+						<input name="order" id="order" value="<?php echo $orderlist; ?>" style="display:none" />
 						<button type="submit" name="search" id="search"  class="btn btn-default btn-sm" onclick= "return   searchtask(); " ><span class="glyphicon glyphicon-filter" style="display:inline;"></span><?php echo $multilingual_global_filterbtn; ?></button>
 						<button type="button" class="btn btn-default" name="export" id="export"  onclick= "return   exportexcel(); " ><?php echo $multilingual_global_excel; ?></button>
 					</form>
 				</span>
-				
+
 				<?php if($pagetabs == "alltask") { // Show searchbox if page is alltask ?>
 					<span>
-						<form id="form2" name="myform2" method="get" class="taskform form-inline">
+						<form id="form2" name="myform2" method="get" class="taskform form-inline" action="index.php" onsubmit="return prepare();" >
 							<select class="form-control "  style="width:200px;float:left;" name="searchby" id="searchby" >
-								<option value="tit"><?php echo $multilingual_tasks_title; ?></option>
-								<option value="tag"><?php echo $multilingual_tasks_tag; ?></option>
+								<option value="tit"
+								<?php  if($searchby=="tit"){ echo  "selected=\"selected\""; } ?>
+								><?php echo $multilingual_tasks_title; ?></option>
+								<option value="tag"
+								<?php  if($searchby=="tag"){ echo "selected=\"selected\""; } ?>
+								><?php echo $multilingual_tasks_tag; ?></option>
 							</select>
-							<input class="form-control " type="text" style="width:200px;float:left;"name="inputval" id="inputval" value="" />
-							<input style="display:none" type="text" name="pagetab" value="alltask" />
-							<input style="display:none" type="text" name="select4" value="%" />
-							<input style="display:none" type="text" name="select_year" value="--" />
-							<input style="display:none" type="text" name="textfield" value="--" />
-
+							<input class="form-control " type="text" style="width:200px;float:left;"name="inputval" id="inputval" value="<?php echo $searchcontain; ?>" />
+							<input class="form-control " type="text" name="select_year" id="select_year" style="display:none;" value=""/>
+							<input class="form-control " type="text" name="textfield" id="textfield" style="display:none;" value=""/>
+							<input class="form-control " type="text" name="select_st" id="select_st" style="display:none;" value=""/>
+							<input class="form-control " type="text" name="select_prt" id="select_prt" style="display:none;" value=""/>
+							<input class="form-control " type="text" name="select_project" id="select_project" style="display:none;" value=""/>
+							<input class="form-control " type="text" name="select_stage" id="select_stage" style="display:none;" value=""/>
+							<input class="form-control " type="text" name="select4" id="select4" style="display:none;" value=""/>
+							<input class="form-control " type="text" name="create_by" id="create_by" style="display:none;" value=""/>
+							<input class="form-control " type="text" name="pagetab" id="pagetab" style="display:none;" value=""/>
+							<input class="form-control " type="text" name="sort" id="sort" style="display:none;" value=""/>
+							<input class="form-control " type="text" name="order" id="order" style="display:none;" value=""/>
 							<button type="submit" style="width:110px;float:left;" name="search1" id="search1" class="btn btn-default btn-sm" ><span class="glyphicon glyphicon-search" style="display:inline;"></span> <?php echo $multilingual_global_searchbtn; ?></button>
 						</form>
 					</span>
