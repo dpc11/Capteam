@@ -637,7 +637,7 @@ $totalRows_Recordset2 = mysql_num_rows($Recordset2);
 
 	function   exportexcel() 
 	{
-		document.myform.action= "excel.php "; 
+		document.myform.action= "task_list_excel.php "; 
 		document.myform.submit(); 
 		return   false; 
 		  
