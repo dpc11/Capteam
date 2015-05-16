@@ -659,6 +659,56 @@ $totalRows_Recordset2 = mysql_num_rows($Recordset2);
 		$(form2)[0][13].value=$(form1)[0][11].value;
 		return   true; 
 	}
+	 
+	var http_request=false;  
+	function send_request(url){//初始化，指定处理函数，发送请求的函数  
+		http_request=false;  
+		//开始初始化XMLHttpRequest对象  
+		if(window.XMLHttpRequest){//Mozilla浏览器  
+			http_request=new XMLHttpRequest();  
+			if(http_request.overrideMimeType){//设置MIME类别  
+				http_request.overrideMimeType("text/xml");  
+			}  
+		}  
+		else if(window.ActiveXObject){//IE浏览器  
+			try{  
+				http_request=new ActiveXObject("Msxml2.XMLHttp");  
+			}catch(e){  
+				try{  
+					http_request=new ActiveXobject("Microsoft.XMLHttp");  
+				}catch(e){}  
+			}  
+		}  
+		if(!http_request){//异常，创建对象实例失败  
+			window.alert("读取阶段失败！");  
+			return false;  
+		}  
+	 
+		http_request.onreadystatechange=processrequest;  
+		//确定发送请求方式，URL，及是否同步执行下段代码  
+		http_request.open("GET",url,true);  
+		http_request.send(null);  
+	}  
+	  
+	//处理返回信息的函数  
+	function processrequest(){  
+		if(http_request.readyState==4){//判断对象状态  
+			if(http_request.status==200){//信息已成功返回，开始处理信息  
+				document.getElementById(reobj).innerHTML=http_request.responseText;  
+			}  
+			else{//页面不正常  
+				alert("您所请求的页面不正常！");  
+			}  
+		}  
+	}  
+	  
+	function getclass(obj){  
+		var pid=document.myform.select_project.value;  
+		document.getElementById(obj).innerHTML="<option>loading...</option>";  
+		send_request('task_list_get_stage.php?pid='+pid);  
+		reobj=obj;  
+	}  
+  
 </script>
 
 <!-- 此处显示过期的任务 -->
@@ -880,7 +930,7 @@ $totalRows_Recordset2 = mysql_num_rows($Recordset2);
 							}?>><?php echo $multilingual_dd_priority_p1; ?></option>
 						</select> 
 						<!--查找该用户所属的所有项目-->	  
-						<select class="form-control " style="width:200px;" name="select_project" id="select_project" onclic=>
+						<select class="form-control " style="width:200px;" name="select_project" id="select_project" onChange="getclass('select_stage');">
 							<option value=""
 							<?php if($_SESSION['ser_project']==""){
 								echo "selected=\"selected\"";
