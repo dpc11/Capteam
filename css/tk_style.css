@@ -16,10 +16,8 @@ li {
 
 body,
 html {
-    font-family: Arial;
+    font-family: 微软雅黑,黑体;
     width: 100%;
-    margin: 0 auto;
-    padding: 0;
 	height:100%;
 }
 
@@ -27,7 +25,10 @@ body {
     font-size: 18px;
 	font-family: 微软雅黑,黑体;
 }
-
+.framediv{
+	overflow:hidden;
+	width:100%;
+}
 table {
     font-size: 20px;
 	font-family: 微软雅黑,黑体;
@@ -368,7 +369,9 @@ a:focus {
     background-size: contain;
     width: 150px;
     height: 30px;
-    float: left;
+    position:absolute;
+	top:0px;
+	left:0px;
     margin-top: 7px;
     margin-left: 20px;
     margin-right: 20px;
@@ -387,6 +390,7 @@ a:focus {
 }
 
 .nav_normal2 {
+	float:left;
 	margin-left:350px;
 	font-family : 黑体,微软雅黑;
 	font-size: 30px;
@@ -415,7 +419,7 @@ a:focus {
     margin: 15px 46px 0px 0px;
 	font-family : 黑体,微软雅黑;
 	font-size: 30px;
-	width:150px;
+	width:200px;
 }
 
 .logininfo2 a {
@@ -427,7 +431,7 @@ a:focus {
 }
 
 .pagemargin {    
-    padding: 0px 30px 20px 30px;
+    margin: 0px 30px 20px 30px;
     width: 100%;
 }
 
@@ -1036,7 +1040,7 @@ a:focus {
 }
 
 .tasktab {
-    width: 100%;
+    width: 98%;
 	min-width:1600px;
     border: 2px #E7E7E7 solid;
     background: #F5F5F5;
