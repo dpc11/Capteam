@@ -17,6 +17,8 @@ if (isset($_GET['pageNum_Recordset1'])) {
   $pageNum_Recordset1 = $_GET['pageNum_Recordset1'];
 }
 $startRow_Recordset1 = $pageNum_Recordset1 * $maxRows_Recordset1;
+$R_list=$startRow_Recordset1+1;
+
 
 //<!--得到设置里的每页显示的任务过期数 -->   
 //<!--pageNum_timeout=0 为第一页 -->
@@ -145,8 +147,7 @@ $orderlist = "DESC";
 if (isset($_GET['order'])) {
   $orderlist= $_GET['order'];
 }
-
-
+	
 $coltouser = GetSQLValueString($colname_Recordset1, "int");
 $colcreateuser = GetSQLValueString($colcreate_Recordset1, "int");
 
@@ -264,7 +265,6 @@ $row_Recordset1 = mysql_fetch_assoc($Recordset1);
 
 
 
-$R_list=1;
 
 if (isset($_GET['totalRows_Recordset1'])) {
   $totalRows_Recordset1 = $_GET['totalRows_Recordset1'];
@@ -1366,6 +1366,9 @@ do {
 <table class="rowcon" border="0" align="center">
 <tr>
 <td>  <table border="0">
+
+<td align="left"><?php echo ($startRow_Recordset1 + 1) ?> <?php echo $multilingual_global_to; ?> <?php echo min($startRow_Recordset1 + $maxRows_Recordset1, $totalRows_Recordset1) ?> (<?php echo $multilingual_global_total; ?> <?php echo $totalRows_Recordset1 ?>)</td>
+</tr>
   <tr>
     <td><?php if ($pageNum_Recordset1 > 0) { // Show if not first page ?>
         <a href="<?php printf("%s?pageNum_Recordset1=%d%s", $currentPage, 0, $queryString_Recordset1); ?>"><?php echo $multilingual_global_first; ?></a>
@@ -1382,8 +1385,6 @@ do {
   </tr>
 </table>
       </td>
-<td align="right"><?php echo ($startRow_Recordset1 + 1) ?> <?php echo $multilingual_global_to; ?> <?php echo min($startRow_Recordset1 + $maxRows_Recordset1, $totalRows_Recordset1) ?> (<?php echo $multilingual_global_total; ?> <?php echo $totalRows_Recordset1 ?>)</td>
-</tr>
 </table>
 
 <?php } // Show nextpage if task list recordset not empty ?>

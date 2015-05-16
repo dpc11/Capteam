@@ -786,7 +786,7 @@ a:focus {
 .rowcon {
     width: 99%;
     margin-bottom: 40px;
-    margin-right: 80px;
+    margin-left: 80px;
     margin-top: 20px;
 }
 
@@ -1370,13 +1370,15 @@ a:focus {
 /********sort*******/
 
 .sort_asc {
-    background: url(../images/ui/arrow_up.gif) no-repeat right;
-    padding-right: 10px;
+    background: url(../images/ui/arrow_up.png) no-repeat right;
+    padding-right: 24px;
+	background-position:right;
 }
 
 .sort_desc {
-    background: url(../images/ui/arrow_down.gif) no-repeat right;
-    padding-right: 10px;
+    background: url(../images/ui/arrow_down.png) no-repeat right;
+    padding-right: 24px;
+	background-position:right;
 }
 /********user rank*******/
 

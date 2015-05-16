@@ -1,6 +1,13 @@
 <?php require_once('config/tank_config.php'); ?>
 <?php
 
+$self =$_SERVER['PHP_SELF'];
+$pagename = explode("/",$self);
+$pagename = end($pagename);
+
+if($pagename=="index.php") {
+  require('task_update.php');
+}
 $colname_Recordset_anc = "2";
 
 mysql_select_db($database_tankdb, $tankdb);
@@ -15,11 +22,6 @@ $message_count = check_message( $_SESSION['MM_uid'] );
 $totalRows_Recordset_anc=0;
 
 
-
-$self =$_SERVER['PHP_SELF'];
-
-$pagename = explode("/",$self);
-$pagename = end($pagename);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
