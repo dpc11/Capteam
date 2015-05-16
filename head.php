@@ -37,7 +37,6 @@ $totalRows_Recordset_anc=0;
 
 </head>
 <body id="docbody" style="min-width:1510px;">
-	<div id="framediv" class="framediv">
 		<div class="clearboth"></div>
 		<div id="foot_top" class="foot_top">
 			<div class="clearboth"></div>
@@ -150,7 +149,7 @@ $totalRows_Recordset_anc=0;
 										$("#conmsg")[0].innerHTML=' <span class="label label-danger">' + resp + '</span>';	
 									}	
 								}
-							})
+							});
 						}, 120000);
 					</script>  
 				</div>

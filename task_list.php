@@ -763,7 +763,6 @@ $totalRows_Recordset2 = mysql_num_rows($Recordset2);
 	<div class="clearboth">
 		<?php if($pagetabs <> "etask"){ // Show search bar ?>
 			<div class="condition">
-				<!--<a name="task"></a>-->
 				<span>
 					<form id="form1" name="myform" method="get" class="taskform form-inline">
 						<select class="form-control " style="width:110px;" name="select_year" id="select_year" >

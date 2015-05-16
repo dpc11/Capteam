@@ -19,15 +19,12 @@ html {
     font-family: 微软雅黑,黑体;
     width: 100%;
 	height:100%;
+	overflow:hidden;
 }
 
 body {
     font-size: 18px;
 	font-family: 微软雅黑,黑体;
-}
-.framediv{
-	overflow:hidden;
-	width:100%;
 }
 table {
     font-size: 20px;
@@ -416,7 +413,7 @@ a:focus {
     float: right;
     font-weight: normal;
     color: #F5F5F5;
-    margin: 15px 46px 0px 0px;
+    margin: 15px 26px 0px 0px;
 	font-family : 黑体,微软雅黑;
 	font-size: 30px;
 	width:200px;
@@ -431,8 +428,8 @@ a:focus {
 }
 
 .pagemargin {    
-    margin: 0px 30px 20px 30px;
-    width: 100%;
+    width: 98%;
+	margin:auto;
 }
 
 .subnav {
@@ -477,6 +474,7 @@ a:focus {
 .foot_top{
 	height:100%;
 	width:100%;
+	overflow:hidden;
 	padding-bottom:60px;
 }
 .wss_title {
@@ -790,9 +788,9 @@ a:focus {
 
 .rowcon {
     width: 99%;
-    margin-bottom: 40px;
+    margin-bottom: 10px;
     margin-left: 80px;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 .rowcon td a {
@@ -1040,7 +1038,8 @@ a:focus {
 }
 
 .tasktab {
-    width: 98%;
+    width: 99%;
+	margin:auto;
 	min-width:1600px;
     border: 2px #E7E7E7 solid;
     background: #F5F5F5;
