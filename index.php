@@ -20,7 +20,7 @@ mysql_select_db($database_tankdb, $tankdb);
 $query_Recordset_sumtotal = sprintf("SELECT 
 							COUNT(*) as count_task   
 							FROM tk_task						
-							WHERE csa_from_user = %s AND csa_status =3 AND csa_del_status=1", 
+							WHERE csa_from_user = %s AND csa_status =4 AND csa_del_status=1", 
 								GetSQLValueString($_SESSION['MM_uid'], "int")
 								);
 $Recordset_sumtotal = mysql_query($query_Recordset_sumtotal, $tankdb) or die(mysql_error());
