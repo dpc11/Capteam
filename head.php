@@ -16,7 +16,6 @@ $Recordset_anc = mysql_query($query_Recordset_anc, $tankdb) or die(mysql_error()
 $row_Recordset_anc = mysql_fetch_assoc($Recordset_anc);
 $totalRows_Recordset_anc = mysql_num_rows($Recordset_anc);
 
-/////////////////////////////////////////////////////////////////////////////////
 $message_count = check_message( $_SESSION['MM_uid'] );
 
 $totalRows_Recordset_anc=0;

@@ -97,15 +97,22 @@ if (isset($_GET['select_prt'])) {
 }
 
 
-//<!--设置任务状态( ""--所有任务； 1--未开始；2--进行中； 3--已完成； 4--已验收； 5--被驳回； 6--已过期)--> 
+//<!--设置任务状态
 if (isset($_GET['select_st'])) {
-  $colstatus_Recordset1 = $_GET['select_st'];
-  $_SESSION['ser_status'] = $colstatus_Recordset1;
+  switch($_GET['select_st'])
+  {
+	  case "":$_SESSION['ser_status'] = ""; break;
+	  case "进行中":$colstatus_Recordset1=1; $_SESSION['ser_status'] = "进行中"; break;
+	  case "已过期":$colstatus_Recordset1=2; $_SESSION['ser_status'] = "已过期"; break;
+	  case "被驳回":$colstatus_Recordset1=3; $_SESSION['ser_status'] = "被驳回"; break;
+	  case "已完成":$colstatus_Recordset1=4; $_SESSION['ser_status'] = "已完成"; break;
+	  case "已验收":$colstatus_Recordset1=5; $_SESSION['ser_status'] = "已验收"; break;
+	  case "未开始":$colstatus_Recordset1=6; $_SESSION['ser_status'] = "未开始"; break;
+  }
 } else {
-$colstatus_Recordset1 = "进行中"; 
+$colstatus_Recordset1 = 1; 
 $_SESSION['ser_status'] = "进行中";
 }
-
 //<!--选择某一项目--> 
 $colproject_Recordset1 = "";
 $_SESSION['ser_project'] = $colproject_Recordset1;
@@ -143,17 +150,17 @@ if (isset($_GET['sort'])) {
 }
 
 //升序 降序
-$orderlist = "DESC";
+$orderlist = "ASC";
 if (isset($_GET['order'])) {
   $orderlist= $_GET['order'];
 }
 	
 $coltouser = GetSQLValueString($colname_Recordset1, "int");
 $colcreateuser = GetSQLValueString($colcreate_Recordset1, "int");
+$colstatus = GetSQLValueString($colstatus_Recordset1, "int");
 
 
 $colprt = GetSQLValueString("%%" . str_replace("%","%%",$colprt_Recordset1) . "%%", "text");
-$colstatus = GetSQLValueString("%%" . str_replace("%","%%",$colstatus_Recordset1) . "%%", "text");
 $colproject = GetSQLValueString($colproject_Recordset1, "int");
 $colstage = GetSQLValueString($colstage_Recordset1, "int");
 $colinputtitle = GetSQLValueString("%%" . str_replace("%","%%",$colinputtitle_Recordset1) . "%%", "text");
@@ -167,60 +174,60 @@ $cc_tome = GetSQLValueString("%%" . str_replace("%","%%",$cc_tome) . "%%", "text
 			//执行人
 			if($colname_Recordset1 <> '%' )
 			{
-				$where.= " tk_task.csa_to_user = $coltouser AND";
+				$where.= " tk_task.csa_to_user = $coltouser AND ";
 			}
 			
 			//优先级
 			if(!empty($colprt_Recordset1))
 			{
-				$where.= " tk_task.csa_priority LIKE $colprt AND";
+				$where.= " tk_task.csa_priority LIKE $colprt AND ";
 			}
 			
 			//任务状态
 			if(!empty($colstatus_Recordset1))
 			{
-				$where.= " tk_status.task_status LIKE $colstatus AND";
+				$where.= " tk_task.csa_status = $colstatus AND ";
 			}
 			
 			//所属项目
 			if(!empty($colproject_Recordset1))
 			{
-				$where.= " tk_task.csa_project = $colproject AND";
+				$where.= " tk_task.csa_project = $colproject AND ";
 			}
 			
 			//所属阶段
 			if(!empty($colstage_Recordset1))
 			{
-				$where.= " tk_task.csa_project_stage = $colstage AND";
+				$where.= " tk_task.csa_project_stage = $colstage AND ";
 			}
 			
 			//任务标题
 			if(!empty($colinputtitle_Recordset1))
 			{
-				$where.= " tk_task.csa_text LIKE $colinputtitle AND";
+				$where.= " tk_task.csa_text LIKE $colinputtitle AND ";
 			}
 			
 			//任务标签
 			if(!empty($colinputtag_Recordset1))
 			{
-				$where.= " tk_task.csa_tag LIKE $colinputtag AND";
+				$where.= " tk_task.csa_tag LIKE $colinputtag AND ";
 			}
 			
 			//创建人
 			if($colcreate_Recordset1 <> '%')
 			{
-				$where.= " tk_task.csa_from_user = $colcreateuser AND";
+				$where.= " tk_task.csa_from_user = $colcreateuser AND ";
 			}
 			
 			//抄送人
 			if($pagetabs == "cctome")
 			{
-				$where.= " tk_task.csa_testto LIKE $cc_tome AND";
+				$where.= " tk_task.csa_testto LIKE $cc_tome AND ";
 			}
 
 //条件查询结果
 mysql_select_db($database_tankdb, $tankdb);
-$query_Recordset1 = sprintf("SELECT *, 
+$query_Recordset1 = sprintf("SELECT *, tk_status.task_status_display,
 							
 							tk_project.project_name as project_name_prt,
 							tk_stage.tk_stage_title as stage_name_prt,
@@ -238,12 +245,14 @@ $query_Recordset1 = sprintf("SELECT *,
 							inner join tk_status on tk_task.csa_status=tk_status.id 
 							
 							$where 
-							(tk_task.csa_plan_st <=%s
- 							AND tk_task.csa_plan_et >=%s)
-							OR (tk_task.csa_plan_st <=%s
- 							AND tk_task.csa_plan_et >=%s)
-							OR (tk_task.csa_plan_st >=%s
- 							AND tk_task.csa_plan_et <=%s)
+							  ((tk_task.csa_plan_st <=%s
+ 							 AND tk_task.csa_plan_et >=%s)
+							 OR (tk_task.csa_plan_st <=%s
+ 							 AND tk_task.csa_plan_et >=%s)
+							 OR (tk_task.csa_plan_st >=%s
+ 							 AND tk_task.csa_plan_et <=%s)
+							 OR (tk_task.csa_plan_st <=%s
+ 							 AND tk_task.csa_plan_et >=%s)) 
 								
 							 AND csa_del_status=1
 							 
@@ -255,9 +264,12 @@ $query_Recordset1 = sprintf("SELECT *,
 							GetSQLValueString($endday , "text"),
 							GetSQLValueString($startday , "text"),
 							GetSQLValueString($endday , "text"),
+							GetSQLValueString($startday , "text"),
+							GetSQLValueString($endday , "text"),
 							GetSQLValueString($sortlist, "defined", $sortlist, "NULL"),
 							GetSQLValueString($orderlist, "defined", $orderlist, "NULL")
 							);
+						
 $query_limit_Recordset1 = sprintf("%s LIMIT %d, %d", $query_Recordset1, $startRow_Recordset1, $maxRows_Recordset1);
 $Recordset1 = mysql_query($query_limit_Recordset1, $tankdb) or die(mysql_error());
 $row_Recordset1 = mysql_fetch_assoc($Recordset1);
@@ -274,6 +286,8 @@ if (isset($_GET['totalRows_Recordset1'])) {
 }
 $totalPages_Recordset1 = ceil($totalRows_Recordset1/$maxRows_Recordset1)-1;
 
+//////////////////////////////////////////////////////////////////////////////
+//分页
 $queryString_Recordset1 = "";
 if (!empty($_SERVER['QUERY_STRING'])) {
   $params = explode("&", $_SERVER['QUERY_STRING']);
@@ -477,7 +491,7 @@ $query_timeout = "SELECT *,
 							
 							$outwhere 
 														
-							ORDER BY csa_plan_et DESC";
+							ORDER BY csa_plan_et ASC";
 $query_limit_timeout = sprintf("%s LIMIT %d, %d", $query_timeout, $startRow_timeout, $maxRows_timeout);
 $timeout = mysql_query($query_limit_timeout, $tankdb) or die(mysql_error());
 $row_timeout = mysql_fetch_assoc($timeout);
@@ -563,7 +577,7 @@ $query_nearout = "SELECT *,
 							
 							$outwhere 
 														
-							ORDER BY csa_plan_et DESC";
+							ORDER BY csa_plan_et ASC";
 $query_limit_nearout = sprintf("%s LIMIT %d, %d", $query_nearout, $startRow_nearout, $maxRows_timeout);
 $nearout = mysql_query($query_limit_nearout, $tankdb) or die(mysql_error());
 $row_nearout = mysql_fetch_assoc($nearout);
@@ -618,7 +632,7 @@ $totalRows_Recordset_project = mysql_num_rows($Recordset_project);
 
 //与自己相关的所有组的组员
 mysql_select_db($database_tankdb, $tankdb);
-$query_Recordset2 = sprintf("SELECT * FROM tk_user, tk_team,tk_project WHERE tk_user_del_status=1 AND tk_user.uid in ( select distinct tk_team_uid from tk_team,tk_project WHERE tk_team_del_status=1 AND project_del_status=1 AND tk_team_pid in (SELECT id FROM tk_project inner join tk_team on tk_team.tk_team_pid=tk_project.id WHERE tk_team_uid = %s AND project_del_status=1 AND tk_team_del_status=1)) ORDER BY  tk_display_name ASC",GetSQLValueString($_SESSION['MM_uid'],"int"));
+$query_Recordset2 = sprintf("SELECT  * FROM tk_user WHERE tk_user_del_status=1 AND tk_user.uid in ( select distinct tk_team_uid from tk_team,tk_project WHERE tk_team_del_status=1 AND project_del_status=1 AND tk_team_pid in (SELECT id FROM tk_project inner join tk_team on tk_team.tk_team_pid=tk_project.id WHERE tk_team_uid = %s AND project_del_status=1 AND tk_team_del_status=1)) ORDER BY  tk_display_name ASC",GetSQLValueString($_SESSION['MM_uid'],"int"));
 $Recordset2 = mysql_query($query_Recordset2, $tankdb) or die(mysql_error());
 $row_Recordset2 = mysql_fetch_assoc($Recordset2);
 $totalRows_Recordset2 = mysql_num_rows($Recordset2);
@@ -627,33 +641,9 @@ $totalRows_Recordset2 = mysql_num_rows($Recordset2);
 
 <script type="text/JavaScript">
 
-function FindStages(projectid){
-/*	<?php do { ?>
-        <option value="<?php echo $row_Recordset_project['id']?>"
-		<?php 
-			if (isset($_SESSION['ser_project'])) {	
-			if (!(strcmp($row_Recordset_project['id'], "{$_SESSION['ser_project']}"))) {
-				echo "selected=\"selected\"";
-				}
-			}
-		?>>
-		<?php echo $row_Recordset_project['project_name']?>
-		</option>
-    <?php
-	} while ($row_Recordset_project = mysql_fetch_assoc($Recordset_project));
-		$rows = mysql_num_rows($Recordset_project);
-		if($rows > 0) {
-		mysql_data_seek($Recordset_project, 0);
-		$row_Recordset_project = mysql_fetch_assoc($Recordset_project);
-	}
-	?>*/
-}
-
 function GP_popupConfirmMsg(msg) { 
   document.MM_returnValue = confirm(msg);
 }
-
-
 
 function MM_goToURL() { 
   var i, args=MM_goToURL.arguments; document.MM_returnValue = false;
@@ -661,10 +651,9 @@ function MM_goToURL() {
 }
 
 function   searchtask() 
-      {document.myform.action= ""; 
+      {document.myform.action= "index.php"; 
         document.myform.submit(); 
-        return   true; 
-      
+        return   true;      
       } 
 function   exportexcel() 
       {document.myform.action= "excel.php "; 
@@ -672,14 +661,8 @@ function   exportexcel()
         return   false; 
       
       } 
-	  
-
-<?php 
-//echo $strssumlog;
-//echo $strslog; 
-//echo $strssumbyday;
-?>
 </script>
+
 <!-- 此处显示过期的任务 -->
 <?php if ($pagetabs <> "etask") { // Show outofdate if recordset not empty ?>
 <?php if ($totalRows_timeout > 0 && $outofdate=="on") { // Show outofdate if recordset not empty ?>
@@ -849,11 +832,14 @@ function   exportexcel()
 
 
 <select class="form-control " style="width:110px;" name="select_year" id="select_year" >
-<option value="--"><?php echo $multilingual_taskf_year; ?></option>
+<option value="--"
+<?php if($_SESSION['ser_year']=="--"){
+			echo "selected=\"selected\"";
+		} ?>><?php echo $multilingual_taskf_year; ?></option>
 <?php for($i = 2009; $i <= 2050; $i++) { ?>
          <option value="<?php echo $i; ?>" <?php 
 		if (isset($_SESSION['ser_year'])) {	
-		if (!(strcmp($i, "{$_SESSION['ser_year']}"))) {
+		if (!(strcmp($i, $_SESSION['ser_year']))) {
 			echo "selected=\"selected\"";
 			}
 		}
@@ -864,11 +850,15 @@ else if (!(strcmp($i, date("Y")))) {echo "selected=\"selected\"";} ?>><?php echo
 
 
 <select class="form-control"  style="width:110px;" name="textfield" id="textfield">
-<option value="--"><?php echo $multilingual_taskf_month; ?></option>
+<option value="--"
+<?php if($_SESSION['ser_month']=="--"){
+			echo "selected=\"selected\"";
+		} ?>
+		><?php echo $multilingual_taskf_month; ?></option>
 <?php for($i = 1; $i <= 12; $i++) { ?>
          <option value="<?php $xi = $i; if($i<=9){$xi ="0".$i;}   echo $xi; ?>" <?php 
 	  if (isset($_SESSION['ser_month'])) {	
-		if (!(strcmp($xi, "{$_SESSION['ser_month']}"))) {
+		if (!(strcmp($xi, $_SESSION['ser_month']))) {
 			echo "selected=\"selected\"";
 			}
 		}
@@ -880,7 +870,11 @@ else if (!(strcmp($i, date("n")))) {echo "selected=\"selected\"";} ?>><?php echo
 <!--选择任务的状态-->
 <select class="form-control"  style="width:110px;" name="select_st" id="select_st">
 		<!--所有状态-->
-        <option value="">所有</option>
+        <option value=""
+		<?php  
+		if ($_SESSION['ser_status']=="") {
+						echo "selected=\"selected\"";
+					} ?>>所有</option>
 		
 		<!--6种状态 1--未开始；2--进行中； 3--已完成； 4--已验收； 5--被驳回； 6--已过期-->
         <?php
@@ -888,7 +882,7 @@ else if (!(strcmp($i, date("n")))) {echo "selected=\"selected\"";} ?>><?php echo
 		?>
 			<option value="<?php echo $row_tkstatus['task_status']; ?>" <?php 
 				if (isset($_SESSION['ser_status'])) {	
-					if (!(strcmp($row_tkstatus['task_status'], "{$_SESSION['ser_status']}"))) {
+					if (!(strcmp($row_tkstatus['task_status'], $_SESSION['ser_status']))) {
 						echo "selected=\"selected\"";
 					}
 				}	
@@ -905,33 +899,36 @@ else if (!(strcmp($i, date("n")))) {echo "selected=\"selected\"";} ?>><?php echo
 	    
 	  <!--//优先级搜索选项-->
 	  <select class="form-control"style="width:120px;" name="select_prt" id="select_prt">
-        <option value="">所有</option>//全部优先级
+        <option value=""
+		<?php if($_SESSION['ser_tkprt']==""){
+			echo "selected=\"selected\"";
+		} ?>>所有</option>
         <option value="<?php echo $multilingual_dd_priority_p5; ?>" <?php if (isset($_SESSION['ser_tkprt'])) {	
-		if (!(strcmp($multilingual_dd_priority_p5, "{$_SESSION['ser_tkprt']}"))) {
+		if (!(strcmp($multilingual_dd_priority_p5, $_SESSION['ser_tkprt']))) {
 			echo "selected=\"selected\"";
 			}
 		}?>><?php echo $multilingual_dd_priority_p5; ?></option>
 
         <option value="<?php echo $multilingual_dd_priority_p4; ?>" <?php if (isset($_SESSION['ser_tkprt'])) {	
-		if (!(strcmp($multilingual_dd_priority_p4, "{$_SESSION['ser_tkprt']}"))) {
+		if (!(strcmp($multilingual_dd_priority_p4, $_SESSION['ser_tkprt']))) {
 			echo "selected=\"selected\"";
 			}
 		}?>><?php echo $multilingual_dd_priority_p4; ?></option>
 
         <option value="<?php echo $multilingual_dd_priority_p3; ?>" <?php if (isset($_SESSION['ser_tkprt'])) {	
-		if (!(strcmp($multilingual_dd_priority_p3, "{$_SESSION['ser_tkprt']}"))) {
+		if (!(strcmp($multilingual_dd_priority_p3, $_SESSION['ser_tkprt']))) {
 			echo "selected=\"selected\"";
 			}
 		}?>><?php echo $multilingual_dd_priority_p3; ?></option>
 
         <option value="<?php echo $multilingual_dd_priority_p2; ?>" <?php if (isset($_SESSION['ser_tkprt'])) {	
-		if (!(strcmp($multilingual_dd_priority_p2, "{$_SESSION['ser_tkprt']}"))) {
+		if (!(strcmp($multilingual_dd_priority_p2, $_SESSION['ser_tkprt']))) {
 			echo "selected=\"selected\"";
 			}
 		}?>><?php echo $multilingual_dd_priority_p2; ?></option>
 
         <option value="<?php echo $multilingual_dd_priority_p1; ?>" <?php if (isset($_SESSION['ser_tkprt'])) {	
-		if (!(strcmp($multilingual_dd_priority_p1, "{$_SESSION['ser_tkprt']}"))) {
+		if (!(strcmp($multilingual_dd_priority_p1, $_SESSION['ser_tkprt']))) {
 			echo "selected=\"selected\"";
 			}
 		}?>><?php echo $multilingual_dd_priority_p1; ?></option>
@@ -942,7 +939,10 @@ else if (!(strcmp($i, date("n")))) {echo "selected=\"selected\"";} ?>><?php echo
 	  
 	  	<!--查找该用户所属的所有项目-->	  
 	  <select class="form-control " style="width:200px;"  name="select_project" id="select_project" onclic=>
-        <option value="">所有项目</option>
+        <option value=""
+		<?php if($_SESSION['ser_project']==""){
+			echo "selected=\"selected\"";
+		} ?>>所有项目</option>
         <?php
 		if(mysql_num_rows($Recordset_project)>0){
 		do {  
@@ -950,7 +950,7 @@ else if (!(strcmp($i, date("n")))) {echo "selected=\"selected\"";} ?>><?php echo
         <option value="<?php echo $row_Recordset_project['id']?>"
 		<?php 
 		if (isset($_SESSION['ser_project'])) {	
-		if (!(strcmp($row_Recordset_project['id'], "{$_SESSION['ser_project']}"))) {
+		if (!(strcmp($row_Recordset_project['id'], $_SESSION['ser_project']))) {
 			echo "selected=\"selected\"";
 			}
 		}
@@ -969,13 +969,19 @@ else if (!(strcmp($i, date("n")))) {echo "selected=\"selected\"";} ?>><?php echo
 	  
 	  <!--查找选定项目中的所有阶段-->  
 	  <select class="form-control "style="width:200px;"  name="select_stage" id="select_stage">
-        <option value=""><?php echo $multilingual_taskf_stage; ?></option>
+        <option value=""
+		<?php if($_SESSION['ser_status']==""){
+			echo "selected=\"selected\"";
+		} ?>>所有阶段</option>
       </select>
 	  
 	  <!--执行人-->  
 	  <?php if ($pagetabs <> "mtask") {  ?>
 	  <select class="form-control " style="width:160px;" id="select4" name="select4">
-        <option value="%"><?php echo $multilingual_taskf_touser; ?></option>
+        <option value="%"
+		<?php if($_SESSION['ser_status']=="%"){
+			echo "selected=\"selected\"";
+		} ?>><?php echo $multilingual_taskf_touser; ?></option>
 		<!-- 不限执行人 -->
         <?php
 do {  
@@ -983,11 +989,11 @@ do {
         <option value="<?php echo $row_Recordset2['uid']?>"
 		<?php 
 		if (isset($_SESSION['ser_touser'])) {	
-		if (!(strcmp($row_Recordset2['uid'], "{$_SESSION['ser_touser']}"))) {
+		if (!(strcmp($row_Recordset2['uid'], $_SESSION['ser_touser']))) {
 			echo "selected=\"selected\"";
 			}
 		}
-else if(!(strcmp($row_Recordset2['uid'], "{$_SESSION['MM_uid']}"))) {
+else if(!(strcmp($row_Recordset2['uid'], $_SESSION['MM_uid']))) {
 				echo "selected=\"selected\"";
 				} ?>><?php echo $row_Recordset2['tk_display_name']?></option>
         <?php
@@ -1003,14 +1009,16 @@ else if(!(strcmp($row_Recordset2['uid'], "{$_SESSION['MM_uid']}"))) {
 
 	  <!--查找创建人--> 
 	  <select  class="form-control " style="width:160px;" name="create_by" id="create_by" <?php if ($pagetabs <> "alltask") { echo "style='display:none'"; }?>>
-      <option value="%"><?php echo $multilingual_taskf_createuser; ?></option>
+      <option value="%"<?php if($_SESSION['ser_createuser']=="%"){
+			echo "selected=\"selected\"";
+		} ?>><?php echo $multilingual_taskf_createuser; ?></option>
       <?php
 do {  
 ?>
       <option value="<?php echo $row_Recordset2['uid']?>"
 	  <?php 
 		if (isset($_SESSION['ser_createuser'])) {	
-		if (!(strcmp($row_Recordset2['uid'], "{$_SESSION['ser_createuser']}"))) {
+		if (!(strcmp($row_Recordset2['uid'], $_SESSION['ser_createuser']))) {
 			echo "selected=\"selected\"";
 			}
 		}
@@ -1102,9 +1110,8 @@ do {
         <?php do { ?>
         <tr  title="<?php echo $row_Recordset1['csa_text']; ?>" class="<?php if($R_list%2==1){ echo "odd_line"; }else{echo "even_line"; } ?>" >
       <td class="week_style_padtd"   ><?php echo $R_list; ?></td>
-      <td class="week_style_padtd" 
-	data-ellipsis="true"
-	data-ellipsis-max-width="200px"><a href="default_task_edit.php?editID=<?php echo $row_Recordset1['tid']; ?>&pagetab=<?php echo $pagetabs; ?>"  target="_parent"> <?php echo $row_Recordset1['csa_text']; ?></a></td>
+      <td class="week_style_padtd" data-ellipsis="true"
+	data-ellipsis-max-width="300px" ><a style="width:100%;" href="default_task_edit.php?editID=<?php echo $row_Recordset1['tid']; ?>&pagetab=<?php echo $pagetabs; ?>"  target="_parent"> <?php echo $row_Recordset1['csa_text']; ?></a></td>
       <td class="week_style_padtd" >
 	  <a href="user_view.php?recordID=<?php echo $row_Recordset1['csa_to_user']; ?>" target="_parent">
 	  <?php echo $row_Recordset1['tk_display_name1']; ?></a></td>
@@ -1161,7 +1168,7 @@ do {
 	  } else {
 	  echo "DESC";
 	  }
-	  ?>#fromsite" 
+	  ?> "
 	  <?php 
 	  if($sortlist=="csa_priority" && $orderlist=="ASC"){
 	  echo "class='sort_asc'";
@@ -1170,8 +1177,26 @@ do {
 	  }
 	  ?>>
 	  <?php echo $multilingual_default_task_priority; ?></a></th>
+	  
 	   <!--工作量-->
-      <th rowspan="2" class="planpv"><?php echo $multilingual_default_task_planpv; ?></th>    
+      <th rowspan="2" class="planpv">
+	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_plan_hour&order=<?php 
+	  if ( $sortlist <> "csa_plan_hour"){
+	  echo "DESC";
+	  }else if( $sortlist == "csa_plan_hour" && $orderlist == "DESC"){
+	  echo "ASC";
+	  } else {
+	  echo "DESC";
+	  }
+	  ?>" 
+	  <?php 
+	  if($sortlist=="csa_plan_hour" && $orderlist=="ASC"){
+	  echo "class='sort_asc'";
+	  } else if ($sortlist=="csa_plan_hour" && $orderlist=="DESC"){
+	  echo "class='sort_desc'";
+	  }
+	  ?>><?php echo $multilingual_default_task_planpv; ?></a></th> 
+	  
 	  <!--计划开始时间-->
 	  <th rowspan="2"  class="time" >
 	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_plan_st&order=<?php 
@@ -1182,15 +1207,15 @@ do {
 	  } else {
 	  echo "DESC";
 	  }
-	  ?>" 
+	  ?>"
 	  <?php 
 	  if($sortlist=="csa_plan_st" && $orderlist=="ASC"){
 	  echo "class='sort_asc'";
 	  } else if ($sortlist=="csa_plan_st" && $orderlist=="DESC"){
 	  echo "class='sort_desc'";
-	  }
-	  ?>>
-	  <?php echo $multilingual_default_task_planstart; ?></a></th>
+	  }	  
+	  ?>><?php echo $multilingual_default_task_planstart; ?></a></th>
+	  
 	  <!--计划完成时间-->
       <th rowspan="2"  class="time"  >
 	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_plan_et&order=<?php 
@@ -1208,8 +1233,8 @@ do {
 	  } else if ($sortlist=="csa_plan_et" && $orderlist=="DESC"){
 	  echo "class='sort_desc'";
 	  }
-	  ?>>
-	  <?php echo $multilingual_default_task_planend; ?></a></th>
+	  ?>><?php echo $multilingual_default_task_planend; ?></a></th>
+	  
 	  <!--所属项目-->
       <th rowspan="2" class="attr"  >
 	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_project&order=<?php 
@@ -1229,25 +1254,26 @@ do {
 	  }
 	  ?>>
 	  <?php echo $multilingual_default_task_project; ?></a></th>
+	  
 	  <!--所属阶段-->
       <th rowspan="2" class="attr" >
-	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=ser_stage&order=<?php 
-	  if ( $sortlist <> "ser_stage"){
+	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_project_stage&order=<?php 
+	  if ( $sortlist <> "csa_project_stage"){
 	  echo "DESC";
-	  }else if( $sortlist == "ser_stage" && $orderlist == "DESC"){
+	  }else if( $sortlist == "csa_project_stage" && $orderlist == "DESC"){
 	  echo "ASC";
 	  } else {
 	  echo "DESC";
 	  }
 	  ?>" 
 	  <?php 
-	  if($sortlist=="ser_stage" && $orderlist=="ASC"){
+	  if($sortlist=="csa_project_stage" && $orderlist=="ASC"){
 	  echo "class='sort_asc'";
-	  } else if ($sortlist=="ser_stage" && $orderlist=="DESC"){
+	  } else if ($sortlist=="csa_project_stage" && $orderlist=="DESC"){
 	  echo "class='sort_desc'";
 	  }
-	  ?>>
-	  <?php echo $multilingual_default_task_stage; ?></a></th>
+	  ?>><?php echo $multilingual_default_task_stage; ?></a></th>
+	  
 	  <!--来自-->
       <th rowspan="2" class="attr" >
 	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_from_user&order=<?php 
@@ -1258,15 +1284,15 @@ do {
 	  } else {
 	  echo "DESC";
 	  }
-	  ?>#fromsite" 
+	  ?>" 
 	  <?php 
 	  if($sortlist=="csa_from_user" && $orderlist=="ASC"){
 	  echo "class='sort_asc'";
 	  } else if ($sortlist=="csa_from_user" && $orderlist=="DESC"){
 	  echo "class='sort_desc'";
 	  }
-	  ?>>
-	  <?php echo $multilingual_default_task_from; ?></a></th>
+	  ?>><?php echo $multilingual_default_task_from; ?></a></th>
+	  
 	<!--上次更新时间-->
       <th rowspan="2" class="lasttime">
 	  <a href="<?php echo $pagenames; ?>?<?php echo $current_url; ?>&sort=csa_last_update&order=<?php 
@@ -1277,21 +1303,20 @@ do {
 	  } else {
 	  echo "DESC";
 	  }
-	  ?>#fromsite" 
+	  ?>" 
 	  <?php 
 	  if($sortlist=="csa_last_update" && $orderlist=="ASC"){
 	  echo "class='sort_asc'";
 	  } else if ($sortlist=="csa_last_update" && $orderlist=="DESC"){
 	  echo "class='sort_desc'";
 	  }
-	  ?>>
-	  <?php echo $multilingual_default_task_update_time; ?></a></th>
+	  ?>><?php echo $multilingual_default_task_update_time; ?></a></th>
 	  
       </tr>
    </thead>     
 <tbody class="tasktab_t2">
      <?php 
-	 $R_list=1;
+	 $R_list=$startRow_Recordset1+1;
 	 do { ?>
      <tr  class="<?php if($R_list%2==1){ echo "odd_line"; }else{echo "even_line"; } ?>">
          <td class="week_style_padtd"  width="100px" align="center"><?php echo $row_Recordset1['task_status_display']; ?></td>
@@ -1307,16 +1332,13 @@ do {
        
        <?php echo $row_Recordset1['csa_plan_st']; ?>&nbsp;
        </td>  
-		<td class="week_style_padtd <?php 
-
-		$today = date("Y-m-d");   
-		if($today > $row_Recordset1['csa_plan_et'] && strpos($row_Recordset1['task_status_display'], $multilingual_dd_status_stfinish) == false){
-	   echo "red";
-	   }   
-	   ?>" width="70px" align="center">
+		<td class="week_style_padtd " width="70px" align="center"><span class="<?php  
+		if($row_Recordset1['csa_status']==2){
+	   echo " red "; }   ?>" >
        
-       <?php echo $row_Recordset1['csa_plan_et']; ?>&nbsp;
-       </td>
+       <?php 
+			echo $row_Recordset1['csa_plan_et']; ?>&nbsp;
+       </span></td>
 
        <td class="week_style_padtd" width="200px" >
 		 <a href="project_view.php?recordID=<?php echo $row_Recordset1['csa_project']; ?>" target="_parent" title="<?php echo $row_Recordset1['project_name_prt']; ?>"><?php echo $row_Recordset1['project_name_prt']; ?></a>
@@ -1330,23 +1352,13 @@ do {
 	   <?php echo $row_Recordset1['tk_display_name2']; ?></a>
 	   </td>
        
-      <td class="week_style_padtd" width="112px" align="center"><span 
-	   <?php 
-		$lonelastday = $row_Recordset1['csa_last_update']; 
-		$lastday = substr($lonelastday,0,10);   
-		if($lastday > $row_Recordset1['csa_plan_et']){
-	   echo "class='red'";
-	   }   
+      <td class="week_style_padtd" width="112px" align="center"><?php 
+	   echo $row_Recordset1['csa_last_update'];
 	   ?>
-	   >
-       <?php 
-		
-	   echo $lastday;
-	   ?></span>&nbsp;
        </td>
 	  
     </tr>
-     <?php $R_list++;
+	<?php $R_list++;
 } while ($row_Recordset1 = mysql_fetch_assoc($Recordset1));
   $rows = mysql_num_rows($Recordset1);
   if($rows > 0) {

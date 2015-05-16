@@ -12,11 +12,11 @@ $multilingual_dd_whether_yes = "是";
 $multilingual_dd_whether_no = "否";
 
   // *项目选择排除条件(与后台管理项目状态管理对应)
-$multilingual_dd_status_prjfinish = "结束";  
+//$multilingual_dd_status_prjfinish = "结束";  
   // *任务搜索排除条件(与后台管理任务状态管理对应)
-$multilingual_dd_status_stfinish = "完成";  
+//$multilingual_dd_status_stfinish = "完成";  
   // *任务待审核条件
-$multilingual_dd_status_exam = "100%";  
+//$multilingual_dd_status_exam = "100%";  
 
 
 

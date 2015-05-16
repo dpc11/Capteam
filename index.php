@@ -69,9 +69,7 @@ $(window).resize(function()
   <a type="button" class="btn btn-default btn-lg<?php if($pagetabs == "cctome") { echo "active";} ?>" href="<?php echo $pagename; ?>?select=&select_project=&select_year=<?php echo date("Y");?>&textfield=<?php echo date("m");?>&select3=-1&select4=%&select_prt=&select_temp=&inputtitle=&select1=-1&select2=%&select_type=&inputid=&inputtag=&pagetab=cctome"><?php echo $multilingual_default_task_cctome_title;?></a>
 
  <!--待我审核的任务 --> 
-  <?php if($exam_totaltask>0) { ?>
-  <a type="button" class="btn btn-default btn-lg <?php if($pagetabs == "etask") { echo "active";} ?>" href="<?php echo $pagename; ?>?select=&select_project=&select_year=--&textfield=--&select3=-1&select4=%&select_prt=&select_temp=&select_exam=3&inputtitle=&select1=-1&select2=<?php echo "{$_SESSION['MM_uid']}"; ?>&select_type=&inputid=&inputtag=&pagetab=etask"><?php echo $multilingual_exam_wait."(".$exam_totaltask.")"; ?></a>
-  <?php } ?>
+  <a type="button" class="btn btn-default btn-lg <?php if($pagetabs == "etask") { echo "active";} ?>" href="<?php echo $pagename; ?>?select=&select_project=&select_year=--&textfield=--&select3=-1&select4=%&select_prt=&select_temp=&select_exam=3&inputtitle=&select1=-1&select2=<?php echo $_SESSION['MM_uid']; ?>&select_type=&inputid=&inputtag=&pagetab=etask"><?php echo $multilingual_exam_wait ?> <?php if($exam_totaltask>0) { echo "(".$exam_totaltask.")"; } else {echo "(0)";}  ?></a>
 
 </div><!--btn-group -->
 </div><!--float_left -->
