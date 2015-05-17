@@ -50,11 +50,11 @@ box-shadow: 5px 5px 7px rgba(33,33,33,.7);
 cursor:pointer;display:block;width:15em;clear:none;height:15em;line-height:30px;margin-right: 2em;margin-bottom:30px;text-align:left;} 
 
 span.usr_text{
-    width: 150px;
-    height: 140px;
+    width: 13em;
+    height: 12em;
     margin: 0px;
     margin-left: 3px;
-    margin-top: 5px;
+    margin-top: 0.8em;
     background: rgba(255,255,255,0);
     text-align: left;
     text-decoration: none; 
@@ -270,6 +270,23 @@ span.usr.catch{background:#ffc!important;}
     }; 
 
 </script> 
+<script type="text/javascript">
+  //禁止滚动条
+  $(document.body).css({
+     "overflow-x":"hidden",
+     "overflow-y":"hidden"
+  });
+
+      $(document).ready(function() {
+              var h = $(window).height(), h2;
+              var h = h - <?php echo "90";?>;
+              $("#displayRoom").css("height", h);
+              $(window).resize(function() {
+                  h2 = $(this).height()-90;
+                  $("#displayRoom").css("height", h2);
+              });
+          })
+  </script>
 
 <script src="js/bootstrap/bootstrap-transition.js"></script>
 <script src="js/bootstrap/bootstrap-modal.js"></script>
@@ -352,7 +369,7 @@ span.usr.catch{background:#ffc!important;}
             <!-- 右边80%宽度的主体内容 -->
             <td  id="tb" position=relative width="80%" valign="top" >
             		 
-            <div id="displayRoom"> 
+            <div id="displayRoom" style="overflow-y:auto;"> 
 
                 <?php while($row_board = mysql_fetch_assoc($board_info)){ 
                      $id_seq = $id_seq + 1;?>
@@ -363,7 +380,7 @@ span.usr.catch{background:#ffc!important;}
                                 <p style="margin: 0px;margin-bottom: 10px;">
                                     <a  onclick="ch1(<?php echo $row_board['board_id']; ?>)">
                                      <input type="hidden" id="ID" name="ID" value="<?php echo $row_board['board_id']; ?>" />
-                                    <img src="images/ui/base_close.png" style="float: right;margin-left: 150px;position: absolute;" width="8px">
+                                    <img src="images/ui/base_close.png" style="float: right;margin-left: 11.5em;position: absolute;" width="16px">
                                 </a>
                                 <!--<a href="#editmodal" role="button" class="edit" data-toggle="modal" <?php $bid=$row_board['board_id'] ?> >-->
                                 <a role="button"  onclick="eb(<?php echo $row_board['board_id']; ?>)">
@@ -374,7 +391,7 @@ span.usr.catch{background:#ffc!important;}
                                       });
                                     });
                                     </script> -->
-                                    <img src="images/ui/base_edit.png" style="float: left;margin-top: -2px;position: absolute;" height="10px">
+                                    <img src="images/ui/base_edit.png" style="float: left;margin-top: -2px;position: absolute;" height="18px">
                                 </a>
                                 </p><span class="usr_text" ><?php echo $row_board['board_content']; ?></span>
                                 <!--<div class="form-group col-xs-12">
@@ -404,8 +421,8 @@ span.usr.catch{background:#ffc!important;}
                     <!--<div class="row"style="margin-right:0px"> -->
                 <span><span class="usr" id="add"><button  data-toggle="modal" data-target="#mymodal" class="btn btn-primary"  style="display:inline-block;-moz-box-shadow: 0 1px 2px rgba(0,0,0,0.5);
                         background-color: #ffc;border-color: #ffc;
-                        text-shadow: 0 -1px 1px rgba(0,0,0,0.25);width:130px;clear:none;
-                        height:129px;line-height:30px;margin-top: 15px;margin-left: 13px;text-align:center;background-image: url(images/ui/add.png);"; type="button"; ></button></span></span> 
+                        text-shadow: 0 -1px 1px rgba(0,0,0,0.25);width: 202px;clear: none;height: 202px;line-height: 30px;margin-top: 25px;
+margin-left: 27px;text-align:center;background-image: url(images/ui/add.png);"; type="button"; ></button></span></span> 
 
                           
                     <!--<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
