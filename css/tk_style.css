@@ -19,7 +19,6 @@ html {
     font-family: 微软雅黑,黑体;
     width: 100%;
 	height:100%;
-	overflow:hidden;
 }
 
 body {
@@ -357,6 +356,8 @@ a:focus {
 /* head */
 
 .topbar {
+	width:99%;
+	flaot:left;
     background: #626262;
     height: 66px;
 }
@@ -465,8 +466,9 @@ a:focus {
 /* foot */
 
 .foot {
-/*    background: url(../images/ui/foot_bg.jpg) repeat-x;*/
-    border-top: 1px solid #ccc;
+	width:99%;
+	float:left;
+	border-top: 1px solid #ccc;
     bottom: 0px;
     height: 60px;
 	margin-top:-60px;
@@ -474,7 +476,6 @@ a:focus {
 .foot_top{
 	height:100%;
 	width:100%;
-	overflow:hidden;
 	padding-bottom:60px;
 }
 .wss_title {
@@ -1030,16 +1031,15 @@ a:focus {
     display: block;
 }
 
-.taskdiv {
-    width: 99%;
-    border-top: 1px #ccc solid;
-    border-left: 1px #ccc solid;
-    margin-left: 7px;
-}
-
 .tasktab {
+    width: 98%;
+	float:left;
+	min-width:1600px;
+    border: 0px #E7E7E7 solid;
+    background: #F5F5F5;
+}
+.projecttab {
     width: 99%;
-	margin:auto;
 	min-width:1600px;
     border: 2px #E7E7E7 solid;
     background: #F5F5F5;
@@ -1109,6 +1109,20 @@ a:focus {
     width: 99%;
     margin-left: 7px;
 }
+/**********projecttable*************/
+.project_table{
+    width: 100%;	
+	font-family : 黑体,微软雅黑;
+	font-size: 20px;
+}
+
+.even_line {
+    background-color:rgba(177, 187, 196, 0.16);
+}
+.odd_line {
+    background-color:white;
+}
+
 /********announcement*******/
 
 .anc_div {
@@ -1438,7 +1452,7 @@ a:focus {
 	font-size: 19px;
 	padding:7px 10px 5px 8px;
 	margin:8px 0px 3px 8px;
-	background-color:rgba(255, 255, 255, 0.3);
+	background-color:rgba(255, 255, 255, 0.5);
 	float:left;
 }
 
@@ -1447,7 +1461,7 @@ a:focus {
 	font-size: 19px;
 	padding:7px 10px 5px 8px;
 	margin:8px 0px 3px 8px;
-	background-color:rgba(255, 255, 255, 0.3);
+	background-color:rgba(255, 255, 255, 0.5);
 }
 
 .taskform  .btn{
@@ -1455,7 +1469,7 @@ a:focus {
 	font-size: 19px;
 	padding:7px 15px 10px 13px;
 	margin:8px 0px 3px 8px;
-	background-color:rgba(255, 255, 255, 0.3);
+	background-color:rgba(255, 255, 255, 0.5);
 }
 
 .structure {

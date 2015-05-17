@@ -75,8 +75,8 @@ $exam_totaltask=$row_Recordset_sumtotal['count_task'];
 		$(window).resize();	
 	});
 	$(window).resize(function()
-	{
-		$("#tbody_br").css("width",document.getElementById("tasktab").clientWidth-551+"px");
+	{	
+		$("#tbody_br").css("width",$("#tasktab").width()-551+"px");
 		$("#foot_top").css("min-height",document.getElementById("pagemargin").clientHeight+document.getElementById("subnav").clientHeight+66+60+60+"px"); 
 	});
 	</script>

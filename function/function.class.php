@@ -1,4 +1,4 @@
-<?php
+<?php 
 $version = "1.3.3b";
 $maxRows = 30;
 $tasklevel = 0;
