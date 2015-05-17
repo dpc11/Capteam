@@ -13,7 +13,7 @@ if (isset($_GET['pagetab'])) {
 ?>
 <?php require('head.php'); ?>
 
-		<div class="subnav">
+		<div class="subnav" id="subnav">
 			<div class="float_left" style="width:85%">
 				<!-- 切换按钮 -->
 				<div class="btn-group">		
@@ -34,7 +34,7 @@ if (isset($_GET['pagetab'])) {
 			<div class="clearboth"></div>
 		</div>
 		<div class="clearboth"></div>
-		<div class="pagemargin">
+		<div class="pagemargin" id="pagemargin">
 			<div class="clearboth"></div>
 			<?php require('project_list.php'); ?>
 		</div>
@@ -42,5 +42,19 @@ if (isset($_GET['pagetab'])) {
 	
 	<?php require('foot.php'); ?>
 	
+	<script>
+
+	$(window).load(function()
+	{
+		$(window).resize();	
+	});
+	$(window).resize(function()
+	{	
+		$("#tbody_br").css("width",$("#tasktab").width()-551+"px");
+		$("#headerlink").css("width",$("#tasktab").width()/0.9+"px");
+		$("#foot_div").css("width",$("#tasktab").width()/0.9+"px");
+		$("#foot_top").css("min-height",document.getElementById("pagemargin").clientHeight+document.getElementById("subnav").clientHeight+66+60+70+"px"); 
+	});
+	</script>
 </body>
 </html>

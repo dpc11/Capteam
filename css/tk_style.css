@@ -356,7 +356,7 @@ a:focus {
 /* head */
 
 .topbar {
-	width:99%;
+	width:100%;
 	flaot:left;
     background: #626262;
     height: 66px;
@@ -430,13 +430,13 @@ a:focus {
 
 .pagemargin {    
     width: 98%;
-	margin:auto;
+	padding-left:5%;
 }
 
 .subnav {
     width: 98%;
-    padding-left: 30px;
-    margin: 25px auto 18px 0px;
+    padding-left: 5%;
+    margin: 30px auto 24px 0px;
 	font-family : 微软雅黑;
 }
 
@@ -466,8 +466,7 @@ a:focus {
 /* foot */
 
 .foot {
-	width:99%;
-	float:left;
+	width:100%;
 	border-top: 1px solid #ccc;
     bottom: 0px;
     height: 60px;
@@ -1032,10 +1031,9 @@ a:focus {
 }
 
 .tasktab {
-    width: 98%;
-	float:left;
+    width: 97%;
 	min-width:1600px;
-    border: 0px #E7E7E7 solid;
+    border: 2px #E7E7E7 solid;
     background: #F5F5F5;
 }
 .projecttab {
@@ -1107,7 +1105,7 @@ a:focus {
 
 .pagemarginfix {
     width: 99%;
-    margin-left: 7px;
+	padding-left:7px;
 }
 /**********projecttable*************/
 .project_table{
