@@ -477,7 +477,7 @@ if ($pagetabs <> "etask") {
 				// {
 				// 	$outwhere.= " tk_task.csa_testto LIKE $cc_tome AND";
 				// }
-				$outwhere.= " tk_status.task_status NOT LIKE $outstfinish AND";
+				// $outwhere.= " tk_status.task_status NOT LIKE $outstfinish AND";
 				//设置过期时间不包括已完成、已验收的
 				$outwhere.= " tk_task.csa_status <> 3 AND tk_task.csa_status <> 4 AND";
 				$outwhere.= " tk_task.csa_plan_et <= $outday  AND csa_del_status=1";
@@ -510,6 +510,7 @@ if ($pagetabs <> "etask") {
 		$all_timeout = mysql_query($query_timeout);
 		$totalRows_timeout = mysql_num_rows($all_timeout);
 	}
+
 	$totalPages_timeout = ceil($totalRows_timeout/$maxRows_timeout)-1;
 
 	$queryString_timeout = "";
@@ -557,7 +558,7 @@ if ($pagetabs <> "etask") {
 				// {
 				// 	$outwhere.= " tk_task.csa_testto LIKE $cc_tome AND";
 				// }
-				$outwhere.= " tk_status.task_status NOT LIKE $outstfinish AND";
+				//$outwhere.= " tk_status.task_status NOT LIKE $outstfinish AND";
 				//设置即将过期的任务为进行中的任务
 				$outwhere.= " tk_task.csa_status =2 AND";
 				$outwhere.= " tk_task.csa_plan_et <= $outday AND tk_task.csa_plan_et >= $nearday AND csa_del_status=1";
