@@ -68,7 +68,7 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recordset1, $queryString_Recordset1);
 ?>
 
-<div class="tasktab">
+<div class="tasktab" id="tasktab">
 	<div class="condition">
 		<span>
 			<div class="clearboth" > </div>
