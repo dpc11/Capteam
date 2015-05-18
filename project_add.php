@@ -1,14 +1,11 @@
-    <?php require_once('config/tank_config.php'); ?>
-    <?php require_once('session_unset.php'); ?>
-    <?php require_once('session.php'); ?>
-    <?php
-    $restrictGoTo = "user_error3.php";
+<?php require_once('config/tank_config.php'); ?>
+<?php require_once('session_unset.php'); ?>
+<?php require_once('session.php'); ?>
+<?php require_once('function/config_function.php'); ?>
+<?php require_once('function/project_function.php'); ?>
+<?php require_once('function/user_function.php'); ?>
+<?php
     $dateError = 1;//no error
-    if ($_SESSION['MM_rank'] < "4") {   
-      header("Location: ". $restrictGoTo); 
-      exit;
-    }
-
     $editFormAction = $_SERVER['PHP_SELF'];
     if (isset($_SERVER['QUERY_STRING'])) {
       $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
@@ -36,7 +33,7 @@
     $newID =0;
 	
     if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
-      //数据库修改后的SQL语句
+		//数据库修改后的SQL语句
         $new_project_createtime = date('Y-m-d');
         $new_project_lastupdate = date("Y-m-d H:i:s");
 
@@ -162,35 +159,31 @@
     }
 
     }
+ ?>
+<?php require('head.php'); ?>
+<link type="text/css" href="css/ui/ui.all.css" rel="stylesheet" />
+<link href="css/lhgcore/lhgcheck.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/lhgcore/lhgcore.js"></script>
+<script type="text/javascript" src="js/lhgcore/lhgcheck.js"></script>
+<link rel="stylesheet" href="css/bootstrap/bootstrap-multiselect.css" type="text/css"/>
+<script type="text/javascript" src="js/bootstrap/bootstrap-multiselect.js"></script>
+<link rel="stylesheet" href="css/bootstrap/datepicker3.css" type="text/css"/>
+<script type="text/javascript" src="js/bootstrap/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="js/bootstrap/locales/bootstrap-datepicker.zh-CN.js"></script>
 
-
-
-    ?>
-    <?php require('head.php'); ?>
-    	<link type="text/css" href="css/ui/ui.all.css" rel="stylesheet" />
-        <link href="css/lhgcore/lhgcheck.css" rel="stylesheet" type="text/css" />
-        <script type="text/javascript" src="js/lhgcore/lhgcore.js"></script>
-        <script type="text/javascript" src="js/lhgcore/lhgcheck.js"></script>
-    <link rel="stylesheet" href="css/bootstrap/bootstrap-multiselect.css" type="text/css"/>
-    <script type="text/javascript" src="js/bootstrap/bootstrap-multiselect.js"></script>
-    <link rel="stylesheet" href="css/bootstrap/datepicker3.css" type="text/css"/>
-    <script type="text/javascript" src="js/bootstrap/bootstrap-datepicker.js"></script>
-    <script type="text/javascript" src="js/bootstrap/locales/bootstrap-datepicker.zh-CN.js"></script>
-
-
-    	<script type="text/javascript">
-    	$(function() {
-    		$('#datepicker').datepicker({
-    			format: "yyyy-mm-dd"
-    	<?php if ($language=="cn") {echo ", language: 'zh-CN'" ;}?>
-    		});
-    		$('#datepicker2').datepicker({
-    			format: "yyyy-mm-dd"
-    	<?php if ($language=="cn") {echo ", language: 'zh-CN'" ;}?>
-    		});
+<script type="text/javascript">
+    $(function() {
+    	$('#datepicker').datepicker({
+    		format: "yyyy-mm-dd"
+			<?php if ($language=="cn") {echo ", language: 'zh-CN'" ;}?>
     	});
-    	</script>
-    <script type="text/javascript">
+    		
+		$('#datepicker2').datepicker({
+    		format: "yyyy-mm-dd"
+			<?php if ($language=="cn") {echo ", language: 'zh-CN'" ;}?>
+    	});
+    });
+		
     J.check.rules = [
         { name: 'project_name', mid: 'projecttitle', type: 'limit', requir: true, min: 2, max: 32, warn: '<?php echo $multilingual_projectstatus_titlerequired; ?>' },
     	//{ name: 'datepicker', mid: 'datepicker_msg', type: 'date',  warn: '<?php echo $multilingual_error_date; ?>' },
@@ -202,148 +195,128 @@
     {
         J.check.regform('form1');
     }
-
-    //function option_gourl(str)
-    //{
-    //if(str == '-1')window.open('user_add.php');
-    //if(str == '-2')window.open('project_status.php');
-    //}
-    </script>
-    <script charset="utf-8" src="plug-in/editor/kindeditor.js"></script>
-    <script charset="utf-8" src="plug-in/editor/lang/zh_CN.js"></script>
-    <script>
-            var editor;
-            KindEditor.ready(function(K) {
-                    editor = K.create('#project_text', {
-    			width : '100%',
-    			height: '350px',
-    			items:[
-            'source', '|', 'undo', 'redo', '|', 'preview', 'print', 'template', 'cut', 'copy', 'paste',
-            'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
-            'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
-            'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/',
-            'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
-            'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image',
-            'flash', 'media', 'insertfile', 'table', 'hr', 'map', 'code', 'pagebreak', 'anchor', 
-            'link', 'unlink', '|', 'about'
-    ]
+</script>
+<script charset="utf-8" src="plug-in/editor/kindeditor.js"></script>
+<script charset="utf-8" src="plug-in/editor/lang/zh_CN.js"></script>
+<script>
+    var editor;
+    KindEditor.ready(function(K) {
+        editor = K.create('#project_text', {
+    		width : '100%',
+    		height: '350px',
+    		items:[
+				'source', '|', 'undo', 'redo', '|', 'preview', 'print', 'template', 'cut', 'copy', 'paste',
+				'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
+				'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+				'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/',
+				'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+				'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image',
+				'flash', 'media', 'insertfile', 'table', 'hr', 'map', 'code', 'pagebreak', 'anchor', 
+				'link', 'unlink', '|', 'about'
+			]
+		});
     });
-            });
-    </script>
-    <!-- Initialize the plugin: -->
-    <script type="text/javascript">
-      $(document).ready(function() {
+	
+    $(document).ready(function() {
+		$('#select2').multiselect({
+			enableCaseInsensitiveFiltering: true,
+    		maxHeight: 360,
+    		filterPlaceholder: '<?php echo $multilingual_user_filter; ?>'
+        });
+    });
+</script>
 
-    					$('#select2').multiselect({
-
-    			        	enableCaseInsensitiveFiltering: true,
-    						maxHeight: 360,
-    						filterPlaceholder: '<?php echo $multilingual_user_filter; ?>'
-                        });
-    					
-
-    	
-      });
-    </script>
-
-    <form action="<?php echo $editFormAction; ?>" method="post" name="myform" id="form1">
+<form action="<?php echo $editFormAction; ?>" method="post" name="myform" id="form1">
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr>
-
-    <!-- 左边20%的宽度的树或者说明  -->
-          <td width="20%" class="input_task_right_bg" valign="top"><table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
-              <tr>
-                <td valign="top" class="gray2">
-    	 <h4 style="margin-top:40px; margin-left: 5px;" ><strong><?php echo $multilingual_project_view_nowbs; ?></strong></h4>
-    	 <p >
-    	 <?php echo $multilingual_project_add_text; ?></p>
-                  
-                  </td>
-              </tr>
-            </table></td>
-            
-    <!-- 右边80%宽度的主体内容 -->
-          <td width="80%" valign="top"><table width="98%" border="0" cellspacing="0" cellpadding="5" align="center">
-              <tr>
-                <td><div class="col-xs-12">
-                    <h3><?php echo $multilingual_projectlist_new; ?></h3>
-                  </div>
-                  
-    <!-- 项目名称 -->
-                  <div class="form-group col-xs-12">
-                    <label for="project_name"><?php echo $multilingual_project_title; ?><span id="projecttitle"></span></label>
-                    <div>
-    				<input type="text" name="project_name" id="project_name" value="" class="form-control" placeholder="<?php echo $multilingual_project_title_tips; ?>" />
-                    </div>
-                  </div>
-    			  
-    <!-- 项目组长为当前用户，此处添加多个项目组员 -->
-    			  <div class="form-group  col-xs-12">
-                    <label for="select2" ><?php echo $multilingual_project_touser; ?><span id="csa_to_user_msg"></span></label>
-                    <div >
-                      <select name="project_to_user[]" id="select2" size="6" multiple class="form-control">
-    				          <?php foreach($user_arr as $key => $val){ 
-                              if($val["uid"] <> $_SESSION["MM_uid"]){
-                       ?>
-    					            <option value='<?php echo $val["uid"]?>'><?php echo $val["uid"]."  ".$val["name"];?></option>
-    					       <?php
-                     }} ?>  
-    			
-                      </select>
-                    </div>
-                    <span class="help-block"><?php echo $multilingual_project_tips2; ?></span> 
-                </div>					  
-                  <div class="form-group col-xs-12">
-                    <label for="project_text"><?php echo $multilingual_project_description; ?></label>
-                    <div>
-                      <textarea name="project_text" id="project_text"></textarea>
-                    </div>
-                  </div>
-
-    <!-- 起始时间 -->
-    				<div class="form-group col-xs-12">
-                    <label for="datepicker"><?php echo $multilingual_project_start; ?><!--<span id="datepicker_msg"></span>-->
-                        <lable style="color:#F00;font-size:14px">
-                            <?php if($dateError==-2) { echo ('&nbsp&nbsp&nbsp');echo "结束时间小于开始时间";} ?>
-                        </lable>
-                    </label>
-                    <div>
-                      <input type="text" name="project_start" id="datepicker" value="<?php echo date('Y-m-d'); ?>" class="form-control"  />
-                    </div>
-                  </div>
-
-    <!-- 结束时间 -->		  
-                  <div class="form-group col-xs-12">
-                    <label for="datepicker2"><?php echo $multilingual_project_end; ?><!--<span id="datepicker2_msg"></span>-->
-                       <lable style="color:#F00;font-size:14px">
-                                <?php if($dateError==-2) {echo ('&nbsp&nbsp&nbsp');echo "结束时间小于开始时间";} else if ($dateError==-1) {echo ('&nbsp&nbsp&nbsp'); echo "结束时间小于今天";} ?>
-                       </lable>
-                    </label>
-                    <div>
-                      <input type="text" name="project_end" id="datepicker2" value="<?php echo date("Y-m-d",strtotime("+7 day")); ?>" class="form-control" />
-                    </div>
-                  </div>
-    			  
-                 
-    				</td>
-              </tr>
-            </table></td>
-        </tr>
-        <tr class="input_task_bottom_bg" >
-    	<td></td>
-          <td height="50px">
-    	  
-    <!-- 提交按钮 -->
-    	  <button type="submit" class="btn btn-primary btn-sm submitbutton" name="cont" ><?php echo $multilingual_global_action_save; ?></button>
-          <button type="button" class="btn btn-default btn-sm" onClick="javascript:history.go(-1);"><?php echo $multilingual_global_action_cancel; ?></button>
-          <input type="hidden" name="MM_insert" value="form1" /></td>
-        </tr>
-      </table>
-
-    </form>
-    <?php require('foot.php'); ?>
-    </body>
-    </html>
-    <?php
+			<!-- 左边20%的宽度的树或者说明  -->
+			<td width="20%" class="input_task_right_bg" valign="top">
+				<table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
+					<tr>
+						<td valign="top" class="gray2">
+							<h4 style="margin-top:40px; margin-left: 5px;" ><strong><?php echo $multilingual_project_view_nowbs; ?></strong></h4>
+							<p > <?php echo $multilingual_project_add_text; ?></p>
+						</td>
+					</tr>
+				</table>
+			</td>
+			<!-- 右边80%宽度的主体内容 -->
+			<td width="80%" valign="top">
+				<table width="98%" border="0" cellspacing="0" cellpadding="5" align="center">
+					<tr>
+						<td>
+							<div class="col-xs-12">
+								<h3><?php echo $multilingual_projectlist_new; ?></h3>
+							</div>
+							<!-- 项目名称 -->
+							<div class="form-group col-xs-12">
+								<label for="project_name"><?php echo $multilingual_project_title; ?><span id="projecttitle"></span></label>
+								<div>
+									<input type="text" name="project_name" id="project_name" value="" class="form-control" placeholder="<?php echo $multilingual_project_title_tips; ?>" />
+								</div>
+							</div>
+							<!-- 项目组长为当前用户，此处添加多个项目组员 -->
+							<div class="form-group  col-xs-12">
+								<label for="select2" ><?php echo $multilingual_project_touser; ?><span id="csa_to_user_msg"></span></label>
+								<div >
+									<select name="project_to_user[]" id="select2" size="6" multiple class="form-control">
+										<?php foreach($user_arr as $key => $val){ 
+											if($val["uid"] <> $_SESSION["MM_uid"]){
+										?>
+											<option value='<?php echo $val["uid"]?>'><?php echo $val["uid"]."  ".$val["name"];?></option>
+										<?php }} ?>  
+									</select>
+								</div>
+								<span class="help-block"><?php echo $multilingual_project_tips2; ?></span> 
+							</div>					  
+							<div class="form-group col-xs-12">
+								<label for="project_text"><?php echo $multilingual_project_description; ?></label>
+								<div>
+								  <textarea name="project_text" id="project_text"></textarea>
+								</div>
+							</div>
+							<!-- 起始时间 -->
+							<div class="form-group col-xs-12">
+								<label for="datepicker"><?php echo $multilingual_project_start; ?><!--<span id="datepicker_msg"></span>-->
+									<label style="color:#F00;font-size:14px">
+										<?php if($dateError==-2) { echo ('&nbsp&nbsp&nbsp');echo "结束时间小于开始时间";} ?>
+									</label>
+								</label>
+								<div>
+									<input type="text" name="project_start" id="datepicker" value="<?php echo date('Y-m-d'); ?>" class="form-control"  />
+								</div>
+							</div>
+							<!-- 结束时间 -->		  
+							<div class="form-group col-xs-12">
+								<label for="datepicker2"><?php echo $multilingual_project_end; ?><!--<span id="datepicker2_msg"></span>-->
+									<label style="color:#F00;font-size:14px">
+										<?php if($dateError==-2) {echo ('&nbsp&nbsp&nbsp');echo "结束时间小于开始时间";} else if ($dateError==-1) {echo ('&nbsp&nbsp&nbsp'); echo "结束时间小于今天";} ?>
+									</label>
+								</label>
+								<div>
+									<input type="text" name="project_end" id="datepicker2" value="<?php echo date("Y-m-d",strtotime("+7 day")); ?>" class="form-control" />
+								</div>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr class="input_task_bottom_bg" >
+			<td></td>
+			<td height="50px">
+				<!-- 提交按钮 -->
+				<button type="submit" class="btn btn-primary btn-sm submitbutton" name="cont" ><?php echo $multilingual_global_action_save; ?></button>
+				<button type="button" class="btn btn-default btn-sm" onClick="javascript:history.go(-1);"><?php echo $multilingual_global_action_cancel; ?></button>
+				<input type="hidden" name="MM_insert" value="form1" />
+			</td>
+		</tr>
+    </table>
+</form>
+<?php require('foot.php'); ?>
+</div>
+</body>
+</html>
+<?php
     mysql_free_result($Recordset3);
-    ?>
+?>
