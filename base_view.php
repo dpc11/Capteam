@@ -40,10 +40,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <style> 
-#displayRoom{background:white;position:relative;float:left;clear:both;padding:30px 0px 0px 20px;margin-left:20px;margin-top:10px;} 
+#displayRoom{background:white;position:relative;float:left;clear:both;padding:10px 0px 0px 20px;margin-left:20px;margin-top:10px;} 
 .row{display:inline-block;float:left;width:16em;margin-right: 30px;margin-left: 30px;clear:none;top:0;background:white;} 
 
-.row span{width:15em;line-height:1em;margin-bottom:30px;text-align:center;} 
+.row span{width:15em;line-height:1.5em;margin-bottom:30px;text-align:center;} 
 span.usr{text-decoration:none; 
 color:#000; 
 background:#ffc; 
@@ -377,9 +377,9 @@ span.usr.catch{background:#ffc!important;}
             <!-- 右边80%宽度的主体内容 -->
             <td  id="tb" position=relative width="80%" valign="top" >
             <?php if($pid!=-1){ ?>
-                <p>项目看板</p>
+                <p style="padding: 10px 0px 0px 30px;font-size: 1.5em;font-weight: 300;">项目看板</p>
             <?php }else{ ?>
-                <p>个人看板</p>
+                <p style="padding: 10px 0px 0px 30px;font-size: 1.5em;font-weight: 300;">个人看板</p>
             <?php }?>
 
             <div id="displayRoom" style="overflow-y:auto;"> 
@@ -411,7 +411,13 @@ span.usr.catch{background:#ffc!important;}
                                 <div>
                                     <textarea id="tk_stage_desc" name="tk_stage_desc" style="width: 155px;height: 150px;background: #ffc;border: 0px;" ></textarea>-->
                                 <!--</div>
-                                </div>-->
+                                </div>
+                                <span style="width: 13em;
+height: 1em;
+padding: 11.5em 0 0 0;
+text-align: right;
+position: absolute;
+font-size: 100%;color: rgb(129, 129, 129);">from:  <?php echo $row_board['tk_display_name']; ?></span>-->
                             </span>
                         </span>
                     </div>
@@ -451,6 +457,23 @@ margin-left: 27px;text-align:center;background-image: url(images/ui/add.png);"; 
     </table>
 
 <?php require( 'foot.php'); ?>
+<script>
+
+    $(window).load(function()
+    {
+        $(window).resize(); 
+    });
+    $(window).resize(function()
+    {   
+        //$("#tbody_br").css("width",$("#tasktab").width()-551+"px");
+        //$("#headerlink").css("width",$("#tasktab").width()/0.9+"px");
+        //var o = document.getElementById("view");
+        //var h = o.offsetHeight;  //高度
+        $("#foot_div").css("margin-top",0);
+        
+    });
+</script>
+
 <form action="<?php echo "base_edit.php?pid=".$pid ?>"  method="post" name="form2" id="form2">
 <div class="modal" id="editmodal">
     <div 

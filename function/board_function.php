@@ -38,7 +38,7 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
 function get_board_info($pid){
 
   global $tankdb;
-  $selBoardInfo = "SELECT * FROM tk_board WHERE board_pid = $pid AND board_del_status=1 AND board_type=1 ORDER BY board_seq";
+  $selBoardInfo = "SELECT * FROM tk_board,tk_user WHERE board_from=uid AND board_pid = $pid AND board_del_status=1 AND board_type=1 ORDER BY board_seq";
   $BoardInfoRS = mysql_query($selBoardInfo, $tankdb) or die(mysql_error());
 
   return $BoardInfoRS;
@@ -48,7 +48,7 @@ function get_board_info($pid){
 function get_personal_board_info($uid){
 
   global $tankdb;
-  $selBoardInfo = "SELECT * FROM tk_board WHERE board_from = $uid AND board_del_status=1 AND board_type=2 ORDER BY board_seq";
+  $selBoardInfo = "SELECT * FROM tk_board,tk_user WHERE board_from=uid AND board_from = $uid AND board_del_status=1 AND board_type=2 ORDER BY board_seq";
   $BoardInfoRS = mysql_query($selBoardInfo, $tankdb) or die(mysql_error());
 
   return $BoardInfoRS;
