@@ -20,7 +20,13 @@
 
     $bnumpre=mysql_num_rows($Result1);
     $bnumnow=$bnumpre+1;
-  $insertSQL="INSERT INTO tk_board (board_seq,board_pid,board_from,board_content,board_time)VALUES('$bnumnow','$pid','$uid','$tk_stage_desc',NOW())";
+    if($pid != -1)
+    {
+        $insertSQL="INSERT INTO tk_board (board_seq,board_type,board_pid,board_from,board_content,board_time)VALUES('$bnumnow',1,'$pid','$uid','$tk_stage_desc',NOW())";
+    }else
+    {
+        $insertSQL="INSERT INTO tk_board (board_seq,board_type,board_pid,board_from,board_content,board_time)VALUES('$bnumnow',2,-1,'$uid','$tk_stage_desc',NOW())";
+    }
 
   $Result1 = mysql_query($insertSQL, $tankdb) or die(mysql_error());
   header("location:base_view.php?pid=$pid");

@@ -8,10 +8,18 @@
     if(isset($_GET['pid'])){
         $pid = $_GET['pid'];
     }
+
+    $uid=$_SESSION['MM_uid'];
+
     $id_seq=0;
     $bid = "-1";
 
-    $board_info = get_board_info($pid);
+    if($pid != -1){
+        $board_info = get_board_info($pid);
+    }else{
+        $board_info = get_personal_board_info($uid);
+    }
+        
     $board_num =mysql_num_rows($board_info);
 
     $editID = "-1";
@@ -272,7 +280,7 @@ span.usr.catch{background:#ffc!important;}
 </script> 
 <script type="text/javascript">
   //禁止滚动条
-  $(document.body).css({
+  /*$(document.body).css({
      "overflow-x":"hidden",
      "overflow-y":"hidden"
   });
@@ -285,7 +293,7 @@ span.usr.catch{background:#ffc!important;}
                   h2 = $(this).height()-90;
                   $("#displayRoom").css("height", h2);
               });
-          })
+          })*/
   </script>
 
 <script src="js/bootstrap/bootstrap-transition.js"></script>
@@ -368,9 +376,13 @@ span.usr.catch{background:#ffc!important;}
 
             <!-- 右边80%宽度的主体内容 -->
             <td  id="tb" position=relative width="80%" valign="top" >
-            		 
-            <div id="displayRoom" style="overflow-y:auto;"> 
+            <?php if($pid!=-1){ ?>
+                <p>项目看板</p>
+            <?php }else{ ?>
+                <p>个人看板</p>
+            <?php }?>
 
+            <div id="displayRoom" style="overflow-y:auto;"> 
                 <?php while($row_board = mysql_fetch_assoc($board_info)){ 
                      $id_seq = $id_seq + 1;?>
                     <div class="row"style="margin-right:0px"> 
@@ -416,7 +428,8 @@ span.usr.catch{background:#ffc!important;}
                         }
                     </script>
                    
-                <?php } ?>
+                <?php }//while ?>
+
                 <div class="row"style="margin-right:0px"> 
                     <!--<div class="row"style="margin-right:0px"> -->
                 <span><span class="usr" id="add"><button  data-toggle="modal" data-target="#mymodal" class="btn btn-primary"  style="display:inline-block;-moz-box-shadow: 0 1px 2px rgba(0,0,0,0.5);
