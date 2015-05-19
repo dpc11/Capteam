@@ -861,7 +861,7 @@ a:focus {
 }
 
 .input_task_bottom_bg {
-    background: #ddd;
+	align:center;
 }
 
 .input_task_right_bg .add_title{

@@ -1,21 +1,13 @@
-  <?php require_once('config/tank_config.php'); ?>
-  <?php require_once('session_unset.php'); ?>
-  <?php require_once('session.php'); ?>
-  <?php require_once('function/dao.php'); ?>
-  <?php require_once('function/file_log_function.php');?>
-  <?php
+<?php require_once('config/tank_config.php'); ?>
+<?php require_once('session_unset.php'); ?>
+<?php require_once('session.php'); ?>
+<?php require_once('function/config_function.php'); ?>
+<?php require_once('function/user_function.php'); ?>
+<?php require_once('function/project_function.php'); ?>
+<?php require_once('function/file_log_function.php');?>
+<?php
   $currentPage = $_SERVER["PHP_SELF"];
    
-  //初始化team数据库操作类
-  $team_dao_obj = new team_dao();
-  //初始化user数据库操作类
-  $user_dao_obj = new user_dao();
-  //获取个人日程的数据库操作类
-  $schedule_dao_obj = new schedule_dao();
-  //获取s阶段的数据库操作类
-  $stage_dao_obj = new stage_dao();
-
-  
   $pagetabs = "allprj";
   if (isset($_GET['pagetab'])) {
     $pagetabs = $_GET['pagetab'];
@@ -42,7 +34,7 @@
   if (isset($_GET['recordID'])) {
     $colname_DetailRS1 = $_GET['recordID'];
   }
-   
+  
   //项目log的显示操作
   mysql_select_db($database_tankdb, $tankdb);
   $pid= $_GET['recordID'];
@@ -53,7 +45,7 @@
   $ProjectLog_Result=mysql_query($selProjectLog, $tankdb) or die(mysql_error());
 
   //获得日程数据
-  $data = $schedule_dao_obj->get_team_events($colname_DetailRS1);
+  $data = get_team_events($colname_DetailRS1);
 
   //授权的id是否有权限
   if (isset($_GET['authority_user_id'])&&isset($_GET['authority_ulimit'])) {
