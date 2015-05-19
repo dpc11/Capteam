@@ -52,7 +52,7 @@
 		return $row['tk_stage_folder_id'];
 	}
     //根据项目id获得stages
-    public function get_stages($project_id)
+    function get_stages($project_id)
     {
         global $tankdb;
         global $database_tankdb;

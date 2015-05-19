@@ -14,9 +14,26 @@
 		  
 		return $userRS;
 	}
+	function get_user($userid, $channel ="default"){
+		global $tankdb;
+		global $database_tankdb;
 
+		$query_touser =  sprintf("SELECT * FROM tk_user WHERE uid = %s AND tk_user_del_status=1",
+							   GetSQLValueString($userid, "int"));  
+		$touser = mysql_query($query_touser, $tankdb) or die(mysql_error());
+		$row_touser = mysql_fetch_assoc($touser);
+
+		$userinfo->name = $row_touser["tk_display_name"];
+		$userinfo->email = $row_touser["tk_user_email"];
+			if($channel == "infopage"){
+			  $userinfo->remark = $row_touser["tk_user_remark"];  
+			  $userinfo->phone = $row_touser["tk_user_contact"];  
+			}
+
+		return $userinfo;
+	}
 	//根据用户id获得用户信息
-	public function get_user_by_userid($userid){
+	function get_user_by_userid($userid){
 		global $tankdb;
 		global $database_tankdb;
 		$query_touser =  sprintf("SELECT * FROM tk_user WHERE uid = %s AND tk_user_del_status=1",
@@ -39,7 +56,7 @@
 	}
 
     //获得和该项目有关的用户信息
-    public function get_user_select_by_project($prjid) {
+    function get_user_select_by_project($prjid) {
         global $tankdb;
         global $database_tankdb;
         $query_user ="SELECT * 
@@ -63,7 +80,7 @@
 
 
     //获得所有的用户信息
-    public function get_all_user() {
+    function get_all_user() {
         global $tankdb;
         global $database_tankdb;
         $query_user ="SELECT * FROM tk_user ORDER BY CONVERT(tk_display_name USING gbk )";

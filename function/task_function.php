@@ -5,7 +5,7 @@
 	mysql_select_db($database_tankdb,$tankdb);
 
     //获得任务id获得对应的task值
-    public function get_task_by_id($tid){
+    function get_task_by_id($tid){
         global $tankdb;
         global $database_tankdb;
         mysql_select_db($database_tankdb, $tankdb);
@@ -39,5 +39,30 @@
 
         return $taskinfo;
     }
+	
+	//add task
+	function add_task( $ccuser, $fuser, $tuser, $projectid, $stage_id, $text, $priority, $start, $end, $hour, $status, $tag,$csa_description ) {
+		global $tankdb;
+		global $database_tankdb;
+		global $multilingual_log_addtask;
+		$insertSQL = sprintf("INSERT INTO tk_task (csa_testto, csa_from_user, csa_to_user, csa_project, csa_project_stage, csa_text, csa_priority, csa_plan_st, csa_plan_et, csa_plan_hour, csa_tag,csa_description,csa_status) VALUES (%s, %s, %s, %s, %s,%s, %s, %s, %s, %s, %s, $csa_description, %s)",
+						   GetSQLValueString($ccuser, "text"),
+						   GetSQLValueString($fuser, "int"),
+						   GetSQLValueString($tuser, "int"),
+						   GetSQLValueString($projectid, "int"),
+						   GetSQLValueString($stage_id, "int"),
+						   GetSQLValueString($text, "text"),
+						   GetSQLValueString($priority, "text"),
+						   GetSQLValueString($start, "text"),
+						   GetSQLValueString($end, "text"),
+						   GetSQLValueString($hour, "text"),
+						   GetSQLValueString($tag, "text"),
+						   GetSQLValueString($status, "int"));
+		mysql_select_db($database_tankdb, $tankdb);
+		$Result1 = mysql_query($insertSQL, $tankdb) or die(mysql_error());
+	  
+		$newID = mysql_insert_id();
+		return $newID;
+	}
 
 ?>

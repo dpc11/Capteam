@@ -5,7 +5,7 @@
 	mysql_select_db($database_tankdb,$tankdb);
 
     //删除某条消息
-    public function delete_message($mid)
+    function delete_message($mid)
     {
         global $tankdb;
         global $database_tankdb;
@@ -14,7 +14,7 @@
         $Result1 = mysql_query($deleteSQL, $tankdb) or die(mysql_error());
     }
     //把某条消息置为已读
-    public function update_message($mid,$status1,$status2)
+    function update_message($mid,$status1,$status2)
     {
         global $tankdb;
         global $database_tankdb;

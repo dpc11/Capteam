@@ -15,7 +15,7 @@
 		return $row_Recordset_pfilename['tk_doc_parentdocid'];
 	}
     //设置某一个用户在某一个项目中的权限
-    public function set_user_authority($uid,$pid,$ulimit){
+    function set_user_authority($uid,$pid,$ulimit){
         global $tankdb;
         global $database_tankdb;
         $modmemSQL="UPDATE tk_team SET tk_team_ulimit=$ulimit WHERE  tk_team_uid=$uid and tk_team_pid=$pid";//修改权限
@@ -24,7 +24,7 @@
     }
 
     //获得某一个用户在这个项目里的权限
-    public function get_user_authority($uid,$pid){
+    function get_user_authority($uid,$pid){
         global $tankdb;
         global $database_tankdb;
         $user_authority =1; 
