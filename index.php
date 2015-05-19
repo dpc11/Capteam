@@ -79,7 +79,7 @@ $exam_totaltask=$row_Recordset_sumtotal['count_task'];
 		$("#tbody_br").css("width",$("#tasktab").width()-551+"px");
 		$("#headerlink").css("width",$("#tasktab").width()/0.9+"px");
 		$("#foot_div").css("width",$("#tasktab").width()/0.9+"px");
-		$("#foot_top").css("min-height",document.getElementById("pagemargin").clientHeight+document.getElementById("subnav").clientHeight+66+60+70+"px"); 
+		$("#foot_top").css("min-height",document.getElementById("pagemargin").clientHeight+document.getElementById("subnav").clientHeight+66+70+document.getElementById("top_height").clientHeight+"px"); 
 	});
 	</script>
 </body>

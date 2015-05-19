@@ -48,7 +48,7 @@ function horsey (input, options) {
     hide: hide,
     destroy: destroy
   };
-
+  
   function loading () {
     crossvent.remove(input, 'focus', oneload);
     suggestions(loaded);
@@ -271,10 +271,15 @@ function horsey (input, options) {
   }
 
   function defaultFilter (q, suggestion) {
-    var text = getText(suggestion) || '';
-    var value = getValue(suggestion) || '';
-    return fuzzysearch(q, text.toLowerCase()) || fuzzysearch(q, value.toLowerCase());
+	if(document.getElementById('constraint').value.indexOf(suggestion)>=0){
+		var text = getText(suggestion) || '';
+		var value = getValue(suggestion) || '';
+		return fuzzysearch(q, text.toLowerCase()) || fuzzysearch(q, value.toLowerCase());
+	}else{
+		return false;
+	}
   }
+
 }
 
 function defaultGetValue (suggestion) {
@@ -574,4 +579,5 @@ module.exports = fuzzysearch;
 
 },{}]},{},[1])(1)
 });
+
 

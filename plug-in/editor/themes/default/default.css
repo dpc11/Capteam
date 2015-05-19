@@ -35,383 +35,383 @@
 /* icons */
 .ke-icon-source {
 	background-position: 0px 0px;
-	width: 16px;
-	height: 16px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-preview {
-	background-position: 0px -16px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -32px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-print {
 	background-position: 0px -32px;
-	width: 16px;
-	height: 16px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-undo {
-	background-position: 0px -48px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -96px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-redo {
-	background-position: 0px -64px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -128px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-cut {
-	background-position: 0px -80px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -160px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-copy {
-	background-position: 0px -96px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -192px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-paste {
-	background-position: 0px -112px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -224px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-selectall {
-	background-position: 0px -128px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -256px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-justifyleft {
-	background-position: 0px -144px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -288px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-justifycenter {
-	background-position: 0px -160px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -320px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-justifyright {
-	background-position: 0px -176px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -352px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-justifyfull {
-	background-position: 0px -192px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -384px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-insertorderedlist {
-	background-position: 0px -208px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -416px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-insertunorderedlist {
-	background-position: 0px -224px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -448px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-indent {
-	background-position: 0px -240px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -480px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-outdent {
-	background-position: 0px -256px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -512px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-subscript {
-	background-position: 0px -272px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -544px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-superscript {
-	background-position: 0px -288px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -544px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-date {
-	background-position: 0px -304px;
+	background-position: 0px -1216px;
 	width: 25px;
 	height: 16px;
 }
 .ke-icon-time {
-	background-position: 0px -320px;
+	background-position: 0px -1280px;
 	width: 25px;
-	height: 16px;
+	height: 32px;
 }
 .ke-icon-formatblock {
-	background-position: 0px -336px;
-	width: 25px;
-	height: 16px;
+	background-position: 0px -672px;
+	width: 50px;
+	height: 32px;
 }
 .ke-icon-fontname {
-	background-position: 0px -352px;
-	width: 21px;
-	height: 16px;
+	background-position: 0px -704px;
+	width: 48px;
+	height: 32px;
 }
 .ke-icon-fontsize {
-	background-position: 0px -368px;
-	width: 23px;
-	height: 16px;
+	background-position: 0px -736px;
+	width: 46px;
+	height: 32px;
 }
 .ke-icon-forecolor {
-	background-position: 0px -384px;
-	width: 20px;
-	height: 16px;
+	background-position: 0px -768px;
+	width: 40px;
+	height: 32px;
 }
 .ke-icon-hilitecolor {
-	background-position: 0px -400px;
-	width: 23px;
-	height: 16px;
+	background-position: 0px -800px;
+	width: 46px;
+	height: 32px;
 }
 .ke-icon-bold {
-	background-position: 0px -416px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -832px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-italic {
-	background-position: 0px -432px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -864px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-underline {
-	background-position: 0px -448px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -896px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-strikethrough {
-	background-position: 0px -464px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -928px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-removeformat {
-	background-position: 0px -480px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -960px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-image {
-	background-position: 0px -496px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -992px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-flash {
-	background-position: 0px -512px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -1024px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-media {
-	background-position: 0px -528px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -1056px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-div {
-	background-position: 0px -544px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -1088px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-formula {
-	background-position: 0px -576px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -1152px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-hr {
-	background-position: 0px -592px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -1184px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-emoticons {
-	background-position: 0px -608px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -1216px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-link {
-	background-position: 0px -624px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -1248px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-unlink {
-	background-position: 0px -640px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -1280px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-fullscreen {
-	background-position: 0px -656px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -1312px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-about {
-	background-position: 0px -672px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -1344px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-plainpaste {
 	background-position: 0px -704px;
-	width: 16px;
-	height: 16px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-wordpaste {
-	background-position: 0px -720px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -1440px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-table {
-	background-position: 0px -784px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -1568px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-tablemenu {
-	background-position: 0px -768px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -1536px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-tableinsert {
-	background-position: 0px -784px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -1568px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-tabledelete {
-	background-position: 0px -800px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -1600px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-tablecolinsertleft {
-	background-position: 0px -816px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -1632px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-tablecolinsertright {
-	background-position: 0px -832px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -1664px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-tablerowinsertabove {
-	background-position: 0px -848px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -1696px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-tablerowinsertbelow {
-	background-position: 0px -864px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -1728px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-tablecoldelete {
-	background-position: 0px -880px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -1760px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-tablerowdelete {
-	background-position: 0px -896px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -1792px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-tablecellprop {
-	background-position: 0px -912px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -1824px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-tableprop {
-	background-position: 0px -928px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -1856px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-checked {
-	background-position: 0px -944px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -1888px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-code {
-	background-position: 0px -960px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -1920px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-map {
-	background-position: 0px -976px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -1952px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-baidumap {
-	background-position: 0px -976px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -1952px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-lineheight {
-	background-position: 0px -992px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -1984px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-clearhtml {
-	background-position: 0px -1008px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -2016px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-pagebreak {
-	background-position: 0px -1024px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -2048px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-insertfile {
-	background-position: 0px -1040px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -2080px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-quickformat {
-	background-position: 0px -1056px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -2112px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-template {
-	background-position: 0px -1072px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -2144px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-tablecellsplit {
-	background-position: 0px -1088px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -2176px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-tablerowmerge {
-	background-position: 0px -1104px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -2208px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-tablerowsplit {
-	background-position: 0px -1120px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -2240px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-tablecolmerge {
-	background-position: 0px -1136px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -2272px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-tablecolsplit {
-	background-position: 0px -1152px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -2304px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-anchor {
-	background-position: 0px -1168px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -2336px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-search {
-	background-position: 0px -1184px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -2368px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-new {
-	background-position: 0px -1200px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -2400px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-specialchar {
-	background-position: 0px -1216px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -2432px;
+	width: 32px;
+	height: 32px;
 }
 .ke-icon-multiimage {
-	background-position: 0px -1232px;
-	width: 16px;
-	height: 16px;
+	background-position: 0px -2464px;
+	width: 32px;
+	height: 32px;
 }
 /* container */
 .ke-container {
@@ -463,7 +463,7 @@
 	cursor: default;
 }
 .ke-toolbar .ke-separator {
-	height: 16px;
+	height: 32px;
 	margin: 2px 3px;
 	border-left: 1px solid #A0A0A0;
 	border-right: 1px solid #FFFFFF;
@@ -493,7 +493,7 @@
 	overflow: auto;
 }
 .ke-edit-textarea {
-	font: 12px/1.5 "Consolas", "Monaco", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
+	font: 24px/1.5 "Consolas", "Monaco", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
 	color: #000;
 	overflow: auto;
 	resize: none;
@@ -505,7 +505,7 @@
 .ke-statusbar {
 	position: relative;
 	background-color: #F0F0EE;
-	border-top: 1px solid #CCCCCC;
+	border-top: 2px solid #CCCCCC;
 	font-size: 0;
 	line-height: 0;
 	*height: 12px;
@@ -514,9 +514,9 @@
 	cursor: s-resize;
 }
 .ke-statusbar-center-icon {
-	background-position: -0px -754px;
-	width: 15px;
-	height: 11px;
+	background-position: -0px -1508px;
+	width: 30px;
+	height: 22px;
 	background-image: url(default.png);
 }
 .ke-statusbar-right-icon {
@@ -524,9 +524,9 @@
 	right: 0;
 	bottom: 0;
 	cursor: se-resize;
-	background-position: -5px -741px;
-	width: 11px;
-	height: 11px;
+	background-position: -10px -1482px;
+	width: 22px;
+	height: 22px;
 	background-image: url(default.png);
 }
 /* menu */
@@ -670,8 +670,8 @@
 .ke-dialog-icon-close {
 	display: block;
 	background: url(default.png) no-repeat scroll 0px -688px;
-	width: 16px;
-	height: 16px;
+	width: 32px;
+	height: 32px;
 	position: absolute;
 	right: 6px;
 	top: 6px;
@@ -964,8 +964,8 @@
 .ke-swfupload-body .ke-delete {
 	display: block;
 	background: url(default.png) no-repeat scroll 0px -688px;
-	width: 16px;
-	height: 16px;
+	width: 32px;
+	height: 32px;
 	position: absolute;
 	right: 0;
 	top: 0;
@@ -991,7 +991,7 @@
 	width: 100px;
 	text-align: center;
 	overflow: hidden;
-	height:16px;
+	height:32px;
 }
 .ke-swfupload-body .ke-on {
 	border: 1px solid #5690D2;
@@ -1098,7 +1098,7 @@
 	width: 100px;
 	text-align: center;
 	overflow: hidden;
-	height:16px;
+	height:32px;
 }
 .ke-plugin-filemanager-body .ke-on {
 	border: 1px solid #5690D2;

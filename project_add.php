@@ -29,13 +29,6 @@
     $project_text = sprintf("%s,", GetSQLValueString(str_replace("%","%%",$_POST['project_text']), "text"));
     }
 
-    //项目成员
-    if ( empty( $_POST['project_from_contact'] ) ){
-    $project_from_contact = "'',";
-    }else{
-    $project_from_contact = sprintf("%s,", GetSQLValueString(str_replace("%","%%",$_POST['project_from_contact']), "text"));
-    }
-
     if ( empty( $_POST['project_start'] ) )
     		$_POST['project_start'] = '0000-00-00';
 
@@ -130,7 +123,7 @@
     $tk_team_disname=$_SESSION['MM_Displayname'];//组长显示名
     $tk_team_ulimit=3;//用户权限,组长是3
     $tk_team_del_status=1;//该用户在该项目中的删除状态
-    $tk_team_jointeamtime=date('Y-m-d H:i:s');//该用户加入该项目的时间，PHP date() 函数会返回服
+    $tk_team_jointeamtime=date('Y-m-d H:i:s');//该用户加入该项目的时间
     /*开始操作数据库了，insert语句*/
     $addnewmemSQL="INSERT INTO tk_team (tk_team_pid,tk_team_uid,tk_team_ulimit,tk_team_del_status,tk_team_jointeamtime)
     VALUES ($tk_team_pid,$tk_team_uid,$tk_team_ulimit,$tk_team_del_status,'$tk_team_jointeamtime')";
@@ -180,142 +173,11 @@
 
     }
  ?>
- 
-<script  src="js/jquery/horsey.js"></script>
-<script type="text/javascript">
-    $(window).load(function()
-	{
-        J.check.regform('form1');
-		
-    	$('#datepicker').datepicker({
-    		format: "yyyy-mm-dd"
-			<?php if ($language=="cn") {echo ", language: 'zh-CN'" ;}?>
-    	});
-    		
-		$('#datepicker2').datepicker({
-    		format: "yyyy-mm-dd"
-			<?php if ($language=="cn") {echo ", language: 'zh-CN'" ;}?>
-    	});
-		horsey(project_team_name, {
-	
-			suggestions:[
-			document.getElementById("constraint").value
-			],
-			render: function (li, suggestion) {		
-				li.innerHTML = suggestion.split('=')[0];
-			}
-		});
-    });
-	
-		function delet(id,obj){
-			var rowIndex = obj.parentElement.rowIndex;
-			document.getElementById(id).deleteRow(rowIndex);
-		}
-			
-    J.check.rules = [
-        { name: 'project_name', mid: 'projecttitle', type: 'limit', requir: true, min: 2, max: 32, warn: '<?php echo $multilingual_projectstatus_titlerequired; ?>' },
-    	//{ name: 'datepicker', mid: 'datepicker_msg', type: 'date',  warn: '<?php echo $multilingual_error_date; ?>' },
-    	//{ name: 'datepicker2', mid: 'datepicker2_msg', type: 'date',  warn: '<?php echo $multilingual_error_date; ?>' }
-    ];
-	
-	function add_to_list(){
-			
-		document.getElementById('teamlist_tr').innerHTML=document.getElementById('teamlist_tr').innerHTML+"<tr ><td  data-ellipsis=\"true\" data-ellipsis-max-width=\"30px\" style=\"width:150px;text-align:center;\">"+document.getElementById('uuname').value+"</td>" +
-				"<td  data-ellipsis=\"true\" data-ellipsis-max-width=\"30px\" style=\"width:150px;text-align:center;\">"+document.getElementById('uuphone').value+"</td><td  data-ellipsis=\"true\" data-ellipsis-max-width=\"30px\" style=\"width:200px;text-align:center;\">"+document.getElementById('uuemail').value+"</td><td ><a href='#'; onclick=\"delet(\"teamlist\",this);\""+">X</a><td></td></tr>";
-			var x=document.getElementById('uuname').value+"【"+document.getElementById('uuphone').value+"】【"+document.getElementById('uuemail').value+"】";
-			var i= document.getElementById('constraint').value.indexOf(x); 
-			var left=""
-			var right="";
-			if(i>0){
-				left =document.getElementById('constraint').value.substr(0,i-2);  
-				right =document.getElementById('constraint').value.substr(i,document.getElementById('constraint').length); 
-			}else {
-				right =document.getElementById('constraint').value; 
-			}					
-				
-			var rrr =right.split('||');
-			document.getElementById('selected').value=rrr[0]+"||";
-			document.getElementById('constraint').value=left+"||"+rrr[1];
-            		
-			document.getElementById('project_team_name').value="";
-			
-	}
-/*	
-
-
-			document.getElementById('teamlist_tr').innerHTML="<tr ><td  data-ellipsis=\"true\" data-ellipsis-max-width=\"30px\" style=\"width:150px;text-align:center;\">"+document.getElementById('uuname').value+"</td>" +
-				"<td  data-ellipsis=\"true\" data-ellipsis-max-width=\"30px\" style=\"width:150px;text-align:center;\">"+document.getElementById('uuphone').value+"</td><td  data-ellipsis=\"true\" data-ellipsis-max-width=\"30px\" style=\"width:200px;text-align:center;\">"+document.getElementById('uuemail').value+"</td><td ><a href='#'; onclick=\"delet(\"teamlist\",this);\""+">X</a><td></td></tr>";
-			var x=document.getElementById('uuname').value+"【"+document.getElementById('uuphone').value+"】【"+document.getElementById('uuemail').value+"】";
-			var i= document.getElementById('constraint').value.indexOf(x); 
-			var left=""
-			var right="";
-			if(i>0){
-				left =document.getElementById('constraint').value.substr(0,i-1);  
-				right =document.getElementById('constraint').value.substr(i-1,document.getElementById('constraint').length); 
-			}else {
-				right =document.getElementById('constraint').value; 
-			}					
-				
-			var rrr =right.split('||');
-			document.getElementById('selected').value=rrr[0]+"||";
-			document.getElementById('constraint').value=left+rrr[1];
-            		
-			document.getElementById('project_team_name').value="";
-			
-			
-			document.getElementById('teamlist_tr').append("'<tr >' +
-				'<td  data-ellipsis=\"true\" data-ellipsis-max-width=\"30px\" style=\"width:150px;text-align:center;\">'"+document.getElementById('uuname').value+"</td>" +
-				'<td  data-ellipsis="true" data-ellipsis-max-width="30px" style="width:150px;text-align:center;">'+document.getElementById('uuphone').value+"</td>" +
-				'<td  data-ellipsis="true" data-ellipsis-max-width="30px" style="width:200px;text-align:center;">'+document.getElementById('uuemail').value+"</td>" +
-				'<td ><a href='#'; "+' onclick="'+'"delet("'+'teamlist",this);"'+'>X</a><td> ' +
-				'</td>' +
-				"</tr>"");
-			var x=document.getElementById('uuname').value+"【"+document.getElementById('uuphone').value+"】【"+document.getElementById('uuemail').value+"】";
-			var i= document.getElementById('constraint').value.indexOf(x); 
-			var left=""
-			var right="";
-			if(i>0){
-				left =document.getElementById('constraint').value.substr(0,i-1);  
-				right =document.getElementById('constraint').value.substr(i-1,document.getElementById('constraint').length); 
-			}else {
-				right =document.getElementById('constraint').value; 
-			}					
-				
-			var rrr =right.split('||');
-			document.getElementById('selected').value=rrr[0]+"||";
-			document.getElementById('constraint').value=left+rrr[1];
-            		
-			document.getElementById('project_team_name').value="";*/
-			
-		
-</script>
-<script charset="utf-8" src="plug-in/editor/kindeditor.js"></script>
-<script charset="utf-8" src="plug-in/editor/lang/zh_CN.js"></script>
-<script>
-    var editor;
-    KindEditor.ready(function(K) {
-        editor = K.create('#project_text', {
-    		width : '100%',
-    		height: '350px',
-    		items:[
-				'source', '|', 'undo', 'redo', '|', 'preview', 'print', 'template', 'cut', 'copy', 'paste',
-				'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
-				'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
-				'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/',
-				'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
-				'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image',
-				'flash', 'media', 'insertfile', 'table', 'hr', 'map', 'code', 'pagebreak', 'anchor', 
-				'link', 'unlink', '|', 'about'
-			]
-		});
-    });
-	
-</script>
 <form action="<?php echo $editFormAction; ?>" method="post" name="myform" id="form1">
-    <table width="100%" border="0" cellspacing="0" cellpadding="0" >
+    <table width="100%" height="100px"  border="0" cellspacing="0" cellpadding="0" id="form1_table" >
         <tr>
 			<!-- 左边20%的宽度的树或者说明  -->
-			<td width="20%" class="input_task_right_bg" valign="top">
+			<td width="20%" height="100%" class="input_task_right_bg"  valign="top">
 				<table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
 					<tr>
 						<div class=" add_title col-xs-12">
@@ -329,13 +191,13 @@
 				</table>
 			</td>
 			<!-- 右边80%宽度的主体内容 -->
-			<td width="80%" valign="top" align="center">
-				<table width="90%" border="0" cellspacing="0" cellpadding="5" align="center" class="add_table">
+			<td width="80%"  height="100%" valign="top" align="center">
+				<table width="90%" border="0" cellspacing="0" cellpadding="5" align="center" id="add_table"class="add_table">
 					<tr>
 						<td>
 							<table width="98%" border="0" cellspacing="0" cellpadding="5" >
 								<tr>
-									<td  width="40%">
+									<td  width="540px">
 										<!-- 项目名称 -->
 										<div class="form-group">
 											<label for="project_name" class="project_label"><?php echo $multilingual_project_title; ?><span id="projecttitle"></span></label>
@@ -375,23 +237,25 @@
 											<span class="help-block"><?php echo $multilingual_project_tips2; ?></span> 
 											<div>
 												<input type="text" name="project_team_name" id="project_team_name" value="" style="float:left" 
-												class="form-control" style="width:550px;" data-ellipsis="true" data-ellipsis-max-width="150px"  autocomplete="off"  placeholder="<?php echo $multilingual_project_team_tips; ?>"  
+												class="form-control" style="width:600px;" data-ellipsis="true" data-ellipsis-max-width="150px"  autocomplete="off"  placeholder="<?php echo $multilingual_project_team_tips; ?>"  
 												/>												
-												<button type="button" style="font-size:20px;margin-left:20px;height:45px;"  name="button11" id="button11" style="float:left" class="btn btn-default" onclick="return add_to_list();"/><span class="glyphicon glyphicon-plus-sign"style="display:inline;"></span> <?php echo $multilingual_global_addbtn; ?>
+												<button type="button" style="font-size:20px;margin-left:50px;height:45px;"  name="button11" id="button11" style="float:left" class="btn btn-default" onclick="return add_to_list();"/><span class="glyphicon glyphicon-plus-sign"style="display:inline;"></span> <?php echo $multilingual_global_addbtn; ?>
 												</button>
 												<input id="uuid" style="display:none;"/>
 												<input id="uuname" style="display:none;"/>
 												<input id="uuemail" style="display:none;"/>
 												<input id="uuphone" style="display:none;"/>
-												<div style="border:2px solid #ddd;margin-top:20px;width:550px;height:150px;overflow:scroll">
-												<table id="teamlist" height="150px" width="550px" class="teamlist_table table table-condensed " border="0" cellspacing="0" cellpadding="5" align="center">
+												<div style="border:2px solid #ddd;margin-top:20px;width:620px;height:150px;overflow:scroll">
+												<table id="teamlist" height="150px" width="650px" class="teamlist_table table table-condensed " border="0" cellspacing="0" cellpadding="5" align="center">
 													<thead>
 														<tr>
+														<th style="display:none">id
+														</th>
 														<th style="width:150px;text-align:center;">用户名
 														</th>
 														<th style="width:150px;text-align:center;">联系方式
 														</th>
-														<th style="width:245px;text-align:center;">注册邮箱
+														<th style="width:250px;text-align:center;">注册邮箱
 														</th>
 														<th style="width:5px;text-align:center;">
 														</th>
@@ -406,9 +270,8 @@
 									</td>
 								</tr>
 							</table>	
-
-										<script src="js/jquery/jquery.ellipsis.js"></script>
-										<script src="js/jquery/jquery.ellipsis.unobtrusive.js"></script>							
+							<script src="js/jquery/jquery.ellipsis.js"></script>
+							<script src="js/jquery/jquery.ellipsis.unobtrusive.js"></script>					
 							<div class="form-group ">
 								<label for="project_text"><?php echo $multilingual_project_description; ?></label>
 								<div>
@@ -417,22 +280,120 @@
 							</div>
 						</td>
 					</tr>
+					<tr >
+						<td align="left" >
+							<table width="250px" border="0" cellspacing="0" cellpadding="5" style="margin-left:650px;margin-top:20px;">
+							<!-- 提交按钮 -->
+								<tr >
+									<td >
+										<button type="submit" class="btn btn-primary btn-sm" name="cont" style="width:100px"><?php echo $multilingual_global_action_save; ?></button>
+									</td>
+									<td  width="20%" align="center" >
+										<button type="button" class="btn btn-default btn-sm" style="width:100px" onClick="javascript:history.go(-1);"><?php echo $multilingual_global_action_cancel; ?></button>
+										<input type="hidden" name="MM_insert" value="form1" />
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
 				</table>
-			</td>
-		</tr>
-		<tr class="input_task_bottom_bg" >
-			<td></td>
-			<td height="50px">
-				<!-- 提交按钮 -->
-				<button type="submit" class="btn btn-primary btn-sm submitbutton" name="cont" ><?php echo $multilingual_global_action_save; ?></button>
-				<button type="button" class="btn btn-default btn-sm" onClick="javascript:history.go(-1);"><?php echo $multilingual_global_action_cancel; ?></button>
-				<input type="hidden" name="MM_insert" value="form1" />
 			</td>
 		</tr>
     </table>
 </form>
-<?php require('foot.php'); ?>
 </div>
+<?php require('foot.php'); ?>
+ 
+<script charset="utf-8" src="plug-in/editor/kindeditor.js"></script>
+<script charset="utf-8" src="plug-in/editor/lang/zh_CN.js"></script>
+<script  src="js/jquery/horsey.js"></script>
+<script >
+
+    var editor;
+    KindEditor.ready(function(K) {
+        editor = K.create('#project_text', {
+    		width : '1150px',
+    		height: '350px',
+    		items:[
+				'source', '|', 'undo', 'redo', '|', 'preview', 'print', 'template', 'cut', 'copy', 'paste',
+				'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
+				'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+				'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/',
+				'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+				'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image',
+				'flash', 'media', 'insertfile', 'table', 'hr', 'map', 'code', 'pagebreak', 'anchor', 
+				'link', 'unlink', '|', 'about'
+			]
+		});
+    });
+    $(window).load(function()
+	{
+        J.check.regform('form1');
+		
+    	$('#datepicker').datepicker({
+    		format: "yyyy-mm-dd"
+			<?php if ($language=="cn") {echo ", language: 'zh-CN'" ;}?>
+    	});
+    		
+		$('#datepicker2').datepicker({
+    		format: "yyyy-mm-dd"
+			<?php if ($language=="cn") {echo ", language: 'zh-CN'" ;}?>
+    	});
+		horsey(project_team_name, {
+	
+			suggestions:[
+			document.getElementById("constraint").value
+			],
+			render: function (li, suggestion) {		
+				li.innerHTML = suggestion.split('=')[0];
+			}
+		});
+		$("#form1_table").css("height",document.getElementById("add_table").clientHeight+"px");
+		$("#foot_top").css("min-height",document.getElementById("form1_table").offsetHeight+document.getElementById("top_height").offsetHeight-20+"px");
+
+    });
+	$(window).resize(function()
+	{	
+		$("#form1_table").css("height",document.getElementById("add_table").clientHeight+"px");
+		$("#foot_top").css("min-height",document.getElementById("form1_table").offsetHeight+document.getElementById("top_height").offsetHeight+60+"px"); 
+		
+	});
+	
+		function delet(id,obj){
+			var rowIndex = obj.parentElement.rowIndex;
+			document.getElementById(id).deleteRow(rowIndex);
+		}
+			
+    J.check.rules = [
+        { name: 'project_name', mid: 'projecttitle', type: 'limit', requir: true, min: 2, max: 32, warn: '<?php echo $multilingual_projectstatus_titlerequired; ?>' },
+    	//{ name: 'datepicker', mid: 'datepicker_msg', type: 'date',  warn: '<?php echo $multilingual_error_date; ?>' },
+    	//{ name: 'datepicker2', mid: 'datepicker2_msg', type: 'date',  warn: '<?php echo $multilingual_error_date; ?>' }
+    ];
+	
+	function add_to_list(){
+			
+		document.getElementById('teamlist_tr').innerHTML=document.getElementById('teamlist_tr').innerHTML+"<tr ><td style=\"display:none;\">"+document.getElementById('uuid').value+"</td><td  data-ellipsis=\"true\" data-ellipsis-max-width=\"30px\" style=\"width:150px;text-align:center;\">"+document.getElementById('uuname').value+"</td>" +
+				"<td  data-ellipsis=\"true\" data-ellipsis-max-width=\"30px\" style=\"width:150px;text-align:center;\">"+document.getElementById('uuphone').value+"</td><td  data-ellipsis=\"true\" data-ellipsis-max-width=\"30px\" style=\"width:200px;text-align:center;\">"+document.getElementById('uuemail').value+"</td><td ><a href='#'; onclick=\"delet(\"teamlist\",this);\""+">X</a><td></td></tr>";
+			var x=document.getElementById('uuname').value+"【"+document.getElementById('uuphone').value+"】【"+document.getElementById('uuemail').value+"】";
+			var i= document.getElementById('constraint').value.indexOf(x); 
+			var left=""
+			var right="";
+			if(i>0){
+				left =document.getElementById('constraint').value.substr(0,i-2);  
+				right =document.getElementById('constraint').value.substr(i,document.getElementById('constraint').length); 
+			}else {
+				right =document.getElementById('constraint').value; 
+			}					
+				
+			var rrr =right.split('||');
+			document.getElementById('selected').value=rrr[0]+"||";
+			document.getElementById('constraint').value=left+"||"+rrr[1];
+            		
+			document.getElementById('project_team_name').value="";
+			
+	}		
+		
+</script>
 </body>
 </html>
 <?php
