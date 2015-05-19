@@ -205,7 +205,6 @@
 				li.innerHTML = suggestion.split('=')[0];
 			}
 		});
-		
     });
 	
 		function delet(id,obj){
@@ -218,7 +217,52 @@
     	//{ name: 'datepicker', mid: 'datepicker_msg', type: 'date',  warn: '<?php echo $multilingual_error_date; ?>' },
     	//{ name: 'datepicker2', mid: 'datepicker2_msg', type: 'date',  warn: '<?php echo $multilingual_error_date; ?>' }
     ];
+	
+	function add_to_list(){
+			
+		document.getElementById('teamlist_tr').innerHTML=document.getElementById('teamlist_tr').innerHTML+"<tr ><td  data-ellipsis=\"true\" data-ellipsis-max-width=\"30px\" style=\"width:150px;text-align:center;\">"+document.getElementById('uuname').value+"</td>" +
+				"<td  data-ellipsis=\"true\" data-ellipsis-max-width=\"30px\" style=\"width:150px;text-align:center;\">"+document.getElementById('uuphone').value+"</td><td  data-ellipsis=\"true\" data-ellipsis-max-width=\"30px\" style=\"width:200px;text-align:center;\">"+document.getElementById('uuemail').value+"</td><td ><a href='#'; onclick=\"delet(\"teamlist\",this);\""+">X</a><td></td></tr>";
+			var x=document.getElementById('uuname').value+"【"+document.getElementById('uuphone').value+"】【"+document.getElementById('uuemail').value+"】";
+			var i= document.getElementById('constraint').value.indexOf(x); 
+			var left=""
+			var right="";
+			if(i>0){
+				left =document.getElementById('constraint').value.substr(0,i-2);  
+				right =document.getElementById('constraint').value.substr(i,document.getElementById('constraint').length); 
+			}else {
+				right =document.getElementById('constraint').value; 
+			}					
+				
+			var rrr =right.split('||');
+			document.getElementById('selected').value=rrr[0]+"||";
+			document.getElementById('constraint').value=left+"||"+rrr[1];
+            		
+			document.getElementById('project_team_name').value="";
+			
+	}
 /*	
+
+
+			document.getElementById('teamlist_tr').innerHTML="<tr ><td  data-ellipsis=\"true\" data-ellipsis-max-width=\"30px\" style=\"width:150px;text-align:center;\">"+document.getElementById('uuname').value+"</td>" +
+				"<td  data-ellipsis=\"true\" data-ellipsis-max-width=\"30px\" style=\"width:150px;text-align:center;\">"+document.getElementById('uuphone').value+"</td><td  data-ellipsis=\"true\" data-ellipsis-max-width=\"30px\" style=\"width:200px;text-align:center;\">"+document.getElementById('uuemail').value+"</td><td ><a href='#'; onclick=\"delet(\"teamlist\",this);\""+">X</a><td></td></tr>";
+			var x=document.getElementById('uuname').value+"【"+document.getElementById('uuphone').value+"】【"+document.getElementById('uuemail').value+"】";
+			var i= document.getElementById('constraint').value.indexOf(x); 
+			var left=""
+			var right="";
+			if(i>0){
+				left =document.getElementById('constraint').value.substr(0,i-1);  
+				right =document.getElementById('constraint').value.substr(i-1,document.getElementById('constraint').length); 
+			}else {
+				right =document.getElementById('constraint').value; 
+			}					
+				
+			var rrr =right.split('||');
+			document.getElementById('selected').value=rrr[0]+"||";
+			document.getElementById('constraint').value=left+rrr[1];
+            		
+			document.getElementById('project_team_name').value="";
+			
+			
 			document.getElementById('teamlist_tr').append("'<tr >' +
 				'<td  data-ellipsis=\"true\" data-ellipsis-max-width=\"30px\" style=\"width:150px;text-align:center;\">'"+document.getElementById('uuname').value+"</td>" +
 				'<td  data-ellipsis="true" data-ellipsis-max-width="30px" style="width:150px;text-align:center;">'+document.getElementById('uuphone').value+"</td>" +
@@ -333,7 +377,7 @@
 												<input type="text" name="project_team_name" id="project_team_name" value="" style="float:left" 
 												class="form-control" style="width:550px;" data-ellipsis="true" data-ellipsis-max-width="150px"  autocomplete="off"  placeholder="<?php echo $multilingual_project_team_tips; ?>"  
 												/>												
-												<button type="button" style="font-size:20px;margin-left:20px;height:45px;"  name="button11" id="button11" style="float:left" class="btn btn-default" /><span class="glyphicon glyphicon-plus-sign"style="display:inline;"></span> <?php echo $multilingual_global_addbtn; ?>
+												<button type="button" style="font-size:20px;margin-left:20px;height:45px;"  name="button11" id="button11" style="float:left" class="btn btn-default" onclick="return add_to_list();"/><span class="glyphicon glyphicon-plus-sign"style="display:inline;"></span> <?php echo $multilingual_global_addbtn; ?>
 												</button>
 												<input id="uuid" style="display:none;"/>
 												<input id="uuname" style="display:none;"/>
