@@ -30,6 +30,7 @@ $multilingual_dd_announcement_offline = "下线";
 $multilingual_global_all = "不限";
 $multilingual_global_select = "请选择";
 $multilingual_global_searchbtn = "搜索";
+$multilingual_global_addbtn = "添加";
 $multilingual_global_filterbtn = "筛选";
 $multilingual_global_excel = "导出Excel";
 $multilingual_global_excelfile = "Capteam_File_TaskList_";
@@ -372,7 +373,7 @@ $multilingual_project_remark = "评论";
 $multilingual_project_none = "没有符合条件的项目";
 $multilingual_project_none2 = "还没创建项目";
 $multilingual_project_tips = "状态包含'结束'两字的项目纳入归档项目，在操作中不可使用";
-$multilingual_project_tips2 = "只有项目成员才能参与项目完成相应操作";
+$multilingual_project_tips2 = "只有团队成员才能参与项目完成相应操作，您也可以在稍后添加成员";
 $multilingual_project_view_title = "项目详情";
 $multilingual_project_view_section1 = "项目基本信息";
 $multilingual_project_view_section2 = "甲方信息";
@@ -401,15 +402,15 @@ $multilingual_project_newtask = "下发任务";
 $multilingual_projectmem_title = "项目成员管理";
 $multilingual_projectmem_text = "在WSS 扩展功能中，您可以为一个项目组添加固定的成员，所有项目相关的内容，如：任务、文档、日志、项目详情等，只对该项目组的成员开放。";
 
-$multilingual_project_view_nowbs = "关于项目";
+$multilingual_project_view_nowbs = "&nbsp;&nbsp;&nbsp;关于项目";
 $multilingual_stage_view_nowbs = "关于阶段";
 $multilingual_project_view_nowbstext = "<p>点击“下发任务”，可以基于该项目创建子项目或子任务。</p><br />
 <p>您可以根据需要按照里程碑或任务类型将大型项目分解为若干子项目或子任务，从而将复杂的任务简单化，同时，也便于管理、跟踪。</p>
 ";
 
-$multilingual_project_add_text = "<p>每个项目包含了一个团队。</p><br />
-<p>创建一个项目，然后您才能分解阶段。</p><br />
-<p>项目创建人就是组长，他／她可以为项目选择若干成员，并且分配不同职责：帮助组长分配任务，或者去完成任务。</p>
+$multilingual_project_add_text = "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每个项目包含了一个团队。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;创建一个项目，然后您才能分解阶段。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;项目创建人就是组长，他／她可以为项目选择若干成员，并且分配不同职责：帮助组长分配任务，或者去完成任务。</p>
 ";
 
 $multilingual_stage_add_text = "<p>每个项目将经历不同阶段。</p><br />
@@ -417,6 +418,7 @@ $multilingual_stage_add_text = "<p>每个项目将经历不同阶段。</p><br /
 <p>只有分解出项目所属的阶段，才能在阶段内下发任务，使项目的完成更加有层次、条理。</p>
 ";
 $multilingual_project_title_tips = "请填写项目名称";
+$multilingual_project_team_tips = "请输入用户名、注册邮箱或手机号";
 $multilingual_stage_title_tips = "请填写阶段名称";
 $multilingual_privilege_grant = "赋予权限";
 $multilingual_privilege_remove = "回收权限";

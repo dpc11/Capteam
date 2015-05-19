@@ -210,7 +210,7 @@ $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recor
 			</thead>
 			<tbody>
 				<?php do { ?>
-					<tr>			
+					<tr >			
 					<!-- 项目列表内容，与上面的表头对应 -->
 					<td class="week_style_padtd" ><?php echo $R_list_num; ?></td>
 					<td  class="week_style_padtd" >&nbsp;&nbsp;<a href="project_view.php?recordID=<?php echo $row_Recordset1['id']; ?>&pagetab=<?php echo $pagetabs; ?>" ><?php echo $row_Recordset1['project_name']; ?></a>&nbsp; </td>

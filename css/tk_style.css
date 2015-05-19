@@ -34,6 +34,22 @@ p {
     margin: 5px;
 }
 
+h3{
+	margin-bottom:10px;
+	margin-top:30px;
+    float: left;	
+	font-family : 微软雅黑;
+	font-size: 34px;
+	font-weight: bold;
+	color:#494747;
+}
+h4{
+	font-family : 微软雅黑;
+	margin-bottom:30px;
+	font-size: 26px;
+	font-weight: bold;
+	color:#5A5A5A;
+}
 .search_warning{
 	text-align:center;
 	font-size:24px;
@@ -191,7 +207,7 @@ a:focus {
 
 .ui-widget {
     font-family: Verdana, Arial, sans-serif;
-    font-size: 1.1em;
+    font-size: 22px;
 }
 
 .ui-icon {
@@ -482,7 +498,7 @@ a:focus {
     margin: 14px auto 8px auto;
     width: 900px;
     color: #666;
-    font-size: 1.2em;
+    font-size: 25px;
 }
 
 .wss_logo {
@@ -846,6 +862,24 @@ a:focus {
 
 .input_task_bottom_bg {
     background: #ddd;
+}
+
+.input_task_right_bg .add_title{
+	width:100%;
+	overflow:hidden;
+	margin-bottom:10px;
+	margin-top:10px;
+	padding-left:26px;
+	font-family : 微软雅黑;
+	font-size: 34px;
+	font-weight: bold;
+	color:#494747;
+	text-align:center;
+}
+.input_task_right_bg p{
+	margin-top:10px;
+	font-size: 20px;
+	color:#797979;
 }
 /********view task*******/
 
@@ -1504,7 +1538,7 @@ a:focus {
 
 .beauty-label {
     font-weight: 500;
-    font-size: 1.2em;
+    font-size: 15px;
     margin: 6px auto 4px auto;
 }
 
@@ -1522,7 +1556,7 @@ a:focus {
     height: 30px;
     line-height: 30px;
     border-bottom: 1px solid #DDD;
-    font-size: 1.6em;
+    font-size: 35px;
     margin-top: 5px;
     font-weight: 600;
 }
@@ -1575,13 +1609,35 @@ a:focus {
 }
 
 .btn-sm {
-    font-size: 1em; !important
+    font-size: 22px; !important
 }
-
 label {
-    font-size: 1.1em;
+    font-size: 24px;
 }
 
 p {
-    font-size: 1.05em;
+    font-size: 23px;
+}
+.add_table{
+	margin:40px 30px;
+}
+.add_table label{
+    font-size: 24px;
+	margin-bottom:10px;
+	color:#646464;
+}
+.add_table input{
+    width: 400px;
+    font-size: 20px;
+	height:45px;
+}
+.add_table .select_team{
+	absolute:relative;
+	top:0px;
+	left:0px;
+}
+.teamlist_table{
+	color:#646464;
+	text-align:center;
+	table-layout: fixed 
 }

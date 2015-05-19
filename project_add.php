@@ -4,6 +4,18 @@
 <?php require_once('function/config_function.php'); ?>
 <?php require_once('function/project_function.php'); ?>
 <?php require_once('function/user_function.php'); ?>
+
+<?php require('head.php'); ?>
+<link type="text/css" href="css/jquery/horsey.css" rel="stylesheet" />
+<link type="text/css" href="css/ui/ui.all.css" rel="stylesheet" />
+<link type="text/css" href="css/lhgcore/lhgcheck.css" rel="stylesheet" />
+<script type="text/javascript" src="js/lhgcore/lhgcheck.js"></script>
+<link rel="stylesheet" href="css/bootstrap/bootstrap-multiselect.css" type="text/css"/>
+<script type="text/javascript" src="js/bootstrap/bootstrap-multiselect.js"></script>
+<link rel="stylesheet" href="css/bootstrap/datepicker3.css" type="text/css"/>
+<script type="text/javascript" src="js/bootstrap/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="js/bootstrap/locales/bootstrap-datepicker.zh-CN.js"></script>
+
 <?php
     $dateError = 1;//no error
     $editFormAction = $_SERVER['PHP_SELF'];
@@ -90,18 +102,26 @@
                 $insertGoTo .= $_SERVER['QUERY_STRING'];
               }
               header(sprintf("Location: %s", $insertGoTo));
+			  exit;
         }
     }
-
-    $user_arr = get_all_user_select();
-
-    mysql_select_db($database_tankdb, $tankdb);
-    $query_Recordset3 = "SELECT * FROM tk_status_project ORDER BY task_status_pbackup1 ASC";
-    $Recordset3 = mysql_query($query_Recordset3, $tankdb) or die(mysql_error());
-    $row_Recordset3 = mysql_fetch_assoc($Recordset3);
-    $totalRows_Recordset3 = mysql_num_rows($Recordset3);
-
-
+	$selected="";
+    $userRS = get_all_user_select($_SESSION['MM_uid']);
+	$user_arr_list = mysql_fetch_assoc($userRS);
+	$phone="空";
+	if($user_arr_list["tk_user_contact"]==""){ $phone="空";}else{ 	$phone=$user_arr_list["tk_user_contact"]; }
+	$constraint = $user_arr_list["tk_display_name"]."【".$user_arr_list["tk_user_contact"]."】【".$user_arr_list["tk_user_email"]."】=".$user_arr_list["uid"]."%".$user_arr_list["tk_display_name"]."%".$phone ."%".$user_arr_list["tk_user_email"]."%".$user_arr_list["tk_display_name"]."'";
+					
+	if($user_arr_list = mysql_fetch_assoc($userRS)){
+		do { 
+			if($user_arr_list["tk_user_contact"]==""){ $phone="空";}else{ 	$phone=$user_arr_list["tk_user_contact"]; }
+			$constraint .= "||".$user_arr_list["tk_display_name"]."【".$user_arr_list["tk_user_contact"]."】【".$user_arr_list["tk_user_email"]."】=".$user_arr_list["uid"]."%".$user_arr_list["tk_display_name"]."%".$phone ."%".$user_arr_list["tk_user_email"]."%".$user_arr_list["tk_display_name"]."'";
+		} while ($user_arr_list = mysql_fetch_assoc($userRS)); 
+	}
+	
+	echo '<input style="display:none" id="constraint" value="'.$constraint.'"/>';
+	echo '<input style="display:none" id="selected" value="'.$selected.'"/>';
+	
     if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
     //往tk_team表中插入相关的用户成员
     //插入项目负责人
@@ -160,19 +180,13 @@
 
     }
  ?>
-<?php require('head.php'); ?>
-<link type="text/css" href="css/ui/ui.all.css" rel="stylesheet" />
-<link href="css/lhgcore/lhgcheck.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="js/lhgcore/lhgcore.js"></script>
-<script type="text/javascript" src="js/lhgcore/lhgcheck.js"></script>
-<link rel="stylesheet" href="css/bootstrap/bootstrap-multiselect.css" type="text/css"/>
-<script type="text/javascript" src="js/bootstrap/bootstrap-multiselect.js"></script>
-<link rel="stylesheet" href="css/bootstrap/datepicker3.css" type="text/css"/>
-<script type="text/javascript" src="js/bootstrap/bootstrap-datepicker.js"></script>
-<script type="text/javascript" src="js/bootstrap/locales/bootstrap-datepicker.zh-CN.js"></script>
-
+ 
+<script  src="js/jquery/horsey.js"></script>
 <script type="text/javascript">
-    $(function() {
+    $(window).load(function()
+	{
+        J.check.regform('form1');
+		
     	$('#datepicker').datepicker({
     		format: "yyyy-mm-dd"
 			<?php if ($language=="cn") {echo ", language: 'zh-CN'" ;}?>
@@ -182,19 +196,54 @@
     		format: "yyyy-mm-dd"
 			<?php if ($language=="cn") {echo ", language: 'zh-CN'" ;}?>
     	});
-    });
+		horsey(project_team_name, {
+	
+			suggestions:[
+			document.getElementById("constraint").value
+			],
+			render: function (li, suggestion) {		
+				li.innerHTML = suggestion.split('=')[0];
+			}
+		});
 		
+    });
+	
+		function delet(id,obj){
+			var rowIndex = obj.parentElement.rowIndex;
+			document.getElementById(id).deleteRow(rowIndex);
+		}
+			
     J.check.rules = [
         { name: 'project_name', mid: 'projecttitle', type: 'limit', requir: true, min: 2, max: 32, warn: '<?php echo $multilingual_projectstatus_titlerequired; ?>' },
     	//{ name: 'datepicker', mid: 'datepicker_msg', type: 'date',  warn: '<?php echo $multilingual_error_date; ?>' },
     	//{ name: 'datepicker2', mid: 'datepicker2_msg', type: 'date',  warn: '<?php echo $multilingual_error_date; ?>' }
-    	
     ];
-
-    window.onload = function()
-    {
-        J.check.regform('form1');
-    }
+/*	
+			document.getElementById('teamlist_tr').append("'<tr >' +
+				'<td  data-ellipsis=\"true\" data-ellipsis-max-width=\"30px\" style=\"width:150px;text-align:center;\">'"+document.getElementById('uuname').value+"</td>" +
+				'<td  data-ellipsis="true" data-ellipsis-max-width="30px" style="width:150px;text-align:center;">'+document.getElementById('uuphone').value+"</td>" +
+				'<td  data-ellipsis="true" data-ellipsis-max-width="30px" style="width:200px;text-align:center;">'+document.getElementById('uuemail').value+"</td>" +
+				'<td ><a href='#'; "+' onclick="'+'"delet("'+'teamlist",this);"'+'>X</a><td> ' +
+				'</td>' +
+				"</tr>"");
+			var x=document.getElementById('uuname').value+"【"+document.getElementById('uuphone').value+"】【"+document.getElementById('uuemail').value+"】";
+			var i= document.getElementById('constraint').value.indexOf(x); 
+			var left=""
+			var right="";
+			if(i>0){
+				left =document.getElementById('constraint').value.substr(0,i-1);  
+				right =document.getElementById('constraint').value.substr(i-1,document.getElementById('constraint').length); 
+			}else {
+				right =document.getElementById('constraint').value; 
+			}					
+				
+			var rrr =right.split('||');
+			document.getElementById('selected').value=rrr[0]+"||";
+			document.getElementById('constraint').value=left+rrr[1];
+            		
+			document.getElementById('project_team_name').value="";*/
+			
+		
 </script>
 <script charset="utf-8" src="plug-in/editor/kindeditor.js"></script>
 <script charset="utf-8" src="plug-in/editor/lang/zh_CN.js"></script>
@@ -217,84 +266,109 @@
 		});
     });
 	
-    $(document).ready(function() {
-		$('#select2').multiselect({
-			enableCaseInsensitiveFiltering: true,
-    		maxHeight: 360,
-    		filterPlaceholder: '<?php echo $multilingual_user_filter; ?>'
-        });
-    });
 </script>
-
 <form action="<?php echo $editFormAction; ?>" method="post" name="myform" id="form1">
-    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" >
         <tr>
 			<!-- 左边20%的宽度的树或者说明  -->
 			<td width="20%" class="input_task_right_bg" valign="top">
 				<table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
 					<tr>
+						<div class=" add_title col-xs-12">
+							<h3 ><?php echo $multilingual_projectlist_new; ?></h3>
+						</div>
 						<td valign="top" class="gray2">
-							<h4 style="margin-top:40px; margin-left: 5px;" ><strong><?php echo $multilingual_project_view_nowbs; ?></strong></h4>
+							<h4 style="margin-top:40px; margin-left: 5px;" ><?php echo $multilingual_project_view_nowbs; ?></h4>
 							<p > <?php echo $multilingual_project_add_text; ?></p>
 						</td>
 					</tr>
 				</table>
 			</td>
 			<!-- 右边80%宽度的主体内容 -->
-			<td width="80%" valign="top">
-				<table width="98%" border="0" cellspacing="0" cellpadding="5" align="center">
+			<td width="80%" valign="top" align="center">
+				<table width="90%" border="0" cellspacing="0" cellpadding="5" align="center" class="add_table">
 					<tr>
 						<td>
-							<div class="col-xs-12">
-								<h3><?php echo $multilingual_projectlist_new; ?></h3>
-							</div>
-							<!-- 项目名称 -->
-							<div class="form-group col-xs-12">
-								<label for="project_name"><?php echo $multilingual_project_title; ?><span id="projecttitle"></span></label>
-								<div>
-									<input type="text" name="project_name" id="project_name" value="" class="form-control" placeholder="<?php echo $multilingual_project_title_tips; ?>" />
-								</div>
-							</div>
-							<!-- 项目组长为当前用户，此处添加多个项目组员 -->
-							<div class="form-group  col-xs-12">
-								<label for="select2" ><?php echo $multilingual_project_touser; ?><span id="csa_to_user_msg"></span></label>
-								<div >
-									<select name="project_to_user[]" id="select2" size="6" multiple class="form-control">
-										<?php foreach($user_arr as $key => $val){ 
-											if($val["uid"] <> $_SESSION["MM_uid"]){
-										?>
-											<option value='<?php echo $val["uid"]?>'><?php echo $val["uid"]."  ".$val["name"];?></option>
-										<?php }} ?>  
-									</select>
-								</div>
-								<span class="help-block"><?php echo $multilingual_project_tips2; ?></span> 
-							</div>					  
-							<div class="form-group col-xs-12">
+							<table width="98%" border="0" cellspacing="0" cellpadding="5" >
+								<tr>
+									<td  width="40%">
+										<!-- 项目名称 -->
+										<div class="form-group">
+											<label for="project_name" class="project_label"><?php echo $multilingual_project_title; ?><span id="projecttitle"></span></label>
+											<div>
+												<input type="text" name="project_name" id="project_name" value="" class="form-control" placeholder="<?php echo $multilingual_project_title_tips; ?>" />
+											</div>
+										</div>
+										<!-- 起始时间 -->
+										<div class="form-group">
+											<label for="datepicker"><?php echo $multilingual_project_start; ?><!--<span id="datepicker_msg"></span>-->
+												<label style="color:#F00;font-size:14px">
+													<?php if($dateError==-2) { echo ('&nbsp&nbsp&nbsp');echo "结束时间小于开始时间";} ?>
+												</label>
+											</label>
+											<div>
+												<input type="text" name="project_start" id="datepicker" value="<?php echo date('Y-m-d'); ?>" class="form-control"  />
+											</div>
+										</div>
+										<!-- 结束时间 -->		  
+										<div class="form-group " >
+											<label for="datepicker2"><?php echo $multilingual_project_end; ?><!--<span id="datepicker2_msg"></span>-->
+												<label style="color:#F00;font-size:14px">
+													<?php if($dateError==-2) {echo ('&nbsp&nbsp&nbsp');echo "结束时间小于开始时间";} else if ($dateError==-1) {echo ('&nbsp&nbsp&nbsp'); echo "结束时间小于今天";} ?>
+												</label>
+											</label>
+											<div>
+												<input type="text" name="project_end" id="datepicker2" value="<?php echo date("Y-m-d",strtotime("+7 day")); ?>" class="form-control" />
+											</div>
+										</div>
+									</td>
+									<td valign="top">
+									
+
+										<!-- 项目组长为当前用户，此处添加多个项目组员 -->
+										<div class="form-group" id="select_team" class="select_team">
+											<label for="select2" ><?php echo $multilingual_project_touser; ?><span id="csa_to_user_msg"></span></label>
+											<span class="help-block"><?php echo $multilingual_project_tips2; ?></span> 
+											<div>
+												<input type="text" name="project_team_name" id="project_team_name" value="" style="float:left" 
+												class="form-control" style="width:550px;" data-ellipsis="true" data-ellipsis-max-width="150px"  autocomplete="off"  placeholder="<?php echo $multilingual_project_team_tips; ?>"  
+												/>												
+												<button type="button" style="font-size:20px;margin-left:20px;height:45px;"  name="button11" id="button11" style="float:left" class="btn btn-default" /><span class="glyphicon glyphicon-plus-sign"style="display:inline;"></span> <?php echo $multilingual_global_addbtn; ?>
+												</button>
+												<input id="uuid" style="display:none;"/>
+												<input id="uuname" style="display:none;"/>
+												<input id="uuemail" style="display:none;"/>
+												<input id="uuphone" style="display:none;"/>
+												<div style="border:2px solid #ddd;margin-top:20px;width:550px;height:150px;overflow:scroll">
+												<table id="teamlist" height="150px" width="550px" class="teamlist_table table table-condensed " border="0" cellspacing="0" cellpadding="5" align="center">
+													<thead>
+														<tr>
+														<th style="width:150px;text-align:center;">用户名
+														</th>
+														<th style="width:150px;text-align:center;">联系方式
+														</th>
+														<th style="width:245px;text-align:center;">注册邮箱
+														</th>
+														<th style="width:5px;text-align:center;">
+														</th>
+														</tr>
+													</thead>
+													<tbody id="teamlist_tr">
+													</tbody>
+												</table>
+												</div>
+											</div>
+										</div>	
+									</td>
+								</tr>
+							</table>	
+
+										<script src="js/jquery/jquery.ellipsis.js"></script>
+										<script src="js/jquery/jquery.ellipsis.unobtrusive.js"></script>							
+							<div class="form-group ">
 								<label for="project_text"><?php echo $multilingual_project_description; ?></label>
 								<div>
 								  <textarea name="project_text" id="project_text"></textarea>
-								</div>
-							</div>
-							<!-- 起始时间 -->
-							<div class="form-group col-xs-12">
-								<label for="datepicker"><?php echo $multilingual_project_start; ?><!--<span id="datepicker_msg"></span>-->
-									<label style="color:#F00;font-size:14px">
-										<?php if($dateError==-2) { echo ('&nbsp&nbsp&nbsp');echo "结束时间小于开始时间";} ?>
-									</label>
-								</label>
-								<div>
-									<input type="text" name="project_start" id="datepicker" value="<?php echo date('Y-m-d'); ?>" class="form-control"  />
-								</div>
-							</div>
-							<!-- 结束时间 -->		  
-							<div class="form-group col-xs-12">
-								<label for="datepicker2"><?php echo $multilingual_project_end; ?><!--<span id="datepicker2_msg"></span>-->
-									<label style="color:#F00;font-size:14px">
-										<?php if($dateError==-2) {echo ('&nbsp&nbsp&nbsp');echo "结束时间小于开始时间";} else if ($dateError==-1) {echo ('&nbsp&nbsp&nbsp'); echo "结束时间小于今天";} ?>
-									</label>
-								</label>
-								<div>
-									<input type="text" name="project_end" id="datepicker2" value="<?php echo date("Y-m-d",strtotime("+7 day")); ?>" class="form-control" />
 								</div>
 							</div>
 						</td>
