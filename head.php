@@ -75,6 +75,11 @@ $totalRows_Recordset_anc=0;
 					<a href="schedule_view.php" 
 					class="<?php if($pagename == "schedule_view.php" || $pagename == "schedule_task.php" || $pagename == "schedule_person.php" || $pagename == "schedule_course.php"){
 					echo "nav_select";} ?>"><?php echo $multilingual_head_schedule; ?></a> 
+
+					<a href="base_view.php" 
+					class="<?php if($pagename == "base_view.php"){
+					echo "nav_select";} ?>"><?php echo $multilingual_head_board; ?></a> 
+
 				</div>
 
 
