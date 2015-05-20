@@ -1320,7 +1320,7 @@ $totalRows_Recordset2 = mysql_num_rows($Recordset2);
 								<td class="week_style_padtd " width="70px" align="center"><span class="<?php  if($row_Recordset1['csa_status']==2){ echo " red "; }   ?>" ><?php echo $row_Recordset1['csa_plan_et']; ?>&nbsp;</span></td>
 								<td class="week_style_padtd" width="200px" data-ellipsis="true"data-ellipsis-max-width="240px">
 								<a href="project_view.php?recordID=<?php echo $row_Recordset1['csa_project']; ?>" target="_parent" title="<?php echo $row_Recordset1['project_name_prt']; ?>"><?php echo $row_Recordset1['project_name_prt']; ?></a></td>
-								<td class="week_style_padtd "  width="200px" data-ellipsis="true"data-ellipsis-max-width="240px"><a href="stage_view.php?recordID=<?php echo $row_Recordset1['csa_project_stage']; ?>" target="_parent" title="<?php echo $row_Recordset1['stage_name_prt']; ?>"><?php echo $row_Recordset1['stage_name_prt']; ?></a></td>
+								<td class="week_style_padtd "  width="200px" data-ellipsis="true"data-ellipsis-max-width="240px"><a href="stage_view.php?sid=<?php echo $row_Recordset1['csa_project_stage']; ?>&pid=<?php echo $row_Recordset1['csa_project']; ?>" target="_parent" title="<?php echo $row_Recordset1['stage_name_prt']; ?>"><?php echo $row_Recordset1['stage_name_prt']; ?></a></td>
 								<td class="week_style_padtd"  width="100px" align="center" data-ellipsis="true"data-ellipsis-max-width="120px"><a href="user_view.php?recordID=<?php echo $row_Recordset1['csa_from_user']; ?>" target="_parent" title="<?php echo $row_Recordset1['tk_display_name2']; ?>"><?php echo $row_Recordset1['tk_display_name2']; ?></a></td>
 								<td class="week_style_padtd" width="112px" align="center"><?php echo $row_Recordset1['csa_last_update']; ?></td>
 							</tr>
