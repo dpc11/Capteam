@@ -1630,6 +1630,7 @@ a:focus {
     font-size: 22px; !important
 }
 label {
+	font-family: 微软雅黑,黑体;
     font-size: 24px;
 }
 

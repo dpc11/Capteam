@@ -64,9 +64,9 @@ $ptab = "&pagetab=".$pagetabs;
 <!DOCTYPE html PUBLIC >
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>WSS - <?php echo $multilingual_project_file_addfolder; ?></title>
-<link href="css/lhgcore/lhgdialog.css" rel="stylesheet" type="text/css" />
-    <link href="css/lhgcore/lhgcheck.css" rel="stylesheet" type="text/css" />
+<title>Capteam - <?php echo $multilingual_project_file_addfolder; ?></title>
+<link href="css/tk_style.css" rel="stylesheet" type="text/css" />
+<link href="css/lhgcore/lhgcheck.css" rel="stylesheet" type="text/css" />
 
     <script type="text/javascript" src="js/lhgcore/lhgcore.js"></script>
     <script type="text/javascript" src="js/lhgcore/lhgcheck.js"></script>
@@ -105,16 +105,15 @@ window.onload = function()
         KindEditor.ready(function(K) {
                 editor = K.create('#tk_doc_description', {
 			width : '100%',
-			height: '246px',
+			height: '336px',
 			items:[
-        'source', '|', 'undo', 'redo', '|',  'cut', 'copy', 'paste',
+        'undo', 'redo', '|',  'cut', 'copy', 'paste',
         'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
         'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
-        'superscript', 'clearhtml', '|', 'fullscreen', 
+        'superscript', 'clearhtml','source', '|', 'fullscreen', 
         'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
         'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image',
-        'flash', 'media', 'insertfile', 'table', 'hr', 'map', 'code', 'pagebreak', 'anchor', 
-        'link', 'unlink', '|', 'about'
+        'table', 'hr', 'code', 'pagebreak', 'link', 'unlink'
 ]
 });
         });
@@ -127,16 +126,16 @@ window.onload = function()
 <div class="modal-body"  style="padding:12px;">
 
 
-<div class="form-group col-xs-12">
-                <label for="tk_doc_title"><?php echo $multilingual_project_file_foldertitle; ?><span id="doctitle"></span></label>
+<div class="form-group">
+                <label for="tk_doc_title" class="project_label"><?php echo $multilingual_project_file_foldertitle; ?><span id="doctitle"></span></label>
                 <div>
-				<input type="text" name="tk_doc_title" id="tk_doc_title" value="" placeholder="<?php echo $multilingual_project_file_foldertitle; ?>"  class="form-control" />
+				<input type="text" name="tk_doc_title" id="tk_doc_title" value="" style="height:45px" placeholder="<?php echo $multilingual_project_file_foldertitle; ?>"  class="form-control" />
                 </div>
               </div>
 
 
-			 <div class="form-group col-xs-12">
-                <label for="tk_doc_description"><?php echo $multilingual_project_file_description; ?></label>
+			 <div class="form-group ">
+                <label for="tk_doc_description" class="project_label" ><?php echo $multilingual_project_file_description; ?></label>
                 <div>
 				<textarea name="tk_doc_description" id="tk_doc_description" >
 
@@ -150,10 +149,10 @@ window.onload = function()
       <div class="modal-footer" style="margin-top:0px; padding:10px 10px 10px;">
 
 
-        <button type="button" class="btn btn-default btn-sm"  id="btn1" onclick="over()"><?php echo $multilingual_global_action_cancel; ?></button>
-
-        <button type="submit" class="btn btn-primary btn-sm" data-loading-text="<?php echo $multilingual_global_wait; ?>" ><?php echo $multilingual_global_action_save; ?></button>
+        <button type="submit" class="btn btn-primary btn-lg"  style="margin-top:6px;margin-right:20px;" data-loading-text="<?php echo $multilingual_global_wait; ?>" ><?php echo $multilingual_global_action_save; ?></button>
 		
+        <button type="button" class="btn btn-default btn-lg"  style="margin-top:6px;margin-right:60px;" id="btn1" onclick="over()"><?php echo $multilingual_global_action_cancel; ?></button>
+
 		<input type="hidden" name="tk_doc_pid" id="tk_doc_pid" value="<?php echo $project_id; ?>"  /> 
 		
 		<input type="hidden" name="tk_doc_parentdocid" id="tk_doc_parentdocid" value="<?php echo $p_id; ?>"  />

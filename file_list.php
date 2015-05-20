@@ -3,7 +3,7 @@
 <script type="text/javascript">
 function addfolder()
 {
-    J.dialog.get({ id: "test7", title: '<?php echo $multilingual_project_file_addfolder; ?>', width: 600, height: 500, page: "file_add_folder.php?projectid=<?php echo $project_id; ?>&pid=<?php echo $colname_DetailRS1; ?>&pagetab=<?php echo $pagetabs;?>" });
+    J.dialog.get({ id: "test7", title: '<?php echo $multilingual_project_file_addfolder; ?>', width: 900, height: 600, page: "file_add_folder.php?projectid=<?php echo $project_id; ?>&pid=<?php echo $colname_DetailRS1; ?>&pagetab=<?php echo $pagetabs;?>" });
 }
 </script>
 

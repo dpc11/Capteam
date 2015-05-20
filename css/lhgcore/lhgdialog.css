@@ -48,7 +48,7 @@ body
 	width: 21px;
 	height: 20px;
 	cursor: default;
-	background-image: url(images/btn_bg.gif);
+	background-image: url(../../images/ui/btn_bg.gif);
 	background-repeat: no-repeat;
 	background-position: -22px 0;
 }
@@ -63,7 +63,7 @@ body
 	right: 0;
 	bottom: 0;
 	left: 0;
-	background-image: url(images/d_bg.gif);
+	background-image: url(../../images/ui/d_bg.gif);
 	background-repeat: repeat-x;
 	background-position: 0 -26px;
 }
@@ -84,7 +84,7 @@ body
 	cursor: default;
 	margin-right: 10px;
 	text-align: center;
-	background-image: url(images/btn_bg.gif);
+	background-image: url(../../images/ui/btn_bg.gif);
 	background-repeat: no-repeat;
 	background-position: 0 -21px;
 }
@@ -109,7 +109,7 @@ body
 	height: 11px;
 	width: 11px;
 	cursor: nw-resize;
-	background-image: url(images/btn_bg.gif);
+	background-image: url(../../images/ui/btn_bg.gif);
 	background-repeat: no-repeat;
 	background-position: -41px -9px;
 }
@@ -125,7 +125,7 @@ body
 	z-index: 2;
 	text-align: right;
 	font: 12px Verdana, Arial, sans-serif;
-	background-image: url(images/wait.gif);
+	background-image: url(../../images/lhgcore/wait.gif);
 	background-repeat: no-repeat;
 }
 
