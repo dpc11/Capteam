@@ -48,7 +48,7 @@
 
 	//获得日程数据
 	$data = get_team_events($colname_DetailRS1);
-echo "==============".$data;
+
 	//授权的id是否有权限
 	if (isset($_GET['authority_user_id'])&&isset($_GET['authority_ulimit'])) {
 		$authority_user_id = $_GET['authority_user_id'];
@@ -305,14 +305,14 @@ $(function() {
 </script>
 
 
-	<body <?php if($tab <> "-1"){ echo "onload='tabs1();'";}?>>
+	<body <?php if($tab <> "-1"){ echo "onload='tabs1();'";} ?>>
 		<table width="100%" border="0" cellspacing="0" cellpadding="0">
 			<tr>
 				<!-- 左边20%的宽度的树或者说明  -->
-				<td width="20%" class="input_task_right_bg" valign="top">
+				<td width="20%" height="100%"  class="input_task_right_bg" valign="top">
 					<table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
 						<tr>
-							<td valign="top"><?php
+							<td valign="top" class="gray2"><?php
 								$project_id = $row_DetailRS1['id'];
 								$project_name = $row_DetailRS1['project_name'];
 								$node_id_task = -1;
@@ -1070,7 +1070,8 @@ $(function() {
     </table>
 
   </body>
-  </html><?php
+  </html>
+  <?php
   mysql_free_result($DetailRS1);
   mysql_free_result($Recordset_task);
   ?>

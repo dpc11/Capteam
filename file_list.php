@@ -7,32 +7,28 @@ function addfolder()
 }
 </script>
 
-<table align="center" class="fontsize-s glink" width="100%">
-<tbody>
-
-	<tr>
-		<td >
-			<div class="search_div pagemarginfix">
-			<form id="form1" name="form1" method="get" action="file.php"  class="saerch_form form-inline">
+<div class="filesubtab" id="tasktab">
+	<div class="condition_file">
+		<span>
+			<div class="clearboth" > </div>
+			<form id="form1" name="form1" method="get" action="file.php"  class="saerch_form_file form-inline">
 				<?php  if($filenames == ""){ ?>
-					<input type="text" name="filetitle" id="filetitle" class="form-control input-sm" placeholder="<?php echo $multilingual_project_file_search; ?>">				
+					<input type="text" name="filetitle" id="filetitle" class="form-control input-lg" placeholder="<?php echo $multilingual_project_file_search; ?>">				
 				<?php  }else{ ?>
-					<input type="text" name="filetitle" id="filetitle" class="form-control input-sm" value="<?php echo $filenames; ?>">				
+					<input type="text" name="filetitle" id="filetitle" class="form-control input-lg" value="<?php echo $filenames; ?>">				
 				<?php  } ?>
 				<input name="search" type="text" id="search" value="1" style="display:none;">
 				<input name="pagetab" type="text" id="pagetab" value="<?php echo $pagetabs; ?>" style="display:none;">
 				<input name="projectID" type="text" id="projectID" value="<?php echo $project_id; ?>" style="display:none;">
 				<input name="recordID" type="text" id="recordID" value="<?php echo $colname_DetailRS1; ?>" style="display:none;">
 			  
-				<button type="submit" name="button11" id="button11" class="btn btn-default btn-sm" ><span class="glyphicon glyphicon-search" style="display:inline;"></span> <?php echo $multilingual_global_searchbtn; ?></button>
+				<button type="submit" name="button11" id="button11" class="btn btn-default btn-lg" ><span class="glyphicon glyphicon-search" style="display:inline;"></span> <?php echo $multilingual_global_searchbtn; ?></button>
             </form>
-			</div>
-		</td>
-	</tr>
+		</span>
+	</div>
+	<div class="filetab " id="filesubtab">
 	<?php if ( ($colname_DetailRS1 <> "-1" && $project_id <> "-1") || $searchf == "1" ) { // 如果是一级页面不显示任何面包屑 ?>
-	<tr>
-		<td>
-			<ul class="breadcrumb"  style="margin-top:10px;">
+			<ul class="breadcrumb" >
 				<?php if($colname_DetailRS1 <> "-1" && $project_id <> "-1" ){// 项目文档面包屑 ?>
 
 					<li><a href="file.php?pagetab=<?php echo $pagetabs; ?>">
@@ -84,10 +80,10 @@ function addfolder()
 						<span >&nbsp;&nbsp;中对于&nbsp;“<?php echo $filenames; ?>”&nbsp;的搜索结果：</span>	
 				<?php } ?>	
 			</ul>
-		</td>
-	 </tr>
 	<?php } //如果是一级页面不显示任何面包屑 ?>	
 
+	<table align="center" class="fontsize-s glink" width="100%">
+	<tbody>
 
 	<?php if(get_doc_description($colname_DetailRS1)<>""&& $searchf <> "1"){ //显示文档详情 ?>
 
@@ -155,7 +151,7 @@ function addfolder()
 	<?php if($totalRows_DetailRS1> "0"){  //文档列表 ?>
 		<tr>
 			<td align="center">
-				<table  class="table table-striped table-hover glink" style="width:98%;">
+				<table  class="table table-striped table-hover glink" style="width:100%;">
 					<thead >
 						<tr>
 							<?php if($searchf == "1"){ ?>
@@ -298,25 +294,25 @@ function addfolder()
 			<td colspan="2" >
 				<table class="rowcon" border="0" align="center">
 					<tr>
+						<td  align="left"><?php echo ($startRow_DetailRS1 + 1) ?> <?php echo $multilingual_global_to; ?> <?php echo min($startRow_DetailRS1 + $maxRows_DetailRS1, $totalPages_DetailRS1) ?> (<?php echo $multilingual_global_total; ?> <?php echo $totalPages_DetailRS1 ?>)
+						</td>
 						<td>   
 							<table border="0">
 								<tr>
-								  <td><?php if ($pageNum_Recordset_file > 0) { // Show if not first page ?>
-									  <a href="<?php printf("%s?pageNum_Recordset_file=%d%s", $currentPage, 0, $queryString_Recordset_file); ?>#task"><?php echo $multilingual_global_first; ?></a>
+								  <td><?php if ($pageNum_DetailRS1 > 0) { // Show if not first page ?>
+									  <a href="<?php printf("%s?pageNum_DetailRS1=%d%s", $currentPage, 0, $queryString_Recordset_file); ?>#task"><?php echo $multilingual_global_first; ?></a>
 									  <?php } // Show if not first page ?></td>
-								  <td><?php if ($pageNum_Recordset_file > 0) { // Show if not first page ?>
-									  <a href="<?php printf("%s?pageNum_Recordset_file=%d%s", $currentPage, max(0, $pageNum_Recordset_file - 1), $queryString_Recordset_file); ?>#task"><?php echo $multilingual_global_previous; ?></a>
+								  <td><?php if ($pageNum_DetailRS1 > 0) { // Show if not first page ?>
+									  <a href="<?php printf("%s?pageNum_DetailRS1=%d%s", $currentPage, max(0, $pageNum_DetailRS1 - 1), $queryString_Recordset_file); ?>#task"><?php echo $multilingual_global_previous; ?></a>
 									  <?php } // Show if not first page ?></td>
-								  <td><?php if ($pageNum_Recordset_file < $totalPages_Recordset_file) { // Show if not last page ?>
-									  <a href="<?php printf("%s?pageNum_Recordset_file=%d%s", $currentPage, min($totalPages_Recordset_file, $pageNum_Recordset_file + 1), $queryString_Recordset_file); ?>#task"><?php echo $multilingual_global_next; ?></a>
+								  <td><?php if ($pageNum_DetailRS1 < $totalPages_DetailRS1) { // Show if not last page ?>
+									  <a href="<?php printf("%s?pageNum_DetailRS1=%d%s", $currentPage, min($totalPages_DetailRS1, $pageNum_DetailRS1 + 1), $queryString_Recordset_file); ?>#task"><?php echo $multilingual_global_next; ?></a>
 									  <?php } // Show if not last page ?></td>
-								  <td><?php if ($pageNum_Recordset_file < $totalPages_Recordset_file) { // Show if not last page ?>
-									  <a href="<?php printf("%s?pageNum_Recordset_file=%d%s", $currentPage, $totalPages_Recordset_file, $queryString_Recordset_file); ?>#task"><?php  echo $multilingual_global_last; ?></a>
+								  <td><?php if ($pageNum_DetailRS1 < $totalPages_DetailRS1) { // Show if not last page ?>
+									  <a href="<?php printf("%s?pageNum_DetailRS1=%d%s", $currentPage, $totalPages_DetailRS1, $queryString_Recordset_file); ?>#task"><?php  echo $multilingual_global_last; ?></a>
 									  <?php } // Show if not last page ?></td>
 								</tr>
 							</table>
-						</td>
-						<td align="right">   <?php echo ($startRow_Recordset_file + 1) ?> <?php echo $multilingual_global_to; ?> <?php echo min($startRow_Recordset_file + $maxRows_Recordset_file, $totalRows_Recordset_file) ?> (<?php echo $multilingual_global_total; ?> <?php echo $totalRows_Recordset_file ?>)&nbsp;&nbsp;&nbsp;&nbsp;
 						</td>
 					</tr>
 				</table>
@@ -326,7 +322,7 @@ function addfolder()
 		<tr>
 			<td colspan="2">
 				<table>
-					<div class="alert alert-warning" style="margin:6px;">
+					<div class="alert alert-warning search_warning" style="margin:6px;">
 						<?php echo $multilingual_project_file_nofile; ?>
 					</div>
 				</table>
@@ -335,5 +331,6 @@ function addfolder()
 	<?php } ?>
 </tbody>
 </table>
-
+</div>
+</div>
 <?php mysql_free_result($row_DetailRS1); ?>

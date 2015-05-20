@@ -56,11 +56,13 @@ if(frm != null && subWeb != null)
         document.write(d);
 
 </script>
+
+	<h4 style="margin-top:40px; margin-left: 5px;" ><?php echo $multilingual_project_view_nowbs; ?></h4>
+	<p > <?php echo $multilingual_project_view_nowbstext; ?></p>
+	
     <?php } else{ ?>
-    <div style="margin:15px">
-        <span class="font_big18 fontbold breakwordsfloat_left"><?php echo $multilingual_project_view_nowbs; ?></span><br /><br />
-    <span class="gray2"><?php echo $multilingual_project_view_nowbstext; ?></span>
-    </div>
+	<h4 style="margin-top:40px; margin-left: 5px;" ><?php echo $multilingual_project_view_nowbs; ?></h4>
+	<p > <?php echo $multilingual_project_view_nowbstext; ?></p>
     <?php } ?>
     
 
