@@ -173,7 +173,7 @@
 
     }
  ?>
-<form action="<?php echo $editFormAction; ?>" method="post" name="myform" id="form1">
+<form action="<?php echo $editFormAction; ?>" method="post" name="myform" id="form1" >
     <table width="100%" height="100px"  border="0" cellspacing="0" cellpadding="0" id="form1_table" >
         <tr>
 			<!-- 左边20%的宽度的树或者说明  -->

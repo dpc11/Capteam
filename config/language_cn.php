@@ -577,7 +577,6 @@ $multilingual_announcement_list_online = "在线公告";
 $multilingual_upload_title = "上传附件";
 $multilingual_upload_button = "上传";
 $multilingual_upload_tip = "允许上传的文件类型为: 图片、 SWF、 RAR、 Zip、 Html、 Doc、 PPT、 Excel、 TXT， 文件大小不超过";
-$multilingual_upload_tip2 = "调整上传附件的大小，请参考 <a href='http://www.wssys.net/zh-CN/file.php?recordID=13&projectID=-1' target='_blank'>常见问题解答</a>";
 $multilingual_upload_tip3 = "上传文档的主要附件，如果需要上传多个附件，请点击文本编辑器的“插入文件”图标";
 $multilingual_upload_error1 = "文件不存在！";
 $multilingual_upload_error2 = "文件大小超出限制";

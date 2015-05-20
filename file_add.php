@@ -89,6 +89,7 @@ $ptab = "&pagetab=".$pagetabs;
 <link href="css/lhgcore/lhgcheck.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="js/lhgcore/lhgcore.js"></script>
 <script type="text/javascript" src="js/lhgcore/lhgcheck.js"></script>
+<script type="text/javascript" src="js/lhgcore/lhgdialog.js"></script>
 <script type="text/javascript">
 J.check.rules = [
     { name: 'tk_doc_title', mid: 'doctitle', type: 'limit', requir: true, min: 2, max: 30, warn: '<?php echo $multilingual_announcement_titlerequired; ?>' }
@@ -104,6 +105,15 @@ J.check.rules = [
 	{	
 		$("#foot_top").css("min-height",document.getElementById("top_height").clientHeight+document.getElementById("file_table").clientHeight+60+"px"); 
 	});
+	
+	function uploadfile()
+	{
+		J.dialog.get({ id: "test7", title: '上传附件', width:550, height:400, page: "file_upload.php" });
+	}
+
+	function displayfile(){
+		$("#csa_remark1").val($("#lefile").val());  
+	}
 </script>
 <script charset="utf-8" src="plug-in/editor/kindeditor.js"></script>
 <script charset="utf-8" src="plug-in/editor/lang/zh_CN.js"></script>
@@ -127,7 +137,7 @@ J.check.rules = [
         });
 </script>
 
-<form action="<?php echo $editFormAction; ?>" method="post" name="form1" id="form1">
+<form action="<?php echo $editFormAction; ?>" method="post" name="form1" id="form1" ENCTYPE="multipart/form-data">
 <table width="100%" border="0" cellspacing="0" cellpadding="0" id="file_table">
     <tr>
 	<!-- 左边20%的宽度的树或者说明  -->
@@ -149,7 +159,7 @@ J.check.rules = [
           <tr>
             <td>
               <div class="form-group col-xs-12">
-                <label for="tk_doc_title"><?php echo $multilingual_project_file_title; ?><span id="doctitle"></span></label>
+                <label for="tk_doc_title"><?php echo $multilingual_project_file_title; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="doctitle"></span></label>
                 <div>
 				<input type="text" name="tk_doc_title" id="tk_doc_title" value="" placeholder="<?php echo $multilingual_project_file_filetitle;?>"  class="form-control" />
 				
@@ -170,8 +180,9 @@ J.check.rules = [
                 <label for="csa_remark1" style="float:left" ><?php echo $multilingual_upload_attachment; ?></label>
 				<span class="help-block" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $multilingual_upload_tip3; ?></span>
 				<div class="input-group col-xs-12">
+					<input id="lefile" type="file" style="display:none"  onchange="displayfile();" />
 					  <input type="text" name="csa_remark1" id="csa_remark1" value=""placeholder="<?php echo $multilingual_upload_attachment; ?>" class="form-control" style="width:1000px;height:50px;">
-						<button class="btn btn-default btn-lg"  style="float:left;margin-left:30px;" type="button" onClick="openBrWindow('upload_file.php','<?php echo $multilingual_global_upload; ?>','width=450,height=235')"><?php echo $multilingual_global_upload; ?></button>
+					<button class="btn btn-default btn-lg"  style="float:left;margin-left:30px;" type="button" onclick="uploadfile();"><?php echo $multilingual_global_upload; ?></button>
 				</div>
               </div>
 
