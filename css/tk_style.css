@@ -1,6 +1,21 @@
 @charset "utf-8";
 /* CSS Document */
-
+::-ms-browse, [type='file'] {
+    padding: .4em;
+    line-height: 24px;
+    border: 1px solid rgb(201, 201, 201);
+    background: rgb(201, 201, 201);
+    color: #4E4E4E;
+    font-family: 微软雅黑,黑体;
+}
+::-webkit-file-upload-button {
+    padding: .4em;
+    line-height: 30px;
+    border: 1px solid rgb(201, 201, 201);
+    background: #E4E4E4;
+    color: #4E4E4E;
+    font-family: 微软雅黑,黑体;
+}
 img {
     border: none;
 }

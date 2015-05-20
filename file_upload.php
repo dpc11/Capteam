@@ -3,6 +3,7 @@
 <?php require_once('function/config_function.php'); ?>
 <?php
 //error_reporting(0);
+$destination="";
 $uptypes=array('image/jpg',  
 'application/octet-stream',
 'application/vnd.openxmlformats',
@@ -24,6 +25,7 @@ $uptypes=array('image/jpg',
 'image/bmp',
 'application/x-shockwave-flash',
 'image/x-png');
+
 $max_file_size=2000000;   
 $destination_folder="upload/"; 
 $watermark=0;   
@@ -33,7 +35,12 @@ $waterstring="newphp.site.cz";
 $waterimg="xplore.gif";  
 $imgpreview=0;  
 $imgpreviewsize=1/2; 
-?>
+
+$filename_upload="";
+if(isset($_POST['input_url'])){
+	$filename_upload=$_POST['input_url'];
+}
+ ?>
 <!DOCTYPE html PUBLIC >
 <html>
 <head>
@@ -46,6 +53,7 @@ $imgpreviewsize=1/2;
 <script type="text/javascript" src="js/bootstrap/bootstrap.js"></script>
 <script type="text/javascript" src="js/lhgcore/lhgcore.js"></script>
 <script type="text/javascript" src="js/lhgcore/lhgdialog.js"></script>
+</style>
 <script type="text/javascript">
 	var P = window.parent, D = P.loadinndlg();   
 	function closreload(url)
@@ -57,196 +65,185 @@ $imgpreviewsize=1/2;
 	{
 		P.cancel();
 	}
-	function uploadtk(){
-		var woper = window.opener;
-		var p1 = woper.document.getElementById("csa_remark1");
-		var p2 = document.getElementById("input_url");
-		p1.value = p2.value;
-		window.close();
+	function uploadtk(destination,names){
+		window.parent.parent.document.getElementById("csa_remark1").value=destination;
+		window.parent.parent.document.getElementById("names").value=names;
+		P.cancel();
 	}
-	function displayfile(){
-		$("#input_url").val($("#upfile_").val());  
-	}
+
 </script>
 </head>
-<body>
-<div class="clearboth"></div>
-<form enctype="multipart/form-data" method="post" name="upform">
-<div class="clearboth"></div>
-	<div style="width:500px;height:400px; ">
-
+<body style="overflow:hidden">
+<form  method="post" enctype="multipart/form-data" name="upform" action="file_upload.php" >
+<div style="height:400px; width:500px;margin-top:40px;margin-left:40px">
 	<div style="margin:10px 150px 25px 200px">
-	<label ><?php echo $multilingual_upload_title; ?></label>
+		<label ><?php echo $multilingual_upload_title; ?></label>
 	</div>
-	<div class="form-group" style="width:100%;margin-left:50px;margin-right:50px;">
-		<div class="clearboth"></div>
-		<div style="width:100px;float:left;height:45px;color:rgb(9, 9, 9);font-size:16px;">	
-		 <button  class="btn btn-default btn-lg" style="height:45px;color:rgb(9, 9, 9);font-size:16px;" type="button"  onclick="$('#upfile_').click();">选择文件</button>
-		 </div>
-		 
-		<div style="float:left;width:300px;height:45px;font-size:16px;margin-right:10px;">
-		<input id="input_url" style="height:45px;font-size:16px;" type="text" class="form-control" placeholder="请选择文件" value="<?php echo $destination_title;?>" />
-		</div>	
-		<input  type="file"  id="upfile_"style="display:none;" onchange="displayfile();" />
+	<div class="form-group" style="width:100%;padding-left:50px;padding-right:50px;overflow:hidden">
+		<input  type="file"  id="upfile_" name="upfile_"style="display:block;border: 1px solid #999;"  />
 	</div>
-			<span class="gray glink" style="width:400px;margin-left:50px;margin-top:30px;"><?php 
-			$filesizes=$max_file_size/1000000;
-			echo $multilingual_upload_tip.$filesizes."MB. " ?></span>
-	<button  class="btn btn-default btn-lg"  style="margin-top:30px;"type="submit" value="上传" style="flaot:right;" ></button>
+	<div style="width:100%;padding-left:50px;padding-top:15px;">
+		<span class="gray glink" >
+		<?php  $filesizes=$max_file_size/1000000;
+		echo $multilingual_upload_tip.$filesizes."MB. "  ?></span>
 	</div>
-</form>
-<div>
+<div style="float:left;width:100%;hieht:60px;padding-left:50px;">
 <?php
-
+$OK=true;
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
-if ($_FILES["upfile"]["tmp_name"]=="")
-{
-echo "<font color='red'>请选择文件！</font>";
-exit;
-}
-if (!is_uploaded_file($_FILES["upfile"]["tmp_name"]))
+	if ($_FILES['upfile_']['tmp_name']=="")
+	{
+		echo "<font color='red'>请选择文件！</font>";
+		$OK=false;
+	}
+	if ($OK&&!is_uploaded_file($_FILES["upfile_"]["tmp_name"]))
+	{
+		echo "<font color='red'>$multilingual_upload_error1</font>";
+		$OK=false;
+	}
+	$file = $_FILES["upfile_"];
+	if($OK&&$max_file_size < $file["size"])
+	{
+		echo "<font color='red'>$multilingual_upload_error2</font>";
+		$OK=false;
+	}
+	//Modification 1: no php file is allowed
+	if ($OK&&strtolower(end(explode('.', $file["name"])))=='php')
+	{
+		echo "<font color='red'>$multilingual_upload_error3</font>";
+		$OK=false;
+	}
+	//Modification 1 end
+	if($OK&&!in_array($file["type"], $uptypes))
+	{
+		echo "<font color='red'>$multilingual_upload_error3</font>";
+		$OK=false;
+	}
+	if($OK&&!file_exists($destination_folder))
+		mkdir($destination_folder);
 
-{
-echo "<font color='red'>$multilingual_upload_error1</font>";
-exit;
-}
+	if($OK)
+	{
+		$filename=$file["tmp_name"];
+		$image_size = getimagesize($filename);
+		$pinfo=pathinfo($file["name"]);
+		$names = $_FILES['upfile_']['name'];
+		$named = iconv('utf-8','gbk',$names);
+		$ftype=$pinfo["extension"];
+		$destination = $destination_folder.md5(time())."_".$named;
+		$destination_title = $destination_folder.md5(time())."_".$names;
+		if ($OK&&file_exists($destination) && $overwrite != true)
+		{
+			echo "<font color='red'>$multilingual_upload_error4</a>";
+			$OK=false;
+		}
 
-$file = $_FILES["upfile"];
-if($max_file_size < $file["size"])
+		if($OK&&!move_uploaded_file ($filename, $destination))
+		{
+			echo "<font color='red'>$multilingual_upload_error5</a>";
+			$OK=false;
+		}
+		if($OK){
+			$pinfo=pathinfo($destination);
+			$fname=$pinfo["basename"];
+			echo " <font color=green>$multilingual_upload_done</font><br>";
 
-{
-echo "<font color='red'>$multilingual_upload_error2</font>";
-exit;
-  }
+			if($watermark==1)
+			{
+				$iinfo=getimagesize($destination,$iinfo);
+				$nimage=imagecreatetruecolor($image_size[0],$image_size[1]);
+				$white=imagecolorallocate($nimage,255,255,255);
+				$black=imagecolorallocate($nimage,0,0,0);
+				$red=imagecolorallocate($nimage,255,0,0);
+				imagefill($nimage,0,0,$white);
+				switch ($iinfo[2])
+				{
+					case 1:
+						$simage =imagecreatefromgif($destination);
+						break;
+					case 2:
+						$simage =imagecreatefromjpeg($destination);
+						break;
+					case 3:
+						$simage =imagecreatefrompng($destination);
+						break;
+					case 6:
+						$simage =imagecreatefromwbmp($destination);
+						break;
+					default:
+						die("<font color='red'>$multilingual_upload_error6</a>");
+						$OK=false;
+				}
+				if($OK){
+					imagecopy($nimage,$simage,0,0,0,0,$image_size[0],$image_size[1]);
+					imagefilledrectangle($nimage,1,$image_size[1]-15,80,$image_size[1],$white);
 
-//Modification 1: no php file is allowed
-if (strtolower(end(explode('.', $file["name"])))=='php')
-{
-echo "<font color='red'>$multilingual_upload_error3</font>";
-exit;
-}
-//Modification 1 end
+					switch($watertype)
+					{
+						case 1: 
+							imagestring($nimage,2,3,$image_size[1]-15,$waterstring,$black);
+							break;
+						case 2:  
+							$simage1 =imagecreatefromgif("xplore.gif");
+							imagecopy($nimage,$simage1,0,0,0,0,85,15);
+							imagedestroy($simage1);
+							break;
+					}
 
-if(!in_array($file["type"], $uptypes))
-
-{
-echo "<font color='red'>$multilingual_upload_error3</font>";
-exit;
-}
-
-if(!file_exists($destination_folder))
-mkdir($destination_folder);
-
-$filename=$file["tmp_name"];
-$image_size = getimagesize($filename);
-$pinfo=pathinfo($file["name"]);
-$names = $_FILES['upfile']['name'];
-$named = iconv('utf-8','gbk',$names);
-$ftype=$pinfo["extension"];
-$destination = $destination_folder.md5(time())."_".$named;
-$destination_title = $destination_folder.md5(time())."_".$names;
-if (file_exists($destination) && $overwrite != true)
-{
-     echo "<font color='red'>$multilingual_upload_error4</a>";
-     exit;
-  }
-
-if(!move_uploaded_file ($filename, $destination))
-{
-   echo "<font color='red'>$multilingual_upload_error5</a>";
-     exit;
-  }
-
-$pinfo=pathinfo($destination);
-$fname=$pinfo["basename"];
-echo " <font color=green>$multilingual_upload_done</font><br>";
-
-if($watermark==1)
-{
-$iinfo=getimagesize($destination,$iinfo);
-$nimage=imagecreatetruecolor($image_size[0],$image_size[1]);
-$white=imagecolorallocate($nimage,255,255,255);
-$black=imagecolorallocate($nimage,0,0,0);
-$red=imagecolorallocate($nimage,255,0,0);
-imagefill($nimage,0,0,$white);
-switch ($iinfo[2])
-{
-case 1:
-$simage =imagecreatefromgif($destination);
-break;
-case 2:
-$simage =imagecreatefromjpeg($destination);
-break;
-case 3:
-$simage =imagecreatefrompng($destination);
-break;
-case 6:
-$simage =imagecreatefromwbmp($destination);
-break;
-default:
-die("<font color='red'>$multilingual_upload_error6</a>");
-exit;
-}
-
-imagecopy($nimage,$simage,0,0,0,0,$image_size[0],$image_size[1]);
-imagefilledrectangle($nimage,1,$image_size[1]-15,80,$image_size[1],$white);
-
-switch($watertype)
-{
-case 1: 
-imagestring($nimage,2,3,$image_size[1]-15,$waterstring,$black);
-break;
-case 2:  
-$simage1 =imagecreatefromgif("xplore.gif");
-imagecopy($nimage,$simage1,0,0,0,0,85,15);
-imagedestroy($simage1);
-break;
-}
-
-switch ($iinfo[2])
-{
-case 1:
-//imagegif($nimage, $destination);
-imagejpeg($nimage, $destination);
-break;
-case 2:
-imagejpeg($nimage, $destination);
-break;
-case 3:
-imagepng($nimage, $destination);
-break;
-case 6:
-imagewbmp($nimage, $destination);
-//imagejpeg($nimage, $destination);
-break;
-}
+					switch ($iinfo[2])
+					{
+						case 1:
+							//imagegif($nimage, $destination);
+							imagejpeg($nimage, $destination);
+							break;
+						case 2:
+							imagejpeg($nimage, $destination);
+							break;
+						case 3:
+							imagepng($nimage, $destination);
+							break;
+						case 6:
+							imagewbmp($nimage, $destination);
+							//imagejpeg($nimage, $destination);
+						break;
+					}
 
 
-imagedestroy($nimage);
-imagedestroy($simage);
-}
+					imagedestroy($nimage);
+					imagedestroy($simage);
+				}
 
-if($imgpreview==1)
-{
-echo "<br>$multilingual_upload_img<br>";
-echo "<a href=\"".$destination."\" target='_blank'><img src=\"".$destination."\" width=".($image_size[0]*$imgpreviewsize)." height=".($image_size[1]*$imgpreviewsize);
-echo " alt=\"$multilingual_upload_img\r$multilingual_upload_file".$destination."\r$multilingual_upload_time\" border='0'></a>";
-}
+				if($imgpreview==1)
+				{
+					echo "<br>$multilingual_upload_img<br>";
+					echo "<a href=\"".$destination."\" target='_blank'><img src=\"".$destination."\" width=".($image_size[0]*$imgpreviewsize)." height=".($image_size[1]*$imgpreviewsize);
+					echo " alt=\"$multilingual_upload_img\r$multilingual_upload_file".$destination."\r$multilingual_upload_time\" border='0'></a>";
+				}
+			} 
+		}
+	}
 }
 ?>
-
+</div>
+	
+<div style="width:100%;padding-top:20px;padding-right:40px;overflow:hidden;">
+<button type="button" class="btn btn-default btn-lg" style="margin-left:10px;float:right;width:60px;height:45px;color:rgb(9, 9, 9);font-size:17px;" onClick="over();" ><?php echo $multilingual_global_action_cancel; ?></button>
+<button  class="btn btn-default btn-lg" id="upfile" style="margin-left:10px;float:right;width:60px;height:45px;color:rgb(9, 9, 9);font-size:17px;" type="submit" style="flaot:right;" >上传</button>
 <?php 
 $file = 1;
 if (isset($fname)) {
   $file = $fname;
 }
-if($file <> "1") { ?>
-<input type="button btn-defalut btn-lg" value="<?php echo $multilingual_global_action_ok; ?>" onClick="uploadtk();" class="button"/> 
-<?php } ?>
-<input type="button btn-defalut btn-lg" value="<?php echo $multilingual_global_action_cancel; ?>" onClick="window.close();" class="button"/>
-
+if($OK&&$file <> "1") {  ?>
+<button  type="button" class="btn btn-default btn-lg" 
+style="padding-left:10px;float:right;width:60px;height:45px;color:rgb(9, 9, 9);font-size:17px;"onClick="uploadtk('<?php echo $destination_title; ?>','<?php  echo $names;  ?>');" ><?php echo $multilingual_global_action_ok; ?></button> 
+<?php }
+ ?>
 </div>
 
+
+</div>
+</form>
 </body>
 </html>

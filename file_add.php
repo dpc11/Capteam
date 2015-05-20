@@ -92,7 +92,7 @@ $ptab = "&pagetab=".$pagetabs;
 <script type="text/javascript" src="js/lhgcore/lhgdialog.js"></script>
 <script type="text/javascript">
 J.check.rules = [
-    { name: 'tk_doc_title', mid: 'doctitle', type: 'limit', requir: true, min: 2, max: 30, warn: '<?php echo $multilingual_announcement_titlerequired; ?>' }
+    { name: 'tk_doc_title', mid: 'doctitle', type: 'limit', requir: true, min: 2, max: 30, warn: '<?php echo $multilingual_announcement_titlerequired; ?>',cover: true ,max: false, min: false,lock: true, background: '#000', opacity: 0.5, drag: false,resize: false }
 	
 ];
 	$(window).load(function()
@@ -108,11 +108,7 @@ J.check.rules = [
 	
 	function uploadfile()
 	{
-		J.dialog.get({ id: "test7", title: '上传附件', width:550, height:400, page: "file_upload.php" });
-	}
-
-	function displayfile(){
-		$("#csa_remark1").val($("#lefile").val());  
+		J.dialog.get({ id: "test7", title: '上传附件', width:600, height:400, page: "file_upload.php" });
 	}
 </script>
 <script charset="utf-8" src="plug-in/editor/kindeditor.js"></script>
@@ -180,8 +176,10 @@ J.check.rules = [
                 <label for="csa_remark1" style="float:left" ><?php echo $multilingual_upload_attachment; ?></label>
 				<span class="help-block" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $multilingual_upload_tip3; ?></span>
 				<div class="input-group col-xs-12">
-					<input id="lefile" type="file" style="display:none"  onchange="displayfile();" />
-					  <input type="text" name="csa_remark1" id="csa_remark1" value=""placeholder="<?php echo $multilingual_upload_attachment; ?>" class="form-control" style="width:1000px;height:50px;">
+					  <input type="text" name="csa_remark1" id="csa_remark1" value="" placeholder="<?php echo $multilingual_upload_attachment; ?>" class="form-control" 
+					  style="width:1000px;height:50px;display:none;" />
+					  <input type="text" name="names" id="names" value="" placeholder="<?php echo $multilingual_upload_attachment; ?>" class="form-control" 
+					  style="width:1000px;height:50px;" />
 					<button class="btn btn-default btn-lg"  style="float:left;margin-left:30px;" type="button" onclick="uploadfile();"><?php echo $multilingual_global_upload; ?></button>
 				</div>
               </div>
