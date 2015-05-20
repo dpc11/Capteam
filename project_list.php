@@ -1,11 +1,5 @@
 <?php 
 
-/*
-$project_dao_obj = new project_dao();
-$my_totalprj = $project_dao_obj->get_my_total_project_num($_SESSION['MM_uid']);
-$pagetabs = "allprj";
-*/
-
 $url_project = $_SERVER["QUERY_STRING"] ;
 $current_url = current(explode("&sort",$url_project));
 

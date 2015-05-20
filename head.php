@@ -55,7 +55,7 @@ $totalRows_Recordset_anc=0;
 					<div class="logo"><a href="index.php" class="logourl" >&nbsp;</a></div>
 					<div class="nav_normal2">
 			
-						<a href="project.php?pagetab=jprj" class="
+						<a href="project.php" class="
 						  <?php if($pagename == "project.php" || $pagename == "project_add.php" || $pagename == "project_view.php" || $pagename == "project_edit.php"){
 						  echo "nav_select";} ?>
 						  "><?php echo $multilingual_head_project; ?></a>

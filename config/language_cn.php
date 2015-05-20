@@ -11,16 +11,6 @@ $multilingual_dd_priority_p1 = "1-紧急";
 $multilingual_dd_whether_yes = "是";
 $multilingual_dd_whether_no = "否";
 
-  // *项目选择排除条件(与后台管理项目状态管理对应)
-//$multilingual_dd_status_prjfinish = "结束";  
-  // *任务搜索排除条件(与后台管理任务状态管理对应)
-//$multilingual_dd_status_stfinish = "完成";  
-  // *任务待审核条件
-//$multilingual_dd_status_exam = "100%";  
-
-
-
-
 // *** 全局共用文字
   // *公告状态
 $multilingual_dd_announcement_settop = "置顶";
@@ -404,14 +394,11 @@ $multilingual_projectmem_text = "在WSS 扩展功能中，您可以为一个项�
 
 $multilingual_project_view_nowbs = "&nbsp;&nbsp;&nbsp;关于项目";
 $multilingual_stage_view_nowbs = "关于阶段";
-$multilingual_project_view_nowbstext = "<p>点击“下发任务”，可以基于该项目创建子项目或子任务。</p><br />
-<p>您可以根据需要按照里程碑或任务类型将大型项目分解为若干子项目或子任务，从而将复杂的任务简单化，同时，也便于管理、跟踪。</p>
-";
-
+$multilingual_project_view_nowbstext = "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;点击“下发任务”，可以基于该项目创建子项目或子任务。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您可以根据需要按照里程碑或任务类型将大型项目分解为若干子项目或子任务，从而将复杂的任务简单化，同时，也便于管理、跟踪。</p>";
 $multilingual_project_add_text = "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每个项目包含了一个团队。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;创建一个项目，然后您才能分解阶段。</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;项目创建人就是组长，他／她可以为项目选择若干成员，并且分配不同职责：帮助组长分配任务，或者去完成任务。</p>
-";
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;项目创建人就是组长，他／她可以为项目选择若干成员，并且分配不同职责：帮助组长分配任务，或者去完成任务。</p>";
 
 $multilingual_stage_add_text = "<p>每个项目将经历不同阶段。</p><br />
 <p>创建一个阶段，才能下发任务。</p><br />

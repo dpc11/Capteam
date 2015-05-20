@@ -251,7 +251,9 @@ a:focus {
     margin-top: 10px;
     height: 40px;
 }
-
+.saerch_form_file {
+    margin: 0px 0px 10px 0px;
+}
 .saerch_form {
     margin: 0px 0px 0px 15px;
 }
@@ -1048,7 +1050,12 @@ a:focus {
     margin-top: 4px;
 }
 /********Main Table Div*******/
-
+.condition_file {
+    width: 100%;
+    background: white;
+    border-bottom: #ccc 0px solid;
+	padding-bottom:12px;
+}
 .condition {
     width: 100%;
     background: #F7F7F7;
@@ -1069,6 +1076,17 @@ a:focus {
 	min-width:1600px;
     border: 2px #E7E7E7 solid;
     background: #F5F5F5;
+}
+.filetab{
+	width: 100%;
+	min-width: 1600px;
+	border: 2px #E7E7E7 solid;
+	background: white;
+}
+.filesubtab{
+	width: 100%;
+	border: 0px #E7E7E7 solid;
+	background: #F5F5F5;
 }
 .projecttab {
     width: 99%;
