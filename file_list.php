@@ -86,11 +86,14 @@ function addfolder()
 	<tbody>
 
 	<?php if(get_doc_description($colname_DetailRS1)<>""&& $searchf <> "1"){ //显示文档详情 ?>
-
-		<tr valign="baseline">
-			<td colspan="2" style="padding-left:10px; padding-bottom:15px ">
+		<tr valign="baseline" style="border-bottom: 3px #D1D1D1 double;border-width:6px;margin-bottom:6px;"  >
+			<td colspan="2" style="padding-left:10px; padding-bottom:15px">
 				<span  style="font-family:Arial;line-height:normal;"><?php echo get_doc_description($colname_DetailRS1); ?></span>
 			</td>
+		</tr>
+			<td valign="baseline">&nbsp;
+			</td>
+		<tr>
 		</tr>
 	<?php }?>
 

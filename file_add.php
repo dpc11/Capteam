@@ -94,11 +94,16 @@ J.check.rules = [
     { name: 'tk_doc_title', mid: 'doctitle', type: 'limit', requir: true, min: 2, max: 30, warn: '<?php echo $multilingual_announcement_titlerequired; ?>' }
 	
 ];
-
-window.onload = function()
-{
-    J.check.regform('form1');
-}
+	$(window).load(function()
+	{
+		J.check.regform('form1');
+		
+		$("#foot_top").css("min-height",document.getElementById("top_height").clientHeight+document.getElementById("file_table").clientHeight-45+"px");
+	});
+	$(window).resize(function()
+	{	
+		$("#foot_top").css("min-height",document.getElementById("top_height").clientHeight+document.getElementById("file_table").clientHeight+60+"px"); 
+	});
 </script>
 <script charset="utf-8" src="plug-in/editor/kindeditor.js"></script>
 <script charset="utf-8" src="plug-in/editor/lang/zh_CN.js"></script>
@@ -106,40 +111,43 @@ window.onload = function()
         var editor;
         KindEditor.ready(function(K) {
                 editor = K.create('#tk_doc_description', {
-			width : '100%',
+			width : '1150px',
 			height: '500px',
 			items:[
-        'source', '|', 'undo', 'redo', '|', 'preview', 'print', 'template', 'cut', 'copy', 'paste',
+        'undo', 'redo', '|', 'preview', 'print', 'template', 'cut', 'copy', 'paste',
         'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
         'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
-        'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/',
+        'superscript','source', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/',
         'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
         'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image',
-        'flash', 'media', 'insertfile', 'table', 'hr', 'map', 'code', 'pagebreak', 'anchor', 
-        'link', 'unlink', '|', 'about'
+        'flash', 'media', 'insertfile', 'table', 'hr',  'code', 'pagebreak', 
+        'link', 'unlink'
 ]
 });
         });
 </script>
 
 <form action="<?php echo $editFormAction; ?>" method="post" name="form1" id="form1">
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" id="file_table">
     <tr>
-      <td width="25%" class="input_task_right_bg" valign="top"><table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
+	<!-- 左边20%的宽度的树或者说明  -->
+			<td width="20%" height="100%" class="input_task_right_bg"  valign="top">
+				<table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
+					<tr>
+						<div class=" add_title col-xs-12">
+							<h3 ><?php echo $multilingual_project_file_addfile; ?></h3>
+						</div>
+						<td valign="top" class="gray2">
+							<h4 style="margin-top:40px; margin-left: 5px;" ><?php echo $multilingual_project_file_tiptitle; ?></h4>
+							<p > <?php echo $multilingual_project_file_tiptext; ?></p>
+						</td>
+					</tr>
+				</table>
+			</td>
+			<td width="80%"  height="100%" valign="top" align="center">
+			<table width="90%" border="0" cellspacing="0" cellpadding="5" align="center" id="add_table"class="add_table">
           <tr>
-            <td valign="top"  class="gray2">
-	 <h4 style="margin-top:40px" ><strong><?php echo $multilingual_project_file_tiptitle; ?></strong></h4>
-	 <p >
-	 <?php echo $multilingual_project_file_tiptext; ?></p>
-              
-              </td>
-          </tr>
-        </table></td>
-      <td width="75%" valign="top"><table width="98%" border="0" cellspacing="0" cellpadding="5" align="center">
-          <tr>
-            <td><div class="col-xs-12">
-                <h3><?php echo $multilingual_project_file_addfile; ?></h3>
-              </div>
+            <td>
               <div class="form-group col-xs-12">
                 <label for="tk_doc_title"><?php echo $multilingual_project_file_title; ?><span id="doctitle"></span></label>
                 <div>
@@ -157,42 +165,47 @@ window.onload = function()
                 </div>
               </div>
 
-              <div class="form-group  col-xs-12">
-                <label for="csa_remark1"><?php echo $multilingual_upload_attachment; ?></label>
-				
-				<div class="input-group">
-      <input type="text" name="csa_remark1" id="csa_remark1" value=""placeholder="<?php echo $multilingual_upload_attachment; ?>" class="form-control">
-      <span class="input-group-btn">
-        <button class="btn btn-default" type="button" onClick="openBrWindow('upload_file.php','<?php echo $multilingual_global_upload; ?>','width=450,height=235')"><?php echo $multilingual_global_upload; ?></button>
-      </span>
-    </div>
-				
-
-				<span class="help-block"><?php echo $multilingual_upload_tip3; ?></span>
+              <div class="form-group col-xs-12">
+			  
+                <label for="csa_remark1" style="float:left" ><?php echo $multilingual_upload_attachment; ?></label>
+				<span class="help-block" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $multilingual_upload_tip3; ?></span>
+				<div class="input-group col-xs-12">
+					  <input type="text" name="csa_remark1" id="csa_remark1" value=""placeholder="<?php echo $multilingual_upload_attachment; ?>" class="form-control" style="width:1000px;height:50px;">
+						<button class="btn btn-default btn-lg"  style="float:left;margin-left:30px;" type="button" onClick="openBrWindow('upload_file.php','<?php echo $multilingual_global_upload; ?>','width=450,height=235')"><?php echo $multilingual_global_upload; ?></button>
+				</div>
               </div>
 
 				</td>
           </tr>
-        </table></td>
-    </tr>
-    <tr class="input_task_bottom_bg" >
-	<td></td>
-      <td height="50px">
-	  <button type="submit" class="btn btn-primary btn-sm submitbutton" name="cont" ><?php echo $multilingual_global_action_save; ?></button>
-          <button type="button" class="btn btn-default btn-sm" onClick="window.close();"><?php echo $multilingual_global_action_cancel; ?></button>
-          
-
-		<input type="hidden" name="tk_doc_class1" id="tk_doc_class1" value="<?php echo $project_id; ?>" />
-		<input type="hidden" name="tk_doc_class2" id="tk_doc_class2" value="<?php echo $p_id; ?>" />
-		<input name="tk_doc_create" type="hidden" value="<?php echo "{$_SESSION['MM_uid']}"; ?>"  />
-		<input name="tk_doc_createtime" type="hidden" value="<?php echo date("Y-m-d H:i:s"); ?>"  />
-
-
-        <input type="hidden" name="MM_insert" value="form1" /></td>
-    </tr>
+		  <tr >
+						<td align="left" >
+							<table width="250px" border="0" cellspacing="0" cellpadding="5" style="margin-left:650px;margin-top:20px;">
+							<!-- 提交按钮 -->
+								<tr >
+									<td >
+										<button type="submit" class="btn btn-primary btn-sm" name="cont" style="width:100px"><?php echo $multilingual_global_action_save; ?></button>
+									</td>
+									<td  width="20%" align="center" >
+										<button type="button" class="btn btn-default btn-sm" style="width:100px" onClick="window.close();"><?php echo $multilingual_global_action_cancel; ?></button>
+										<input type="hidden" name="MM_insert" value="form1" />
+										
+										<input type="hidden" name="tk_doc_class1" id="tk_doc_class1" value="<?php echo $project_id; ?>" />
+										<input type="hidden" name="tk_doc_class2" id="tk_doc_class2" value="<?php echo $p_id; ?>" />
+										<input name="tk_doc_create" type="hidden" value="<?php echo "{$_SESSION['MM_uid']}"; ?>"  />
+										<input name="tk_doc_createtime" type="hidden" value="<?php echo date("Y-m-d H:i:s"); ?>"  />
+										<input type="hidden" name="MM_insert" value="form1" />
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>					
+				</table>
+			</td>
+		</tr>
   </table>
 
 </form>
+</div>
 <?php require('foot.php'); ?>
 </body>
 </html>

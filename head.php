@@ -40,7 +40,7 @@ $totalRows_Recordset_anc=0;
 		<div class="clearboth"></div>
 		<div id="foot_top" class="foot_top">
 			<div class="clearboth"></div>
-			<div id="top_height">
+			<div id="top_height" >
 				<div class="clearboth"></div>
 				<?php
 					if(strpos($_SERVER["HTTP_USER_AGENT"],"MSIE 8.0") || strpos($_SERVER["HTTP_USER_AGENT"],"MSIE 7.0") || strpos($_SERVER["HTTP_USER_AGENT"],"MSIE 6.0") ){

@@ -1084,7 +1084,8 @@ a:focus {
 	background: white;
 }
 .filesubtab{
-	width: 100%;
+	width: 96%;
+	min-width:1600px;
 	border: 0px #E7E7E7 solid;
 	background: #F5F5F5;
 }

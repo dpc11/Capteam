@@ -443,13 +443,12 @@ $multilingual_project_file_title = "标题";
 $multilingual_project_myprj = "我负责的项目";
 $multilingual_project_jprj = "我参与的项目";
 $multilingual_project_allprj = "所有项目";
-$multilingual_project_closeprj = "归档项目";
 
-$multilingual_project_file_tiptitle = "文档";
-$multilingual_project_file_tiptext = "<p>文档是重要的组织过程资产，包括任何或全部与过程相关的资产，可以来自任一或所有参与项目的组织，用于帮助项目成功。</p><br />
-<p>这些过程资产包括正式和非正式的计划、政策、程序和指南。过程资产还包括组织的知识库，如经验教训和历史信息。</p><br />
-<p>文档可以由多个用户协作完成，任何普通用户都可以修改文档（修改操作将被记录）。</p><br />
-<p>只有文档的创建者和管理员可以删除文档。</p><br />
+$multilingual_project_file_tiptitle = "&nbsp;&nbsp;&nbsp;关于文档";
+$multilingual_project_file_tiptext = "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;文档是重要的组织过程资产，包括任何或全部与过程相关的资产，可以来自任一或所有参与项目的组织，用于帮助项目成功。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这些过程资产包括正式和非正式的计划、政策、程序和指南。过程资产还包括组织的知识库，如经验教训和历史信息。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;文档可以由多个用户协作完成，任何普通用户都可以修改文档（修改操作将被记录）。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;只有文档的创建者和管理员可以删除文档。</p>
 ";
 
 // *** 阶段详情页(stage_view.php) 
