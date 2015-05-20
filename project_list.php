@@ -215,7 +215,7 @@ $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recor
 					<td class="week_style_padtd" ><?php echo $R_list_num; ?></td>
 					<td  class="week_style_padtd" >&nbsp;&nbsp;<a href="project_view.php?recordID=<?php echo $row_Recordset1['id']; ?>&pagetab=<?php echo $pagetabs; ?>" ><?php echo $row_Recordset1['project_name']; ?></a>&nbsp; </td>
 					<!-- 显示负责人 -->
-					<td class="week_style_padtd" > <a href="user_view.php?recordID=<?php echo $row_Recordset1['project_to_user']; ?>"><?php echo $row_Recordset1['tk_display_name']; ?></a></td>
+					<td class="week_style_padtd" > <a href="user_view.php?recordID=<?php echo $row_Recordset1['project_to_user']; ?>"><?php echo get_user_disName($row_Recordset1['project_to_user']); ?></a></td>
 					<td class="week_style_padtd" ><?php echo $row_Recordset1['project_start']; ?>&nbsp; </td>
 					<td class="week_style_padtd" ><?php echo $row_Recordset1['project_end']; ?>&nbsp; </td>
 					<td class="week_style_padtd" ><?php //显示项目的状态

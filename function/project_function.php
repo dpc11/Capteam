@@ -49,7 +49,7 @@
 			$where .= " p.project_to_user = $prjtouser AND p.project_del_status != -1 ";
 		}else if($pagetabs == "allprj"){
 			//所有项目
-			$where .= " t.tk_team_uid = $prjtouser ";
+			$where .= " t.tk_team_uid = $prjtouser AND p.project_del_status != -1";
 		}
 		
 		if($colinputtitle_Recordset1!=""){
@@ -65,7 +65,7 @@
 		FROM 
 			tk_project p, tk_team t, tk_user user 
 		
-		WHERE p.id=t.tk_team_pid AND user.uid=t.tk_team_uid AND  
+		WHERE p.id=t.tk_team_pid AND user.uid=t.tk_team_uid AND 
 		
 			$where 
 			
@@ -109,7 +109,7 @@
 		FROM 
 			tk_project p, tk_team t, tk_user user 
 		
-		WHERE p.id=t.tk_team_pid AND user.uid=t.tk_team_uid AND  
+		WHERE p.id=t.tk_team_pid AND user.uid=t.tk_team_uid AND 
 		
 			$where 
 			
@@ -150,6 +150,18 @@
         $row_Recordset_sumtotal = mysql_fetch_assoc($Recordset_sumtotal);
         $my_totalprj=$row_Recordset_sumtotal['count_prj'];
         return $my_totalprj;
+    }
+
+    function get_user_disName($user_id)
+    {
+    	global $tankdb;
+        global $database_tankdb;
+        mysql_select_db($database_tankdb, $tankdb);
+        $selDisName = "SELECT * From tk_user WHERE uid=$user_id";
+        $RS = mysql_query($selDisName, $tankdb) or die(mysql_error());
+        $row_Recordset_sumtotal = mysql_fetch_assoc($RS);
+        $display_name=$row_Recordset_sumtotal['tk_display_name'];
+        return $display_name;
     }
 
 ?>
