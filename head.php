@@ -40,7 +40,7 @@ $totalRows_Recordset_anc=0;
 		<div class="clearboth"></div>
 		<div id="foot_top" class="foot_top">
 			<div class="clearboth"></div>
-			<div id="top_height">
+			<div id="top_height" >
 				<div class="clearboth"></div>
 				<?php
 					if(strpos($_SERVER["HTTP_USER_AGENT"],"MSIE 8.0") || strpos($_SERVER["HTTP_USER_AGENT"],"MSIE 7.0") || strpos($_SERVER["HTTP_USER_AGENT"],"MSIE 6.0") ){
@@ -79,7 +79,7 @@ $totalRows_Recordset_anc=0;
 						echo "nav_select";} ?>"><?php echo $multilingual_head_schedule; ?></a> 
 
 						<a href="board_view.php" 
-						class="<?php if($pagename == "base_view.php"){
+						class="<?php if($pagename == "board_view.php"){
 						echo "nav_select";} ?>"><?php echo $multilingual_head_board; ?></a> 
 
 					</div>

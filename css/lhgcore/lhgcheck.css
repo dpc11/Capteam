@@ -7,10 +7,10 @@
 	font-weight: bold;
 	background-image: url(../../images/lhgcore/info.gif);
 	background-repeat: no-repeat;
-	font-size: 18px;	
+	font-size: 17px;	
 }
 
-.chker{ color: #CD0A0A; font-weight:normal; font-size: 18px; background-position: 0 6px;}
+.chker{ color: #CD0A0A; font-weight:normal; font-size: 17px; background-position: 0 6px;}
 .chkok{ color: #89CB0A; font-weight:normal; font-size: 14px; background-position: 0 -14px; }
 
 /* chkaj是AJAX验证时等待时的样式 */

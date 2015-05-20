@@ -394,6 +394,7 @@ $multilingual_projectmem_text = "在WSS 扩展功能中，您可以为一个项�
 
 $multilingual_project_view_nowbs = "&nbsp;&nbsp;&nbsp;关于项目";
 $multilingual_stage_view_nowbs = "关于阶段";
+$multilingual_board_view_nowbs = "关于看板";
 $multilingual_project_view_nowbstext = "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;点击“下发任务”，可以基于该项目创建子项目或子任务。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您可以根据需要按照里程碑或任务类型将大型项目分解为若干子项目或子任务，从而将复杂的任务简单化，同时，也便于管理、跟踪。</p>";
 $multilingual_project_add_text = "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每个项目包含了一个团队。</p>
@@ -410,6 +411,10 @@ $multilingual_stage_title_tips = "请填写阶段名称";
 $multilingual_privilege_grant = "赋予权限";
 $multilingual_privilege_remove = "回收权限";
 
+$multilingual_board_add_text = "<p>看板分为项目看板和个人看板。</p><br />
+<p>创建一个项目，才能在项目详情页面点击进入看板页添加项目看板。</p><br />
+<p>点击菜单栏看板即可进入个人看板。</p>
+";
 // *** 文档管理
 $multilingual_project_file = "项目文档";
 $multilingual_project_file_project = "所属项目";
@@ -422,6 +427,7 @@ $multilingual_project_file_download = "下载附件";
 $multilingual_project_file_update = "更新于";
 $multilingual_project_file_update_by = "由谁更新";
 $multilingual_project_file_addfile = "上传文档";
+$multilingual_project_board_view="项目看板";
 $multilingual_project_file_submittask = "提交任务";
 $multilingual_project_file_checktask = "审核任务";
 $multilingual_project_file_addfolder = "新建文件夹";
@@ -443,13 +449,12 @@ $multilingual_project_file_title = "标题";
 $multilingual_project_myprj = "我负责的项目";
 $multilingual_project_jprj = "我参与的项目";
 $multilingual_project_allprj = "所有项目";
-$multilingual_project_closeprj = "归档项目";
 
-$multilingual_project_file_tiptitle = "文档";
-$multilingual_project_file_tiptext = "<p>文档是重要的组织过程资产，包括任何或全部与过程相关的资产，可以来自任一或所有参与项目的组织，用于帮助项目成功。</p><br />
-<p>这些过程资产包括正式和非正式的计划、政策、程序和指南。过程资产还包括组织的知识库，如经验教训和历史信息。</p><br />
-<p>文档可以由多个用户协作完成，任何普通用户都可以修改文档（修改操作将被记录）。</p><br />
-<p>只有文档的创建者和管理员可以删除文档。</p><br />
+$multilingual_project_file_tiptitle = "&nbsp;&nbsp;&nbsp;关于文档";
+$multilingual_project_file_tiptext = "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;文档是重要的组织过程资产，包括任何或全部与过程相关的资产，可以来自任一或所有参与项目的组织，用于帮助项目成功。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这些过程资产包括正式和非正式的计划、政策、程序和指南。过程资产还包括组织的知识库，如经验教训和历史信息。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;文档可以由多个用户协作完成，任何普通用户都可以修改文档（修改操作将被记录）。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;只有文档的创建者和管理员可以删除文档。</p>
 ";
 
 // *** 阶段详情页(stage_view.php) 

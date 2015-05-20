@@ -2475,6 +2475,9 @@ input[type="button"].btn-block {
 .glyphicon-file:before {
   content: "\e022";
 }
+.glyphicon-board:before {
+  content: "\e032";
+}
 .glyphicon-time:before {
   content: "\e023";
 }

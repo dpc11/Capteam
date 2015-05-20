@@ -364,9 +364,9 @@ span.usr.catch{background:#ffc!important;}
                 <table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
                     <tr>
                         <td valign="top" class="gray2">
-                            <h4 style="margin-top:40px; margin-left: 5px;"><strong><?php echo $multilingual_stage_view_nowbs; ?></strong></h4>
+                            <h4 style="margin-top:40px; margin-left: 5px;"><strong><?php echo $multilingual_board_view_nowbs; ?></strong></h4>
                             <p>
-                                <?php echo $multilingual_stage_add_text; ?>
+                                <?php echo $multilingual_board_add_text; ?>
                             </p>
 
                         </td>
