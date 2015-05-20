@@ -59,7 +59,7 @@ function check_message( $userid ) {
 								COUNT(meid) as count_msg   
 								FROM tk_message  							
 					WHERE tk_mess_status = 1 AND tk_mess_touser = '$userid'"
-									);//Ñ¡ÔñÎ´¶ÁµÄÏûÏ¢
+									);//Ã‘Â¡Ã”Ã±ÃÂ´Â¶ÃÂµÃ„ÃÃ»ÃÂ¢
 	//WHERE tk_mess_status = 1 AND tk_mess_touser = '$userid'"
 	//WHERE meid > '$user_message_id' AND tk_mess_touser = '$userid'"
 	$count_message_RS = mysql_query($count_message_SQL, $tankdb) or die(mysql_error());
@@ -72,7 +72,7 @@ function check_message( $userid ) {
 function strsToArray($strs) { 
 $result = array(); 
 $array = array(); 
-$strs = str_replace('£¬', ',', $strs); 
+$strs = str_replace('Â£Â¬', ',', $strs); 
 $strs = str_replace("n", ',', $strs); 
 $strs = str_replace("rn", ',', $strs); 
 $strs = str_replace(' ', ',', $strs); 
@@ -85,28 +85,28 @@ $result[] = $value;
 return $result; 
 } 
 
-//ËÑË÷¶şÎ¬Êı×é
+//Ã‹Ã‘Ã‹Ã·Â¶Ã¾ÃÂ¬ÃŠÃ½Ã—Ã©
 function in_2array($strs, $arr){
    $exist = 0;
    foreach($arr as $value){
      if(in_array($strs, $value)){
         $exist = 1;
-        break;    //Ñ­»·ÅĞ¶Ï×Ö·û´®ÊÇ·ñ´æÔÚÓÚÒ»Î»Êı×é£¬´æÔÚÔòÌø³ö  ·µ»Ø½á¹û
+        break;    //Ã‘Â­Â»Â·Ã…ÃÂ¶ÃÃ—Ã–Â·Ã»Â´Â®ÃŠÃ‡Â·Ã±Â´Ã¦Ã”ÃšÃ“ÃšÃ’Â»ÃÂ»ÃŠÃ½Ã—Ã©Â£Â¬Â´Ã¦Ã”ÃšÃ”Ã²ÃŒÃ¸Â³Ã¶  Â·ÂµÂ»Ã˜Â½Ã¡Â¹Ã»
      }
    }
    return $exist;
 }
-//¶şÎ¬Êı×éÈ¥ÖØ
+//Â¶Ã¾ÃÂ¬ÃŠÃ½Ã—Ã©ÃˆÂ¥Ã–Ã˜
 function array_unique_fb($array2D) { 
 foreach ($array2D as $k=>$v) 
 { 
-$v = join(",",$v); //½µÎ¬,Ò²¿ÉÒÔÓÃimplode,½«Ò»Î¬Êı×é×ª»»ÎªÓÃ¶ººÅÁ¬½ÓµÄ×Ö·û´® 
+$v = join(",",$v); //Â½ÂµÃÂ¬,Ã’Â²Â¿Ã‰Ã’Ã”Ã“Ãƒimplode,Â½Â«Ã’Â»ÃÂ¬ÃŠÃ½Ã—Ã©Ã—ÂªÂ»Â»ÃÂªÃ“ÃƒÂ¶ÂºÂºÃ…ÃÂ¬Â½Ã“ÂµÃ„Ã—Ã–Â·Ã»Â´Â® 
 $temp[$k] = $v; 
 } 
-$temp = array_unique($temp); //È¥µôÖØ¸´µÄ×Ö·û´®,Ò²¾ÍÊÇÖØ¸´µÄÒ»Î¬Êı×é 
+$temp = array_unique($temp); //ÃˆÂ¥ÂµÃ´Ã–Ã˜Â¸Â´ÂµÃ„Ã—Ã–Â·Ã»Â´Â®,Ã’Â²Â¾ÃÃŠÃ‡Ã–Ã˜Â¸Â´ÂµÃ„Ã’Â»ÃÂ¬ÃŠÃ½Ã—Ã© 
 foreach ($temp as $k => $v) 
 { 
-$array=explode(",",$v); //ÔÙ½«²ğ¿ªµÄÊı×éÖØĞÂ×é×° 
+$array=explode(",",$v); //Ã”Ã™Â½Â«Â²Ã°Â¿ÂªÂµÃ„ÃŠÃ½Ã—Ã©Ã–Ã˜ÃÃ‚Ã—Ã©Ã—Â° 
 $temp2[$k]["uid"] =$array[0]; 
 $temp2[$k]["uname"] =$array[1]; 
 } 
@@ -170,9 +170,9 @@ function pinyin($zh){
 function get_tree( $projectid ) {
 global $tankdb;
 global $database_tankdb;
-/*¿ªÊ¼²Ù×÷Êı¾İ¿âÁË£¬selectÓï¾ä*/
+/*å¼€å§‹æ“ä½œæ•°æ®åº“äº†ï¼Œselectè¯­å¥*/
 $viewstageSQL1="SELECT * from tk_stage WHERE tk_stage_delestatus=1 AND tk_stage_pid=$projectid";
-//¶ÔÊı¾İ¿â½øĞĞ²éÑ¯
+//å¯¹æ•°æ®åº“è¿›è¡ŒæŸ¥è¯¢
 mysql_select_db($database_tankdb, $tankdb);
 $Result_stage = mysql_query($viewstageSQL1, $tankdb) or die(mysql_error());
 $FoundTask = mysql_num_rows($Result_stage);
@@ -180,46 +180,46 @@ $FoundTask = mysql_num_rows($Result_stage);
 if (!$FoundTask) {
  return 0;    
 }
-//¶Ô²éµ½µÄÊı¾İ½øĞĞ±éÀú
+//å¯¹æŸ¥åˆ°çš„æ•°æ®è¿›è¡Œéå†
 while($row_stage = mysql_fetch_array($Result_stage))
   {
-    $pid = 0;//ÒòÎªÊÇ½×¶Î£¬ËùÒÔ¸¸½ÚµãÊÇ0½Úµã
-    $today_date = date('Y-m-d');//½ñÌìµÄÈÕÆÚ£¬ÓÃÓÚ¼ÆËãÏîÄ¿×´Ì¬
-    //¼ÆËãÏîÄ¿µÄ×´Ì¬
+    $pid = 0;//å› ä¸ºæ˜¯é˜¶æ®µï¼Œæ‰€ä»¥çˆ¶èŠ‚ç‚¹æ˜¯0èŠ‚ç‚¹
+    $today_date = date('Y-m-d');//ä»Šå¤©çš„æ—¥æœŸï¼Œç”¨äºè®¡ç®—é¡¹ç›®çŠ¶æ€
+    //è®¡ç®—é¡¹ç›®çš„çŠ¶æ€
       if($today_date < $row_stage['tk_stage_st']){
-        //±íÊ¾ÏîÄ¿»¹Ã»ÓĞ¿ªÊ¼
-        $str = "<div style='background-color: #FF6666; width:100%; text-align:center;'>½×¶ÎÎ´¿ªÊ¼</div>";
-        $stage_statues = "½×¶ÎÎ´¿ªÊ¼";
+        //è¡¨ç¤ºé¡¹ç›®è¿˜æ²¡æœ‰å¼€å§‹
+        $str = "<div style='background-color: #FF6666; width:100%; text-align:center;'>é˜¶æ®µæœªå¼€å§‹</div>";
+        $stage_statues = "é˜¶æ®µæœªå¼€å§‹";
       }elseif ($today_date > $row_stage['tk_stage_et']) {
-        //±íÊ¾ÏîÄ¿ÒÑ½á½áÊø
-        $str = "<div style='background-color: #B3B3B3; width:100%; text-align:center;'>½×¶ÎÒÑ½áÊø</div>";
-        $stage_statues = "½×¶ÎÒÑ½áÊø";
+        //è¡¨ç¤ºé¡¹ç›®å·²ç»“ç»“æŸ
+        $str = "<div style='background-color: #B3B3B3; width:100%; text-align:center;'>é˜¶æ®µå·²ç»“æŸ</div>";
+        $stage_statues = "é˜¶æ®µå·²ç»“æŸ";
       }else{
-        //±íÊ¾ÏîÄ¿ÕıÔÚ½øĞĞÖĞ
-        $str = "<div style='background-color: #6ABD78; width:100%; text-align:center;'>½×¶Î½øĞĞÖĞ</div>";
-        $stage_statues = "½×¶Î½øĞĞÖĞ";
+        //è¡¨ç¤ºé¡¹ç›®æ­£åœ¨è¿›è¡Œä¸­
+        $str = "<div style='background-color: #6ABD78; width:100%; text-align:center;'>é˜¶æ®µè¿›è¡Œä¸­</div>";
+        $stage_statues = "é˜¶æ®µè¿›è¡Œä¸­";
       }
   $str =  explode('background-color:', $str);
   $str =  explode('width:', $str[1]);
-  $nodename = "<span style ='color:".$str[0]."'>¡ö</span>"." [½×¶Î]".$row_stage['tk_stage_title'];
+  $nodename = "<span style ='color:".$str[0]."'>â– </span>"." [é˜¶æ®µ]".$row_stage['tk_stage_title'];
   $nodetitle = $stage_statues;  
   $stage_id = $row_stage['stageid'];
-  //²åÈë
+  //æ’å…¥
   $result[] = array('id'=>(100000+$row_stage['stageid']),'pid'=>$pid,'name'=>$nodename,'title'=>$nodetitle,);
 
-  //ÕâÀïÓ¦¸Ã¼ÓÉÏÏîÄ¿µÄ²Ù×÷
- /*¿ªÊ¼²Ù×÷Êı¾İ¿âÁË£¬selectÓï¾ä,·µ»Ø¸ÃÏîÄ¿ÖĞËùÓĞ½×¶ÎµÄidºÅºÍÌâÄ¿*/
+   //è¿™é‡Œåº”è¯¥åŠ ä¸Šé¡¹ç›®çš„æ“ä½œ
+ /*å¼€å§‹æ“ä½œæ•°æ®åº“äº†ï¼Œselectè¯­å¥,è¿”å›è¯¥é¡¹ç›®ä¸­æ‰€æœ‰é˜¶æ®µçš„idå·å’Œé¢˜ç›®*/
   $viewtaskSQL1="SELECT * from tk_task,tk_status WHERE tk_task.csa_status = tk_status.id AND tk_task.csa_del_status=1 AND tk_task.csa_project_stage=$stage_id";
-  //¶ÔÊı¾İ¿â½øĞĞ²éÑ¯
+  //å¯¹æ•°æ®åº“è¿›è¡ŒæŸ¥è¯¢
   mysql_select_db($database_tankdb, $tankdb);
   $Result_task = mysql_query($viewtaskSQL1, $tankdb) or die(mysql_error());
   while($row_task = mysql_fetch_array($Result_task)){
-      $pid = $stage_id+100000;//¸¸½ÚµãÊÇ¸Ä½×¶ÎµÄmenu id
+      $pid = $stage_id+100000;//çˆ¶èŠ‚ç‚¹æ˜¯æ”¹é˜¶æ®µçš„menu id
       $str = $row_task['task_status_display'];
       $str =  explode('background-color:', $str);
       $str =  explode('width:', $str[1]);
 
-      $nodename = "<span style ='color:".$str[0]."'>¡ö</span>"." [ÈÎÎñ]".$row_task['csa_text'];
+      $nodename = "<span style ='color:".$str[0]."'>â– </span>"." [ä»»åŠ¡]".$row_task['csa_text'];
       $nodetitle = $row_task['task_status'];
       $result[] = array('id'=>$row_task['tid'],'pid'=>$pid,'name'=>$nodename,'title'=>$nodetitle,);
   }
