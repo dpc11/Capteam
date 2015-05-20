@@ -422,6 +422,7 @@ $multilingual_project_file_download = "下载附件";
 $multilingual_project_file_update = "更新于";
 $multilingual_project_file_update_by = "由谁更新";
 $multilingual_project_file_addfile = "上传文档";
+$multilingual_project_board_view="项目看板";
 $multilingual_project_file_submittask = "提交任务";
 $multilingual_project_file_checktask = "审核任务";
 $multilingual_project_file_addfolder = "新建文件夹";
