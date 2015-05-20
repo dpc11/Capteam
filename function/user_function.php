@@ -73,6 +73,7 @@
         $user_arr[$row_user['uid']]['email'] =  $row_user['tk_user_email'];
         $user_arr[$row_user['uid']]['phone_num'] =  $row_user['tk_user_contact'];
         $user_arr[$row_user['uid']]['ulimit'] =  $row_user['tk_team_ulimit'];
+        $user_arr[$row_user['uid']]['score'] =  $row_user['tk_team_score'];
         } while ($row_user = mysql_fetch_assoc($userRS));     
     
         return $user_arr;
