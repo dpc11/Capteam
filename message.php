@@ -1,10 +1,8 @@
 <?php require_once('config/tank_config.php'); ?>
 <?php require_once('session_unset.php'); ?>
 <?php require_once('session.php'); ?>
-<?php require_once('function/dao.php'); ?>
+<?php require_once('function/message_function.php'); ?>
 <?php
-//创建Message数据库操作实体类
-$message_dao_obj = new message_dao();
 //获得当前页面的url
 $currentPage = $_SERVER["PHP_SELF"];
 //设置消息最大显示行数为30行
@@ -28,7 +26,7 @@ $user_id= $_SESSION['MM_uid'];
 //删除选中的消息
 $frm_tag = $_POST['item']; 
 for($i=0;$i<count($frm_tag);$i++){ 
-  $message_dao_obj->delete_message($frm_tag[$i]);
+  delete_message($frm_tag[$i]);
 } 
 
 
@@ -150,7 +148,7 @@ xmlhttp.send("meid="+meid);
             <a href="user_view.php?recordID=<?php echo $row_Recordset1['tk_mess_fromuser']; ?>" onclick="ajax_update_message(<?php echo$row_Recordset1['meid']; ?>)">
 		        <?php echo $row_Recordset1['tk_display_name']; ?></a> <!-- 显示用户 -->
 		        <?php echo $row_Recordset1['tk_mess_title']; ?>   <!-- 显示内容 -->
-		        <?php $message_dao_obj->update_message($row_Recordset1['meid'],1,2); ?>   <!-- 显示内容,将消息从已读改为半已读-->
+		        <?php update_message($row_Recordset1['meid'],1,2); ?>   <!-- 显示内容,将消息从已读改为半已读-->
 		 </div>
 		 </td>
         
