@@ -37,8 +37,30 @@
 
     $newID =0;
 	
+    /*if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
+		
+    }//mm_insert*/
+
+
+	$selected="";
+    $userRS = get_all_user_select($_SESSION['MM_uid']);
+	$user_arr_list = mysql_fetch_assoc($userRS);
+	$phone="空";
+	if($user_arr_list["tk_user_contact"]==""){ $phone="空";}else{ 	$phone=$user_arr_list["tk_user_contact"]; }
+	$constraint = $user_arr_list["tk_display_name"]."【".$user_arr_list["tk_user_contact"]."】【".$user_arr_list["tk_user_email"]."】=".$user_arr_list["uid"]."%".$user_arr_list["tk_display_name"]."%".$phone ."%".$user_arr_list["tk_user_email"]."%".$user_arr_list["tk_display_name"]."'";
+					
+	if($user_arr_list = mysql_fetch_assoc($userRS)){
+		do { 
+			if($user_arr_list["tk_user_contact"]==""){ $phone="空";}else{ 	$phone=$user_arr_list["tk_user_contact"]; }
+			$constraint .= "||".$user_arr_list["tk_display_name"]."【".$user_arr_list["tk_user_contact"]."】【".$user_arr_list["tk_user_email"]."】=".$user_arr_list["uid"]."%".$user_arr_list["tk_display_name"]."%".$phone ."%".$user_arr_list["tk_user_email"]."%".$user_arr_list["tk_display_name"]."'";
+		} while ($user_arr_list = mysql_fetch_assoc($userRS)); 
+	}
+	
+	echo '<input style="display:none" id="constraint" value="'.$constraint.'"/>';
+	echo '<input style="display:none" id="selected" name="selected" value="'.$selected.'"/>';
+	
     if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
-		//数据库修改后的SQL语句
+    		//数据库修改后的SQL语句
         $new_project_createtime = date('Y-m-d');
         $new_project_lastupdate = date("Y-m-d H:i:s");
 
@@ -88,6 +110,75 @@
 				$insertSQL = sprintf("UPDATE tk_project SET project_folder_id = $folderID WHERE id=$newID");
               mysql_select_db($database_tankdb, $tankdb);
               $Result1 = mysql_query($insertSQL, $tankdb) or die(mysql_error());
+
+              //往tk_team表中插入相关的用户成员
+		    //插入项目负责人
+		    $tk_team_pid= $newID;//项目id
+		    $tk_team_uid= $_SESSION['MM_uid'];//用户id
+		    $tk_team_disname=$_SESSION['MM_Displayname'];//组长显示名
+		    $tk_team_ulimit=3;//用户权限,组长是3
+		    $tk_team_del_status=1;//该用户在该项目中的删除状态
+		    $tk_team_jointeamtime=date('Y-m-d H:i:s');//该用户加入该项目的时间
+		    /*开始操作数据库了，insert语句*/
+		    $addnewmemSQL="INSERT INTO tk_team (tk_team_pid,tk_team_uid,tk_team_ulimit,tk_team_del_status,tk_team_jointeamtime)
+		    VALUES ($tk_team_pid,$tk_team_uid,$tk_team_ulimit,$tk_team_del_status,'$tk_team_jointeamtime')";
+		    mysql_select_db($database_tankdb, $tankdb);
+		    $Result1 = mysql_query($addnewmemSQL, $tankdb) or die(mysql_error());
+		    echo "add leader   ";
+		    //添加项目负责人的log记录
+		    date_default_timezone_set('PRC');
+		    $action='添加了成员:'.$tk_team_uid.' --'.$tk_team_disname;
+		              $timenow=date('Y-m-d H:i:s',time());
+		              $insertSQLLog=sprintf("INSERT into tk_log(tk_log_user,tk_log_action,tk_log_time,tk_log_type,tk_log_class)
+		                VALUES(%s,'$action','$timenow','$tk_team_pid','1')",GetSQLValueString($_SESSION['MM_uid'], "int"));
+		 
+		               mysql_select_db($database_tankdb, $tankdb);
+		              $Result2 = mysql_query($insertSQLLog, $tankdb) or die(mysql_error());
+		    //获取选中的项目成员
+		    $user_list= $_POST['now_selected'];
+		    //$user_list ="<script>document.write(sel_now).value;</script>";
+		    echo $user_list;
+
+		    $a_user = explode("||", $user_list);
+
+		    $i=0;
+		    while($a_user[$i])
+		    {
+		    	$r = explode("=",$a_user[$i]);
+		    	$user_info = $r[1];
+		    	$d = explode("%", $user_info);
+		    	$user_id = $d[0];
+		    	echo $user_id;
+		    	echo '<br>';
+		    	$tk_team_ulimit=1;//用户权限,组长是3，组员是1，副组长是2
+		        $tk_team_del_status=1;//该用户在该项目中的删除状态
+		        $tk_team_jointeamtime=date('Y-m-d H:i:s');//该用户加入该项目的时间，PHP date() 函数会返回服
+
+		        $addnewmemSQL="INSERT INTO tk_team (tk_team_pid,tk_team_uid,tk_team_ulimit,tk_team_del_status,tk_team_jointeamtime)
+		        VALUES ($tk_team_pid,$user_id,$tk_team_ulimit,$tk_team_del_status,'$tk_team_jointeamtime')";
+		        echo "add member    ";
+		        mysql_select_db($database_tankdb, $tankdb);
+		        $Result1 = mysql_query($addnewmemSQL, $tankdb) or die(mysql_error());
+		        //添加项目成员的log记录
+		        $searchmemSQL="SELECT* FROM tk_user WHERE uid=$user_id";
+		        mysql_select_db($database_tankdb, $tankdb);
+		        $Result1 = mysql_query($searchmemSQL, $tankdb) or die(mysql_error());
+		        
+		        $FoundUser = mysql_num_rows($Result1);
+		          if ($FoundUser) {  
+		            $loginStrDisplayname  = mysql_result($Result1,0,'tk_display_name');
+		          }
+		    	date_default_timezone_set('PRC');
+		    	$action='添加了成员:'.$user_id.'--'.$loginStrDisplayname;
+		              $timenow=date('Y-m-d H:i:s',time());
+		              $insertSQLLog=sprintf("INSERT into tk_log(tk_log_user,tk_log_action,tk_log_time,tk_log_type,tk_log_class)
+		                VALUES(%s,'$action','$timenow','$tk_team_pid','1')",GetSQLValueString($_SESSION['MM_uid'], "int"));
+		 
+		               mysql_select_db($database_tankdb, $tankdb);
+		              $Result2 = mysql_query($insertSQLLog, $tankdb) or die(mysql_error());
+
+		    	$i++;
+    		}
 			  
               $insertGoTo = "project_view.php?recordID=$newID";
               if (isset($_SERVER['QUERY_STRING'])) {
@@ -96,58 +187,17 @@
               }
               header(sprintf("Location: %s", $insertGoTo));
 			  exit;
-        }
-    }
-	$selected="";
-    $userRS = get_all_user_select($_SESSION['MM_uid']);
-	$user_arr_list = mysql_fetch_assoc($userRS);
-	$phone="空";
-	if($user_arr_list["tk_user_contact"]==""){ $phone="空";}else{ 	$phone=$user_arr_list["tk_user_contact"]; }
-	$constraint = $user_arr_list["tk_display_name"]."【".$user_arr_list["tk_user_contact"]."】【".$user_arr_list["tk_user_email"]."】=".$user_arr_list["uid"]."%".$user_arr_list["tk_display_name"]."%".$phone ."%".$user_arr_list["tk_user_email"]."%".$user_arr_list["tk_display_name"]."'";
-					
-	if($user_arr_list = mysql_fetch_assoc($userRS)){
-		do { 
-			if($user_arr_list["tk_user_contact"]==""){ $phone="空";}else{ 	$phone=$user_arr_list["tk_user_contact"]; }
-			$constraint .= "||".$user_arr_list["tk_display_name"]."【".$user_arr_list["tk_user_contact"]."】【".$user_arr_list["tk_user_email"]."】=".$user_arr_list["uid"]."%".$user_arr_list["tk_display_name"]."%".$phone ."%".$user_arr_list["tk_user_email"]."%".$user_arr_list["tk_display_name"]."'";
-		} while ($user_arr_list = mysql_fetch_assoc($userRS)); 
-	}
-	
-	echo '<input style="display:none" id="constraint" value="'.$constraint.'"/>';
-	echo '<input style="display:none" id="selected" value="'.$selected.'"/>';
-	
-    if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
-    //往tk_team表中插入相关的用户成员
-    //插入项目负责人
-    $tk_team_pid= $newID;//项目id
-    $tk_team_uid= $_SESSION['MM_uid'];//用户id
-    $tk_team_disname=$_SESSION['MM_Displayname'];//组长显示名
-    $tk_team_ulimit=3;//用户权限,组长是3
-    $tk_team_del_status=1;//该用户在该项目中的删除状态
-    $tk_team_jointeamtime=date('Y-m-d H:i:s');//该用户加入该项目的时间
-    /*开始操作数据库了，insert语句*/
-    $addnewmemSQL="INSERT INTO tk_team (tk_team_pid,tk_team_uid,tk_team_ulimit,tk_team_del_status,tk_team_jointeamtime)
-    VALUES ($tk_team_pid,$tk_team_uid,$tk_team_ulimit,$tk_team_del_status,'$tk_team_jointeamtime')";
-    mysql_select_db($database_tankdb, $tankdb);
-    $Result1 = mysql_query($addnewmemSQL, $tankdb) or die(mysql_error());
-    //添加项目负责人的log记录
-    date_default_timezone_set('PRC');
-    $action='添加了成员:'.$tk_team_uid.' --'.$tk_team_disname;
-              $timenow=date('Y-m-d H:i:s',time());
-              $insertSQLLog=sprintf("INSERT into tk_log(tk_log_user,tk_log_action,tk_log_time,tk_log_type,tk_log_class)
-                VALUES(%s,'$action','$timenow','$tk_team_pid','1')",GetSQLValueString($_SESSION['MM_uid'], "int"));
- 
-               mysql_select_db($database_tankdb, $tankdb);
-              $Result2 = mysql_query($insertSQLLog, $tankdb) or die(mysql_error());
-    //获取选中的项目成员
-    $user_list= $_POST['project_to_user'];
+        }//else
+		    
+    	}//mm_insert
 
     //往数据库team表中插入各个成员的信息
-    foreach ($user_list as $a_user) {
+    /*foreach ($user_list as $a_user) {
         $tk_team_uid= $a_user;//用户id
         $tk_team_ulimit=1;//用户权限,组长是3，组员是1，副组长是2
         $tk_team_del_status=1;//该用户在该项目中的删除状态
         $tk_team_jointeamtime=date('Y-m-d H:i:s');//该用户加入该项目的时间，PHP date() 函数会返回服
-        /*开始操作数据库了，insert语句*/
+        //开始操作数据库了，insert语句
         $addnewmemSQL="INSERT INTO tk_team (tk_team_pid,tk_team_uid,tk_team_ulimit,tk_team_del_status,tk_team_jointeamtime)
         VALUES ($tk_team_pid,$tk_team_uid,$tk_team_ulimit,$tk_team_del_status,'$tk_team_jointeamtime')";
         mysql_select_db($database_tankdb, $tankdb);
@@ -169,9 +219,9 @@
  
                mysql_select_db($database_tankdb, $tankdb);
               $Result2 = mysql_query($insertSQLLog, $tankdb) or die(mysql_error());
-    }
+    }*/
 
-    }
+    
  ?>
 <form action="<?php echo $editFormAction; ?>" method="post" name="myform" id="form1" >
     <table width="100%" height="100px"  border="0" cellspacing="0" cellpadding="0" id="form1_table" >
@@ -236,6 +286,7 @@
 											<label for="select2" ><?php echo $multilingual_project_touser; ?><span id="csa_to_user_msg"></span></label>
 											<span class="help-block"><?php echo $multilingual_project_tips2; ?></span> 
 											<div>
+												<div style="display:none" id="now_sel" ><input type="text" id="now_selected" name="now_selected"/></div>
 												<input type="text" name="project_team_name" id="project_team_name" value="" style="float:left" 
 												class="form-control" style="width:600px;" data-ellipsis="true" data-ellipsis-max-width="150px"  autocomplete="off"  placeholder="<?php echo $multilingual_project_team_tips; ?>"  
 												/>												
@@ -358,6 +409,8 @@
 		$("#foot_top").css("min-height",document.getElementById("form1_table").offsetHeight+document.getElementById("top_height").offsetHeight+60+"px"); 
 		
 	});
+	 //function get_selected() {  var sel =  document.getElementById('selected').value; alert(sel);} 
+	 var sel_now="init";
 	
 		function delet(id,obj){
 
@@ -398,6 +451,7 @@
 			var add=uu_name+"【"+uu_phone+"】【"+uu_mail+"】="+uu_id+"%"+uu_name+"%"+uu_phone+"%"+uu_mail+"%"+uu_name+"'";
 			document.getElementById('constraint').value = old_con+"||"+add;
 			alert(document.getElementById('constraint').value);
+			document.getElementById('now_sel').innerHTML="<input type=\"text\" id=\"now_selected\" name=\"now_selected\" value=\"" +document.getElementById('selected').value+"\">" ;
 			document.getElementById(id).deleteRow(rowIndex-1);	
 			document.getElementById('project_team_name').value="";
 		}
@@ -439,6 +493,9 @@
 				new_con = new_con+"||"+rrr[k];
 				k++;
 			}
+			//alert(document.getElementById('now_sel').innerHTML);
+			document.getElementById('now_sel').innerHTML="<input type=\"text\" id=\"now_selected\" name=\"now_selected\" value=\"" +document.getElementById('selected').value+"\">" ;
+			//alert(document.getElementById('now_sel').innerHTML);
 			document.getElementById('constraint').value=new_con;
            //alert(document.getElementById('constraint').value);
 			document.getElementById('project_team_name').value="";
