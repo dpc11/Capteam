@@ -98,12 +98,13 @@ $queryString_Recordset_actlog = sprintf("&totalRows_Recordset_actlog=%d%s", $tot
 <script type="text/javascript" src="js/lhgcore/lhgcore.js"></script>
 <script type="text/javascript" src="js/lhgcore/lhgdialog.js"></script>
 
-<table width="100%">
+<table width="100%" height="100%" id="totalpage">
   
   <tr>
-    <td class="file_text_bg">
-	<div class="file_text_div">
-	<table width="100%" align="center">
+    <td class="file_text_bg" height="100%">
+	<div class="file_text_div" id="filecontain" style="background:white;height="100%">
+	<div  id="tablecontain" style="background:white;">
+	<table width="100%" align="center" >
         <tr>
 		<td>
 	<h2><b><?php echo $row_DetailRS1['tk_doc_title']; ?></b></h2></td>
@@ -118,11 +119,11 @@ $queryString_Recordset_actlog = sprintf("&totalRows_Recordset_actlog=%d%s", $tot
 		  </td>
 		  <?php } ?>
 		  
-		  <td width="13%">
+		  <td width="26%">
 		  <a href="word.php?fileid=<?php echo $colname_DetailRS1; ?>" class="icon_word"><?php echo $multilingual_project_file_word; ?></a> 
 		  </td>
 		  <?php if($_SESSION['MM_uid'] == $row_DetailRS1['tk_doc_create'] ) { ?>
-		  <td width="10%">
+		  <td width="20%">
 		  <span class="glyphicon glyphicon-pencil"></span> <a href="file_edit.php?editID=<?php echo $row_DetailRS1['docid']; ?>&projectID=<?php echo $project_id; ?>&pid=<?php echo $row_DetailRS1['tk_doc_parentdocid']; ?>&pagetab=<?php echo $pagetabs;?>"><?php echo $multilingual_global_action_edit; ?></a>
 
 		  </td>
@@ -130,7 +131,7 @@ $queryString_Recordset_actlog = sprintf("&totalRows_Recordset_actlog=%d%s", $tot
 
       <?php if ($isNewWindow == 0) {?>
 
-      <td width = "13%">
+      <td width = "26%">
          <a class="mouse_over" onClick="javascript:history.go(-1);">
               <span class="glyphicon glyphicon-arrow-left"></span>
               <?php echo $multilingual_global_action_back; ?>
@@ -139,7 +140,7 @@ $queryString_Recordset_actlog = sprintf("&totalRows_Recordset_actlog=%d%s", $tot
       <?php } ?>
 
       <?php if ($isNewWindow == 1) {?>
-		  <td width="10%">
+		  <td width="20%">
 		    <span class="glyphicon glyphicon-remove-circle"></span> <a onClick="window.opener.location.reload(); window.close();" class="mouse_hover"><?php echo $multilingual_global_action_close; ?></a>
 		  </td>
       <?php } ?>
@@ -161,12 +162,13 @@ $queryString_Recordset_actlog = sprintf("&totalRows_Recordset_actlog=%d%s", $tot
 	?>
 	<?php } ?>
 	</div>
+	</div>
 	</td>
   </tr>
-  
+  <div id="logcontain">
+  <tr >
+          <td class="file_text_bg" >
   <?php if($totalRows_Recordset_actlog > 0){ //显示操作记录，如果有 ?>
-  <tr>
-          <td class="file_text_bg">
 		  <table style="width:940px;" align="center">
 		  <tr>
 		  <td>
@@ -217,8 +219,30 @@ $queryString_Recordset_actlog = sprintf("&totalRows_Recordset_actlog=%d%s", $tot
 	</td>
   </tr>
   <?php } ?>
+  </div>
 </table>
+</div>
 <?php require('foot.php'); ?>
+<script>
+$(window).load(function()
+	{		
+	
+		$("#totalpage").css("height",$(window).height()-60-64+"px");
+		$("#totalpage").css("min-height",document.getElementById("tablecontain").clientHeight+document.getElementById("logcontain").clientHeight+60+"px");
+		$("#filecontain").css("min-height",document.getElementById("tablecontain").clientHeight+110+"px");
+		$("#filecontain").css("height",document.getElementById("totalpage").clientHeight-110-
+				document.getElementById("logcontain").clientHeight+"px");
+		$("#foot_top").css("min-height",document.getElementById("totalpage").clientHeight+60+60+"px");
+	});
+	$(window).resize(function()
+	{	
+		
+		$("#totalpage").css("height",$(window).height()-60-64+"px");
+		$("#filecontain").css("height",$(window).height()-60-64-document.getElementById("logcontain").clientHeight-110+"px");
+
+		$("#foot_top").css("min-height",document.getElementById("totalpage").clientHeight+60+60+"px");
+	});
+</script>
 </body>
 </html>
 
