@@ -59,7 +59,7 @@
             }
             $data[] = array(
             'id' => $row['id'],
-            'title' => '[¸öÈË]'.$row['name'],
+            'title' => '[个人]'.$row['name'],
             'start' => $row['start_time'],
             'end' => $row['end_time'],
             'url' => $row['url'],
@@ -74,7 +74,7 @@
         while($row=mysql_fetch_array($query)){
             $data[] = array(
                 'id' => $row['tid'],
-                'title' => '[ÈÎÎñ]'.$row['csa_text'],
+                'title' => '[任务]'.$row['csa_text'],
                 'start' => $row['csa_plan_et'],
                 'end' => $row['csa_plan_et'],
                 'url' => $row['url'],
