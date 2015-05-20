@@ -21,5 +21,5 @@
     $qurnum="UPDATE tk_board SET board_content='$tk_stage_desc' WHERE board_id=$editID";
     $Result1 = mysql_query($qurnum, $tankdb) or die(mysql_error());
 
-   header("location:base_view.php?pid=$pid");
+   header("location:board_view.php?pid=$pid");
 ?>

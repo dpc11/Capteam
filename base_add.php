@@ -29,5 +29,5 @@
     }
 
   $Result1 = mysql_query($insertSQL, $tankdb) or die(mysql_error());
-  header("location:base_view.php?pid=$pid");
+  header("location:board_view.php?pid=$pid");
 ?>
