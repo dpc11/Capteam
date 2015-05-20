@@ -55,44 +55,43 @@ $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recor
 ?>
 
   <?php require('head.php'); ?>
-  <?php if ($_SESSION['MM_rank'] > "4") {  ?> 
-<div class="subnav">
+
+<div class="subnav" id="subnav">
 
 <div class="float_left" style="width:50%">
-<div class="btn-group">
-<a type="button" class="btn btn-default btn-sm <?php if($pagetabs == "online") { echo "active";} ?>" href="<?php echo $pagename; ?>?pagetab=online"><?php echo $multilingual_announcement_list_online; ?></a>
-<a type="button" class="btn btn-default btn-sm <?php if($pagetabs == "offline") { echo "active";} ?>" href="<?php echo $pagename; ?>?pagetab=offline"><?php echo $multilingual_announcement_list_showoff; ?></a>
-</div>
+	<div class="btn-group">
+		<a type="button" class="btn btn-default btn-lg <?php if($pagetabs == "online") { echo "active";} ?>" href="<?php echo $pagename; ?>?pagetab=online"><?php echo $multilingual_announcement_list_online; ?></a>
+		<a type="button" class="btn btn-default btn-lg <?php if($pagetabs == "offline") { echo "active";} ?>" href="<?php echo $pagename; ?>?pagetab=offline"><?php echo $multilingual_announcement_list_showoff; ?></a>
+		<button type="button" class="btn btn-link btn-lg" style="margin-left:10px;"  name="button2" id="button2" onclick="javascript:self.location='announcement_add.php';">
+		<span class="glyphicon glyphicon-plus-sign"></span> <?php echo $multilingual_announcement_new_title; ?>
+		</button>
+	</div>
 </div>
 
-
-
-<div class="float_right">
-<button type="button" class="btn btn-default btn-sm" name="button2" id="button2" onclick="javascript:self.location='announcement_add.php';">
-<span class="glyphicon glyphicon-plus-sign"></span> <?php echo $multilingual_announcement_new_title; ?>
-</button>
-</div>
 
 </div>
 <div class="clearboth"></div>
-<?php }  ?>
 
-
-  <div class="pagemargin">
+  <div class="pagemargin" id="pagemargin">
+  <div class="filesubtab" id="tasktab" style="margin-top:30px;">
+  <div class="filetab " id="filesubtab">
   <?php if ($totalRows_Recordset1 > 0) { // Show if recordset not empty ?>
    
       <table  class="table table-striped table-hover glink" width="98%" >
         <thead>
           <tr>
-            <th><?php echo $multilingual_announcement_title; ?></th>
-            <th><?php echo $multilingual_announcement_publisher; ?></th>
-            <th><?php echo $multilingual_announcement_status; ?></th>
-            <th><?php echo $multilingual_global_lastupdate; ?></th>
+			<th width="10%"></th>
+            <th width="30%"><?php echo $multilingual_announcement_title; ?></th>
+            <th width="15%"><?php echo $multilingual_announcement_publisher; ?></th>
+            <th width="15%"><?php echo $multilingual_announcement_status; ?></th>
+            <th width="20%"><?php echo $multilingual_global_lastupdate; ?></th>
+			<th width="10%"></th>
           </tr>
         </thead>
 		<tbody>
         <?php do { ?>
           <tr>
+			<td></td>
             <td class="task_title5"><div  class="text_overflow_450  "><a href="announcement_view.php?recordID=<?php echo $row_Recordset1['AID']; ?>" ><?php echo $row_Recordset1['tk_anc_title']; ?></a></div></td>
             <td>
 			<a href="user_view.php?recordID=<?php echo $row_Recordset1['tk_anc_create']; ?>">
@@ -118,10 +117,10 @@ case -1:
 			
 			</td>
             <td><?php echo $row_Recordset1['tk_anc_lastupdate']; ?>&nbsp; </td>
+			<td></td>
           </tr>
           <?php } while ($row_Recordset1 = mysql_fetch_assoc($Recordset1)); ?>
-		  </tbody>
-      </table>
+
 
     <table class="rowcon" border="0" align="center">
       <tr>
@@ -130,7 +129,8 @@ case -1:
             
             <td valign="bottom">
               <table border="0">
-                <tr>
+                <tr></td>
+        <td align="right" valign="bottom"><?php echo ($startRow_Recordset1 + 1) ?> <?php echo $multilingual_global_to; ?> <?php echo min($startRow_Recordset1 + $maxRows_Recordset1, $totalRows_Recordset1) ?> (<?php echo $multilingual_global_total; ?> <?php echo $totalRows_Recordset1 ?>)</td>
                   <td><?php if ($pageNum_Recordset1 > 0) { // Show if not first page ?>
                     <a href="<?php printf("%s?pageNum_Recordset1=%d%s", $currentPage, 0, $queryString_Recordset1); ?>"><?php echo $multilingual_global_first; ?></a>
                     <?php } // Show if not first page ?></td>
@@ -145,27 +145,43 @@ case -1:
                     <?php } // Show if not last page ?></td>
                 </tr>
               </table>
-            </td>
-            
-            
+            </td>            
           </tr>
-        </table></td>
-        <td align="right" valign="bottom"><?php echo ($startRow_Recordset1 + 1) ?> <?php echo $multilingual_global_to; ?> <?php echo min($startRow_Recordset1 + $maxRows_Recordset1, $totalRows_Recordset1) ?> (<?php echo $multilingual_global_total; ?> <?php echo $totalRows_Recordset1 ?>)</td>
+        </table>
       </tr>
-    </table>
     <?php } else { // Show if recordset empty ?>  
-  <div class="alert alert-warning" style="margin:6px;">
-
-	<?php echo $multilingual_announcement_none; ?>
-
-	</div>
-  </div>
-  </div>
+  		<tr>
+			<td colspan="2">
+				<table>
+					<div class="alert alert-warning search_warning" style="margin:6px;">
+						<?php echo $multilingual_announcement_none; ?>
+					</div>
+				</table>
+			</td>
+		</tr>
 <?php } // Show if recordset empty ?>  
-  <p>&nbsp;</p>
+
+</tbody>
+</table>
+</div>
+</div>
+</div>
   </div><!--pagemargin结束 -->
   <?php require('foot.php'); ?>
-  
+	<script>
+
+	$(window).load(function()
+	{
+		$(window).resize();	
+	});
+	$(window).resize(function()
+	{	
+		$("#headerlink").css("width",$("#tasktab").width()/0.8929+"px");
+		$("#foot_div").css("width",$("#tasktab").width()/0.8929+"px");
+		$("#foot_div").css("width",$("#tasktab").width()/0.8929+"px");
+		$("#foot_top").css("min-height",document.getElementById("pagemargin").clientHeight+document.getElementById("subnav").clientHeight+66+110+70+"px"); 
+	});
+	</script>  
 </body>
 </html>
 <?php

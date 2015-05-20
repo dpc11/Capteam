@@ -70,8 +70,8 @@ $totalRows_Recordset_anc=0;
 						class="<?php if($pagename == "file.php" || $pagename == "file_add.php" || $pagename == "file_project.php" || $pagename == "file_edit.php" || $pagename == "file_view.php"){ 
 						echo "nav_select";} ?> "><?php echo $multilingual_head_file; ?></a>
 					  
-						<a href="default_announcement.php" 
-						class="<?php if($pagename == "default_announcement.php" || $pagename == "announcement_add.php" || $pagename == "announcement_view.php" || $pagename == "announcement_edit.php"){
+						<a href="announcement.php" 
+						class="<?php if($pagename == "announcement.php" || $pagename == "announcement_add.php" || $pagename == "announcement_view.php" || $pagename == "announcement_edit.php"){
 						echo "nav_select";} ?> "><?php echo $multilingual_head_announcement; ?></a>
 						
 						<a href="schedule_view.php" 

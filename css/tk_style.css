@@ -1328,15 +1328,15 @@ a:focus {
 
 .icon_folder {
     background: url(../images/ui/folder-horizontal.png) no-repeat;
-    padding-left: 20px;
-    height: 18px;
+    padding-left: 35px;
+    height: 22px;
     display: block;
     float: left;
 }
 
 .icon_file {
     background: url(../images/ui/document-text.png) no-repeat;
-    padding-left: 20px;
+    padding-left: 30px;
     display: block;
     float: left;
 }
@@ -1350,7 +1350,7 @@ a:focus {
 
 .icon_atc {
     background: url(../images/ui/iconatt.gif) no-repeat;
-    padding-left: 17px;
+    padding-left: 27px;
     height: 18px;
     margin-left: 5px;
 }
