@@ -405,7 +405,7 @@ $(function() {
 											 
 											 <!-- 项目看板 -->
 											 <td width="12%">
-											 <a   href="board_view.php?pid=<?php echo $project_folder_id;?>"><span class="glyphicon glyphicon-board"></span> <?php echo $multilingual_project_board_view; ?></a></td>
+											 <a   href="board_view.php?pid=<?php echo $colname_DetailRS1;?>"><span class="glyphicon glyphicon-board"></span> <?php echo $multilingual_project_board_view; ?></a></td>
 											<!-- 增加评论 -->
 											 <td width="12%">
 											 <a onClick="addcomm();" class="mouse_over"><span class="glyphicon glyphicon-comment"></span> <?php echo $multilingual_default_addcom; ?></a>
