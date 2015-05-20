@@ -1,13 +1,12 @@
 <?php require_once('config/tank_config.php'); ?>
 <?php require_once('session_unset.php'); ?>
 <?php require_once('session.php'); ?>
-<?php require_once('function/dao.php'); ?>
 <?php require_once('function/stage_function.php'); ?>
+<?php require_once('function/project_function.php'); ?>
+<?php require_once('function/team_function.php'); ?>
 <?php require_once('function/file_log_function.php'); ?>
 <?php
 $currentPage = $_SERVER["PHP_SELF"];
-
-$team_dao = new team_dao();
 //$_SESSION['MM_pid'] = 24;
 //$_SESSION['MM_uid'] = 5;
 //$_SESSION['MM_sid'] = 12;
@@ -28,7 +27,7 @@ $Log_Result=get_stage_log($now_sid);
 $folder_id=get_stage_folder($now_sid);
 $file_log_Result = get_stage_file_log($folder_id);
 
-$user_rank = $team_dao->get_user_authority($now_uid,$now_pid);
+$user_rank = get_user_authority($now_uid,$now_pid);
 $selLimit = "SELECT tk_team_ulimit FROM tk_team WHERE tk_team_pid=$now_pid
     AND tk_team_uid=$now_uid";
 mysql_select_db($database_tankdb,$tankdb);
@@ -399,9 +398,8 @@ document.getElementById('tab_' + i).className = (i == ".$tabid.") ? 'onhover' : 
                     <tr>
                         <td valign="top">
                             <?php 
-                            $project_id=$now_pid; 
-                            $project_dao_obj = new project_dao();
-                            $project_obj = $project_dao_obj->get_project_by_id($project_id);
+                            $project_id=$now_pid;                             
+                            $project_obj = get_project_by_id($project_id);
                             $project_name=$project_obj->name; 
                             $node_id_task=$now_sid+100000; 
                             require_once( 'tree.php'); 
