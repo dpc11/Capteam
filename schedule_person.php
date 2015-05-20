@@ -23,14 +23,12 @@
 require_once( 'config/tank_config.php'); ?>
 <?php require_once( 'session_unset.php'); ?>
 <?php require_once( 'session.php'); ?>
-<?php require_once( 'function/dao.php'); ?>
+<?php require_once( 'function/schedule_function.php'); ?>
 
 <?php 
-//获取个人日程的数据库操作类
-$schedule_dao_obj = new schedule_dao();
 //获得个人日程数据
 $userid = $_SESSION['MM_uid'];
-$data = $schedule_dao_obj->get_person_events($userid);
+$data = get_person_events($userid);
 ?>
 
 <?php require( 'head.php'); ?>
