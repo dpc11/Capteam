@@ -1342,9 +1342,9 @@ a:focus {
 }
 
 .icon_word {
-    background: url(../images/ui/wordico.gif) no-repeat;
-    padding-left: 17px;
-    height: 18px;
+    background: url(../images/ui/wordico.png) no-repeat;
+    padding-left: 32px;
+    height: 20px;
     margin-left: 5px;
 }
 
@@ -1398,7 +1398,7 @@ a:focus {
     background: #fff;
     width: 940px;
     border: 1px solid #CCCCCC;
-    margin: 30px auto 20px auto;
+    margin: 30px auto 30px auto;
     padding: 55px;
 }
 

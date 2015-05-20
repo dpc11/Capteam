@@ -111,10 +111,10 @@ $queryString_Recordset_actlog = sprintf("&totalRows_Recordset_actlog=%d%s", $tot
 	</tr>
         <tr>
           <td>
-		  <table width="100%" align="center">
+		  <table style=" margin-top:10px;" width="100%" align="center">
         <tr>
 		<?php if ($row_DetailRS1['tk_doc_attachment'] <> "" && $row_DetailRS1['tk_doc_attachment'] <> " ") { //显示附件下载地址，如果有 ?>
-          <td width="12%">
+          <td width="24%">
 		  <a href="<?php echo $row_DetailRS1['tk_doc_attachment']; ?>" class="icon_atc"><?php echo $multilingual_project_file_download; ?></a>
 		  </td>
 		  <?php } ?>
