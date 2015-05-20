@@ -360,8 +360,46 @@
 	});
 	
 		function delet(id,obj){
-			var rowIndex = obj.parentElement.rowIndex;
-			document.getElementById(id).deleteRow(rowIndex);
+
+			var tr= obj.parentNode.parentNode;
+			var rowIndex = tr.rowIndex;
+			//alert(rowIndex);
+			var uu_id = tr.childNodes[0].childNodes[0].id;
+			var uu_name = tr.childNodes[1].childNodes[0].id;
+			var uu_phone = tr.childNodes[2].childNodes[0].id;
+			var uu_mail = tr.childNodes[3].childNodes[0].id;
+			old_con=document.getElementById('constraint').value;
+			//alert(document.getElementById('constraint').value);
+			alert(document.getElementById('selected').value);
+			var xx=uu_name+"【"+uu_phone+"】【"+uu_mail+"】";
+			var j= document.getElementById('selected').value.indexOf(xx); 
+			var sel_left="";
+			var sel_right="";
+			if(j>0){
+				sel_left =document.getElementById('selected').value.substr(0,j-2);  
+				//alert(left);
+				sel_right =document.getElementById('selected').value.substr(j,document.getElementById('selected').length); 
+				//alert(right);
+			}else {
+				sel_right =document.getElementById('selected').value; 
+				//alert(right);
+			}
+			var sr =sel_right.split('||');
+			var y=1;
+			new_sel = sel_left;
+			while(sr[y])
+			{
+				new_sel = new_sel+"||"+sr[y];
+				y++;
+			}
+			document.getElementById('selected').value=new_sel;
+			alert(document.getElementById('selected').value);
+
+			var add=uu_name+"【"+uu_phone+"】【"+uu_mail+"】="+uu_id+"%"+uu_name+"%"+uu_phone+"%"+uu_mail+"%"+uu_name+"'";
+			document.getElementById('constraint').value = old_con+"||"+add;
+			alert(document.getElementById('constraint').value);
+			document.getElementById(id).deleteRow(rowIndex-1);	
+			document.getElementById('project_team_name').value="";
 		}
 			
     J.check.rules = [
@@ -372,23 +410,37 @@
 	
 	function add_to_list(){
 			
-		document.getElementById('teamlist_tr').innerHTML=document.getElementById('teamlist_tr').innerHTML+"<tr ><td style=\"display:none;\">"+document.getElementById('uuid').value+"</td><td  data-ellipsis=\"true\" data-ellipsis-max-width=\"30px\" style=\"width:150px;text-align:center;\">"+document.getElementById('uuname').value+"</td>" +
-				"<td  data-ellipsis=\"true\" data-ellipsis-max-width=\"30px\" style=\"width:150px;text-align:center;\">"+document.getElementById('uuphone').value+"</td><td  data-ellipsis=\"true\" data-ellipsis-max-width=\"30px\" style=\"width:200px;text-align:center;\">"+document.getElementById('uuemail').value+"</td><td ><a href='#'; onclick=\"delet(\"teamlist\",this);\""+">X</a><td></td></tr>";
+		document.getElementById('teamlist_tr').innerHTML=document.getElementById('teamlist_tr').innerHTML+"<tr><td style=\"display:none;\"><span id=\""+document.getElementById('uuid').value+"\">"+document.getElementById('uuid').value+"</span></td><td  data-ellipsis=\"true\" data-ellipsis-max-width=\"30px\" style=\"width:150px;text-align:center;\"><span id=\""+document.getElementById('uuname').value+"\">"+document.getElementById('uuname').value+"</span></td>" +
+				"<td  data-ellipsis=\"true\" data-ellipsis-max-width=\"30px\" style=\"width:150px;text-align:center;\"><span id=\""+document.getElementById('uuphone').value+"\">"+document.getElementById('uuphone').value+"</span></td><td  data-ellipsis=\"true\" data-ellipsis-max-width=\"30px\" style=\"width:200px;text-align:center;\"><span id=\""+document.getElementById('uuemail').value+"\">"+document.getElementById('uuemail').value+"</span></td><td ><a href=\"#\" onclick=\"return delet('teamlist_tr',this);\""+">X</a><td></td></tr>";
 			var x=document.getElementById('uuname').value+"【"+document.getElementById('uuphone').value+"】【"+document.getElementById('uuemail').value+"】";
 			var i= document.getElementById('constraint').value.indexOf(x); 
+			//alert(i);
 			var left=""
 			var right="";
+			//alert(document.getElementById('constraint').value);
 			if(i>0){
 				left =document.getElementById('constraint').value.substr(0,i-2);  
+				//alert(left);
 				right =document.getElementById('constraint').value.substr(i,document.getElementById('constraint').length); 
+				//alert(right);
 			}else {
 				right =document.getElementById('constraint').value; 
+				//alert(right);
 			}					
 				
 			var rrr =right.split('||');
-			document.getElementById('selected').value=rrr[0]+"||";
-			document.getElementById('constraint').value=left+"||"+rrr[1];
-            		
+			var old_sel=document.getElementById('selected').value;
+			document.getElementById('selected').value=rrr[0]+"||"+old_sel;
+			//alert(document.getElementById('selected').value);
+			var k=1;
+			new_con = left;
+			while(rrr[k])
+			{
+				new_con = new_con+"||"+rrr[k];
+				k++;
+			}
+			document.getElementById('constraint').value=new_con;
+           //alert(document.getElementById('constraint').value);
 			document.getElementById('project_team_name').value="";
 			
 	}		
