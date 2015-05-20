@@ -48,7 +48,8 @@
 
 	//获得日程数据
 	$data = get_team_events($colname_DetailRS1);
-echo "==============".$data;
+
+
 	//授权的id是否有权限
 	if (isset($_GET['authority_user_id'])&&isset($_GET['authority_ulimit'])) {
 		$authority_user_id = $_GET['authority_user_id'];
