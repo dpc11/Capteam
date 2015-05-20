@@ -294,7 +294,7 @@ function addfolder()
 			<td colspan="2" >
 				<table class="rowcon" border="0" align="center">
 					<tr>
-						<td  align="left"><?php echo ($startRow_DetailRS1 + 1) ?> <?php echo $multilingual_global_to; ?> <?php echo min($startRow_DetailRS1 + $maxRows_DetailRS1, $totalPages_DetailRS1) ?> (<?php echo $multilingual_global_total; ?> <?php echo $totalPages_DetailRS1 ?>)
+						<td  align="left"><?php echo ($startRow_DetailRS1 + 1) ?> <?php echo $multilingual_global_to; ?> <?php echo min($startRow_DetailRS1 + $maxRows_DetailRS1, $totalRows_DetailRS1) ?> (<?php echo $multilingual_global_total; ?> <?php echo $totalRows_DetailRS1 ?>)
 						</td>
 						<td>   
 							<table border="0">
