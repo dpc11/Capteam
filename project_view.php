@@ -405,7 +405,7 @@ $(function() {
 											 
 											 <!-- 项目看板 -->
 											 <td width="12%">
-											 <a   href="board_view.php?pid=<?php echo $project_folder_id;?>"><span class="glyphicon glyphicon-board"></span> <?php echo $multilingual_project_board_view; ?></a></td>
+											 <a   href="board_view.php?pid=<?php echo $colname_DetailRS1;?>"><span class="glyphicon glyphicon-board"></span> <?php echo $multilingual_project_board_view; ?></a></td>
 											<!-- 增加评论 -->
 											 <td width="12%">
 											 <a onClick="addcomm();" class="mouse_over"><span class="glyphicon glyphicon-comment"></span> <?php echo $multilingual_default_addcom; ?></a>
@@ -465,11 +465,12 @@ $(function() {
 									<table class="table table-striped table-hover glink">
 										<tbody>                 
 											<?php foreach($user_arr as $key => $val){ 
-												if($val["uid"] <> $_SESSION["MM_uid"]){ ?>
+												 ?>
 													<tr>
 													<td><?php echo "姓名:".$val["name"]; ?></td>
 													<td><?php echo "邮箱:".$val["email"]; ?></td>
 													<td><?php echo "电话:".$val["phone_num"]; ?></td>
+													<td><?php echo "总得分:".$val["score"]; ?></td>
 													<?php 
 														$tk_team_pid=$colname_DetailRS1;//项目id
 														$tk_team_uid=$_SESSION['MM_uid'];//用户id
@@ -486,7 +487,7 @@ $(function() {
 																?></a></td>  
 														<?php } ?>  
 													</tr>                      
-											<?php } }?>                                 
+											<?php }?>                                 
 										</tbody>
 									</table>
 								</td>

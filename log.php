@@ -1,6 +1,9 @@
 <?php require_once('config/tank_config.php'); ?>
 <?php require_once('session_unset.php'); ?>
 <?php require_once('session.php'); ?>
+<?php require_once('function/log_function.php'); ?>
+<?php require_once('function/user_function.php'); ?>
+<?php require_once('function/project_function.php'); ?>
 <?php 
 $pagetabs = "alllog";
 if (isset($_GET['pagetab'])) {
@@ -8,9 +11,8 @@ if (isset($_GET['pagetab'])) {
 }
 
 $currentPage = $_SERVER["PHP_SELF"];
-
-
 ?>
+
 <?php require('head.php'); ?>
 <!--
 <div class="subnav">
@@ -28,7 +30,6 @@ $currentPage = $_SERVER["PHP_SELF"];
 </div>
 -->
 <div class="pagemargin">
-
 <?php require('control_log.php'); ?>
 </div>
 <?php require('foot.php'); ?>
