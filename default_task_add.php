@@ -1,6 +1,9 @@
 <?php require_once('config/tank_config.php'); ?>
 <?php require_once('session_unset.php'); ?>
 <?php require_once('session.php'); ?>
+<?php require_once('function/user_function.php'); ?>
+<?php require_once('function/task_function.php'); ?>
+<?php require_once('function/message_function.php'); ?>
 <?php
 
 
@@ -84,7 +87,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
 
-if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
+if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {//获得本页表单form1
 if($_POST['user_cc'] == null){
 $cc_post= $_POST['user_cc'];
 }else {
@@ -117,11 +120,13 @@ else {
   $insertGoTo = "default_task_edit.php?editID=$newID";
 }
 */
+
 $insertGoTo = "default_task_edit.php?editID=$newID";
   if (isset($_SERVER['QUERY_STRING'])) {
     $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
     $insertGoTo .= $_SERVER['QUERY_STRING'];
   }
+
 //新建任务，给被指派的人发消息
 $msg_to = $to_user;
 //$msg_from = $_POST['csa_create_user'];
@@ -141,7 +146,7 @@ if($_POST['user_cc'] <> null){
   header(sprintf("Location: %s", $insertGoTo));
 }
 
-$user_arr = get_user_select($project_id);
+$user_arr = get_user_select_by_project($project_id);
 
 ?>
 <?php require('head.php'); ?>

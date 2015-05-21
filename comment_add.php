@@ -1,5 +1,6 @@
 <?php require_once('config/tank_config.php'); ?>
 <?php require_once('session.php'); ?>
+<?php require_once('function/message_function.php'); ?>
 <?php
 $restrictGoTo = "user_error3.php";
 
@@ -54,12 +55,10 @@ $tk_comm_title = "'',";
 }else{
 $tk_comm_title = sprintf("%s,", GetSQLValueString(str_replace("%","%%",$_POST['tk_comm_title']), "text"));
 }
-
+echo $tk_comm_title;
 if ((isset($_POST["com_insert"])) && ($_POST["com_insert"] == "form1")) {
-  $insertSQL = sprintf("INSERT INTO tk_comment (tk_comm_title, tk_comm_user, tk_comm_pid, tk_comm_type, tk_comm_text) VALUES ($tk_comm_title %s, %s, %s, '')",
-                       GetSQLValueString($nowuserid, "text"),
-                       GetSQLValueString($taskid, "text"),
-                       GetSQLValueString($ctype, "text"));
+  echo $tk_comm_title;
+  $insertSQL = "INSERT INTO tk_comment (tk_comm_title, tk_comm_type, tk_comm_user, tk_comm_pid) VALUES ($tk_comm_title,$ctype,$nowuserid,$taskid)";
 
   mysql_select_db($database_tankdb, $tankdb);
   $Result1 = mysql_query($insertSQL, $tankdb) or die(mysql_error());

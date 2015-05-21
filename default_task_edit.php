@@ -74,6 +74,8 @@ $maxRows_Recordset_comment = 10;
 $pageNum_Recordset_comment = 0;
 $startRow_Recordset_comment =0;
 
+
+// echo $row_Recordset_task['tid']; 
 //日志操作，评论
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*
@@ -202,7 +204,7 @@ if(frm != null && subWeb != null)
 
 function addcomm()
 {
-    J.dialog.get({ id: "test1", title: '<?php echo $multilingual_default_addcom; ?>', width: 600, height: 500, page: "comment_add.php?taskid=<?php echo $row_Recordset_task['TID']; ?>&type=1" });
+    J.dialog.get({ id: "test1", title: '<?php echo $multilingual_default_addcom; ?>', width: 600, height: 500, page: "comment_add.php?taskid=<?php echo $row_Recordset_task['tid']; ?>&type=1" });
 }
 
 </script>
