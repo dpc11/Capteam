@@ -239,7 +239,7 @@ if(window.screen.width!=1920||window.screen.height!=1080){
 	<div style="width: 10%;float:right; ">
 	 </div>
 	 <div style="width: 30%;float:right; ">
-	  <a class="beauty-label" href="#">忘记密码？</a>
+	  <a class="beauty-label" href="#">忘记密码啦哎喂？</a>
 	 </div>
      
   </div>
