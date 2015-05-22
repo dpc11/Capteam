@@ -142,7 +142,7 @@ function login(){
 	<div style="width: 10%;float:right; ">
 	 </div>
 	 <div style="width: 30%;float:right; ">
-	  <a class="beauty-label" href="#">忘记密码？</a>
+	  <a class="beauty-label" href="http://localhost//Capteam/head.php">忘记密码啊？</a>
 	 </div>
      
   </div>
