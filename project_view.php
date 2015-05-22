@@ -476,7 +476,9 @@ $(function() {
 														$tk_team_uid=$_SESSION['MM_uid'];//用户id
 														$user_authority = get_user_authority($tk_team_uid,$tk_team_pid);//获得当前用户的权限
 
-														if($user_authority > 2){ //只有组长才能分配权限?>
+														if($user_authority > 2){ //只有组长才能分配权限
+															if($val["ulimit"] < 3){?>
+
 															<td><a type="button" class="btn btn-default btn-sm" href=<?php echo 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF'].'?recordID='.$colname_DetailRS1.'&authority_user_id='.$val["uid"].'&authority_ulimit='.$val["ulimit"]; ?>>
 															  <?php
 															  if($val["ulimit"] == 1){
@@ -485,7 +487,14 @@ $(function() {
 																  echo $multilingual_privilege_remove;
 															  }   
 																?></a></td>  
-														<?php } ?>  
+														<?php }else{   ?>
+                                                              <td><a type="button" class="btn btn-default btn-sm">
+															  <?php
+																  echo "组长";															   
+																?></a></td>  
+
+														<?php	 }
+															} ?>  
 													</tr>                      
 											<?php }?>                                 
 										</tbody>
