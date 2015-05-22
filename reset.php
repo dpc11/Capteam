@@ -19,6 +19,16 @@ if($row){
 	if($mt==$token){
 		if(time()-$row['getpasstime']>24*60*60){
 			$msg = '该链接已过期！';
+  echo $msg;
+    $insertGoTo = "findpass_witherror.php";
+     if (isset($_SERVER['QUERY_STRING'])) {
+    $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
+    $insertGoTo .= $_SERVER['QUERY_STRING'];
+  }
+    header(sprintf("Location: %s", $insertGoTo));
+      
+
+
 		}else{
 			//重置密码...
 			$msg = '请重新设置密码，显示重置密码表单，<br/>这里只是演示，略过。';
@@ -26,9 +36,25 @@ if($row){
 		}
 	}else{
 		$msg =  '无效的链接<br/>'.$mt.'<br/>'.$token;
+    echo $msg;
+
+    $insertGoTo = "findpass_witherror.php";
+     if (isset($_SERVER['QUERY_STRING'])) {
+    $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
+    $insertGoTo .= $_SERVER['QUERY_STRING'];}
+
+    header(sprintf("Location: %s", $insertGoTo));
 	}
 }else{
 	$msg =  '错误的链接！';	
+  echo $msg;
+  $insertGoTo = "findpass_witherror.php";
+     if (isset($_SERVER['QUERY_STRING'])) {
+    $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
+    $insertGoTo .= $_SERVER['QUERY_STRING'];}
+
+    header(sprintf("Location: %s", $insertGoTo));
+
 }
 //echo $msg;
 if($msg=='请重新设置密码，显示重置密码表单，<br/>这里只是演示，略过。'){//如果链接有效，显示重置密码页面
