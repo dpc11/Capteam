@@ -93,11 +93,15 @@ include_once("smtp.class.php");
     $smtpemailto = $email;
     $smtpemailfrom = $smtpusermail;
     $emailsubject = "Capteam - 找回密码";
-    $emailbody = "亲爱的".$email."：<br/>您在".$time."提交了找回密码请求。请点击下面的链接重置密码。<br/><a href='".$url."' target='_blank'>".$url."</a><br/>如果以上链接无法点击，请将它复制到你的浏览器地址栏中进入访问。<br/>如果您没有提交找回密码请求，请忽略此邮件。";
+    $emailbody = "亲爱的".$email."：<br/>您在".$time."提交了找回密码请求。请点击下面的链接重置密码(30分钟以内有效)。<br/><a href='".$url."' target='_blank'>".$url."</a><br/>如果以上链接无法点击，请将它复制到你的浏览器地址栏中进入访问。<br/>如果您没有提交找回密码请求，请忽略此邮件。";
     
     $rs = $smtp->sendmail($smtpemailto, $smtpemailfrom, $emailsubject, $emailbody, $emailtype);
 
   if($rs==1){
+
+
+  $updatetime = mysql_query("UPDATE tk_user SET  getpasstime=$getpasstime WHERE tk_user_email='$email' AND status=1");
+
     $mailstyle = explode('@',$email); 
     $url='http://mail.'.$mailstyle[1];   ?>   
 <body onload='setHeight("500px");' > 
