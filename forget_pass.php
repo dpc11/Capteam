@@ -55,7 +55,7 @@ $(function(){
    	<form id="reg" action="user_findpass.php" method="post">
         	<p>用户可以通过邮箱找回密码</p>
         	<p><strong>输入您注册的电子邮箱，找回密码：</strong></p>
-        	<p><input type="text" class="input" name="email" id="email"><span id="chkmsg"></span></p>
+        	<p><input type="text" class="input" name="email" id="email"><span id="chkmsg"></span></p><!--填写用户邮箱-->
             <p><input type="submit" class="btn" id="sub_btn" value="提 交"></p>
 	</form>
 	</div>

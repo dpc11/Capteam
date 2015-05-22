@@ -17,10 +17,10 @@ if($row){
 
 
 	if($mt==$token){
-		if(time()-$row['getpasstime']>24*60*60){
-			$msg = '该链接已过期！';
+		if(time()-$row['getpasstime']>1*30*60){
+			$msg = '该链接已过期';
   echo $msg;
-    $insertGoTo = "findpass_witherror.php";
+    $insertGoTo = "findpass_witherror.php?&msg=".$msg;
      if (isset($_SERVER['QUERY_STRING'])) {
     $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
     $insertGoTo .= $_SERVER['QUERY_STRING'];
@@ -35,10 +35,10 @@ if($row){
 			//echo "woshi！！！";
 		}
 	}else{
-		$msg =  '无效的链接<br/>'.$mt.'<br/>'.$token;
-    echo $msg;
+		$msg1 =  '无效的链接';
+    echo $msg1;
 
-    $insertGoTo = "findpass_witherror.php";
+    $insertGoTo = "findpass_witherror.php?&msg=".$msg1;
      if (isset($_SERVER['QUERY_STRING'])) {
     $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
     $insertGoTo .= $_SERVER['QUERY_STRING'];}

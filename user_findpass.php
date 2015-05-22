@@ -35,10 +35,10 @@ function over()
 			top.location.href='user_login.php';
 		}
 		function resend(){
-			var username=document.getElementById('textfield1').value;
-			var password=document.getElementById('textfield3').value;
-			var email=document.getElementById('textfield5').value;
-			window.open('register_real.php?textfield1='+username+'&&textfield3='+password+'&&textfield5='+email+'&&TYPE=2','_self');
+			//var username=document.getElementById('textfield1').value;
+			////var password=document.getElementById('textfield3').value;
+			//var email=document.getElementById('textfield5').value;
+			window.open('forget_pass.php');
 		}
 		function register(){
 			window.parent.parent.document.getElementById("lhg_registerDILOG").height="350px";
@@ -134,7 +134,7 @@ include_once("smtp.class.php");
 					<p class="text-muted" style="font-size:15px;">没有收到邮件？</p> 
 					<p class="text-muted" style="font-size:15px;">1.检查你的邮件垃圾箱</p> 
 					<p class="text-muted" style="font-size:15px;">2.检查邮件是否被拦截</p> 
-					<p class="text-muted" style="font-size:15px;">3.若仍未收到邮件，请尝试<a href="#" onclick="resend();">重新发送</a></p> 	
+					<p class="text-muted" style="font-size:15px;">3.您输入的邮箱有误，请重新输入<a href="#" onclick="resend();">重新找回</a></p> 	
 				</div>				
 				<div class="form-group col-xs-4">	</div>
 			</div>

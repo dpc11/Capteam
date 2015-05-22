@@ -58,6 +58,8 @@ function over()
 header("Content-type: text/html;charset=utf-8");
 
 $email = stripslashes(trim($_GET['email']));
+
+$msg = stripslashes(trim($_GET['msg']));
   ?>   
 <body onload='setHeight("500px");' > 
 	<form action="" method="post" name="myform" id="form1"  >
@@ -70,19 +72,27 @@ $email = stripslashes(trim($_GET['email']));
 				 <div class="form-group col-xs-12">
 				 <div class="form-group col-xs-1"></div>
 				</div>
-			
+			<?php  
+			if($msg=='无效的链接'){//无效链接?>
 				<div class="form-group col-xs-12" style="font-size:20px;line-height:1.8; word-break: break-all;">
 					<div style="font-size:20px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;尊敬的： <?php echo $email; ?> ，您好，此条链接为无效链接，可能的原因有：1.
-						您已经点击过该链接并成功找回密码。您可以点击下方“已重置，点击登录”按钮进入登录页面，使用您重置的密码登录系统。
+						您已经点击过该链接并成功找回密码。您可以点击下方“点击登录”按钮进入登录页面，使用您重置的密码登录系统。
 
 						2.此条链接纯属系统误发，请自行忽略，给您带来的不便敬请谅解。--Capteam敬上</div> 	
 				</div>
-			
+			<?php }elseif($msg=='该链接已过期'){//链接已过期?>
+                 <div class="form-group col-xs-12" style="font-size:20px;line-height:1.8; word-break: break-all;">
+					<div style="font-size:20px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;尊敬的： <?php echo $email; ?> ，您好，此条链接（有效期为30分钟，以邮件发到您邮箱的具体时间开始计起）
+						已过期，您可以点击下方“登录”按钮进入登录页面，使用您原始的密码登录系统。如需再次重置密码，请在登录页面按相关提示进行操作。
+
+						--Capteam敬上</div> 	
+				</div>
+				<?php }?>
 				<div class="form-group col-xs-12">
 					<div class="form-group col-xs-6"></div>
 				<!--<div class="form-group col-xs-2"><button type="button" class="btn btn-default" style="font-size:16px;" name="cont" data-loading-text="跳转中……" onclick="jumpto();">登录邮箱</button></div>	
 				--><div class="form-group col-xs-1">
-				<div class="form-group col-xs-3"><button type="button" class="btn btn-default" style="font-size:16px;"  onclick="login();">已重置，点击登录</button></div>		 
+				<div class="form-group col-xs-3"><button type="button" class="btn btn-default" style="font-size:16px;"  onclick="login();">点击登录</button></div>		 
 					
 				</div>  
 				<p>&nbsp;</p>
@@ -101,7 +111,7 @@ $('button[data-loading-text]').click(function () {
 		
 		</form>
 </body>
-<?php  //注册成功，发送失败 
+<?php  
 
 
 /*function sendmail($time,$email,$url){
