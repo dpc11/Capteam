@@ -556,12 +556,12 @@ $multilingual_announcement_id = "ID";
 $multilingual_announcement_title = "公告标题";
 $multilingual_announcement_text = "公告正文";
 $multilingual_announcement_publisher = "发布人";
-$multilingual_announcement_status = "发布状态";
+$multilingual_announcement_status = "&nbsp;&nbsp;&nbsp;关于公告";
 $multilingual_announcement_none = "没有符合条件的公告";
 $multilingual_announcement_tip = "
-状态为置顶的公告，在所有页面顶部显示，如果设置了多个置顶公告，则滚动显示;<br /><br />
-状态为上线的公告，可以在公告列表页查看；<br /><br />
-状态为下线的公告对普通用户不可见。
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;状态为置顶的公告，在所有页面顶部显示，如果设置了多个置顶公告，则滚动显示;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;状态为上线的公告，可以在公告列表页查看；</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;状态为下线的公告对普通用户不可见。</p>
 ";
 $multilingual_announcement_view_title = "公告详情";
 $multilingual_announcement_view_time = "发布时间";
