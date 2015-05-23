@@ -79,8 +79,15 @@ $totalRows_Recordset_anc=0;
 						echo "nav_select";} ?>"><?php echo $multilingual_head_schedule; ?></a> 
 
 						<a href="board_view.php" 
-						class="<?php if($pagename == "board_view.php"){
-						echo "nav_select";} ?>"><?php echo $multilingual_head_board; ?></a> 
+						class="<?php if($pagename == "board_view.php")
+									{	
+									    if(isset($_GET['pid'])){
+									        ;
+									    }else
+									    {
+									    	echo "nav_select";
+									    }
+									} ?>"><?php echo $multilingual_head_board; ?></a> 
 
 					</div>
 

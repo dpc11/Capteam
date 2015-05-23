@@ -54,4 +54,16 @@ function get_personal_board_info($uid){
   return $BoardInfoRS;
 }
 
+//查找项目对应的组长id
+function get_leader($pid){
+
+  global $tankdb;
+  $selLeaderSQL = "SELECT * FROM tk_team WHERE tk_team_pid=$pid AND tk_team_ulimit = 3";
+  $LeaderRS = mysql_query($selLeaderSQL, $tankdb) or die(mysql_error());
+  $row = mysql_fetch_assoc($LeaderRS);
+  $leader_id = $row['tk_team_uid'];
+
+  return $leader_id;
+}
+
 ?>

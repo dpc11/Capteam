@@ -6,7 +6,7 @@ $prjurl="project_view.php?recordID=".$project_id."&pagetab=allprj";
 <link rel="StyleSheet" href="css/dtree/dtree.css" type="text/css" />
 <script type="text/javascript" src="js/dtree/dtree.js"></script>
 
-<body onLoad="javascript: d.openTo(<?php  if ($pagename == "project_view.php"){ echo "0"; } else { echo $node_id_task; } ?>,true);">
+<body >
 
 <script type="text/javascript" language="javascript">    
  

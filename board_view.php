@@ -5,6 +5,7 @@
 
 <?php 
     $pid = "-1";
+    $leader_id = -1;
     if(isset($_GET['pid'])){
         $pid = $_GET['pid'];
     }
@@ -13,11 +14,19 @@
 
     $id_seq=0;
     $bid = "-1";
+    $now_role = 0;//对于项目看板当前角色
 
     if($pid != -1){
         $board_info = get_board_info($pid);
+         $leader_id = get_leader($pid);
     }else{
         $board_info = get_personal_board_info($uid);
+        $now_role = 1;//个人看板时自己也是最高权限者
+    }
+
+    if($uid==$leader_id)
+    {
+        $now_role = 1;//是项目组长
     }
         
     $board_num =mysql_num_rows($board_info);
@@ -25,6 +34,7 @@
     $editID = "-1";
         if (isset($_POST['edit_board_id'])) {
     $editID = $_POST['edit_board_id'];
+
 }
 ?>
 
@@ -59,7 +69,7 @@ cursor:pointer;display:block;width:15em;clear:none;height:15em;line-height:30px;
 
 span.usr_text{
     width: 13em;
-    height: 12em;
+    height: 10.5em;
     margin: 0px;
     margin-left: 3px;
     margin-top: 0.8em;
@@ -377,7 +387,9 @@ span.usr.catch{background:#ffc!important;}
             <!-- 右边80%宽度的主体内容 -->
             <td  id="tb" position=relative width="80%" valign="top" >
             <?php if($pid!=-1){ ?>
-                <p style="padding: 10px 0px 0px 30px;font-size: 1.5em;font-weight: 300;">项目看板</p>
+                <p style="padding: 10px 0px 0px 30px;font-size: 1.5em;font-weight: 300;">项目看板
+                    <a class="mouse_over" href="javascript:history.go(-1)" style="float: right;margin-right: 5em;">
+                                                    <span class="glyphicon glyphicon-arrow-left"></span> <?php echo $multilingual_global_action_back; ?></a></p>
             <?php }else{ ?>
                 <p style="padding: 10px 0px 0px 30px;font-size: 1.5em;font-weight: 300;">个人看板</p>
             <?php }?>
@@ -390,22 +402,32 @@ span.usr.catch{background:#ffc!important;}
                         <span id="parent<?php echo $row_board['board_seq']; ?>" style="display:block;width:15em;clear:none;background:white;height:15em;line-height:30px;margin-right: 30px;margin-bottom:30px;text-align:center;">
                             <span class="usr" id="<?php echo $id_seq; ?>">
                                 <p style="margin: 0px;margin-bottom: 10px;">
-                                    <a  onclick="ch1(<?php echo $row_board['board_id']; ?>)">
-                                     <input type="hidden" id="ID" name="ID" value="<?php echo $row_board['board_id']; ?>" />
-                                    <img src="images/ui/base_close.png" style="float: right;margin-left: 11.5em;position: absolute;" width="16px">
-                                </a>
+                                    <?php if($row_board['board_from']==$uid || $now_role == 1){ $close_ok = 1;}else{$close_ok = 0;} ?>
+                                    <a  onclick="ch1(<?php echo $row_board['board_id']; ?>,<?php echo $close_ok; ?>)">
+                                         <input type="hidden" id="ID" name="ID" value="<?php echo $row_board['board_id']; ?>" />
+                                        <img src="images/ui/base_close.png" style="float: right;margin-left: 11.5em;" width="16px">
+                                    </a>
                                 <!--<a href="#editmodal" role="button" class="edit" data-toggle="modal" <?php $bid=$row_board['board_id'] ?> >-->
-                                <a role="button"  onclick="eb(<?php echo $row_board['board_id']; ?>)">
-                                   <!-- <script>
-                                      $(function(){
-                                        $(".edit").click(function(){
-                                          $("#editmodal").modal("toggle");
-                                      });
-                                    });
-                                    </script> -->
-                                    <img src="images/ui/base_edit.png" style="float: left;margin-top: -2px;position: absolute;" height="18px">
-                                </a>
-                                </p><span class="usr_text" ><?php echo $row_board['board_content']; ?></span>
+                                    <?php if($row_board['board_from'] == $uid){//是自己的发的便签 ?>
+                                        <a role="button"  onclick="eb(<?php echo $row_board['board_id']; ?>)">
+                                           <!-- <script>
+                                              $(function(){
+                                                $(".edit").click(function(){
+                                                  $("#editmodal").modal("toggle");
+                                              });
+                                            });
+                                            </script> -->
+                                            <img src="images/ui/base_edit.png" style="float: left;margin-top: -2px;position: absolute;" height="18px">
+                                        </a>
+                                    <?php } ?>
+                                </p>
+                                
+                                <span class="usr_text" ><?php echo $row_board['board_content']; ?></span>
+                                <?php if($pid!=-1){ ?>
+                                     <p style="margin-top: 92%;text-align: right;color:rgb(86, 86, 86);font-size: 1em;"><?php echo $row_board['tk_display_name'] ?></p>
+                                <?php }else{ ?>
+                                    <p style="margin-top: 92%;text-align: right;color:rgb(86, 86, 86);font-size: 1em;"><?php echo $row_board['board_time'] ?></p>
+                                <?php } ?>
                                 <!--<div class="form-group col-xs-12">
                                     <label for="tk_stage_desc"><?php echo $multilingual_default_task_description; ?><span  id="tk_stage_title_msg"></span></label>
                                 <div>
@@ -422,14 +444,19 @@ font-size: 100%;color: rgb(129, 129, 129);">from:  <?php echo $row_board['tk_dis
                         </span>
                     </div>
                     <script language="javascript">
-                                      function ch1(data) {
+                        function ch1(data,isok) {
+                            if(isok == 1){
                                        // var data = data;
-                            if (confirm("您确定要删除吗?")) {
-                               // window.location = "show_news.php?flag=1&id={$row['news_id']}";  href="base_delete.php?delID=<?php echo $row_board['board_id']; ?>&pid=<?php echo $pid; ?>"    
-                               window.location = "base_delete.php?delID="+data+"&pid=<?php echo $pid; ?>";
-                                return true;
-                            } else {
-                                return false;
+                                if (confirm("您确定要删除吗?")) {
+                                   // window.location = "show_news.php?flag=1&id={$row['news_id']}";  href="base_delete.php?delID=<?php echo $row_board['board_id']; ?>&pid=<?php echo $pid; ?>"    
+                                   window.location = "base_delete.php?delID="+data+"&pid=<?php echo $pid; ?>";
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            }
+                            else{
+                                alert("对不起，您没有删除的权限！");
                             }
                         }
                     </script>
@@ -441,7 +468,7 @@ font-size: 100%;color: rgb(129, 129, 129);">from:  <?php echo $row_board['tk_dis
                 <span><span class="usr" id="add"><button  data-toggle="modal" data-target="#mymodal" class="btn btn-primary"  style="display:inline-block;-moz-box-shadow: 0 1px 2px rgba(0,0,0,0.5);
                         background-color: #ffc;border-color: #ffc;
                         text-shadow: 0 -1px 1px rgba(0,0,0,0.25);width: 202px;clear: none;height: 202px;line-height: 30px;margin-top: 25px;
-margin-left: 27px;text-align:center;background-image: url(images/ui/add.png);"; type="button"; ></button></span></span> 
+margin-left: 27px;text-align:center;background: url(images/ui/add.png)no-repeat;"; type="button"; ></button></span></span> 
 
                           
                     <!--<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
