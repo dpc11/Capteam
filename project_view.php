@@ -406,11 +406,16 @@ $(function() {
 										  
 											<!-- 上传文档 -->
 											 <td width="12%">
-											 <a  target="_blank" href="file_add.php?projectid=<?php echo $row_DetailRS1['id']; ?>&pid=<?php echo $project_folder_id;?>&pagetab=allfile"><span class="glyphicon glyphicon-file"></span> <?php echo $multilingual_project_file_addfile; ?></a></td>
+											 <a target="_blank" href="file_add.php?projectid=<?php echo $row_DetailRS1['id']; ?>&pid=<?php echo $project_folder_id;?>&pagetab=allfile"><span class="glyphicon glyphicon-file"></span> <?php echo $multilingual_project_file_addfile; ?></a></td>
 											 
 											 <!-- 项目看板 -->
 											 <td width="12%">
-											 <a   href="board_view.php?pid=<?php echo $colname_DetailRS1;?>"><span class="glyphicon glyphicon-board"></span> <?php echo $multilingual_project_board_view; ?></a></td>
+											 <a href="board_view.php?pid=<?php echo $colname_DetailRS1;?>"><span class="glyphicon glyphicon-board"></span> <?php echo $multilingual_project_board_view; ?></a></td>
+                                            
+                                            <!-- 进入会议 -->
+											 <td width="12%">
+											 <a href="video"><span class="glyphicon glyphicon-user"></span> <?php echo $multilingual_project_conference; ?></a></td>
+                                            
 											<!-- 增加评论 -->
 											 <td width="12%">
 											 <a onClick="addcomm();" class="mouse_over"><span class="glyphicon glyphicon-comment"></span> <?php echo $multilingual_default_addcom; ?></a>

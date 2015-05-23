@@ -695,6 +695,9 @@ $multilingual_message_exam_cc =  "审核了抄送给您的任务:";
 $multilingual_message_edituser_cc = "转让了抄送给您的任务:";
 $multilingual_message_edittask_cc = "更新了抄送给您的任务:";
 
+// *** 新增的
+$multilingual_project_conference = "进入会议";
+
 // *** login
 $multilingual_getqrcode = "使用微信扫描二维码，或搜索公众帐号wsspmis，即可使用WSS移动版<br /><br />
 
