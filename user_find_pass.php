@@ -218,11 +218,11 @@ if(window.screen.width!=1920||window.screen.height!=1080){
 
 
       <div class="demo">
-   	<form id="reg" action="user_findpass.php" method="post">
+   	<form id="reg" action="user_findpass_logic.php" method="post">
         	
         	<p><strong style="font-size:15px">输入您注册的电子邮箱，找回密码：</strong></p>
         	<p><input type="text" style="
-    width: 150px;
+    width: 250px;
     height: 30px;
 "class="input" name="email" id="email"><span id="chkmsg"></span></p><!--填写用户邮箱-->
             <p><input type="submit" class="btn" id="sub_btn" value="提 交"></p>

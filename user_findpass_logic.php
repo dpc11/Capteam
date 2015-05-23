@@ -82,7 +82,7 @@ if($num!=1){
 
 
 
-include_once("smtp.class.php");
+include_once("plug-in/mail/smtp.class.php");
 	$smtpserver = "smtp.qq.com"; //SMTP服务器
     $smtpserverport = 25; //SMTP服务器端口
        $smtpusermail = "1152352921@qq.com"; //SMTP服务器的用户邮箱
