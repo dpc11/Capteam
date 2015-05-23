@@ -233,37 +233,14 @@ function changemsg(UP,DOWN){
 	
 	$(window).load(function()
 	{
-
-		if(window.screen.width!=1920||window.screen.height!=1080){
-			r = window.screen.width/1920
-			$("body").css("min-width",1200*r+"px");
-			//$("#centerdiv").css("min-width",1260*r+"px");  
-			$("#contain_other").css("min-width",1100*r+"px");  
-			$("#contain_other").css("min-height",480*r+"px"); 
-			$("#headerlink").css("min-width",1200*r+"px"); 
-			
-			document.getElementById("contain_other").style.display="block";
-			document.getElementById("frame_div").width=1300*r+"px";
-			document.getElementById("frame_div").height=480*r+"px";
-			
-			$("#foot_top").css("padding-bottom",60*r+"px"); 
-			$("#foot_div").css("margin-top",60*r+"px"); 		
-			
-			$(window).resize();
-		}else{
 			$("body").css("min-width","1300px"); 
 			$("#containdiv").css("min-width","1300px"); 
 			document.getElementById("containdiv").style.display="block";
-			document.getElementById("foot_div").style.display="block";
-			J.check.regform('myform');
 			
-			document.getElementById("foot_div").style.visibility="visible ";
+			J.check.regform('myform');
 			
 			document.getElementById("outdiv").style.height = ( $(window).height()-186) +'px';
 			document.getElementById("innerdiv").style.paddingTop = (document.getElementById("outdiv").clientHeight-485*1.2)/2 +'px'; 
-
-			$("#foot_top").css("min-height",document.getElementById("headerlink").clientHeight+document.getElementById("centerdiv").clientHeight+60+"px"); 
-			$("#foot_div").css("margin-top","60px"); 
 			
 			var x= $(textfield1).offset(); 
 			document.getElementById("temp_textfield1_1").style.top=(x.top-7)+'px';
@@ -312,43 +289,12 @@ function changemsg(UP,DOWN){
 			document.getElementById("email_msg").style.left=(x.left+document.getElementById("temp_textfield5_5").clientWidth+80)+'px';
 			
 			$(window).resize();
-		}
 	});
 
 	$(window).resize(function()
 	{	
-		if(window.screen.width!=1920||window.screen.height!=1080){
-		
-			r = window.screen.width/1920 ; 
-		
-		$("#headerlink").css("-webkit-transform","scale(" + r + ")"); 
-		$("#headerlink").css("-webkit-transform-origin","0 0");  
-		$("#headerlink").css("width",document.getElementById("foot_top").clientWidth/r+"px");
-		
-		$("#foot_div").css("float","left");  
-		$("#foot_div").css("-webkit-transform","scale(" + r + ")"); 
-		$("#foot_div").css("-webkit-transform-origin","bottom left"); 
-		$("#foot_div").css("width",document.getElementById("foot_top").clientWidth/r+"px");
-		
-		$("#foot_top").css("min-height",(document.getElementById("headerlink").clientHeight+document.getElementById("centerdiv").clientHeight+60)+"px"); 
-		
-		document.getElementById("contain_other").style.height=($(window).height()-126)+"px";
-
-		if(document.getElementById("contain_other").clientHeight>document.getElementById("frame_div").clientHeight){
-		document.getElementById("contain_other").style.paddingTop=(document.getElementById("contain_other").clientHeight-document.getElementById("frame_div").clientHeight)/2+"px";
-		}
-		
-		document.getElementById("foot_div").style.visibility="visible ";
-		
-		window.scrollTo(document.body.scrollWidth,0);
-			
-		}else{
-			
 			document.getElementById("outdiv").style.height = ( $(window).height()-186) +'px';
 			document.getElementById("innerdiv").style.paddingTop = (document.getElementById("outdiv").clientHeight-485*1.2)/2 +'px'; 
-
-			$("#foot_top").css("min-height",document.getElementById("headerlink").clientHeight+document.getElementById("centerdiv").clientHeight+60+"px"); 
-			$("#foot_div").css("margin-top","60px"); 
 			
 			var x= $(textfield1).offset(); 
 			document.getElementById("temp_textfield1_1").style.top=(x.top-7)+'px';
@@ -395,27 +341,17 @@ function changemsg(UP,DOWN){
 			document.getElementById("ms5").style.width=(document.getElementById("textfield5").clientWidth+4)+'px';	
 			document.getElementById("email_msg").style.top=(x.top)+'px';
 			document.getElementById("email_msg").style.left=(x.left+document.getElementById("temp_textfield5_5").clientWidth+80)+'px';
-		
-			if((document.getElementById("outdiv").clientWidth-(document.getElementById("innerdiv").clientWidth*1.2))/2<175){
-				
-				var addwidth=180*1.2-((document.getElementById("outdiv").clientWidth-(document.getElementById("innerdiv").clientWidth*1.2))/2);
-				document.getElementById("headerlink").style.width=document.getElementById("outdiv").clientWidth+addwidth+"px";
-				document.getElementById("foot_div").style.width=document.getElementById("outdiv").clientWidth+addwidth+"px";
-			}else{
-				document.getElementById("headerlink").style.width=document.getElementById("outdiv").clientWidth+"px";
-				document.getElementById("foot_div").style.width=document.getElementById("outdiv").clientWidth+"px";
-			}
-			window.scrollTo(document.body.scrollWidth,0);
-		}
+			
+			
+	var r = window.screen.width /1920; 
+	$("body").css("-webkit-transform","scale(" + r + ")"); 
+	$("body").css("-webkit-transform-origin","0 0"); 
+
 });
 </script>
 </head>
 
 <body>
-<div  id="foot_top" style="height:100%; width:100%; padding-bottom:60px;">
-<div class="topbar" id="headerlink">
-    <div class="logo" ><a href="index.php" class="logourl" >&nbsp;</a></div>
-</div>
 <center id="centerdiv">
 <div id="containdiv" style="display:none;">
 <div id="outdiv" style="min-width:1300px;min-height:650px;height:650px;">
@@ -537,24 +473,12 @@ function changemsg(UP,DOWN){
 
 </div>
 
-<div id="contain_other" align="center" style="display:none;overflow:hidden;height:100%">
+<div id="contain_other" align="center" style="display:none;overflow:hidden;">
               <iFrame  id="frame_div" src="user_register_contain.php" scrolling="no"  frameborder="no">
              </iFrame>
 			 </div>
 
 
 </center> 	
-</div>
-<center>
-<div class="foot" id="foot_div" style="visibility:hidden;" >
-    <div class="wss_title" id="foot_title" style="font-size: 22px;">
-
-        <div class="wss_ver" id="capteamfoot">
-            © 2014 - 2015 Capteam 大学生团队协作管理平台 &nbsp;&nbsp;|&nbsp;&nbsp; 北京交通大学软件学院
-        </div>
-    </div>
-</div>
-</center>
-
 </body>
 </html>

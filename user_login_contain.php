@@ -37,7 +37,7 @@ J.check.rules = [
 
 function register(){
 	
-	window.open('user_register.php','_self');
+	top.location.href="user_register.php";
 }
 
 function changemsg(UP,DOWN){
@@ -86,7 +86,7 @@ function login(){
 	document.getElementById("passwordid").style.top=(x.top+3)+'px';
 	document.getElementById("passwordid").style.left=(x.left+document.getElementById("textfield2_label").clientWidth+13)+'px';
 	
-	var r = window.screen.height /1080; 
+	var r = window.screen.width /1920; 
 	$("body").css("-webkit-transform","scale(" + r + ")"); 
 	$("body").css("-webkit-transform-origin","0 0"); 
 	
