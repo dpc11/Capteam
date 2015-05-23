@@ -176,7 +176,7 @@ J.check.rules = [
 	{ name: 'textfield3', mid: 'password_msg', requir: true, type: 'cusfn', cusfunc: 'checkpassword2()', warn: '密码长度至多为25位' },
 	{ name: 'textfield3', mid: 'password_msg', requir: true, type: 'cusfn', cusfunc: 'checkpassword3()', warn: '密码中含有非法字符' },
 	{ name: 'textfield4', mid: 're_password_msg', requir: true, type: 'match', to: 'textfield3', warn: '两次密码不一致' },
-	{ name: 'textfield5', mid: 'email_msg', requir: true, type: 'email|cusfn', warn: '邮箱格式错误|该邮箱已经注册，请直接登陆' },
+	{ name: 'textfield5', mid: 'email_msg', requir: true, type: 'email|cusfn', warn: '邮箱格式错误|邮箱已被注册' },
 ];
 
 function checkemail(){
@@ -236,19 +236,16 @@ function changemsg(UP,DOWN){
 
 		if(window.screen.width!=1920||window.screen.height!=1080){
 			r = window.screen.width/1920
-			$("body").css("min-width",1200*r+"px");
-			//$("#centerdiv").css("min-width",1260*r+"px");  
-			$("#contain_other").css("min-width",1100*r+"px");  
-			$("#contain_other").css("min-height",480*r+"px"); 
-			$("#headerlink").css("min-width",1200*r+"px"); 
+			$("body").css("min-width",1400*r+"px"); 
+			$("#contain_other").css("min-width",1300*r+"px");  
+			$("#contain_other").css("min-height",600*r+"px"); 
+			$("#headerlink").css("min-width",1400*r+"px"); 
 			
 			document.getElementById("contain_other").style.display="block";
 			document.getElementById("frame_div").width=1300*r+"px";
-			document.getElementById("frame_div").height=480*r+"px";
-			
-			$("#foot_top").css("padding-bottom",60*r+"px"); 
-			$("#foot_div").css("margin-top",60*r+"px"); 		
-			
+			document.getElementById("frame_div").height=600*r+"px";
+			$("#frame_div").css("margin-left",100*r+"px"); 
+						
 			$(window).resize();
 		}else{
 			$("body").css("min-width","1300px"); 
@@ -335,7 +332,12 @@ function changemsg(UP,DOWN){
 		document.getElementById("contain_other").style.height=($(window).height()-126)+"px";
 
 		if(document.getElementById("contain_other").clientHeight>document.getElementById("frame_div").clientHeight){
+		
 		document.getElementById("contain_other").style.paddingTop=(document.getElementById("contain_other").clientHeight-document.getElementById("frame_div").clientHeight)/2+"px";
+		
+		}else{
+			
+			document.getElementById("contain_other").style.paddingTop=0+"px";
 		}
 		
 		document.getElementById("foot_div").style.visibility="visible ";
@@ -538,7 +540,7 @@ function changemsg(UP,DOWN){
 </div>
 
 <div id="contain_other" align="center" style="display:none;overflow:hidden;height:100%">
-              <iFrame  id="frame_div" src="user_register_contain.php" scrolling="no"  frameborder="no">
+              <iFrame  id="frame_div" src="user_register_contain.php"  scrolling="no"  frameborder="no">
              </iFrame>
 			 </div>
 

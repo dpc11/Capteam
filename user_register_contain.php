@@ -176,7 +176,7 @@ J.check.rules = [
 	{ name: 'textfield3', mid: 'password_msg', requir: true, type: 'cusfn', cusfunc: 'checkpassword2()', warn: '密码长度至多为25位' },
 	{ name: 'textfield3', mid: 'password_msg', requir: true, type: 'cusfn', cusfunc: 'checkpassword3()', warn: '密码中含有非法字符' },
 	{ name: 'textfield4', mid: 're_password_msg', requir: true, type: 'match', to: 'textfield3', warn: '两次密码不一致' },
-	{ name: 'textfield5', mid: 'email_msg', requir: true, type: 'email|cusfn', warn: '邮箱格式错误|该邮箱已经注册，请直接登陆' },
+	{ name: 'textfield5', mid: 'email_msg', requir: true, type: 'email|cusfn', warn: '邮箱格式错误|邮箱已被注册' },
 ];
 
 function checkemail(){
@@ -199,6 +199,10 @@ function changemsg(UP,DOWN){
 
 }
         
+function login(){
+	
+	top.location.href="user_login.php";
+}
 
  function checkname1() {
 		var v = document.getElementById("textfield1").value;
@@ -226,31 +230,20 @@ function changemsg(UP,DOWN){
 		if (num > 10) { return false; }
         return true;
     }
-	
-	var r=1;
-	var rateW=1;
-	var rateH=1;
-	
+		
 	$(window).load(function()
 	{
-			$("body").css("min-width","1300px"); 
-			$("#containdiv").css("min-width","1300px"); 
-			document.getElementById("containdiv").style.display="block";
-			
 			J.check.regform('myform');
-			
-			document.getElementById("outdiv").style.height = ( $(window).height()-186) +'px';
-			document.getElementById("innerdiv").style.paddingTop = (document.getElementById("outdiv").clientHeight-485*1.2)/2 +'px'; 
 			
 			var x= $(textfield1).offset(); 
 			document.getElementById("temp_textfield1_1").style.top=(x.top-7)+'px';
 			document.getElementById("temp_textfield1_1").style.left=(x.left)+'px';
 			document.getElementById("temp_textfield1_1").style.width=(document.getElementById("textfield1").clientWidth+5)+'px';
-			document.getElementById("ms1").style.top=(x.top-7+35)+'px';
+			document.getElementById("user_name_msg").style.top=(x.top)+'px';
+			document.getElementById("user_name_msg").style.left=(x.left+document.getElementById("textfield1").clientWidth+60)+'px';
+			document.getElementById("ms1").style.top=(x.top-7+45)+'px';
 			document.getElementById("ms1").style.left=(x.left)+'px';
 			document.getElementById("ms1_text").style.width=(document.getElementById("textfield1").clientWidth+4)+'px';
-			document.getElementById("user_name_msg").style.top=(x.top)+'px';
-			document.getElementById("user_name_msg").style.left=(x.left+document.getElementById("textfield1").clientWidth+80)+'px';
 			
 			x= $(textfield3).offset(); 
 			document.getElementById("temp_textfield3_3").style.top=(x.top-7)+'px';
@@ -264,7 +257,7 @@ function changemsg(UP,DOWN){
 			document.getElementById("keycheck").style.top=(x.top-2)+'px';
 			document.getElementById("keycheck").style.left=(x.left+document.getElementById("textfield3").clientWidth+90)+'px';
 			document.getElementById("password_msg").style.top=(x.top-7)+'px';
-			document.getElementById("password_msg").style.left=(x.left+document.getElementById("textfield3").clientWidth+80)+'px';
+			document.getElementById("password_msg").style.left=(x.left+document.getElementById("textfield3").clientWidth+60)+'px';
 			
 			x= $(textfield4).offset(); 
 			document.getElementById("temp_textfield4_4").style.top=(x.top-7)+'px';
@@ -275,7 +268,7 @@ function changemsg(UP,DOWN){
 			document.getElementById("ms4").style.width=(document.getElementById("textfield4").clientWidth+4)+'px';
 			document.getElementById("ms4_text").style.width=(document.getElementById("textfield4").clientWidth+4)+'px';
 			document.getElementById("re_password_msg").style.top=(x.top-7)+'px';
-			document.getElementById("re_password_msg").style.left=(x.left+document.getElementById("temp_textfield4_4").clientWidth+80)+'px';
+			document.getElementById("re_password_msg").style.left=(x.left+document.getElementById("temp_textfield4_4").clientWidth+60)+'px';
 			
 			x= $(textfield5).offset(); 
 			document.getElementById("temp_textfield5_5").style.top=(x.top-7)+'px';
@@ -286,85 +279,28 @@ function changemsg(UP,DOWN){
 			document.getElementById("ms5_text").style.width=(document.getElementById("textfield5").clientWidth+4)+'px';
 			document.getElementById("ms5").style.width=(document.getElementById("textfield5").clientWidth+4)+'px';	
 			document.getElementById("email_msg").style.top=(x.top-7)+'px';
-			document.getElementById("email_msg").style.left=(x.left+document.getElementById("temp_textfield5_5").clientWidth+80)+'px';
-			
-			$(window).resize();
-	});
-
-	$(window).resize(function()
-	{	
-			document.getElementById("outdiv").style.height = ( $(window).height()-186) +'px';
-			document.getElementById("innerdiv").style.paddingTop = (document.getElementById("outdiv").clientHeight-485*1.2)/2 +'px'; 
-			
-			var x= $(textfield1).offset(); 
-			document.getElementById("temp_textfield1_1").style.top=(x.top-7)+'px';
-			document.getElementById("temp_textfield1_1").style.left=(x.left-2)+'px';
-			document.getElementById("temp_textfield1_1").style.width=(document.getElementById("textfield1").clientWidth+5)+'px';
-			document.getElementById("ms1").style.top=(x.top-7+35)+'px';
-			document.getElementById("ms1").style.left=(x.left)+'px';
-			document.getElementById("ms1_text").style.width=(document.getElementById("textfield1").clientWidth+4)+'px';
-			document.getElementById("user_name_msg").style.top=(x.top)+'px';
-			document.getElementById("user_name_msg").style.left=(x.left+document.getElementById("textfield1").clientWidth+80)+'px';
-			
-			x= $(textfield3).offset(); 
-			document.getElementById("temp_textfield3_3").style.top=(x.top-7)+'px';
-			document.getElementById("temp_textfield3_3").style.left=(x.left-2)+'px';
-			document.getElementById("temp_textfield3_3").style.width=(document.getElementById("textfield3").clientWidth+6)+'px';
-			document.getElementById("ms3").style.top=(x.top-7+35)+'px';
-			document.getElementById("ms3").style.left=(x.left)+'px';
-			document.getElementById("ms3").style.width=(document.getElementById("textfield3").clientWidth+4)+'px';
-			document.getElementById("ms3_text").style.width=(document.getElementById("textfield3").clientWidth+4)+'px';
-			
-			document.getElementById("keycheck").style.top=(x.top-2)+'px';
-			document.getElementById("keycheck").style.left=(x.left+document.getElementById("textfield3").clientWidth+90)+'px';
-			document.getElementById("password_msg").style.top=(x.top)+'px';
-			document.getElementById("password_msg").style.left=(x.left+document.getElementById("textfield3").clientWidth+80)+'px';
-			
-			x= $(textfield4).offset(); 
-			document.getElementById("temp_textfield4_4").style.top=(x.top-7)+'px';
-			document.getElementById("temp_textfield4_4").style.left=(x.left-2)+'px';
-			document.getElementById("temp_textfield4_4").style.width=(document.getElementById("textfield4").clientWidth+6)+'px';
-			document.getElementById("ms4").style.top=(x.top-7+35)+'px';
-			document.getElementById("ms4").style.left=(x.left)+'px';
-			document.getElementById("ms4").style.width=(document.getElementById("textfield4").clientWidth+4)+'px';
-			document.getElementById("ms4_text").style.width=(document.getElementById("textfield4").clientWidth+4)+'px';
-			document.getElementById("re_password_msg").style.top=(x.top)+'px';
-			document.getElementById("re_password_msg").style.left=(x.left+document.getElementById("temp_textfield4_4").clientWidth+80)+'px';
-			
-			x= $(textfield5).offset(); 
-			document.getElementById("temp_textfield5_5").style.top=(x.top-7)+'px';
-			document.getElementById("temp_textfield5_5").style.left=(x.left-2)+'px';
-			document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield5").clientWidth+6)+'px';
-			document.getElementById("ms5").style.top=(x.top-7+35)+'px';
-			document.getElementById("ms5").style.left=(x.left)+'px';
-			document.getElementById("ms5_text").style.width=(document.getElementById("textfield5").clientWidth+4)+'px';
-			document.getElementById("ms5").style.width=(document.getElementById("textfield5").clientWidth+4)+'px';	
-			document.getElementById("email_msg").style.top=(x.top)+'px';
-			document.getElementById("email_msg").style.left=(x.left+document.getElementById("temp_textfield5_5").clientWidth+80)+'px';
+			document.getElementById("email_msg").style.left=(x.left+document.getElementById("temp_textfield5_5").clientWidth+60)+'px';
 			
 			
 	var r = window.screen.width /1920; 
 	$("body").css("-webkit-transform","scale(" + r + ")"); 
 	$("body").css("-webkit-transform-origin","0 0"); 
+	
 
-});
+	});
 </script>
 </head>
 
-<body>
-<center id="centerdiv">
-<div id="containdiv" style="display:none;">
-<div id="outdiv" style="min-width:1300px;min-height:650px;height:650px;">
-
-<div id="innerdiv" style="width:980.167px;-webkit-transform: scale( 1.2 )translate(-82.0833px,0);-webkit-transform-origin: 0 0;height:485px;" >
+<body style="width:1300px;height:600px;">
+<div id="innerdiv" style="width:980.167px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;height:485px;" >
 <table width="100%" border="0" cellspacing="0" cellpadding="0" height="100%" align="center" >
 	<tr>
-	<td style="width:50%;">
-	<div style="width:100%;height:100%;padding-left:82px;padding-top:74px;">
+	<td style="width:490px;">
+	<div style="width:100%;height:100%;padding-left:82px;padding-top:65.5px;">
 	<div  class="ping_logo" ></div>
 	</div>
 	</td>
-	<td style="width:50%;min-width:490px;" valign="top" >
+	<td style="width:490px;" valign="top" >
 			<div style="width:90%">
 			<legend  style="border-bottom-width: 3px;font-weight:bold;font-size:20px;">&nbsp;&nbsp;&nbsp;用户注册</legend>
 			</div>
@@ -414,7 +350,6 @@ function changemsg(UP,DOWN){
 	  
 	  </table>
 	</div>	
-	</div> 
 	
 						<div  id="ms1" style="margin-top: 8px;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;">
 						<p class="text-muted"  id="ms1_text"  style="font-size:15px;width:400px;text-align:left">最多5个中文字符或10个字母、数字</p>
@@ -431,7 +366,7 @@ function changemsg(UP,DOWN){
 						<p class="text-muted"id="ms5_text"  style="font-size:15px;width:300px;text-align:left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮箱注册后不能更改，将作为您的Capteam账号唯一确认您的身份，也可用于找回密码，建议使用163、sina、gmail、QQ邮箱。</p>
 						
 						<div style="margin-top: 20px;float:right">
-						 <a  style="margin-top: 7px;width: 130px;float:right;font-family:微软雅黑"  href="user_login.php"> 已有账号，直接登陆</a>
+						 <button  style="width: 150px;float:right;font-family:微软雅黑"  class="btn btn-link" onclick="login();"> 已有账号，直接登陆</button>
 						 <button type="button" class="btn btn-default" style="width: 70px;margin-right:10px;float:right;" onclick="return registeruser('<?php echo $editFormAction;  ?>');" > <?php echo $multilingual_user_register; ?></button>
 						<div style="clear:both;">  </div>
 						</div>
@@ -463,22 +398,13 @@ function changemsg(UP,DOWN){
 	<span id="email_msg" style="z-index:3;position:absolute;min-width:170px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;"></span>
 	
 	
-						<input  class="form-control"   type="text"  id="temp_textfield1_1" name="temp_textfield1_1" style="z-index:4;position:absolute;left:20;top:40;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;width:100px;" onblur='changemsg("temp_textfield1_1","textfield1");'/>
+						<input  class="form-control"   type="text"  id="temp_textfield1_1" name="temp_textfield1_1" style="z-index:4;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;width:100px;" onblur='changemsg("temp_textfield1_1","textfield1");'/>
 						
-						<input  class="form-control"   type="password"  id="temp_textfield3_3" name="temp_textfield3_3" style="z-index:4;position:absolute;left:20;top:40;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;" onkeyup="judgepassword();" onblur='changemsg("temp_textfield3_3","textfield3");' />
+						<input  class="form-control"   type="password"  id="temp_textfield3_3" name="temp_textfield3_3" style="z-index:4;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;" onkeyup="judgepassword();" onblur='changemsg("temp_textfield3_3","textfield3");' />
 						
-						<input  class="form-control"   type="password"  id="temp_textfield4_4" name="temp_textfield4_4" style="z-index:4;position:absolute;left:20;top:40;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;" onblur='changemsg("temp_textfield4_4","textfield4");' />
+						<input  class="form-control"   type="password"  id="temp_textfield4_4" name="temp_textfield4_4" style="z-index:4;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;" onblur='changemsg("temp_textfield4_4","textfield4");' />
 						
-						<input  class="form-control"   type="text"  id="temp_textfield5_5" name="temp_textfield5_5" style="z-index:4;position:absolute;left:20;top:40;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;" onblur='changemsg("temp_textfield5_5","textfield5");'/>
+						<input  class="form-control"   type="text"  id="temp_textfield5_5" name="temp_textfield5_5" style="z-index:4;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;" onblur='changemsg("temp_textfield5_5","textfield5");'/>
 
-</div>
-
-<div id="contain_other" align="center" style="display:none;overflow:hidden;">
-              <iFrame  id="frame_div" src="user_register_contain.php" scrolling="no"  frameborder="no">
-             </iFrame>
-			 </div>
-
-
-</center> 	
 </body>
 </html>

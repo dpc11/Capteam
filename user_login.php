@@ -104,13 +104,12 @@ function changepsd(UP,DOWN){
 
 	if(window.screen.width!=1920||window.screen.height!=1080){
 		r = window.screen.width/1920
-		$("body").css("min-width",1200*r+"px");
-		//$("#centerdiv").css("min-width",1260*r+"px");  
-		$("#contain_other").css("min-width",1200*r+"px");  
+		$("body").css("min-width",1300*r+"px");  
+		$("#contain_other").css("min-width",1300*r+"px");  
 		$("#contain_other").css("min-height",480*r+"px"); 
 		
 		document.getElementById("contain_other").style.display="block";
-		document.getElementById("frame_div").width=1200*r+"px";
+		document.getElementById("frame_div").width=1300*r+"px";
 		document.getElementById("frame_div").height=480*r+"px";		
 		
 		$("#headerlink").css("-webkit-transform","scale(" + r + ")"); 
@@ -161,6 +160,8 @@ $(window).resize(function()
 
 		if(document.getElementById("contain_other").clientHeight>document.getElementById("frame_div").clientHeight){
 		document.getElementById("contain_other").style.paddingTop=(document.getElementById("contain_other").clientHeight-document.getElementById("frame_div").clientHeight)/2+"px";
+		}else{
+			document.getElementById("contain_other").style.paddingTop=0+"px";
 		}
 		
 		//$("body").css("height",(126/r+document.getElementById("contain_other").clientHeight)*r+"px"); 
