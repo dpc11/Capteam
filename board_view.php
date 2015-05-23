@@ -392,7 +392,7 @@ span.usr.catch{background:#ffc!important;}
             <td  id="tb" position=relative width="80%" valign="top" >
             <?php if($pid!=-1){ ?>
                 <p style="padding: 10px 0px 0px 30px;font-size: 1.5em;font-weight: 300;">项目看板
-                    <a class="mouse_over" href="javascript:history.go(-1)" style="float: right;margin-right: 5em;">
+                    <a class="mouse_over" href="project_view.php?recordID=<?php echo $pid;?> " style="float: right;margin-right: 5em;">
                                                     <span class="glyphicon glyphicon-arrow-left"></span> <?php echo $multilingual_global_action_back; ?></a></p>
             <?php }else{ ?>
                 <p style="padding: 10px 0px 0px 30px;font-size: 1.5em;font-weight: 300;">个人看板</p>

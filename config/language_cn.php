@@ -413,7 +413,8 @@ $multilingual_privilege_remove = "回收权限";
 
 $multilingual_board_add_text = "<p>看板分为项目看板和个人看板。</p><br />
 <p>创建一个项目，才能在项目详情页面点击进入看板页添加项目看板。</p><br />
-<p>点击菜单栏看板即可进入个人看板。</p>
+<p>点击菜单栏看板即可进入个人看板。</p><br />
+<p>便签可以相互交换，只有组长可以移动项目看板</p>
 ";
 // *** 文档管理
 $multilingual_project_file = "项目文档";
