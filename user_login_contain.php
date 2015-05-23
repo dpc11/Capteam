@@ -86,11 +86,10 @@ function login(){
 	document.getElementById("passwordid").style.top=(x.top+3)+'px';
 	document.getElementById("passwordid").style.left=(x.left+document.getElementById("textfield2_label").clientWidth+13)+'px';
 	
-		var r = window.screen.height /1080; 
-		$("body").css("-webkit-transform","scale(" + r + ")"); 
-		$("body").css("-webkit-transform-origin","0 0"); 
-		
-		
+	var r = window.screen.height /1080; 
+	$("body").css("-webkit-transform","scale(" + r + ")"); 
+	$("body").css("-webkit-transform-origin","0 0"); 
+	
 	});
 
 </script>
@@ -142,9 +141,8 @@ function login(){
 	<div style="width: 10%;float:right; ">
 	 </div>
 	 <div style="width: 30%;float:right; ">
-	  <a class="beauty-label" href="http://localhost//Capteam/head.php">忘记密码啊？</a>
-	 </div>
-     
+	  <a class="beauty-label" href="head.php">忘记密码？</a>
+	 </div>     
   </div>
   
   <div  style="clear:both ">

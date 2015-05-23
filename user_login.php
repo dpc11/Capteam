@@ -121,16 +121,15 @@ function changepsd(UP,DOWN){
 		$("#containdiv").css("min-width","1200px"); 
 		document.getElementById("containdiv").style.display="block";
 		document.getElementById("foot_div").style.display="block";
-    J.check.regform('form1');
+		J.check.regform('form1');
 		$(window).resize();
 	}
 	});
 $(window).resize(function()
 {	
-if(window.screen.width!=1920||window.screen.height!=1080){
-	//location.reload();
+	if(window.screen.width!=1920||window.screen.height!=1080){
 	
-	r = window.screen.height/1080 ; 
+		r = window.screen.height/1080 ; 
 	
 		$("#headerlink").css("-webkit-transform","scale(" + r + ")"); 
 		$("#headerlink").css("-webkit-transform-origin","0 0"); 
@@ -156,29 +155,30 @@ if(window.screen.width!=1920||window.screen.height!=1080){
 	}else{
 		
 		document.getElementById("foot_div").style.visibility="visible ";
-	document.getElementById("outdiv").style.height = ( $(window).height()-186) +'px';
-	document.getElementById("innerdiv").style.paddingTop = (document.getElementById("outdiv").clientHeight-300*1.2)/2 +'px'; 
+		document.getElementById("outdiv").style.height = ( $(window).height()-186) +'px';
+		document.getElementById("innerdiv").style.paddingTop = (document.getElementById("outdiv").clientHeight-300*1.2)/2 +'px'; 
 
-		$("#foot_top").css("min-height",document.getElementById("headerlink").clientHeight+document.getElementById("centerdiv").clientHeight60+"px"); 
+		$("#foot_top").css("min-height",document.getElementById("headerlink").clientHeight+document.getElementById("centerdiv").clientHeight+60+"px"); 
 		$("#foot_div").css("margin-top","60px"); 
-	
-    var x= $(textfield).offset(); 
-	document.getElementById("temp_textfield4_4").style.top=(x.top)+'px';
-	document.getElementById("temp_textfield4_4").style.left=(x.left)+'px';
-	document.getElementById("temp_textfield4_4").style.width=(document.getElementById("textfield").clientWidth+5)+'px';
-    x= $(textfield2).offset();
-	document.getElementById("temp_textfield5_5").style.top=(x.top)+'px';
-	document.getElementById("temp_textfield5_5").style.left=(x.left)+'px';	
-	document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield2").clientWidth+5)+'px';
-	
-	x= $(textfield_label).offset();
-	document.getElementById("username").style.top=(x.top+3)+'px';
-	document.getElementById("username").style.left=(x.left+document.getElementById("textfield_label").clientWidth+13)+'px';
-	
-	x= $(textfield2_label).offset();
-	document.getElementById("passwordid").style.top=(x.top+3)+'px';
-	document.getElementById("passwordid").style.left=(x.left+document.getElementById("textfield2_label").clientWidth+13)+'px';
-	
+		
+		var x= $(textfield).offset(); 
+		document.getElementById("temp_textfield4_4").style.top=(x.top)+'px';
+		document.getElementById("temp_textfield4_4").style.left=(x.left)+'px';
+		document.getElementById("temp_textfield4_4").style.width=(document.getElementById("textfield").clientWidth+5)+'px';
+		
+		x= $(textfield2).offset();
+		document.getElementById("temp_textfield5_5").style.top=(x.top)+'px';
+		document.getElementById("temp_textfield5_5").style.left=(x.left)+'px';	
+		document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield2").clientWidth+5)+'px';
+		
+		x= $(textfield_label).offset();
+		document.getElementById("username").style.top=(x.top+3)+'px';
+		document.getElementById("username").style.left=(x.left+document.getElementById("textfield_label").clientWidth+13)+'px';
+		
+		x= $(textfield2_label).offset();
+		document.getElementById("passwordid").style.top=(x.top+3)+'px';
+		document.getElementById("passwordid").style.left=(x.left+document.getElementById("textfield2_label").clientWidth+13)+'px';
+		
 	
 		window.scrollTo(document.body.scrollWidth,0);
 	}
@@ -196,16 +196,16 @@ if(window.screen.width!=1920||window.screen.height!=1080){
 <center id="centerdiv">
 <div id="containdiv" style="display:none;">
 <div id="outdiv" style="min-width:1200px;min-height:500px;height:500px;">
-<div id="innerdiv" style="width:820.833px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;height:300px;" >
+<div id="innerdiv" style="width:980.167px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;height:300px;" >
 <table width="100%" border="0" cellspacing="0" cellpadding="0" height="100%" align="center">
     <tr>
-      <td  style="width:40%">
+      <td  style="width:30%">
       <div class="ping_logo"></div>
       </td>
-	  <td style="width:20%;">&nbsp;</td>
+	  <td style="width:10%;">&nbsp;</td>
 	  
 	  <td style="width:40%;min-width:100px;">
-	  <div>
+	  <div style="width:90%;" >
 			<legend  style="border-bottom-width: 3px;font-weight:bold;font-size:20px;">&nbsp;&nbsp;用户登录</legend>
 		</div>		
 		<?php  if($errormsg==true){ ?>
@@ -239,7 +239,7 @@ if(window.screen.width!=1920||window.screen.height!=1080){
 	<div style="width: 10%;float:right; ">
 	 </div>
 	 <div style="width: 30%;float:right; ">
-	  <a class="beauty-label" href="#">忘记密码？</a>
+	  <a class="beauty-label" href="head.php">忘记密码？</a>
 	 </div>
      
   </div>
@@ -258,6 +258,7 @@ if(window.screen.width!=1920||window.screen.height!=1080){
   </div>
 	  </form>
       </td>
+	  <td style="width:20%;">&nbsp;</td>
     </tr>
 
   </table>

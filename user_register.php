@@ -234,31 +234,50 @@ function changemsg(UP,DOWN){
 	$(window).load(function()
 	{
 
-		rateW=window.screen.width /1920;
-		rateH=window.screen.height/1080;
-		
-		J.check.regform("myform");
-		
+		if(window.screen.width!=1920||window.screen.height!=1080){
+			r = window.screen.height/1080
+			$("body").css("min-width",1200*r+"px");
+			//$("#centerdiv").css("min-width",1260*r+"px");  
+			$("#contain_other").css("min-width",1100*r+"px");  
+			$("#contain_other").css("min-height",480*r+"px"); 
+			$("#headerlink").css("min-width",1300*r+"px"); 
 			
-			/*document.getElementById("outdiv").style.height = ($(window).height() -126+24) +'px';  
-			document.getElementById("innerdiv").style.paddingTop = ((document.getElementById("outdiv").clientHeight-23-485*1.2))/2 +'px'; 
+			document.getElementById("contain_other").style.display="block";
+			document.getElementById("frame_div").width=1300*r+"px";
+			document.getElementById("frame_div").height=480*r+"px";
+						
+			$(window).resize();
+		}else{
+			$("body").css("min-width","1300px"); 
+			$("#containdiv").css("min-width","1300px"); 
+			document.getElementById("containdiv").style.display="block";
+			document.getElementById("foot_div").style.display="block";
+			J.check.regform('myform');
+			
+			document.getElementById("foot_div").style.visibility="visible ";
+			
+			document.getElementById("outdiv").style.height = ( $(window).height()-186) +'px';
+			document.getElementById("innerdiv").style.paddingTop = (document.getElementById("outdiv").clientHeight-485*1.2)/2 +'px'; 
+
+			$("#foot_top").css("min-height",document.getElementById("headerlink").clientHeight+document.getElementById("centerdiv").clientHeight+60+"px"); 
+			$("#foot_div").css("margin-top","60px"); 
 			
 			var x= $(textfield1).offset(); 
 			document.getElementById("temp_textfield1_1").style.top=(x.top-7)+'px';
-			document.getElementById("temp_textfield1_1").style.left=(x.left-2)+'px';
-			document.getElementById("temp_textfield1_1").style.width=(document.getElementById("textfield1").clientWidth+6)+'px';
+			document.getElementById("temp_textfield1_1").style.left=(x.left)+'px';
+			document.getElementById("temp_textfield1_1").style.width=(document.getElementById("textfield1").clientWidth+5)+'px';
 			document.getElementById("ms1").style.top=(x.top-7+35)+'px';
 			document.getElementById("ms1").style.left=(x.left)+'px';
 			document.getElementById("ms1_text").style.width=(document.getElementById("textfield1").clientWidth+4)+'px';
-			document.getElementById("user_name_msg").style.top=(x.top-7)+'px';
+			document.getElementById("user_name_msg").style.top=(x.top)+'px';
 			document.getElementById("user_name_msg").style.left=(x.left+document.getElementById("textfield1").clientWidth+80)+'px';
 			
 			x= $(textfield3).offset(); 
 			document.getElementById("temp_textfield3_3").style.top=(x.top-7)+'px';
-			document.getElementById("temp_textfield3_3").style.left=(x.left-2+13)+'px';
+			document.getElementById("temp_textfield3_3").style.left=(x.left-2)+'px';
 			document.getElementById("temp_textfield3_3").style.width=(document.getElementById("textfield3").clientWidth+6)+'px';
 			document.getElementById("ms3").style.top=(x.top-7+35)+'px';
-			document.getElementById("ms3").style.left=(x.left+13)+'px';
+			document.getElementById("ms3").style.left=(x.left)+'px';
 			document.getElementById("ms3").style.width=(document.getElementById("textfield3").clientWidth+4)+'px';
 			document.getElementById("ms3_text").style.width=(document.getElementById("textfield3").clientWidth+4)+'px';
 			
@@ -269,10 +288,10 @@ function changemsg(UP,DOWN){
 			
 			x= $(textfield4).offset(); 
 			document.getElementById("temp_textfield4_4").style.top=(x.top-7)+'px';
-			document.getElementById("temp_textfield4_4").style.left=(x.left-2+13)+'px';
+			document.getElementById("temp_textfield4_4").style.left=(x.left-2)+'px';
 			document.getElementById("temp_textfield4_4").style.width=(document.getElementById("textfield4").clientWidth+6)+'px';
 			document.getElementById("ms4").style.top=(x.top-7+35)+'px';
-			document.getElementById("ms4").style.left=(x.left+13)+'px';
+			document.getElementById("ms4").style.left=(x.left)+'px';
 			document.getElementById("ms4").style.width=(document.getElementById("textfield4").clientWidth+4)+'px';
 			document.getElementById("ms4_text").style.width=(document.getElementById("textfield4").clientWidth+4)+'px';
 			document.getElementById("re_password_msg").style.top=(x.top-7)+'px';
@@ -280,109 +299,127 @@ function changemsg(UP,DOWN){
 			
 			x= $(textfield5).offset(); 
 			document.getElementById("temp_textfield5_5").style.top=(x.top-7)+'px';
-			document.getElementById("temp_textfield5_5").style.left=(x.left-2+13)+'px';
+			document.getElementById("temp_textfield5_5").style.left=(x.left-2)+'px';
 			document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield5").clientWidth+6)+'px';
 			document.getElementById("ms5").style.top=(x.top-7+35)+'px';
-			document.getElementById("ms5").style.left=(x.left+13)+'px';
+			document.getElementById("ms5").style.left=(x.left)+'px';
 			document.getElementById("ms5_text").style.width=(document.getElementById("textfield5").clientWidth+4)+'px';
 			document.getElementById("ms5").style.width=(document.getElementById("textfield5").clientWidth+4)+'px';	
 			document.getElementById("email_msg").style.top=(x.top-7)+'px';
 			document.getElementById("email_msg").style.left=(x.left+document.getElementById("temp_textfield5_5").clientWidth+80)+'px';
-		
-				
-		var r = window.screen.width /1920; 
-		$(document.body).css("-webkit-transform","scale(" + r + ")"); 
-		$(document.body).css("-webkit-transform-origin","center 0"); 
-		
-		window.scrollTo(document.body.scrollWidth,0);*/
-		$(window).resize();
-		
+			
+			$(window).resize();
+		}
 	});
 
 	$(window).resize(function()
-{	
+	{	
+		if(window.screen.width!=1920||window.screen.height!=1080){
 		
-		$("#totaldiv").css("-webkit-transform","scale(" + r + ")"); 
-		//$("#totaldiv").css("-webkit-transform-origin","center 0");
+			r = window.screen.height/1080 ; 
 		
-			document.getElementById("outdiv").style.height = ($(window).height() -126) +'px';  
-			document.getElementById("innerdiv").style.paddingTop = ((document.getElementById("outdiv").clientHeight-23-485*1.2))/2 +'px'; 
+			$("#headerlink").css("-webkit-transform","scale(" + r + ")"); 
+			$("#headerlink").css("-webkit-transform-origin","0 0"); 
+			$("#headerlink").css("width",document.getElementById("contain_other").clientWidth/r+"px"); 
+			 
+			$("#foot_div").css("width",document.getElementById("contain_other").clientWidth/r+"px"); 
+			$("#foot_div").css("float","left");  
+			$("#foot_div").css("-webkit-transform","scale(" + r + ")"); 
+			$("#foot_div").css("-webkit-transform-origin","bottom left"); 
 			
-	var x= $(textfield1).offset(); 
-	document.getElementById("temp_textfield1_1").style.top=(x.top-7)+'px';
-	document.getElementById("temp_textfield1_1").style.left=(x.left-2)+'px';
-	document.getElementById("temp_textfield1_1").style.width=(document.getElementById("textfield1").clientWidth+6)+'px';
-	document.getElementById("ms1").style.top=(x.top-7+35)+'px';
-	document.getElementById("ms1").style.left=(x.left)+'px';
-	document.getElementById("ms1_text").style.width=(document.getElementById("textfield1").clientWidth+4)+'px';
-	document.getElementById("user_name_msg").style.top=(x.top-7)+'px';
-	document.getElementById("user_name_msg").style.left=(x.left+document.getElementById("textfield1").clientWidth+80)+'px';
-	
-    x= $(textfield3).offset(); 
-	document.getElementById("temp_textfield3_3").style.top=(x.top-7)+'px';
-	document.getElementById("temp_textfield3_3").style.left=(x.left-2)+'px';
-	document.getElementById("temp_textfield3_3").style.width=(document.getElementById("textfield3").clientWidth+6)+'px';
-	document.getElementById("ms3").style.top=(x.top-7+35)+'px';
-	document.getElementById("ms3").style.left=(x.left)+'px';
-	document.getElementById("ms3").style.width=(document.getElementById("textfield3").clientWidth+4)+'px';
-	document.getElementById("ms3_text").style.width=(document.getElementById("textfield3").clientWidth+4)+'px';
-	
-	document.getElementById("keycheck").style.top=(x.top-2)+'px';
-	document.getElementById("keycheck").style.left=(x.left+document.getElementById("textfield3").clientWidth+90)+'px';
-	document.getElementById("password_msg").style.top=(x.top-7)+'px';
-	document.getElementById("password_msg").style.left=(x.left+document.getElementById("textfield3").clientWidth+80)+'px';
-	
-    x= $(textfield4).offset(); 
-	document.getElementById("temp_textfield4_4").style.top=(x.top-7)+'px';
-	document.getElementById("temp_textfield4_4").style.left=(x.left-2)+'px';
-	document.getElementById("temp_textfield4_4").style.width=(document.getElementById("textfield4").clientWidth+6)+'px';
-	document.getElementById("ms4").style.top=(x.top-7+35)+'px';
-	document.getElementById("ms4").style.left=(x.left)+'px';
-	document.getElementById("ms4").style.width=(document.getElementById("textfield4").clientWidth+4)+'px';
-	document.getElementById("ms4_text").style.width=(document.getElementById("textfield4").clientWidth+4)+'px';
-	document.getElementById("re_password_msg").style.top=(x.top-7)+'px';
-	document.getElementById("re_password_msg").style.left=(x.left+document.getElementById("temp_textfield4_4").clientWidth+80)+'px';
-	
-    x= $(textfield5).offset(); 
-	document.getElementById("temp_textfield5_5").style.top=(x.top-7)+'px';
-	document.getElementById("temp_textfield5_5").style.left=(x.left-2)+'px';
-	document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield5").clientWidth+6)+'px';
-	document.getElementById("ms5").style.top=(x.top-7+35)+'px';
-	document.getElementById("ms5").style.left=(x.left)+'px';
-	document.getElementById("ms5_text").style.width=(document.getElementById("textfield5").clientWidth+4)+'px';
-	document.getElementById("ms5").style.width=(document.getElementById("textfield5").clientWidth+4)+'px';	
-	document.getElementById("email_msg").style.top=(x.top-7)+'px';
-	document.getElementById("email_msg").style.left=(x.left+document.getElementById("temp_textfield5_5").clientWidth+80)+'px';	
-	
-			
-		window.scrollTo(document.body.scrollWidth,0);
-		//$(document.body).css("height", document.body.scrollHeight*window.screen.height/1080+"px"); 
-		//$(window).height=$(window).height*1080/window.screen.height+"px"
-		
-		var r = window.screen.width /1920; 
-		$("#totaldiv").css("-webkit-transform","scale(" + r + ")"); 
-		//$("#totaldiv").css("-webkit-transform-origin","center 0"); 
-	
-		
-		var r = 1920/window.screen.width ; 
+			document.getElementById("contain_other").style.height=($(window).height()-126)+"px";
 
+			if(document.getElementById("contain_other").clientHeight>document.getElementById("frame_div").clientHeight){
+			document.getElementById("contain_other").style.paddingTop=(document.getElementById("contain_other").clientHeight-document.getElementById("frame_div").clientHeight)/2*r+"px";
+			}
+			// $("body").css("height",(126/r+document.getElementById("contain_other").clientHeight)*r+"px"); 
+			
+			document.getElementById("foot_div").style.visibility="visible ";
+			
+			window.scrollTo(document.body.scrollWidth,0);
+			
+		}else{
+			
+			document.getElementById("outdiv").style.height = ( $(window).height()-186) +'px';
+			document.getElementById("innerdiv").style.paddingTop = (document.getElementById("outdiv").clientHeight-485*1.2)/2 +'px'; 
+
+			$("#foot_top").css("min-height",document.getElementById("headerlink").clientHeight+document.getElementById("centerdiv").clientHeight+60+"px"); 
+			$("#foot_div").css("margin-top","60px"); 
+			
+			var x= $(textfield1).offset(); 
+			document.getElementById("temp_textfield1_1").style.top=(x.top-7)+'px';
+			document.getElementById("temp_textfield1_1").style.left=(x.left-2)+'px';
+			document.getElementById("temp_textfield1_1").style.width=(document.getElementById("textfield1").clientWidth+5)+'px';
+			document.getElementById("ms1").style.top=(x.top-7+35)+'px';
+			document.getElementById("ms1").style.left=(x.left)+'px';
+			document.getElementById("ms1_text").style.width=(document.getElementById("textfield1").clientWidth+4)+'px';
+			document.getElementById("user_name_msg").style.top=(x.top)+'px';
+			document.getElementById("user_name_msg").style.left=(x.left+document.getElementById("textfield1").clientWidth+80)+'px';
+			
+			x= $(textfield3).offset(); 
+			document.getElementById("temp_textfield3_3").style.top=(x.top-7)+'px';
+			document.getElementById("temp_textfield3_3").style.left=(x.left-2)+'px';
+			document.getElementById("temp_textfield3_3").style.width=(document.getElementById("textfield3").clientWidth+6)+'px';
+			document.getElementById("ms3").style.top=(x.top-7+35)+'px';
+			document.getElementById("ms3").style.left=(x.left)+'px';
+			document.getElementById("ms3").style.width=(document.getElementById("textfield3").clientWidth+4)+'px';
+			document.getElementById("ms3_text").style.width=(document.getElementById("textfield3").clientWidth+4)+'px';
+			
+			document.getElementById("keycheck").style.top=(x.top-2)+'px';
+			document.getElementById("keycheck").style.left=(x.left+document.getElementById("textfield3").clientWidth+90)+'px';
+			document.getElementById("password_msg").style.top=(x.top)+'px';
+			document.getElementById("password_msg").style.left=(x.left+document.getElementById("textfield3").clientWidth+80)+'px';
+			
+			x= $(textfield4).offset(); 
+			document.getElementById("temp_textfield4_4").style.top=(x.top-7)+'px';
+			document.getElementById("temp_textfield4_4").style.left=(x.left-2)+'px';
+			document.getElementById("temp_textfield4_4").style.width=(document.getElementById("textfield4").clientWidth+6)+'px';
+			document.getElementById("ms4").style.top=(x.top-7+35)+'px';
+			document.getElementById("ms4").style.left=(x.left)+'px';
+			document.getElementById("ms4").style.width=(document.getElementById("textfield4").clientWidth+4)+'px';
+			document.getElementById("ms4_text").style.width=(document.getElementById("textfield4").clientWidth+4)+'px';
+			document.getElementById("re_password_msg").style.top=(x.top)+'px';
+			document.getElementById("re_password_msg").style.left=(x.left+document.getElementById("temp_textfield4_4").clientWidth+80)+'px';
+			
+			x= $(textfield5).offset(); 
+			document.getElementById("temp_textfield5_5").style.top=(x.top-7)+'px';
+			document.getElementById("temp_textfield5_5").style.left=(x.left-2)+'px';
+			document.getElementById("temp_textfield5_5").style.width=(document.getElementById("textfield5").clientWidth+6)+'px';
+			document.getElementById("ms5").style.top=(x.top-7+35)+'px';
+			document.getElementById("ms5").style.left=(x.left)+'px';
+			document.getElementById("ms5_text").style.width=(document.getElementById("textfield5").clientWidth+4)+'px';
+			document.getElementById("ms5").style.width=(document.getElementById("textfield5").clientWidth+4)+'px';	
+			document.getElementById("email_msg").style.top=(x.top)+'px';
+			document.getElementById("email_msg").style.left=(x.left+document.getElementById("temp_textfield5_5").clientWidth+80)+'px';
+		
+			if((document.getElementById("outdiv").clientWidth-(document.getElementById("innerdiv").clientWidth*1.2))/2<175){
+				
+				var addwidth=180*1.2-((document.getElementById("outdiv").clientWidth-(document.getElementById("innerdiv").clientWidth*1.2))/2);
+				document.getElementById("headerlink").style.width=document.getElementById("outdiv").clientWidth+addwidth+"px";
+				document.getElementById("foot_div").style.width=document.getElementById("outdiv").clientWidth+addwidth+"px";
+			}else{
+				document.getElementById("headerlink").style.width=document.getElementById("outdiv").clientWidth+"px";
+				document.getElementById("foot_div").style.width=document.getElementById("outdiv").clientWidth+"px";
+			}
+			window.scrollTo(document.body.scrollWidth,0);
+		}
 });
 </script>
 </head>
 
 <body>
-<div id="totaldiv">
 <div class="topbar" id="headerlink">
     <div class="logo" ><a href="index.php" class="logourl" >&nbsp;</a></div>
 </div>
-<center>
-<div id="outdiv" style="min-width:1200px;min-height:650px;">
+<center id="centerdiv">
+<div id="containdiv" style="display:none;">
+<div id="outdiv" style="min-width:1300px;min-height:650px;height:650px;">
 
 <div id="innerdiv" style="width:980.167px;-webkit-transform: scale( 1.2 )translate(-82.0833px,0);-webkit-transform-origin: 0 0;height:485px;" >
-<table width="100%" border="0" cellspacing="0" cellpadding="0" height="100%" ><!-- width:67%;margin-bottom:197.344px; -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0" height="100%" align="center" >
 	<tr>
 	<td style="width:50%;">
-	<div style="width:100%;height:100%;padding-left:79.733px;padding-top:65px;">
+	<div style="width:100%;height:100%;padding-left:82px;padding-top:74px;">
 	<div  class="ping_logo" ></div>
 	</div>
 	</td>
@@ -395,7 +432,7 @@ function changemsg(UP,DOWN){
 			
 						<div id="h1">
 						<div  class="control-group">
-						<label  class="control-label" id="for1" for="textfield1" style="font-size:17px;"  >&nbsp;&nbsp;&nbsp;&nbsp;昵&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称&nbsp;&nbsp; ：&nbsp;&nbsp;</label> 
+						<label class="beauty-label" id="textfield_label"  for="textfield" style="font-size:17px;font-weight:bold;" >&nbsp;&nbsp;&nbsp;&nbsp;昵&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称&nbsp;&nbsp; ：&nbsp;&nbsp;</label> 
 						 
 							<input  class="input-xlarge" type="text"  id="textfield1" name="textfield1" style="z-index:2;width:280px;" />
 							
@@ -404,7 +441,7 @@ function changemsg(UP,DOWN){
 						
 						<div id="h3 "style="margin-top: 40px;">
 						<div  class="control-group">					
-						<label  class="control-label" id="for3" for="textfield3" style="font-size:17px;" >&nbsp;&nbsp;&nbsp;&nbsp;登陆密码&nbsp;&nbsp; ：&nbsp;&nbsp;</label> 
+						<label class="beauty-label" id="textfield_label"  for="textfield" style="font-size:17px;font-weight:bold;" >&nbsp;&nbsp;&nbsp;&nbsp;登陆密码&nbsp;&nbsp; ：&nbsp;&nbsp;</label> 
 							<input  class="input-xlarge" type="password" id="textfield3" name="textfield3" style="z-index:2;width:280px;" />
 							
 						</div>						
@@ -412,14 +449,14 @@ function changemsg(UP,DOWN){
 						
 						<div id="h4" style="margin-top: 64px;">
 						<div class="control-group">	 
-						<label  class="control-label" id="for4"  for="textfield4" style="font-size:17px;" >&nbsp;&nbsp;&nbsp;&nbsp;确认密码&nbsp;&nbsp; ：&nbsp;&nbsp;</label>
+						<label  class="beauty-label" id="textfield_label"  for="textfield" style="font-size:17px;font-weight:bold;">&nbsp;&nbsp;&nbsp;&nbsp;确认密码&nbsp;&nbsp; ：&nbsp;&nbsp;</label>
 							<input  class="input-xlarge" type="password" id="textfield4"  name="textfield4" style="z-index:2;width:280px;">
 						</div>
 						</div>
 						
 						<div id="h5" style="margin-top: 44px;">
 						<div  class="control-group">	 
-						<label  class="control-label" id="for5"  for="textfield5" style="font-size:17px;" >&nbsp;&nbsp;&nbsp;&nbsp;邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱 &nbsp;&nbsp;：&nbsp;&nbsp;</label> 
+						<label class="beauty-label" id="textfield_label"  for="textfield" style="font-size:17px;font-weight:bold;">&nbsp;&nbsp;&nbsp;&nbsp;邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱 &nbsp;&nbsp;：&nbsp;&nbsp;</label> 
 							<input class="input-xlarge" type="text" id="textfield5"  name="textfield5" style="z-index:2;width:280px;" />
 						</div>
 						
@@ -453,7 +490,7 @@ function changemsg(UP,DOWN){
 						<p class="text-muted"id="ms5_text"  style="font-size:15px;width:300px;text-align:left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮箱注册后不能更改，将作为您的Capteam账号唯一确认您的身份，也可用于找回密码，建议使用163、sina、gmail、QQ邮箱。</p>
 						
 						<div style="margin-top: 20px;float:right">
-						 <a  style="margin-top: 7px;width: 130px;float:right;"  href="user_login.php"> 已有账号，直接登陆</a>
+						 <a  style="margin-top: 7px;width: 130px;float:right;font-family:微软雅黑"  href="user_login.php"> 已有账号，直接登陆</a>
 						 <button type="button" class="btn btn-default" style="width: 70px;margin-right:10px;float:right;" onclick="return registeruser('<?php echo $editFormAction;  ?>');" > <?php echo $multilingual_user_register; ?></button>
 						<div style="clear:both;">  </div>
 						</div>
@@ -461,12 +498,12 @@ function changemsg(UP,DOWN){
 						</div>
 						
 	
-	<span id="user_name_msg" style="margin-top:10px;z-index:3;position:absolute;font-size:12px;min-width:130px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;"></span>
+	<span id="user_name_msg" style="z-index:3;position:absolute;min-width:170px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;"></span>
 							
 	
-							<span id="password_msg" style="margin-top:10px;z-index:3;position:absolute;font-size:12px;display:block;min-width:130px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;"></span>
+							<span id="password_msg" style="z-index:3;position:absolute;display:block;min-width:170px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;"></span>
 								
-							<table id="keycheck"  style="z-index:3;position:absolute;left:20;top:40;display:none;min-width:130px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;">
+							<table id="keycheck"  style="z-index:3;position:absolute;left:20;top:40;display:none;min-width:170px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;">
 								<tr>    
 									<th></th>   
 									<td id="level" class="pw-strength" >           	
@@ -481,8 +518,8 @@ function changemsg(UP,DOWN){
 								</tr>
 							</table>
 							
-	<span id="re_password_msg" style="margin-top:10px;z-index:3;position:absolute;font-size:12px;min-width:130px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;"></span>
-	<span id="email_msg" style="margin-top:10px;z-index:3;position:absolute;font-size:12px;min-width:130px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;"></span>
+	<span id="re_password_msg" style="z-index:3;position:absolute;min-width:170px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;"></span>
+	<span id="email_msg" style="z-index:3;position:absolute;min-width:170px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;"></span>
 	
 	
 						<input  class="form-control"   type="text"  id="temp_textfield1_1" name="temp_textfield1_1" style="z-index:4;position:absolute;left:20;top:40;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;width:100px;" onblur='changemsg("temp_textfield1_1","textfield1");'/>
@@ -493,11 +530,25 @@ function changemsg(UP,DOWN){
 						
 						<input  class="form-control"   type="text"  id="temp_textfield5_5" name="temp_textfield5_5" style="z-index:4;position:absolute;left:20;top:40;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;" onblur='changemsg("temp_textfield5_5","textfield5");'/>
 
- 
-<?php require('foot.php'); ?>
-</center>
 </div>
+
+<div id="contain_other" align="center" style="display:none;overflow:hidden;">
+              <iFrame  id="frame_div" src="user_login_contain.php" scrolling="no"  frameborder="no">
+             </iFrame>
+			 </div>
+
+
+</center> 	
+<center>
+<div class="foot" id="foot_div" style="visibility:hidden;" >
+    <div class="wss_title" id="foot_title" style="font-size: 22px;">
+
+        <div class="wss_ver" id="capteamfoot">
+            © 2014 - 2015 Capteam 大学生团队协作管理平台 &nbsp;&nbsp;|&nbsp;&nbsp; 北京交通大学软件学院
+        </div>
+    </div>
+</div>
+</center>
+
 </body>
-
-
 </html>
