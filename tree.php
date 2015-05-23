@@ -33,8 +33,7 @@ if(frm != null && subWeb != null)
 </script>
 <div class="tree_div" id="main_left">
     <?php if($str <> "0"){ ?>
-    <h5 class="font_big1
-    8 fontbold"><?php echo $multilingual_project_view_wbs; ?></h5>
+    <h5 class="font_big18 fontbold"><?php echo $multilingual_project_view_wbs; ?></h5>
     
 <script type="text/javascript">
 

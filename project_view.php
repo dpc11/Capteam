@@ -317,6 +317,11 @@ $(function() {
 								$project_name = $row_DetailRS1['project_name'];
 								$node_id_task = -1;
 								require_once('tree.php'); ?>
+                                
+                                <h4 style="margin-top:40px; margin-left: 5px;"><strong><?php echo $multilingual_schedule_task; ?></strong></h4>
+                        <p>
+                            <?php echo $multilingual_schedule_task_tip; ?>
+                        </p>
 							</td>
 						</tr>
 					</table>
