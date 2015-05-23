@@ -278,9 +278,13 @@ span.usr.catch{background:#ffc!important;}
         dragHelper.style.cssText = 'position:absolute;display:none;'; 
         document.body.appendChild(dragHelper); 
         var bNum = document.getElementById('boardNum').value;
-        for(var i =1; i<=bNum;i++)
+        var userrole = document.getElementById('now_role').value;
+        if(userrole == "1")
         {
-        	setdragreplace(document.getElementById(i)); 
+            for(var i =1; i<=bNum;i++)
+            {
+                setdragreplace(document.getElementById(i)); 
+            }
         }
         //setdragreplace(document.getElementById('1')); 
         //setdragreplace(document.getElementById('2')); 
@@ -395,6 +399,7 @@ span.usr.catch{background:#ffc!important;}
             <?php }?>
 
             <div id="displayRoom" style="overflow-y:auto;"> 
+             <input type="hidden" id="now_role" name="now_role" value="<?php echo $now_role; ?>" />
                 <?php while($row_board = mysql_fetch_assoc($board_info)){ 
                      $id_seq = $id_seq + 1;?>
                     <div class="row"style="margin-right:0px"> 
