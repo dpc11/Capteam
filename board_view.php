@@ -5,6 +5,7 @@
 
 <?php 
     $pid = "-1";
+    $leader_id = -1;
     if(isset($_GET['pid'])){
         $pid = $_GET['pid'];
     }
@@ -13,11 +14,19 @@
 
     $id_seq=0;
     $bid = "-1";
+    $now_role = 0;//对于项目看板当前角色
 
     if($pid != -1){
         $board_info = get_board_info($pid);
+         $leader_id = get_leader($pid);
     }else{
         $board_info = get_personal_board_info($uid);
+        $now_role = 1;//个人看板时自己也是最高权限者
+    }
+
+    if($uid==$leader_id)
+    {
+        $now_role = 1;//是项目组长
     }
         
     $board_num =mysql_num_rows($board_info);
@@ -25,6 +34,7 @@
     $editID = "-1";
         if (isset($_POST['edit_board_id'])) {
     $editID = $_POST['edit_board_id'];
+
 }
 ?>
 
@@ -392,21 +402,24 @@ span.usr.catch{background:#ffc!important;}
                         <span id="parent<?php echo $row_board['board_seq']; ?>" style="display:block;width:15em;clear:none;background:white;height:15em;line-height:30px;margin-right: 30px;margin-bottom:30px;text-align:center;">
                             <span class="usr" id="<?php echo $id_seq; ?>">
                                 <p style="margin: 0px;margin-bottom: 10px;">
-                                    <a  onclick="ch1(<?php echo $row_board['board_id']; ?>)">
-                                     <input type="hidden" id="ID" name="ID" value="<?php echo $row_board['board_id']; ?>" />
-                                    <img src="images/ui/base_close.png" style="float: right;margin-left: 11.5em;" width="16px">
-                                </a>
+                                    <?php if($row_board['board_from']==$uid || $now_role == 1){ $close_ok = 1;}else{$close_ok = 0;} ?>
+                                    <a  onclick="ch1(<?php echo $row_board['board_id']; ?>,<?php echo $close_ok; ?>)">
+                                         <input type="hidden" id="ID" name="ID" value="<?php echo $row_board['board_id']; ?>" />
+                                        <img src="images/ui/base_close.png" style="float: right;margin-left: 11.5em;" width="16px">
+                                    </a>
                                 <!--<a href="#editmodal" role="button" class="edit" data-toggle="modal" <?php $bid=$row_board['board_id'] ?> >-->
-                                <a role="button"  onclick="eb(<?php echo $row_board['board_id']; ?>)">
-                                   <!-- <script>
-                                      $(function(){
-                                        $(".edit").click(function(){
-                                          $("#editmodal").modal("toggle");
-                                      });
-                                    });
-                                    </script> -->
-                                    <img src="images/ui/base_edit.png" style="float: left;margin-top: -2px;position: absolute;" height="18px">
-                                </a>
+                                    <?php if($row_board['board_from'] == $uid){//是自己的发的便签 ?>
+                                        <a role="button"  onclick="eb(<?php echo $row_board['board_id']; ?>)">
+                                           <!-- <script>
+                                              $(function(){
+                                                $(".edit").click(function(){
+                                                  $("#editmodal").modal("toggle");
+                                              });
+                                            });
+                                            </script> -->
+                                            <img src="images/ui/base_edit.png" style="float: left;margin-top: -2px;position: absolute;" height="18px">
+                                        </a>
+                                    <?php } ?>
                                 </p>
                                 
                                 <span class="usr_text" ><?php echo $row_board['board_content']; ?></span>
@@ -431,14 +444,19 @@ font-size: 100%;color: rgb(129, 129, 129);">from:  <?php echo $row_board['tk_dis
                         </span>
                     </div>
                     <script language="javascript">
-                                      function ch1(data) {
+                        function ch1(data,isok) {
+                            if(isok == 1){
                                        // var data = data;
-                            if (confirm("您确定要删除吗?")) {
-                               // window.location = "show_news.php?flag=1&id={$row['news_id']}";  href="base_delete.php?delID=<?php echo $row_board['board_id']; ?>&pid=<?php echo $pid; ?>"    
-                               window.location = "base_delete.php?delID="+data+"&pid=<?php echo $pid; ?>";
-                                return true;
-                            } else {
-                                return false;
+                                if (confirm("您确定要删除吗?")) {
+                                   // window.location = "show_news.php?flag=1&id={$row['news_id']}";  href="base_delete.php?delID=<?php echo $row_board['board_id']; ?>&pid=<?php echo $pid; ?>"    
+                                   window.location = "base_delete.php?delID="+data+"&pid=<?php echo $pid; ?>";
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            }
+                            else{
+                                alert("对不起，您没有删除的权限！");
                             }
                         }
                     </script>
