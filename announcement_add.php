@@ -31,6 +31,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
     $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
     $insertGoTo .= $_SERVER['QUERY_STRING'];
   }
+  $insertGoTo=$insertGoTo."&backnums=-2";
   header(sprintf("Location: %s", $insertGoTo));
   exit;
 }
@@ -87,7 +88,7 @@ $row_teamleader_lists = mysql_fetch_assoc($teamleader_lists);
 									<select name="tk_pid" id="tk_pid" class="form-control selectpicker">
 									<option value="-1">请选择</option>
 									<?php do {  ?> 
-									  <option value="<?php echo $row_teamleader_lists['tk_team_uid']; ?>"><?php echo $row_teamleader_lists['project_name']; ?></option>
+									  <option value="<?php echo $row_teamleader_lists['tk_team_pid']; ?>"><?php echo $row_teamleader_lists['project_name']; ?></option>
 									  <?php } while ($row_teamleader_lists = mysql_fetch_assoc($teamleader_lists)); ?>
 									</select>
 								</div>
@@ -125,10 +126,10 @@ $row_teamleader_lists = mysql_fetch_assoc($teamleader_lists);
 							<!-- 提交按钮 -->
 								<tr >
 									<td >
-										<button type="submit" class="btn btn-primary btn-lg" name="cont" style="width:100px"><?php echo $multilingual_global_action_save; ?></button>
+										<button type="submit" class="btn btn-primary btn-lg" name="cont"  data-loading-text="提交中……" style="width:120px"><?php echo $multilingual_global_action_save; ?></button>
 									</td>
 									<td  width="20%" align="center" >
-										<button type="button" class="btn btn-default btn-lg" style="width:100px" onClick="javascript:history.go(-1);"><?php echo $multilingual_global_action_cancel; ?></button>
+										<button type="button" class="btn btn-default btn-lg" style="width:120px" onClick="javascript:history.go(-1);"><?php echo $multilingual_global_action_cancel; ?></button>
 										<input type="hidden" name="MM_insert" value="form1" />
 										<input name="tk_anc_create" type="hidden" value="<?php echo "{$_SESSION['MM_uid']}"; ?>" />
 
@@ -149,6 +150,14 @@ $row_teamleader_lists = mysql_fetch_assoc($teamleader_lists);
 <script charset="utf-8" src="plug-in/editor/kindeditor.js"></script>
 <script charset="utf-8" src="plug-in/editor/lang/zh_CN.js"></script>
 <script>
+
+		$('button[data-loading-text]').click(function () {
+			var btn = $(this).button('loading');
+			setTimeout(function () {
+				btn.button('reset');	
+			}, 3000);
+		});
+
 		J.check.rules = [
 			{ name: 'tk_anc_title', mid: 'anntitle', type: 'limit', requir: true, min: 2, max: 30, warn: '<?php echo $multilingual_announcement_titlerequired; ?>' }
 			

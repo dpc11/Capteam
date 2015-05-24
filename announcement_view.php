@@ -13,6 +13,10 @@ $colname_DetailRS1 = "-1";
 if (isset($_GET['recordID'])) {
   $colname_DetailRS1 = $_GET['recordID'];
 }
+$backnums=-1;
+if (isset($_GET['backnums'])) {
+  $backnums = $_GET['backnums'];
+}
 mysql_select_db($database_tankdb, $tankdb);
 $query_DetailRS1 = sprintf("SELECT * FROM tk_announcement inner join tk_user on tk_announcement.tk_anc_create=tk_user.uid  WHERE tk_announcement.AID = %s ORDER BY tk_anc_lastupdate DESC", GetSQLValueString($colname_DetailRS1, "int"));
 $query_limit_DetailRS1 = sprintf("%s LIMIT %d, %d", $query_DetailRS1, $startRow_DetailRS1, $maxRows_DetailRS1);
@@ -29,11 +33,13 @@ $totalPages_DetailRS1 = ceil($totalRows_DetailRS1/$maxRows_DetailRS1)-1;
 ?>
 
 <?php require('head.php'); ?>
-<table width="100%">
+<table width="100%" height="100%" id="totalpage">
+  
   <tr>
-    <td class="file_text_bg">
-	<div class="file_text_div">
-	<table width="100%" align="center">
+    <td class="file_text_bg" height="100%">
+	<div class="file_text_div" id="filecontain" style="background:white;height:100%">
+	<div  id="tablecontain" style="background:white;">
+	<table width="100%" align="center" style="border-bottom: 3px #D1D1D1 double;border-width:6px;margin-bottom:6px;" >
         <tr>
 		<td>
 	<h2><b><?php echo $row_DetailRS1['tk_anc_title']; ?></b></h2>	</td>
@@ -53,7 +59,7 @@ $totalPages_DetailRS1 = ceil($totalRows_DetailRS1/$maxRows_DetailRS1)-1;
 
 		  </td>
 		  <td width="10%">
-		  <span class="glyphicon glyphicon-arrow-left"></span> <a onclick="javascript:history.go(-1)" class="mouse_hover"><?php echo $multilingual_global_action_back; ?></a>
+		  <span class="glyphicon glyphicon-arrow-left"></span> <a onclick="javascript:history.go(<?php echo $backnums; ?>)" class="mouse_hover"><?php echo $multilingual_global_action_back; ?></a>
 		  </td>
 		  <td>&nbsp;
 		  </td>
@@ -78,7 +84,28 @@ $totalPages_DetailRS1 = ceil($totalRows_DetailRS1/$maxRows_DetailRS1)-1;
   </tr>
   
 </table>
+</div>
 <?php require('foot.php'); ?>
+<script>
+$(window).load(function()
+	{		
+	
+		$("#totalpage").css("height",$(window).height()-60-64+"px");
+		$("#totalpage").css("min-height",document.getElementById("tablecontain").clientHeight+document.getElementById("logcontain").clientHeight+60+"px");
+		$("#filecontain").css("min-height",document.getElementById("tablecontain").clientHeight+110+"px");
+		$("#filecontain").css("height",document.getElementById("totalpage").clientHeight-110-
+				document.getElementById("logcontain").clientHeight+"px");
+		$("#foot_top").css("min-height",document.getElementById("totalpage").clientHeight+60+60+"px");
+	});
+	$(window).resize(function()
+	{	
+		
+		$("#totalpage").css("height",$(window).height()-60-64+"px");
+		$("#filecontain").css("height",$(window).height()-60-64-document.getElementById("logcontain").clientHeight-110+"px");
+
+		$("#foot_top").css("min-height",document.getElementById("totalpage").clientHeight+60+60+"px");
+	});
+</script>
 </body>
 </html><?php
 mysql_free_result($DetailRS1);
