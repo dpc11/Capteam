@@ -165,7 +165,7 @@ document.getElementById('tab_' + i).className = (i == 3) ? 'onhover' : 'none';
 ";
 }
 ?>
-<script language="javascript">
+
 function tabs(n)
 {
 var len = 3;
@@ -249,16 +249,15 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
 		  <td>
 		  <table width="100%" style="line-height:40px;">
 		  <tr>
-		  <?php if($_SESSION['MM_rank'] > "2") { ?>
-		
-		  <?php }  ?> 
-		  <?php if ($_SESSION['MM_rank'] > "1"){ ?>
-		  <?php if ($_SESSION['MM_rank'] > "4" || $_SESSION['MM_uid'] == $row_DetailRS1['uid']) { ?>
+              
+		  <?php if ($_SESSION['MM_uid'] == $row_DetailRS1['uid']) { ?>
 		  <td width="10%">
 		  <a href="default_user_edit.php?UID=<?php echo $row_DetailRS1['uid']; ?>"><span class="glyphicon glyphicon-pencil"></span> <?php echo $multilingual_global_action_edit; ?></a>
 		  </td>
 		  <?php }  ?> 
-		  <?php }  ?> 
+              
+<!-- 不能删除用户 -->
+<!--
 		  <?php if ($_SESSION['MM_rank'] > "4" && $row_Recordset_countuser['count_user'] > "1") {  ?>
 		  <td width="10%">
 		  <a onClick="javascript:if(confirm( '<?php 
@@ -267,6 +266,7 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
 	  } else { echo $multilingual_global_action_delconfirm4;} ?>'))self.location='user_del.php?UID=<?php echo $row_DetailRS1['uid']; ?>';" value="<?php echo $multilingual_global_action_del; ?>" class="mouse_hover"><span class="glyphicon glyphicon-remove"></span> <?php echo $multilingual_global_action_del; ?></a>
 		  </td>
 		  <?php }  ?> 
+-->
 		  
 		  <td>
 		   <a class="mouse_over" onClick="javascript:history.go(-1)">
@@ -281,438 +281,11 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
 
 		  </td>
 		  </tr>
-		  
-		  <?php if ( $row_DetailRS1['tk_user_remark'] <> null && $row_DetailRS1['tk_user_remark']<> " ") { ?>
-		  <tr>
-            <td>&nbsp;</td>
-          </tr>
-		  
-		  <tr>
-            <td><span class="font_big18 fontbold"><?php echo $multilingual_user_remark; ?></span></td>
-          </tr>
-		  
-		  <tr>
-            <td><?php 
-	
-	$row_DetailRS1['tk_user_remark']   =   htmlspecialchars($row_DetailRS1['tk_user_remark']);  
-	$row_DetailRS1['tk_user_remark']   =   str_replace("\n",   "<br>",   $row_DetailRS1['tk_user_remark']);  
-	$row_DetailRS1['tk_user_remark']   =   str_replace("     ",   "&nbsp;",   $row_DetailRS1['tk_user_remark']);   
-	echo $row_DetailRS1['tk_user_remark']; 
-	
-	?></td>
-          </tr>
-		  <?php } ?>
-		  
-		  <?php if ($user_totalhour > 0.5) {  ?>
-		  <tr>
-            <td>&nbsp;</td>
-          </tr>
-          <tr>
-            <td><span class="font_big18 fontbold"><?php echo $multilingual_user_chart_title; ?></span></td>
-          </tr>
-          <tr>
-            <td>
-	          <div id="chart"></div>
-	        </td>
-          </tr>
-		  <?php }  ?>
-          <tr>
-            <td><br />
-			<a name="task"></a>
-<div class="tab">
-<ul class="menu" id="menutitle">
-
-<li id="tab_1" class="onhover" <?php if ($user_totallog == 0) { echo "style='display:none'"; }?>><a href="javascript:void(0)" onClick="tabs('1');" ><?php echo $multilingual_default_task_section5; ?></a></li>
-
-<li id="tab_2" <?php if ($user_totallog == 0) { echo "class='onhover'"; }?> <?php if ($totalRows_Recordset_task == 0) { echo "style='display:none'"; } ?>><a href="javascript:void(0)" onClick="tabs('2');" ><?php echo $multilingual_user_view_task; ?></a></li>
-
-
-<li id="tab_3"  <?php if ($user_totallog == 0 && $totalRows_Recordset_task == 0) { echo "class='onhover'"; }?> <?php if ($totalRows_Recordset_prj == 0) { echo "style='display:none'"; }?>><a href="javascript:void(0)" onClick="tabs('3');" ><?php echo $multilingual_user_view_project; ?></a></li>
-<?php if ($user_totallog <> 0 || $totalRows_Recordset_task <> 0 || $totalRows_Recordset_prj <> 0) { ?>
-<li >&nbsp;</li><li >&nbsp;</li>
-<?php }?>
-</ul>
-
-<div class="tab_b" id="tab_a1" 
-<?php if ($user_totallog > 0) { 
-echo "style='display:block'";
-} else {
-echo "style='display:none'";
-} ?>
->
-  <!--log start-->
-  <?php if ($user_totallog > 0) {  ?>
-<table width="100%" cellpadding="5">
-  <tr>
-  <td>
-  <div class="condition">
-  <span>
-<form id="form1" name="form1" method="get" class="taskform form-inline">
-  <input type="hidden" name="recordID" id="recordID" value="<?php echo $row_DetailRS1['uid']; ?>"  />
-  <input type="hidden" name="logtype" id="logtype" value="1"  />
-      <select name="logyear" id="logyear"  class="form-control input-sm">
-	  <option value=""><?php echo $multilingual_taskf_year; ?></option>
-	  <?php for($i = 2009; $i <= 2050; $i++) { ?>
-         <option value="<?php echo $i; ?>" <?php 
-		if (isset($_SESSION['ser_logyear'])) {	
-		if (!(strcmp($i, "{$_SESSION['ser_logyear']}"))) {
-			echo "selected=\"selected\"";
-			}
-		}
-else if (!(strcmp($i, date("Y")))) {echo "selected=\"selected\"";} ?>><?php echo $i; ?></option>
-<?php  }?>
-      </select>
-	  
-	  <select  name="logmonth" id="logmonth" class="form-control input-sm">
-      <option value=""><?php echo $multilingual_taskf_month; ?></option>
-      <?php for($i = 1; $i <= 12; $i++) { ?>
-         <option value="<?php $xi = $i; if($i<=9){$xi ="0".$i;}   echo $xi; ?>" <?php 
-	  if (isset($_SESSION['ser_logmonth'])) {	
-		if (!(strcmp($xi, "{$_SESSION['ser_logmonth']}"))) {
-			echo "selected=\"selected\"";
-			}
-		}
-else if (!(strcmp($i, date("n")))) {echo "selected=\"selected\"";} ?>><?php echo $xi; ?></option>
-<?php  }?>
-    </select>
-	
-	<select name="logday" id="logday"  class="form-control input-sm">
-      <option value="" selected="selected"><?php echo $multilingual_taskf_day; ?></option>
-	  <?php for($i = 1; $i <= 31; $i++) { ?>
-         <option value="<?php $yi = $i; if($i<=9){$yi ="0".$i;}   echo $yi; ?>" <?php 
-	  if (isset($_SESSION['ser_logday'])) {	
-		if (!(strcmp($yi, "{$_SESSION['ser_logday']}"))) {
-			echo "selected=\"selected\"";
-			}
-		} ?>><?php echo $yi; ?></option>
-<?php  }?>
-    </select>
-
-	 <button type="button" class="btn btn-default btn-sm" onclick= "return   searchtask(); " /><span class="glyphicon glyphicon-filter" style="display:inline;"></span> 
-	  <?php echo $multilingual_global_filterbtn; ?>
-	  </button>
-	  
-	  <button type="button" class="btn btn-link btn-sm" name="export" id="export"  onclick= "return   exportexcel(); " ><?php echo $multilingual_global_excel; ?></button>
-
- </form>
- </span>
- </div>
-  </td>
-  </tr>
-  <tr>
-    <td>
-	<?php if ($totalRows_Recordset_log > 0) { ?>
-    <div >
-    <table  class="table table-striped table-hover"  width="100%" >
- <thead>
-<tr>
-<th>
-<?php echo $multilingual_global_log; ?>
-</th>
-<th>
-<?php echo $multilingual_user_view_cost; ?>
-</th>
-<th>
-<?php echo $multilingual_user_view_status; ?>
-</th>
-<th>
-<?php echo $multilingual_user_view_project2; ?>
-</th>
-<th>
-<?php echo $multilingual_project_file_update; ?>
-</th>
-<th>
-
-</th>
-</tr>
-</thead>
-<tbody>
-
-  <?php do { ?>
-<tr>
-      <td >
-<?php echo $row_DetailRS1['tk_display_name']; ?> <?php echo $multilingual_user_view_by; ?> 
-	   
-<?php 
-$logdate = $row_Recordset_log['csa_tb_year'];
-$logyear = str_split($logdate,4);
-$logmonth = str_split($logyear[1],2);
-echo $logyear[0]; ?>-<?php echo $logmonth[0]; ?>-<?php echo $logmonth[1]; ?>	
-
-
-
-	  <?php echo $multilingual_user_view_do; ?>  
-	  <?php echo $row_Recordset_log['task_tpye']; ?> - 
-	  <a href="default_task_edit.php?editID=<?php echo $row_Recordset_log['TID']; ?>" >
-	  <?php echo $row_Recordset_log['csa_text']; ?></a>
-	  
-	  <?php if($row_Recordset_log['csa_tb_text']<>null){ echo "<br/><span class='gray'>".$row_Recordset_log['csa_tb_text']."</span>"; }?>
-</td>
-<td>
-<?php echo $row_Recordset_log['csa_tb_manhour']; ?> <?php echo $multilingual_user_view_hour; ?>
-</td>
-<td>
- <?php echo $row_Recordset_log['task_status_display']; ?>
-</td>
-<td>
-<a href="project_view.php?recordID=<?php echo $row_Recordset_log['csa_project']; ?>">
-  <?php echo $row_Recordset_log['project_name']; ?></a>
-</td>
-<td>
-<?php echo $row_Recordset_log['csa_tb_lastupdate']; ?>
-</td>
-</tr>
-     <?php
-} while ($row_Recordset_log = mysql_fetch_assoc($Recordset_log));
-  $rows = mysql_num_rows($Recordset_log);
-  if($rows > 0) {
-      mysql_data_seek($Recordset_log, 0);
-	  $row_Recordset_log = mysql_fetch_assoc($Recordset_log);
-  }
-?>
-</tbody>
-</table>
-</div>
-<table class="rowcon" border="0" align="center">
-<tr>
-<td>   <table border="0">
-        <tr>
-          <td><?php if ($pageNum_Recordset_log > 0) { // Show if not first page ?>
-              <a href="<?php printf("%s?pageNum_Recordset_log=%d%s", $currentPage, 0, $queryString_Recordset_log); ?>#task"><?php echo $multilingual_global_first; ?></a>
-              <?php } // Show if not first page ?></td>
-          <td><?php if ($pageNum_Recordset_log > 0) { // Show if not first page ?>
-              <a href="<?php printf("%s?pageNum_Recordset_log=%d%s", $currentPage, max(0, $pageNum_Recordset_log - 1), $queryString_Recordset_log); ?>#task"><?php echo $multilingual_global_previous; ?></a>
-              <?php } // Show if not first page ?></td>
-          <td><?php if ($pageNum_Recordset_log < $totalPages_Recordset_log) { // Show if not last page ?>
-              <a href="<?php printf("%s?pageNum_Recordset_log=%d%s", $currentPage, min($totalPages_Recordset_log, $pageNum_Recordset_log + 1), $queryString_Recordset_log); ?>#task"><?php echo $multilingual_global_next; ?></a>
-              <?php } // Show if not last page ?></td>
-          <td><?php if ($pageNum_Recordset_log < $totalPages_Recordset_log) { // Show if not last page ?>
-              <a href="<?php printf("%s?pageNum_Recordset_log=%d%s", $currentPage, $totalPages_Recordset_log, $queryString_Recordset_log); ?>#task"><?php echo $multilingual_global_last; ?></a>
-              <?php } // Show if not last page ?></td>
-        </tr>
-      </table></td>
-<td align="right">   <?php echo ($startRow_Recordset_log + 1) ?> <?php echo $multilingual_global_to; ?> <?php echo min($startRow_Recordset_log + $maxRows_Recordset_log, $totalRows_Recordset_log) ?> (<?php echo $multilingual_global_total; ?> <?php echo $totalRows_Recordset_log ?>)&nbsp;&nbsp;&nbsp;&nbsp;</td>
-</tr>
-</table> 
-
-<?php } else { ?>
-<div class="alert alert-warning" style="margin:6px;">
-    <?php echo $multilingual_user_view_nolog; ?>
-</div>
-
-<?php }  ?>
- </td>
-</tr>
-</table>  
-
-
-
-<?php }  ?>
- <!-- log end-->
- </div>
-
-<div class="tab_b" id="tab_a2" 
-<?php if ($user_totallog > 0) { 
-echo "style='display:none'";
-} else {
-echo "style='display:block'";
-} ?>
->
-<!-- task start-->
-<?php if ($totalRows_Recordset_task > 0) {  ?>
- <table width="100%">
-
-  <tr>
-    <td colspan="2">
-    
-
-    <table class="table table-striped table-hover glink">
-<thead >
-        
-        <tr>
-          <th>ID</th>
-          <th><?php echo $multilingual_default_task_title; ?></th>
-          <th><?php echo $multilingual_default_task_status; ?></th>
-          <th class="hide"><?php echo $multilingual_default_task_planstart; ?></th>
-          <th><?php echo $multilingual_default_task_planend; ?></th>
-          <th><?php echo $multilingual_default_task_project; ?></th>
-          <th><?php echo $multilingual_default_task_priority; ?></th>
-          <th class="hide"><?php echo $multilingual_default_tasklevel; ?></th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php do { ?>
-          <tr>
-            <td><?php echo $row_Recordset_task['TID']; ?></td>
-            <td class="task_title"  title="<?php echo $row_Recordset_task['csa_text']; ?> "><div  class="text_overflow_150 task_title"><a href="default_task_edit.php?editID=<?php echo $row_Recordset_task['TID']; ?>" ><b>[<?php echo $row_Recordset_task['task_tpye']; ?>]</b> <?php echo $row_Recordset_task['csa_text']; ?></a></div></td>
-            <td><?php echo $row_Recordset_task['task_status_display']; ?></td>
-            <td  class="hide"><?php echo $row_Recordset_task['csa_plan_st']; ?></td>
-            <td ><?php echo $row_Recordset_task['csa_plan_et']; ?></td>
-            <td class="task_title"><a href="project_view.php?recordID=<?php echo $row_Recordset_task['csa_project']; ?>"><?php echo $row_Recordset_task['project_name_prt']; ?></a></td>
-            <td>
-			<?php
-switch ($row_Recordset_task['csa_priority'])
-{
-case 5:
-  echo $multilingual_dd_priority_p5;
-  break;
-case 4:
-  echo $multilingual_dd_priority_p4;
-  break;
-case 3:
-  echo $multilingual_dd_priority_p3;
-  break;
-case 2:
-  echo $multilingual_dd_priority_p2;
-  break;
-case 1:
-  echo $multilingual_dd_priority_p1;
-  break;
-}
-?>			</td>
-            <td  class="hide">
-			<?php
-switch ($row_Recordset_task['csa_temp'])
-{
-case 5:
-  echo $multilingual_dd_level_l5;
-  break;
-case 4:
-  echo $multilingual_dd_level_l4;
-  break;
-case 3:
-  echo $multilingual_dd_level_l3;
-  break;
-case 2:
-  echo $multilingual_dd_level_l2;
-  break;
-case 1:
-  echo $multilingual_dd_level_l1;
-  break;
-}
-?>			</td>
-          </tr>
-          <?php } while ($row_Recordset_task = mysql_fetch_assoc($Recordset_task)); ?>
-		  </tbody>
-      </table>
-
-
-     
-      <table class="rowcon" border="0" align="center">
-<tr>
-<td>   <table border="0">
-        <tr>
-          <td><?php if ($pageNum_Recordset_task > 0) { // Show if not first page ?>
-              <a href="<?php printf("%s?pageNum_Recordset_task=%d%s", $currentPage, 0, $queryString_Recordset_task); ?>&tab=2#task"><?php echo $multilingual_global_first; ?></a>
-              <?php } // Show if not first page ?></td>
-          <td><?php if ($pageNum_Recordset_task > 0) { // Show if not first page ?>
-              <a href="<?php printf("%s?pageNum_Recordset_task=%d%s", $currentPage, max(0, $pageNum_Recordset_task - 1), $queryString_Recordset_task); ?>&tab=2#task"><?php echo $multilingual_global_previous; ?></a>
-              <?php } // Show if not first page ?></td>
-          <td><?php if ($pageNum_Recordset_task < $totalPages_Recordset_task) { // Show if not last page ?>
-              <a href="<?php printf("%s?pageNum_Recordset_task=%d%s", $currentPage, min($totalPages_Recordset_task, $pageNum_Recordset_task + 1), $queryString_Recordset_task); ?>&tab=2#task"><?php echo $multilingual_global_next; ?></a>
-              <?php } // Show if not last page ?></td>
-          <td><?php if ($pageNum_Recordset_task < $totalPages_Recordset_task) { // Show if not last page ?>
-              <a href="<?php printf("%s?pageNum_Recordset_task=%d%s", $currentPage, $totalPages_Recordset_task, $queryString_Recordset_task); ?>&tab=2#task"><?php echo $multilingual_global_last; ?></a>
-              <?php } // Show if not last page ?></td>
-        </tr>
-      </table></td>
-<td align="right">   <?php echo ($startRow_Recordset_task + 1) ?> <?php echo $multilingual_global_to; ?> <?php echo min($startRow_Recordset_task + $maxRows_Recordset_task, $totalRows_Recordset_task) ?> (<?php echo $multilingual_global_total; ?> <?php echo $totalRows_Recordset_task ?>)&nbsp;&nbsp;&nbsp;&nbsp;</td>
-</tr>
-</table>      </td>
-</tr>
-</table>
-    <?php }  ?>
-  <!-- task end-->
-  
- 
-</div>
-<div class="tab_b" id="tab_a3" 
-
-<?php if ($user_totallog == 0 && $totalRows_Recordset_task == 0) { 
-echo "style='display:block'";
-} else {
-echo "style='display:none'";
-} ?>>
-<!-- project start--> 
-<?php if ($totalRows_Recordset_prj > 0) { ?>
- <table width="100%">
-
-  <tr>
-    <td colspan="2">
-    <table class="table table-striped table-hover glink">
-<thead>
-  <tr>
-    <th><?php echo $multilingual_project_id; ?></th>
-    <th><?php echo $multilingual_project_title; ?></th>
-    <th class="hide"><?php echo $multilingual_project_code; ?></th>
-    <th><?php echo $multilingual_project_start; ?></th>
-    <th><?php echo $multilingual_project_end; ?></th>
-    <th><?php echo $multilingual_project_status; ?></th>
-    <th><?php echo $multilingual_global_lastupdate; ?></th>
-  </tr>
-</thead>
-<tbody>
-  <?php do { ?>
-<tr>
-      <td><?php echo $row_Recordset_prj['id']; ?></td>
-      <td class="task_title"><span class="task_title"><a href="project_view.php?recordID=<?php echo $row_Recordset_prj['id']; ?>"><?php echo $row_Recordset_prj['project_name']; ?></a></span>&nbsp;</td>
-      <td class="hide"><?php echo $row_Recordset_prj['project_code']; ?>&nbsp;</td>
-      <td><?php echo $row_Recordset_prj['project_start']; ?>&nbsp;</td>
-      <td><?php echo $row_Recordset_prj['project_end']; ?>&nbsp;</td>
-  <td><?php echo $row_Recordset_prj['task_status_display']; ?></td>
-      <td><?php echo $row_Recordset_prj['project_lastupdate']; ?></td>
-</tr>
-     <?php
-} while ($row_Recordset_prj = mysql_fetch_assoc($Recordset_prj));
-  $rows = mysql_num_rows($Recordset_prj);
-  if($rows > 0) {
-      mysql_data_seek($Recordset_prj, 0);
-	  $row_Recordset_prj = mysql_fetch_assoc($Recordset_prj);
-  }
-?>
-</tbody>
-</table>
-
-<table class="rowcon" border="0" align="center">
-<tr>
-<td>  <table border="0">
-  <tr>
-    <td><?php if ($pageNum_Recordset_prj > 0) { // Show if not first page ?>
-        <a href="<?php printf("%s?pageNum_Recordset_prj=%d%s", $currentPage, 0, $queryString_Recordset_prj); ?>&tab=3#task"><?php echo $multilingual_global_first; ?></a>
-        <?php } // Show if not first page ?></td>
-    <td><?php if ($pageNum_Recordset_prj > 0) { // Show if not first page ?>
-        <a href="<?php printf("%s?pageNum_Recordset_prj=%d%s", $currentPage, max(0, $pageNum_Recordset_prj - 1), $queryString_Recordset_prj); ?>&tab=3#task"><?php echo $multilingual_global_previous; ?></a>
-        <?php } // Show if not first page ?></td>
-    <td><?php if ($pageNum_Recordset_prj < $totalPages_Recordset_prj) { // Show if not last page ?>
-        <a href="<?php printf("%s?pageNum_Recordset_prj=%d%s", $currentPage, min($totalPages_Recordset_prj, $pageNum_Recordset_prj + 1), $queryString_Recordset_prj); ?>&tab=3#task"><?php echo $multilingual_global_next; ?></a>
-        <?php } // Show if not last page ?></td>
-    <td><?php if ($pageNum_Recordset_prj < $totalPages_Recordset_prj) { // Show if not last page ?>
-        <a href="<?php printf("%s?pageNum_Recordset_prj=%d%s", $currentPage, $totalPages_Recordset_prj, $queryString_Recordset_prj); ?>&tab=3#task"><?php echo $multilingual_global_last; ?></a>
-        <?php } // Show if not last page ?></td>
-  </tr>
-</table></td>
-<td align="right">   <?php echo ($startRow_Recordset_prj + 1) ?> <?php echo $multilingual_global_to; ?> <?php echo min($startRow_Recordset_prj + $maxRows_Recordset_prj, $totalRows_Recordset_prj) ?> (<?php echo $multilingual_global_total; ?> <?php echo $totalRows_Recordset_prj ?>)&nbsp;&nbsp;&nbsp;&nbsp;</td>
-</tr>
-</table> </td></tr>   
- 
- </table>
- <?php }  ?>
-<!-- project end-->
-</div>
-
-</div>
-			</td>
-          </tr>
+          
           <tr>
             <td>&nbsp;</td>
           </tr>
         </table>
-
-
-
-  
-
-           
 
 				</td>
           </tr>
@@ -720,8 +293,6 @@ echo "style='display:none'";
     </tr>
    
   </table>
-
-
 
 <?php require('foot.php'); ?>
 </body>
