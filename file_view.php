@@ -102,9 +102,9 @@ $queryString_Recordset_actlog = sprintf("&totalRows_Recordset_actlog=%d%s", $tot
   
   <tr>
     <td class="file_text_bg" height="100%">
-	<div class="file_text_div" id="filecontain" style="background:white;height="100%">
+	<div class="file_text_div" id="filecontain" style="background:white;height:100%">
 	<div  id="tablecontain" style="background:white;">
-	<table width="100%" align="center" >
+	<table width="100%" align="center" style="border-bottom: 3px #D1D1D1 double;border-width:6px;margin-bottom:6px;" >
         <tr>
 		<td>
 	<h2><b><?php echo $row_DetailRS1['tk_doc_title']; ?></b></h2></td>

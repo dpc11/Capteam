@@ -1,6 +1,7 @@
 <?php require_once('config/tank_config.php'); ?>
 <?php require_once('session_unset.php'); ?>
 <?php require_once('session.php'); ?>
+<?php require_once('function/announcement_function.php'); ?>
 <?php
 $restrictGoTo = "user_error3.php";
 
@@ -15,12 +16,12 @@ $tk_anc_text = "'',";
 $tk_anc_text = sprintf("%s,", GetSQLValueString(str_replace("%","%%",$_POST['tk_anc_text']), "text"));
 }
 
-
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
-  $insertSQL = sprintf("INSERT INTO tk_announcement (tk_anc_title, tk_anc_text, tk_anc_type, tk_anc_create) VALUES (%s, $tk_anc_text %s, %s)",
+  $insertSQL = sprintf("INSERT INTO tk_announcement (tk_anc_title, tk_anc_text, tk_anc_type, tk_anc_create,tk_pid) VALUES (%s, $tk_anc_text %s, %s , %s)",
                        GetSQLValueString($_POST['tk_anc_title'], "text"),
 					   GetSQLValueString($_POST['tk_anc_type'], "text"),
-                       GetSQLValueString($_POST['tk_anc_create'], "text"));
+                       GetSQLValueString($_POST['tk_anc_create'], "text"),
+                       GetSQLValueString($_POST['tk_pid'], "text"));
 
   mysql_select_db($database_tankdb, $tankdb);
   $Result1 = mysql_query($insertSQL, $tankdb) or die(mysql_error());
@@ -31,7 +32,12 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
     $insertGoTo .= $_SERVER['QUERY_STRING'];
   }
   header(sprintf("Location: %s", $insertGoTo));
+  exit;
 }
+
+$teamleader_lists=get_teamleader_lists($_SESSION['MM_uid']);
+$row_teamleader_lists = mysql_fetch_assoc($teamleader_lists);
+
 ?>
 <?php require('head.php'); ?>
     <link href="css/lhgcore/lhgcheck.css" rel="stylesheet" type="text/css" />
@@ -76,12 +82,13 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 								<td width="420px">
 							<div class="form-group "  style="width: 400px;">
 								<label for="tk_anc_type">所属团队&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<span id="anneprojeft"></span></label>
+								<span id="anneproject"></span></label>
 								<div>
-									<select name="tk_anc_type" id="tk_anc_type" class="form-control selectpicker">
-									  <option value="2"><?php echo $multilingual_dd_announcement_settop; ?></option>
-									  <option value="1" selected="selected"><?php echo $multilingual_dd_announcement_online; ?></option>
-									  <option value="-1" ><?php echo $multilingual_dd_announcement_offline; ?></option>
+									<select name="tk_pid" id="tk_pid" class="form-control selectpicker">
+									<option value="-1">请选择</option>
+									<?php do {  ?> 
+									  <option value="<?php echo $row_teamleader_lists['tk_team_uid']; ?>"><?php echo $row_teamleader_lists['project_name']; ?></option>
+									  <?php } while ($row_teamleader_lists = mysql_fetch_assoc($teamleader_lists)); ?>
 									</select>
 								</div>
 							</div>

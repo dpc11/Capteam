@@ -14,6 +14,7 @@
 		  
 		return $userRS;
 	}
+	
 	function get_user($userid, $channel ="default"){
 		global $tankdb;
 		global $database_tankdb;
