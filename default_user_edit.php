@@ -2,11 +2,6 @@
 <?php require_once('session_unset.php'); ?>
 <?php require_once('session.php'); ?>
 <?php
-$restrictGoTo = "user_error3.php";
-if ($_SESSION['MM_rank'] < "2") {   
-  header("Location: ". $restrictGoTo); 
-  exit;
-}
 
 $colname_Recordset1 = "-1";
 if (isset($_GET['UID'])) {
@@ -18,11 +13,6 @@ $Recordset1 = mysql_query($query_Recordset1, $tankdb) or die(mysql_error());
 $row_Recordset1 = mysql_fetch_assoc($Recordset1);
 $totalRows_Recordset1 = mysql_num_rows($Recordset1);
 
-$restrictGoTo = "user_error3.php";
-if ($row_Recordset1['uid'] <> $_SESSION['MM_uid'] && $_SESSION['MM_rank'] < "5") {   
-  header("Location: ". $restrictGoTo); 
-  exit;
-}
 $userid=$_SESSION['MM_uid'];
 $editFormAction = $_SERVER['PHP_SELF'];
 if (isset($_SERVER['QUERY_STRING'])) {

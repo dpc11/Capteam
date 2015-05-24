@@ -400,7 +400,7 @@ document.getElementById('tab_' + i).className = (i == ".$tabid.") ? 'onhover' : 
                             <?php 
                             $project_id=$now_pid;                             
                             $project_obj = get_project_by_id($project_id);
-                            $project_name=$project_obj->name; 
+                            $project_name=$project_obj['project_name']; 
                             $node_id_task=$now_sid+100000; 
                             require_once( 'tree.php'); 
                             ?>
