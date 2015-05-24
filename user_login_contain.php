@@ -37,7 +37,7 @@ J.check.rules = [
 
 function register(){
 	
-	window.open('user_register.php','_self');
+	top.location.href="user_register.php";
 }
 
 function changemsg(UP,DOWN){
@@ -86,7 +86,7 @@ function login(){
 	document.getElementById("passwordid").style.top=(x.top+3)+'px';
 	document.getElementById("passwordid").style.left=(x.left+document.getElementById("textfield2_label").clientWidth+13)+'px';
 	
-	var r = window.screen.height /1080; 
+	var r = window.screen.width /1920; 
 	$("body").css("-webkit-transform","scale(" + r + ")"); 
 	$("body").css("-webkit-transform-origin","0 0"); 
 	
@@ -96,8 +96,7 @@ function login(){
 
 </head>
 
-<body style="width:1000px;height:500px;">
-<center>
+<body style="width:1300px;height:500px;padding-left:150px;float:left">
 <div id="innerdiv" style="width:820.833px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;height:400px;" >
 <table width="100%" border="0" cellspacing="0" cellpadding="0" height="100%" align="center">
     <tr>
@@ -167,8 +166,7 @@ function login(){
 <span id="passwordid"  style="z-index:3;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;min-width:150px;"></span>
 
 <input  class="form-control"   type="text"  id="temp_textfield4_4" name="temp_textfield4_4" style="width:300px;z-index:3;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;" onblur='changemsg("temp_textfield4_4","textfield");' placeholder="邮箱"  value="<?php echo $loginUsername; ?>" />
-	<input  class="form-control"   type="password"  id="temp_textfield5_5" name="temp_textfield5_5" style="width:300px;z-index:3;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;" onblur='changepsd("temp_textfield5_5","textfield2");' placeholder="密码" value="<?php echo $password; ?>" >
+	<input  class="form-control"   type="password"  id="temp_textfield5_5" name="temp_textfield5_5" style="width:300px;z-index:3;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;" onblur='changepsd("temp_textfield5_5","textfield2");' placeholder="密码" value="<?php echo $password; ?>" />
 
-</center>
 </body>
 </html>

@@ -103,17 +103,31 @@ function changepsd(UP,DOWN){
 	{
 
 	if(window.screen.width!=1920||window.screen.height!=1080){
-		r = window.screen.height/1080
-		$("body").css("min-width",1200*r+"px");
-		//$("#centerdiv").css("min-width",1260*r+"px");  
-		$("#contain_other").css("min-width",1100*r+"px");  
+		r = window.screen.width/1920
+		$("body").css("min-width",1300*r+"px");  
+		$("#contain_other").css("min-width",1300*r+"px");  
 		$("#contain_other").css("min-height",480*r+"px"); 
-		$("#headerlink").css("min-width",1200*r+"px"); 
 		
 		document.getElementById("contain_other").style.display="block";
-		document.getElementById("frame_div").width=1200*r+"px";
-		document.getElementById("frame_div").height=480*r+"px";
+		document.getElementById("frame_div").width=1300*r+"px";
+		document.getElementById("frame_div").height=480*r+"px";		
 		
+		$("#headerlink").css("-webkit-transform","scale(" + r + ")"); 
+		$("#headerlink").css("-webkit-transform-origin","0 0");  
+		$("#headerlink").css("width",document.getElementById("foot_top").clientWidth/r+"px");
+		
+		$("#foot_div").css("float","left");  
+		$("#foot_div").css("-webkit-transform","scale(" + r + ")"); 
+		$("#foot_div").css("-webkit-transform-origin","bottom left"); 
+		$("#foot_div").css("width",document.getElementById("foot_top").clientWidth/r+"px");
+		
+		$("#foot_top").css("min-height",(document.getElementById("headerlink").clientHeight+document.getElementById("centerdiv").clientHeight+60)+"px"); 
+		
+		document.getElementById("contain_other").style.height=($(window).height()-126)+"px";
+
+		if(document.getElementById("contain_other").clientHeight>document.getElementById("frame_div").clientHeight){
+		document.getElementById("contain_other").style.paddingTop=(document.getElementById("contain_other").clientHeight-document.getElementById("frame_div").clientHeight)/2+"px";
+		}
 		
 		$(window).resize();
 	}else{
@@ -129,24 +143,28 @@ $(window).resize(function()
 {	
 	if(window.screen.width!=1920||window.screen.height!=1080){
 	
-		r = window.screen.height/1080 ; 
-	
+		r = window.screen.width/1920 ; 
+		
 		$("#headerlink").css("-webkit-transform","scale(" + r + ")"); 
-		$("#headerlink").css("-webkit-transform-origin","0 0"); 
-		$("#headerlink").css("width",document.getElementById("contain_other").clientWidth/r+"px"); 
-		 
-		$("#foot_div").css("width",document.getElementById("contain_other").clientWidth/r+"px"); 
+		$("#headerlink").css("-webkit-transform-origin","0 0");  
+		$("#headerlink").css("width",document.getElementById("foot_top").clientWidth/r+"px");
+		
 		$("#foot_div").css("float","left");  
 		$("#foot_div").css("-webkit-transform","scale(" + r + ")"); 
 		$("#foot_div").css("-webkit-transform-origin","bottom left"); 
+		$("#foot_div").css("width",document.getElementById("foot_top").clientWidth/r+"px");
+		
+		$("#foot_top").css("min-height",(document.getElementById("headerlink").clientHeight+document.getElementById("centerdiv").clientHeight+60)+"px"); 
 		
 		document.getElementById("contain_other").style.height=($(window).height()-126)+"px";
 
 		if(document.getElementById("contain_other").clientHeight>document.getElementById("frame_div").clientHeight){
-		document.getElementById("contain_other").style.paddingTop=(document.getElementById("contain_other").clientHeight-document.getElementById("frame_div").clientHeight)/2*r+"px";
+		document.getElementById("contain_other").style.paddingTop=(document.getElementById("contain_other").clientHeight-document.getElementById("frame_div").clientHeight)/2+"px";
+		}else{
+			document.getElementById("contain_other").style.paddingTop=0+"px";
 		}
-		// $("body").css("height",(126/r+document.getElementById("contain_other").clientHeight)*r+"px"); 
 		
+		//$("body").css("height",(126/r+document.getElementById("contain_other").clientHeight)*r+"px"); 
 		
 		document.getElementById("foot_div").style.visibility="visible ";
 		
@@ -190,106 +208,92 @@ $(window).resize(function()
 
 <body >
 <div  id="foot_top" style="height:100%; width:100%; padding-bottom:60px;">
-<div class="topbar" id="headerlink" >
-    <div class="logo" id="logo" ><a href="index.php" class="logourl" >&nbsp;</a></div>
-</div>
-<center id="centerdiv">
-<div id="containdiv" style="display:none;">
-<div id="outdiv" style="min-width:1200px;min-height:500px;height:500px;">
-<div id="innerdiv" style="width:980.167px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;height:300px;" >
-<table width="100%" border="0" cellspacing="0" cellpadding="0" height="100%" align="center">
-    <tr>
-      <td  style="width:30%">
-      <div class="ping_logo"></div>
-      </td>
-	  <td style="width:10%;">&nbsp;</td>
-	  
-	  <td style="width:40%;min-width:100px;">
-	  <div style="width:90%;" >
-			<legend  style="border-bottom-width: 3px;font-weight:bold;font-size:20px;">&nbsp;&nbsp;用户登录</legend>
-		</div>		
-		<?php  if($errormsg==true){ ?>
-		<div  style="width:5%;float:left;" > 
-		&nbsp;
-		</div>
-				<div id="errormsg"class="ui-state-error ui-corner-all" style="width:90%;float:left;margin-bottom:8px;" > 
-						<div style="width:11%;float:left;margin-top:10px;text-align:center;" >
-						<span class="ui-icon ui-icon-alert"style="margin:0 auto;" ></span>
-						</div>
-						<div  style="width:89%;float:left;padding-top:4px;padding-bottom:4px;">
-							<span>您输入的密码和账户名不匹配，请重新输入。<br>或者您忘记了密码？</span>
-						</div>
+	<div class="topbar" id="headerlink" >
+		<div class="logo" id="logo" ><a href="index.php" class="logourl" >&nbsp;</a></div>
+	</div>
+	<center id="centerdiv">
+		<div id="containdiv" style="display:none;">
+			<div id="outdiv" style="min-width:1200px;min-height:500px;height:500px;">
+				<div id="innerdiv" style="width:980.167px;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;height:300px;" >
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" height="100%" align="center">
+						<tr>
+							<td  style="width:30%">
+								<div class="ping_logo"></div>
+							</td>
+							<td style="width:10%;">&nbsp;</td>
+						  
+							<td style="width:40%;min-width:100px;">
+								<div style="width:90%;" >
+									<legend  style="border-bottom-width: 3px;font-weight:bold;font-size:20px;">&nbsp;&nbsp;用户登录</legend>
+								</div>		
+								<?php  if($errormsg==true){ ?>
+									<div  style="width:5%;float:left;" > &nbsp;</div>
+									<div id="errormsg"class="ui-state-error ui-corner-all" style="width:90%;float:left;margin-bottom:8px;" > 
+											<div style="width:11%;float:left;margin-top:10px;text-align:center;" >
+											<span class="ui-icon ui-icon-alert"style="margin:0 auto;" ></span>
+											</div>
+											<div  style="width:89%;float:left;padding-top:4px;padding-bottom:4px;">
+												<span>您输入的密码和账户名不匹配，请重新输入。<br>或者您忘记了密码？</span>
+											</div>
+									</div>
+								<?php }	?>
+								<form id="form1" name="form1" method="POST" action="<?php echo $loginFormAction; ?>">
+									<div style="padding-left:15px;" >
+										<div class="form-group">
+											<label class="beauty-label" id="textfield_label"  for="textfield" style="font-size:17px;font-weight:bold;"><?php echo $multilingual_userlogin_username; ?>&nbsp;&nbsp; ：&nbsp;&nbsp;</label>
+											<input type="text" class="form-control" id="textfield"  style="width:300px;" name="textfield" placeholder="邮箱" value="<?php echo $loginUsername; ?>"/>
+										</div>
+						  
+										<div class="form-group">
+											<label class="beauty-label" for="textfield2" id="textfield2_label"  style="font-size:17px;font-weight:bold;">密&nbsp;&nbsp;&nbsp;&nbsp;码&nbsp;&nbsp; ：&nbsp;&nbsp;</label>
+											<input type="password" class="form-control" name="textfield2"  style="width:300px;" id="textfield2" placeholder="密码" value="<?php echo $password; ?>"/>
+										</div>
+										<div style="clear:both ">
+											<div style="width: 10%;float:right; "></div>
+											<div style="width: 30%;float:right; ">
+												<a class="beauty-label" href="head.php">忘记密码？</a>
+											</div>
+										 
+										</div>
+						  
+										<div  style="clear:both ">
+											<div style="width: 10%;margin-top: 24px;float:right; "> </div>
+											<div style="width: 30%;margin-top: 24px;float:right; ">
+												<button type="button" class="btn btn-default" style="width: 60px;float:right; " onclick="register();"><?php echo $multilingual_user_register; ?></button>
+											</div>
+											<div style="width: 30%;margin-top: 24px;float:right; ">
+												<button type="submit" id="login" class="btn btn-default" style="width: 60px;float:right; "><?php echo $multilingual_userlogin_login; ?></button>
+											</div>
+										</div>
+									</div>
+								</form>
+							</td>
+							<td style="width:20%;">&nbsp;</td>
+						</tr>
+					</table>
 				</div>
-		<?php }
-		?>
+			</div>
+			<span id="username" style="z-index:3;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;min-width:150px;"></span>
+			<span id="passwordid"  style="z-index:3;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;min-width:150px;"></span>
 
+			<input  class="form-control"   type="text"  id="temp_textfield4_4" name="temp_textfield4_4" style="width:300px;z-index:3;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;" onblur='changemsg("temp_textfield4_4","textfield");' placeholder="邮箱"  value="<?php echo $loginUsername; ?>" />
+			<input  class="form-control"   type="password"  id="temp_textfield5_5" name="temp_textfield5_5" style="width:300px;z-index:3;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;" onblur='changepsd("temp_textfield5_5","textfield2");' placeholder="密码" value="<?php echo $password; ?>" >
 
-      <form id="form1" name="form1" method="POST" action="<?php echo $loginFormAction; ?>">
-	  <div style="padding-left:15px;" >
-	   <div class="form-group">
-    <label class="beauty-label" id="textfield_label"  for="textfield" style="font-size:17px;font-weight:bold;"><?php echo $multilingual_userlogin_username; ?>&nbsp;&nbsp; ：&nbsp;&nbsp;</label>
-    <input type="text" class="form-control" id="textfield"  style="width:300px;" name="textfield" placeholder="邮箱" value="<?php echo $loginUsername; ?>">
-  </div>
-  
-  <div class="form-group">
-    <label class="beauty-label" for="textfield2" id="textfield2_label"  style="font-size:17px;font-weight:bold;">密&nbsp;&nbsp;&nbsp;&nbsp;码&nbsp;&nbsp; ：&nbsp;&nbsp;</label>
-    <input type="password" class="form-control" name="textfield2"  style="width:300px;" id="textfield2" placeholder="密码" value="<?php echo $password; ?>">
-  </div>
-  <div style="clear:both ">
-	<div style="width: 10%;float:right; ">
-	 </div>
-	 <div style="width: 30%;float:right; ">
-	  <a class="beauty-label" href="head.php">忘记密码？</a>
-	 </div>
-     
-  </div>
-  
-  <div  style="clear:both ">
-	  <div style="width: 10%;margin-top: 24px;float:right; ">
-	 </div>
-	  <div style="width: 30%;margin-top: 24px;float:right; ">
-	  <button type="button" class="btn btn-default" style="width: 60px;float:right; " onclick="register();"><?php echo $multilingual_user_register; ?></button>
-	  </div>
-	  <div style="width: 30%;margin-top: 24px;float:right; ">
-	  <button type="submit" id="login" class="btn btn-default" style="width: 60px;float:right; "><?php echo $multilingual_userlogin_login; ?></button>
-	  </div>
-	  
-  </div>
-  </div>
-	  </form>
-      </td>
-	  <td style="width:20%;">&nbsp;</td>
-    </tr>
-
-  </table>
-</div></div>
-
-<span id="username" style="z-index:3;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;min-width:150px;"></span>
-<span id="passwordid"  style="z-index:3;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;min-width:150px;"></span>
-
-<input  class="form-control"   type="text"  id="temp_textfield4_4" name="temp_textfield4_4" style="width:300px;z-index:3;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;" onblur='changemsg("temp_textfield4_4","textfield");' placeholder="邮箱"  value="<?php echo $loginUsername; ?>" />
-	<input  class="form-control"   type="password"  id="temp_textfield5_5" name="temp_textfield5_5" style="width:300px;z-index:3;position:absolute;-webkit-transform: scale( 1.2 );-webkit-transform-origin: 0 0;" onblur='changepsd("temp_textfield5_5","textfield2");' placeholder="密码" value="<?php echo $password; ?>" >
-
-</div>
-
-<div id="contain_other" align="center" style="display:none;overflow:hidden;">
-              <iFrame  id="frame_div" src="user_login_contain.php" scrolling="no"  frameborder="no">
+		</div>
+		<div id="contain_other" align="center" style="display:none;overflow:hidden;height:100%">
+             <iFrame  id="frame_div" src="user_login_contain.php" scrolling="no"  frameborder="no">
              </iFrame>
-			 </div>
-
-
-</center> 	
+		</div>
+	</center>
+</div> 	
 <center>
-<div class="foot" id="foot_div" style="visibility:hidden;" >
-    <div class="wss_title" id="foot_title" style="font-size: 22px;">
-
-        <div class="wss_ver" id="capteamfoot">
+	<div class="foot" id="foot_div" style="visibility:hidden;" >
+		<div class="wss_title" id="foot_title" style="font-size: 22px;">
+			<div class="wss_ver" id="capteamfoot">
             © 2014 - 2015 Capteam 大学生团队协作管理平台 &nbsp;&nbsp;|&nbsp;&nbsp; 北京交通大学软件学院
-        </div>
-    </div>
-</div>
-
-
+			</div>
+		</div>
+	</div>
 </center> 	
 </body>
 </html>
