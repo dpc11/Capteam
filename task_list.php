@@ -740,7 +740,7 @@ $totalRows_Recordset2 = mysql_num_rows($Recordset2);
 					<tr>
 						<td>
 							<a href="default_task_edit.php?editID=<?php echo $row_timeout['tid']; ?>" target="_parent">
-							[<?php echo $row_timeout['tid']; ?>] <?php echo $row_timeout['csa_text']; ?> 
+							<?php echo $row_timeout['csa_text']; ?> 
 							</a>
 						</td>
 						<?php if($pagetabs <> "mtask"){ ?>
@@ -801,7 +801,7 @@ $totalRows_Recordset2 = mysql_num_rows($Recordset2);
 					<tr>
 						<td>
 							<a href="default_task_edit.php?editID=<?php echo $row_nearout['tid']; ?>" target="_parent">
-							[<?php echo $row_nearout['tid']; ?>] <?php echo $row_nearout['csa_text']; ?> 
+							<?php echo $row_nearout['csa_text']; ?> 
 							</a>
 						</td>
 						<?php if($pagetabs <> "mtask"){ ?>
