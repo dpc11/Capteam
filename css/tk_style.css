@@ -462,6 +462,9 @@ a:focus {
 .logininfo2 a:hover {
     text-decoration: none;
 }
+.logininfo2 ul {
+	font-size: 18px;
+}
 
 .pagemargin {    
     width: 98%;
