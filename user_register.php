@@ -260,7 +260,6 @@ function changemsg(UP,DOWN){
 			document.getElementById("innerdiv").style.paddingTop = (document.getElementById("outdiv").clientHeight-485*1.2)/2 +'px'; 
 
 			$("#foot_top").css("min-height",document.getElementById("headerlink").clientHeight+document.getElementById("centerdiv").clientHeight+60+"px"); 
-			$("#foot_div").css("margin-top","60px"); 
 			
 			var x= $(textfield1).offset(); 
 			document.getElementById("temp_textfield1_1").style.top=(x.top-7)+'px';
@@ -349,8 +348,7 @@ function changemsg(UP,DOWN){
 			document.getElementById("outdiv").style.height = ( $(window).height()-186) +'px';
 			document.getElementById("innerdiv").style.paddingTop = (document.getElementById("outdiv").clientHeight-485*1.2)/2 +'px'; 
 
-			$("#foot_top").css("min-height",document.getElementById("headerlink").clientHeight+document.getElementById("centerdiv").clientHeight+60+"px"); 
-			$("#foot_div").css("margin-top","60px"); 
+			$("#foot_top").css("min-height",document.getElementById("headerlink").clientHeight+document.getElementById("centerdiv").clientHeight+60+"px");  
 			
 			var x= $(textfield1).offset(); 
 			document.getElementById("temp_textfield1_1").style.top=(x.top-7)+'px';
@@ -497,7 +495,7 @@ function changemsg(UP,DOWN){
 						<p class="text-muted"id="ms5_text"  style="font-size:15px;width:300px;text-align:left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮箱注册后不能更改，将作为您的Capteam账号唯一确认您的身份，也可用于找回密码，建议使用163、sina、gmail、QQ邮箱。</p>
 						
 						<div style="margin-top: 20px;float:right">
-						 <a  style="margin-top: 7px;width: 130px;float:right;font-family:微软雅黑"  href="user_login.php"> 已有账号，直接登陆</a>
+						 <button  style="width: 150px;float:right;font-family:微软雅黑"  class="btn btn-link" onclick="login();"> 已有账号，直接登陆</button>
 						 <button type="button" class="btn btn-default" style="width: 70px;margin-right:10px;float:right;" onclick="return registeruser('<?php echo $editFormAction;  ?>');" > <?php echo $multilingual_user_register; ?></button>
 						<div style="clear:both;">  </div>
 						</div>

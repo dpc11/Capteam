@@ -177,7 +177,7 @@ $(window).resize(function()
 		document.getElementById("innerdiv").style.paddingTop = (document.getElementById("outdiv").clientHeight-300*1.2)/2 +'px'; 
 
 		$("#foot_top").css("min-height",document.getElementById("headerlink").clientHeight+document.getElementById("centerdiv").clientHeight+60+"px"); 
-		$("#foot_div").css("margin-top","60px"); 
+		$("#foot_div").css("margin-top","-60px"); 
 		
 		var x= $(textfield).offset(); 
 		document.getElementById("temp_textfield4_4").style.top=(x.top)+'px';

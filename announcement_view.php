@@ -42,7 +42,6 @@ $totalPages_DetailRS1 = ceil($totalRows_DetailRS1/$maxRows_DetailRS1)-1;
           <td>
 		  <table width="100%" align="center">
         <tr>
-		<?php if ($_SESSION['MM_rank'] > "4") {  ?>
 		  <td width="10%">
 		  <span class="glyphicon glyphicon-pencil"></span> <a href="announcement_edit.php?editAID=<?php echo $row_DetailRS1['AID']; ?>"><?php echo $multilingual_global_action_edit; ?></a>
 
@@ -53,7 +52,6 @@ $totalPages_DetailRS1 = ceil($totalRows_DetailRS1/$maxRows_DetailRS1)-1;
 	  echo $multilingual_global_action_delconfirm; ?>'))self.location='announcement_del.php?delAID=<?php echo $row_DetailRS1['AID']; ?>';"><?php echo $multilingual_global_action_del; ?></a>
 
 		  </td>
-		  <?php } ?>
 		  <td width="10%">
 		  <span class="glyphicon glyphicon-arrow-left"></span> <a onclick="javascript:history.go(-1)" class="mouse_hover"><?php echo $multilingual_global_action_back; ?></a>
 		  </td>

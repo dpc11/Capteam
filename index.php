@@ -71,7 +71,9 @@ $exam_totaltask=$row_Recordset_sumtotal['count_task'];
 		},function(){
 			$(this).removeClass('thhover');
 			});	
-		
+	/*var r = window.screen.width /1920; 
+	$("#pagemargin").css("-webkit-transform","scale(" + r + ")"); 
+	$("#pagemargin").css("-webkit-transform-origin","0 0"); */
 		$(window).resize();	
 	});
 	$(window).resize(function()

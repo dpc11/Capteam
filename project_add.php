@@ -366,14 +366,14 @@
     		width : '1150px',
     		height: '350px',
     		items:[
-				'source', '|', 'undo', 'redo', '|', 'preview', 'print', 'template', 'cut', 'copy', 'paste',
-				'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
-				'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
-				'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/',
-				'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
-				'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image',
-				'flash', 'media', 'insertfile', 'table', 'hr', 'map', 'code', 'pagebreak', 'anchor', 
-				'link', 'unlink', '|', 'about'
+        'undo', 'redo', '|', 'preview', 'print', 'template', 'cut', 'copy', 'paste',
+        'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
+        'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+        'superscript','source', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/',
+        'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+        'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image',
+        'flash', 'media', 'insertfile', 'table', 'hr',  'code', 'pagebreak', 
+        'link', 'unlink'
 			]
 		});
     });
