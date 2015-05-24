@@ -86,7 +86,6 @@ $row_teamleader_lists = mysql_fetch_assoc($teamleader_lists);
 								<span id="anneproject"></span></label>
 								<div>
 									<select name="tk_pid" id="tk_pid" class="form-control selectpicker">
-									<option value="-1">请选择</option>
 									<?php do {  ?> 
 									  <option value="<?php echo $row_teamleader_lists['tk_team_pid']; ?>"><?php echo $row_teamleader_lists['project_name']; ?></option>
 									  <?php } while ($row_teamleader_lists = mysql_fetch_assoc($teamleader_lists)); ?>
