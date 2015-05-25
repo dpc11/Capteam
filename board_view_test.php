@@ -288,6 +288,72 @@ span.usr.catch{background:#ffc!important;}
                         else;
                         }
                  });
+                //改对象的顺序id
+                var curSeqID = parseInt(curID.substring(6));
+                var actSeqID = parseInt(actID.substring(6));
+
+                if(curSeqID>actSeqID)//从后到前移
+                {
+                    if(isboundary == 0)//激活的位置不是边界的便签
+                    {
+                        for(var k=curSeqID-1;k>actSeqID && k<curSeqID;k--)
+                        {
+                            var before_id = "parent"+k;
+                            var need_node = document.getElementById(before_id);
+                            var kk = k+1;
+                            var after_id = "parent"+kk;
+                            need_node.id=after_id;
+                        }
+                        var cur_after = actSeqID+1;
+                        var cur_after_id = "parent"+cur_after;
+                        curTarget.parentNode.id=cur_after_id;
+                    }else //交换的是左边边界上的便签
+                    {
+                        for(var k=curSeqID-1;k>=actSeqID && k<curSeqID;k--)
+                        {
+                            var before_id = "parent"+k;
+                            var need_node = document.getElementById(before_id);
+                            var kk = k+1;
+                            var after_id = "parent"+kk;
+                            need_node.id=after_id;
+                        }
+                        var cur_after = actSeqID;
+                        var cur_after_id = "parent"+cur_after;
+                        curTarget.parentNode.id=cur_after_id;
+                    }
+                }
+                else//从前到后移
+                {
+                    if(isboundary == 0)//激活的位置不是边界的便签
+                    {
+                        for(var k=curSeqID+1;k<=actSeqID && k>curSeqID;k++)
+                        {
+                            var before_id = "parent"+k;
+                            var need_node = document.getElementById(before_id);
+                            var kk = k-1;
+                            var after_id = "parent"+kk;
+                            need_node.id=after_id;
+                        }
+                        var cur_after = actSeqID;
+                        var cur_after_id = "parent"+cur_after;
+                        curTarget.parentNode.id=cur_after_id;
+                    }else //交换的是左边边界上的便签
+                    {
+                        for(var k=curSeqID+1;k<actSeqID && k>curSeqID;k++)
+                        {
+                            var before_id = "parent"+k;
+                            var need_node = document.getElementById(before_id);
+                            var kk = k-1;
+                            var after_id = "parent"+kk;
+                            need_node.id=after_id;
+                        }
+                        var cur_after = actSeqID-1;
+                        var cur_after_id = "parent"+cur_after;
+                        curTarget.parentNode.id=cur_after_id;
+                    }
+                }
+
+                
                 activeTarget=null;
                 isboundary = 0;
             }

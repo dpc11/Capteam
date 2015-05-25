@@ -13,7 +13,7 @@ mysql_select_db($database_tankdb,$tankdb);
   $tag = $_POST["tag"];
   if (preg_match('/parent(\d+)/',$cur_b,$reg)) 
   	$cur_seq=$reg[1];
-  if(preg_match('/parent(\d+)/',$act_b,$reg))
+  if(x('/parent(\d+)/',$act_b,$reg))
     $act_seq=$reg[1];
  //获得点击移动块的id号
   $selCurID = "SELECT * FROM tk_board WHERE board_seq=$cur_seq";
