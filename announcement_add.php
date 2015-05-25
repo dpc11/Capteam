@@ -3,7 +3,6 @@
 <?php require_once('session.php'); ?>
 <?php require_once('function/announcement_function.php'); ?>
 <?php
-$restrictGoTo = "user_error3.php";
 
 $editFormAction = $_SERVER['PHP_SELF'];
 if (isset($_SERVER['QUERY_STRING'])) {
@@ -130,7 +129,8 @@ $row_teamleader_lists = mysql_fetch_assoc($teamleader_lists);
 									<td  width="20%" align="center" >
 										<button type="button" class="btn btn-default btn-lg" style="width:120px" onClick="javascript:history.go(-1);"><?php echo $multilingual_global_action_cancel; ?></button>
 										<input type="hidden" name="MM_insert" value="form1" />
-										<input name="tk_anc_create" type="hidden" value="<?php echo "{$_SESSION['MM_uid']}"; ?>" />
+										<input name="tk_anc_create" type="hidden" value="
+										<?php echo $_SESSION['MM_uid']; ?>" />
 
 									</td>
 								</tr>
@@ -208,7 +208,5 @@ $row_teamleader_lists = mysql_fetch_assoc($teamleader_lists);
 		
 	});
 </script>
-
-
 </body>
 </html>
