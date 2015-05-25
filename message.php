@@ -33,21 +33,6 @@ if (isset($_GET['pageNum_Recordset1'])) {
 }
 $startRow_Recordset1 = $pageNum_Recordset1 * $maxRows_Recordset1;
 
-
-$colname_Recordset1 = "-1";
-if (isset($_GET['select1'])) {
-  $colname_Recordset1 = $_GET['select1'];
-}
-
-$user_id= $_SESSION['MM_uid'];
-
-//删除选中的消息
-$frm_tag = $_POST['item']; 
-for($i=0;$i<count($frm_tag);$i++){ 
-  delete_message($frm_tag[$i]);
-} 
-
-
 mysql_select_db($database_tankdb, $tankdb);
 $query_Recordset1 = sprintf("SELECT meid,tk_mess_fromuser,tk_display_name,project_name,id,
 									tk_mess_title,tk_mess_status,tk_mess_time 
@@ -56,13 +41,6 @@ $query_Recordset1 = sprintf("SELECT meid,tk_mess_fromuser,tk_display_name,projec
 $query_limit_Recordset1 = sprintf("%s LIMIT %d, %d", $query_Recordset1, $pageNum_Recordset1, $maxRows_Recordset1);
 $Recordset1 = mysql_query($query_limit_Recordset1, $tankdb) or die(mysql_error());
 $row_Recordset1 = mysql_fetch_assoc($Recordset1);
-
-// if($pageNum_Recordset1==0 && $row_Recordset1['meid']<>null){
-// $message_id = $row_Recordset1['meid'];
-
-// $updateSQL = "UPDATE tk_user SET tk_user_message='$message_id' WHERE uid='$user_id'";
-// $Result1 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
-// }
 
 if (isset($_GET['totalRows_Recordset1'])) {
   $totalRows_Recordset1 = $_GET['totalRows_Recordset1'];
@@ -88,7 +66,8 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 	  }
 	}
 	$queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recordset1, $queryString_Recordset1);
-	?>
+
+?>
 
 <?php require('head.php'); ?>
 
@@ -103,10 +82,11 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 		<a type="button" class="btn btn-default btn-lg <?php if($pagetabs == "readmsg") { echo "active";} ?>" href="<?php echo $pagename; ?>?pagetab=readmsg">已读消息</a>
 		<a type="button" class="btn btn-default btn-lg <?php if($pagetabs == "delmsg") { echo "active";} ?>" href="<?php echo $pagename; ?>?pagetab=delmsg">已删除</a>
 		<?php if($pagetabs == "delmsg"){ ?>
-		<a type="button" name="button11" id="button11" class="btn btn-link btn-lg" onclick="javascript:self.location='project_add.php';"><span class="glyphicon glyphicon-trash" style="display:inline;margin-left:10px;"></span> 清空</a>
+		<button type="button" name="button11" id="button11" class="btn btn-link btn-lg" onclick="delete_delete_msg();"><span class="glyphicon glyphicon-remove" style="display:inline;margin-left:10px;"></span>彻底删除</button>
+		<button type="button" name="button11" id="button11" class="btn btn-link btn-lg"onclick="delete_all();"><span class="glyphicon glyphicon-trash" style="display:inline;"></span> 清空</button>
 		<?php }else{ ?>
 		<button type="button" name="button11" id="button11" class="btn btn-link btn-lg" onclick="delete_msg();"><span class="glyphicon glyphicon-remove" style="display:inline;margin-left:10px;"></span>删除</button>
-		<a type="button" name="button11" id="button11" class="btn btn-link btn-lg" onclick="delete_delete_msg();" ><span class="glyphicon glyphicon-trash" style="display:inline;" ></span>彻底删除</a>
+		<button type="button" name="button11" id="button11" class="btn btn-link btn-lg" onclick="delete_delete_msg();" ><span class="glyphicon glyphicon-trash" style="display:inline;" ></span>彻底删除</button>
 		<?php } ?>
 	</div>
 </div>
@@ -118,27 +98,31 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 <?php if ($totalRows_Recordset1 > 0) { // Show if recordset not empty ?>
     <form name="form1" id="form1" method="post">
 		<section class="me-select" style="width:90%">
+				<ul id="me-select-all">
 					<li class="topicline" style="border-bottom: 2px solid #D1D1D1;height:55px;margin-top:15px;padding-top:15px;">
-						<input style="width:5%;margin-top:-5px;" id="selectall" name="selectall" type="checkbox" />
+						<input style="width:5%;margin-top:-5px;" id="selectall" name="selectall" type="checkbox" onclick="check_all();" />
 						<label for="selectall" >
 							<span style="width:45%;padding-left:5%;font-size:22px;"><?php echo $multilingual_message; ?></span>
 							<span style="width:25%;font-size:22px;">消息所属项目</span>
 							<span style="width:15%;font-size:22px;"><?php echo $multilingual_message_time; ?></span>
 						</label>
 					</li>
+					</ul>
 					<ul id="me-select-list">
 					    <?php do { ?>
 							<li >
 							<input  style="width:5%" id="cb1" name="cb1" type="checkbox" value="<?php echo $row_Recordset1['meid']; ?>" >
 							<label for="cb1">
-								<span  style="width:45%;padding-left:5%;<?php if($row_Recordset1['tk_mess_status'] == 1 || $row_Recordset1['tk_mess_status'] == 2) {echo "font-weight:bold;"; }else{echo "font-weight:normal;";} ?>">
-									<a  style="font-size:20px;font-family:微软雅黑;<?php if($row_Recordset1['tk_mess_status'] == 1 || $row_Recordset1['tk_mess_status'] == 2) {echo "font-weight:bold;"; }else{echo "font-weight:normal;";} ?>" href="user_view.php?recordID=<?php echo $row_Recordset1['tk_mess_fromuser']; ?>" ><?php echo $row_Recordset1['tk_display_name']; ?></a>
-									<span style="font-size:20px;font-family:微软雅黑;<?php if($row_Recordset1['tk_mess_status'] == 1 || $row_Recordset1['tk_mess_status'] == 2) {echo "font-weight:bold;"; }else{echo "font-weight:normal;";} ?>" onclick="ajax_update_message(<?php echo$row_Recordset1['meid']; ?>)">
+								<span  style="width:45%;padding-left:5%;<?php if($row_Recordset1['tk_mess_status'] == 1 || $row_Recordset1['tk_mess_status'] == 2) {echo "font-weight:bold"; }else{echo "font-weight:normal";} ?>">
+									<a  style="font-size:20px;font-family:微软雅黑;<?php if($row_Recordset1['tk_mess_status'] == 1 || $row_Recordset1['tk_mess_status'] == 2) {echo "font-weight:bold"; }else{echo "font-weight:normal";} ?>" href="user_view.php?recordID=<?php echo $row_Recordset1['tk_mess_fromuser']; ?>" ><?php echo $row_Recordset1['tk_display_name']; ?></a>
+									<span style="font-size:20px;font-family:微软雅黑;<?php if($row_Recordset1['tk_mess_status'] == 1 || $row_Recordset1['tk_mess_status'] == 2) {echo "font-weight:bold"; }else{echo "font-weight:normal";} ?>" 
+									onclick="ajax_update_message(<?php echo $row_Recordset1['meid']; ?>)">
 									<?php echo $row_Recordset1['tk_mess_title']; ?>
 									<?php update_message($row_Recordset1['meid'],1,2); ?> 
 									</span>
 								</span>
-								<span style="width:25%;font-size:20px;font-family:微软雅黑;font-weight:normal;">项目</span>
+								<span style="width:25%;font-size:20px;font-family:微软雅黑;font-weight:normal;">
+								<a  style="font-size:20px;font-family:微软雅黑;font-weight:normal;" href="project_view.php?recordID=<?php echo $row_Recordset1['id']; ?>" ><?php echo $row_Recordset1['project_name']; ?></a></span>
 								<span style="width:15%;font-size:20px;font-family:微软雅黑;font-weight:normal;"><?php echo $row_Recordset1['tk_mess_time']; ?></span>
 							</label>
 							</li>
@@ -256,8 +240,8 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 		  }
 		xmlhttp.open("POST","message_del_real.php",false);
 		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-		xmlhttp.send("mid="+optionstr);
-		xmlhttp.send("option=1");
+		alert(optionstr);
+		xmlhttp.send("option=1&mid="+optionstr);
 	}
 	
 	function delete_delete_msg(){
@@ -292,25 +276,47 @@ if (!empty($_SERVER['QUERY_STRING'])) {
 		  }
 		xmlhttp.open("POST","message_del_real.php",false);
 		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-		xmlhttp.send("mid="+optionstr);
-		xmlhttp.send("option=2");
+		xmlhttp.send("option=2&mid="+optionstr);
 	}
+	
+	function delete_all(){
+		var xmlhttp;
+		if (window.XMLHttpRequest)
+		  {// code for IE7+, Firefox, Chrome, Opera, Safari
+		  xmlhttp=new XMLHttpRequest();
+		  }
+		else
+		  {// code for IE6, IE5
+		  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		  }
+		xmlhttp.onreadystatechange=function()
+		  {
+		  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+			{			
+				location.reload();	
+			}
+		  }
+		xmlhttp.open("POST","message_del_real.php",false);
+		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		xmlhttp.send("option=3&mid=''");
+	}
+	
 		//该方法实现全选和取消全选
 		function check_all(){
-			var a=document.getElementsByName('all_items');//获得全选的框
-			 for (j=0;j<a.length;j++){
-				 if(a[j].checked == true){
-					 var b=document.getElementsByName('item[]');//获得所有的checkbox变量
-					 for (i=0;i<b.length;i++){
-						 b[i].checked=true;
-					 }
-				 }else{
-					 var b=document.getElementsByName('item[]');//获得所有的checkbox变量
-					 for (i=0;i<b.length;i++){
-						 b[i].checked=false;
-					 }
-				 }
-			  }
+			
+		var selList = document.getElementById( 'me-select-all' ),
+					items = selList.querySelectorAll( 'li' );
+				
+				[].slice.call( items ).forEach( function( el ) {
+					var t = el.querySelector( 'input[type="checkbox"]' ).checked;
+					var selList1 = document.getElementById( 'me-select-list' ),
+						items1 = selList1.querySelectorAll( 'li' );
+					
+					[].slice.call( items1 ).forEach( function( el ) {
+						el.querySelector( 'input[type="checkbox"]' ).checked=t;
+						el.className = t ? 'selected' : '';
+					} );
+				} );
 		}
 function ajax_update_message(meid)
 {

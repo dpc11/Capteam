@@ -4,20 +4,29 @@
 	$tasklevel = 0;
 	mysql_select_db($database_tankdb,$tankdb);
 
+	function delete_all()
+    {
+        global $tankdb;
+        global $database_tankdb;
+        $deleteSQL = "DELETE FROM tk_message WHERE tk_mess_status=-1";
+        mysql_select_db($database_tankdb, $tankdb);
+        $Result1 = mysql_query($deleteSQL, $tankdb) or die(mysql_error());
+    }
+	
     function delete_message($mid)
     {
         global $tankdb;
         global $database_tankdb;
-        $deleteSQL = sprintf("DELETE FROM tk_message WHERE meid in ".$mid;
+        $deleteSQL = "DELETE FROM tk_message WHERE meid in ".$mid;
         mysql_select_db($database_tankdb, $tankdb);
         $Result1 = mysql_query($deleteSQL, $tankdb) or die(mysql_error());
     }
+	
 	function delete_message_to_garbage($mid)
     {
         global $tankdb;
         global $database_tankdb;
         $deleteSQL = "UPDATE tk_message SET tk_mess_status=-1 WHERE meid in ".$mid;
-		echo $deleteSQL;
 		mysql_select_db($database_tankdb, $tankdb);
         $Result1 = mysql_query($deleteSQL, $tankdb) or die(mysql_error());
     }
