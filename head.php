@@ -35,6 +35,59 @@ $totalRows_Recordset_anc=0;
 <script type="text/javascript" src="js/lhgcore/lhgcore.js"></script>
 <script type="text/javascript" src="js/lhgcore/lhgdialog.js"></script>
 
+						<script type="text/javascript">  
+							var blinkTitle = function (option) {
+								var title = null;
+								var newTitle = null;
+								var handle = null;
+								var state = false;
+								var interval = null;
+			 
+								if (option) {
+									newTitle = option.newTitle ? option.newTitle : '';
+									title = option.title ? option.title : document.title;
+									interval = option.interval ? option.interval : 600;
+								} else {
+									newTitle = '<?php echo $multilingual_newmessage1;?> Capteam';
+									title = '<?php echo $multilingual_newmessage2;?> Capteam';
+									interval = 600;
+								}
+			 
+								function start() {
+									var step=0, _title = document.title;
+									var timer = setInterval(function() {
+									step++;
+									if (step==3) {step=1};
+									if (step==1) {document.title='<?php echo $multilingual_newmessage1;?> Capteam'};
+									if (step==2) {document.title='<?php echo $multilingual_newmessage2;?> Capteam'};
+									}, 500);
+
+									return [timer, _title];
+								}
+								return {
+									start: start
+								}
+							}();
+			 
+							/**
+							 * 开始标题闪烁
+							 */
+
+							setInterval(function() {
+										
+								$.ajax({
+									url:'message_check.php',
+									success:function(resp){
+											
+										resp = JSON.parse(resp);
+										if(resp!="0"){
+											blinkTitle.start();
+											$("#conmsg")[0].innerHTML=' <span class="label label-danger">' + resp + '</span>';	
+										}	
+									}
+								});
+							}, 120000);
+						</script>  
 </head>
 <body id="docbody" style="min-width:1510px;">
 		<div class="clearboth"></div>
@@ -104,68 +157,15 @@ $totalRows_Recordset_anc=0;
 								<li><a href="<?php echo $logoutAction ?>"  ><?php echo $multilingual_head_logout; ?></a></li>
 							</ul>
 							<a href="message.php" title = "<?php echo $multilingual_message; ?>" class="mouse_hover">
-								<i class="glyphicon glyphicon-envelope icon-white"></i>
+								<i class="glyphicon glyphicon-envelope icon-white" ></i>
 								<span id="conmsg"><?php if($message_count > 0){ ?> 
-									<span class="label label-danger"><?php echo $message_count; ?></span>
+									<span class="label label-danger" style="position:relative;z-index:3;margin-left:-25px;font-size:10px;"><?php echo $message_count; ?></span>
 									<script type="text/javascript">  
 										blinkTitle.start();
 									</script>
 								<?php  } ?></span>
 							</a>
 						</div>
-						<script type="text/javascript">  
-							var blinkTitle = function (option) {
-								var title = null;
-								var newTitle = null;
-								var handle = null;
-								var state = false;
-								var interval = null;
-			 
-								if (option) {
-									newTitle = option.newTitle ? option.newTitle : '';
-									title = option.title ? option.title : document.title;
-									interval = option.interval ? option.interval : 600;
-								} else {
-									newTitle = '<?php echo $multilingual_newmessage1;?> Capteam';
-									title = '<?php echo $multilingual_newmessage2;?> Capteam';
-									interval = 600;
-								}
-			 
-								function start() {
-									var step=0, _title = document.title;
-									var timer = setInterval(function() {
-									step++;
-									if (step==3) {step=1};
-									if (step==1) {document.title='<?php echo $multilingual_newmessage1;?> Capteam'};
-									if (step==2) {document.title='<?php echo $multilingual_newmessage2;?> Capteam'};
-									}, 500);
-
-									return [timer, _title];
-								}
-								return {
-									start: start
-								}
-							}();
-			 
-							/**
-							 * 开始标题闪烁
-							 */
-
-							setInterval(function() {
-										
-								$.ajax({
-									url:'message_check.php',
-									success:function(resp){
-											
-										resp = JSON.parse(resp);
-										if(resp!="0"){
-											blinkTitle.start();
-											$("#conmsg")[0].innerHTML=' <span class="label label-danger">' + resp + '</span>';	
-										}	
-									}
-								});
-							}, 120000);
-						</script>  
 					</div>
 
 				</div>
