@@ -1,6 +1,7 @@
 <?php require_once('config/tank_config.php'); ?>
 <?php require_once('session_unset.php'); ?>
 <?php require_once('session.php'); ?>
+<?php require_once('function/announcement_function.php'); ?>
 <?php
 $pagetabs = "online";
 if (isset($_GET['pagetab'])) {
@@ -20,10 +21,13 @@ $where ="tk_anc_type > 0";
 }else{
 $where ="tk_anc_type = -1";
 }
-
+$teamleader_nums=get_teamleader_nums($_SESSION['MM_uid']);
 
 mysql_select_db($database_tankdb, $tankdb);
-$query_Recordset1 = "SELECT * FROM tk_announcement inner join tk_user on tk_announcement.tk_anc_create=tk_user.uid WHERE $where ORDER BY tk_anc_lastupdate DESC";
+$query_Recordset1 = "SELECT  * FROM tk_announcement,tk_user,tk_project 
+					 WHERE  tk_announcement.tk_anc_create=tk_user.uid 
+							and tk_announcement.tk_pid=tk_project.id  
+							and $where ORDER BY tk_anc_lastupdate DESC";
 $query_limit_Recordset1 = sprintf("%s LIMIT %d, %d", $query_Recordset1, $startRow_Recordset1, $maxRows_Recordset1);
 $Recordset1 = mysql_query($query_limit_Recordset1, $tankdb) or die(mysql_error());
 $row_Recordset1 = mysql_fetch_assoc($Recordset1);
@@ -62,9 +66,11 @@ $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recor
 	<div class="btn-group">
 		<a type="button" class="btn btn-default btn-lg <?php if($pagetabs == "online") { echo "active";} ?>" href="<?php echo $pagename; ?>?pagetab=online"><?php echo $multilingual_announcement_list_online; ?></a>
 		<a type="button" class="btn btn-default btn-lg <?php if($pagetabs == "offline") { echo "active";} ?>" href="<?php echo $pagename; ?>?pagetab=offline"><?php echo $multilingual_announcement_list_showoff; ?></a>
+		<?php if($teamleader_nums>0){ ?>
 		<button type="button" class="btn btn-link btn-lg" style="margin-left:10px;"  name="button2" id="button2" onclick="javascript:self.location='announcement_add.php';">
 		<span class="glyphicon glyphicon-plus-sign"></span> <?php echo $multilingual_announcement_new_title; ?>
 		</button>
+		<?php } ?>
 	</div>
 </div>
 
@@ -80,19 +86,24 @@ $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recor
       <table  class="table table-striped table-hover glink" width="98%" >
         <thead>
           <tr>
-			<th width="10%"></th>
+			<th width="5%"></th>
             <th width="30%"><?php echo $multilingual_announcement_title; ?></th>
-            <th width="15%"><?php echo $multilingual_announcement_publisher; ?></th>
-            <th width="15%"><?php echo $multilingual_announcement_status; ?></th>
+            <th width="15%">所属项目</th>
+            <th width="10%"><?php echo $multilingual_announcement_publisher; ?></th>
+            <th width="15%">公告状态</th>
             <th width="20%"><?php echo $multilingual_global_lastupdate; ?></th>
-			<th width="10%"></th>
+			<th width="5%"></th>
           </tr>
         </thead>
 		<tbody>
         <?php do { ?>
           <tr>
 			<td></td>
-            <td class="task_title5"><div  class="text_overflow_450  "><a href="announcement_view.php?recordID=<?php echo $row_Recordset1['AID']; ?>" ><?php echo $row_Recordset1['tk_anc_title']; ?></a></div></td>
+            <td class="task_title5"><div  class="text_overflow_450  "><a href="announcement_view.php?recordID=<?php echo $row_Recordset1['aid']; ?>" ><?php echo $row_Recordset1['tk_anc_title']; ?></a></div></td>
+			<td>
+			<a href="project_view.php?recordID=<?php echo $row_Recordset1['tk_pid']; ?>">
+			<?php echo $row_Recordset1['project_name']; ?></a>
+			&nbsp; </td>
             <td>
 			<a href="user_view.php?recordID=<?php echo $row_Recordset1['tk_anc_create']; ?>">
 			<?php echo $row_Recordset1['tk_display_name']; ?></a>

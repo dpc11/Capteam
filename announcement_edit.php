@@ -35,7 +35,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
     $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
     $updateGoTo .= $_SERVER['QUERY_STRING'];
   }
-  $insertGoTo=$insertGoTo."&backnums=-2";
+  $updateGoTo=$updateGoTo."&backnums=-2";
   header(sprintf("Location: %s", $updateGoTo));
   exit;
 }

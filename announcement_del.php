@@ -1,12 +1,7 @@
 <?php require_once('config/tank_config.php'); ?>
-<?php require_once('session_admin.php'); ?>
+<?php require_once('session_unset.php'); ?>
+<?php require_once('session.php'); ?>
 <?php
-$restrictGoTo = "user_error3.php";
-if ($_SESSION['MM_rank'] < "5") {   
-  header("Location: ". $restrictGoTo); 
-  exit;
-}
-
 if (!function_exists("GetSQLValueString")) {
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
 {
@@ -38,19 +33,17 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
 }
 }
 
-if ((isset($_GET['delAID'])) && ($_GET['delAID'] != "") && ($_SESSION['MM_Username'] <> $multilingual_dd_user_readonly)) {
-  $deleteSQL = sprintf("DELETE FROM tk_announcement WHERE AID=%s",
+if ((isset($_GET['delAID'])) && ($_GET['delAID'] != "")) {
+  $deleteSQL = sprintf("UPDATE tk_announcement SET tk_anc_type=0 WHERE aid=%s",
                        GetSQLValueString($_GET['delAID'], "int"));
 
   mysql_select_db($database_tankdb, $tankdb);
   $Result1 = mysql_query($deleteSQL, $tankdb) or die(mysql_error());
 
-  $deleteGoTo = "default_announcement.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $deleteGoTo .= (strpos($deleteGoTo, '?')) ? "&" : "?";
-    $deleteGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  $deleteGoTo = "announcement.php";
+
   header(sprintf("Location: %s", $deleteGoTo));
+  exit;
 }
 ?>
 <!DOCTYPE html PUBLIC>
