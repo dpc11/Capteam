@@ -13,7 +13,7 @@ mysql_select_db($database_tankdb,$tankdb);
   $tag = $_POST["tag"];
   if (preg_match('/parent(\d+)/',$cur_b,$reg)) 
   	$cur_seq=$reg[1];
-  if(x('/parent(\d+)/',$act_b,$reg))
+  if(preg_match('/parent(\d+)/',$act_b,$reg))
     $act_seq=$reg[1];
  //获得点击移动块的id号
   $selCurID = "SELECT * FROM tk_board WHERE board_seq=$cur_seq";
@@ -27,21 +27,42 @@ mysql_select_db($database_tankdb,$tankdb);
   $DropInfo=mysql_fetch_assoc($RS2);
   $drop_id = $DropInfo['board_id'];
 
-  if($tag == 0)
+  if($cur_seq > $act_seq)//从后面移到前面
   {
-    $updateAdd = "UPDATE tk_board SET board_seq = board_seq+1 WHERE board_seq > $act_seq AND board_seq < $cur_seq";
-    $RS3 = mysql_query($updateAdd, $tankdb) or die(mysql_error());
+      if($tag == 0)
+      {
+        $updateAdd = "UPDATE tk_board SET board_seq = board_seq+1 WHERE board_seq > $act_seq AND board_seq < $cur_seq";
+        $RS3 = mysql_query($updateAdd, $tankdb) or die(mysql_error());
 
-    $updateCur = "UPDATE tk_board SET board_seq = $act_seq+1 WHERE board_id = $cur_id";
-    $RS4 = mysql_query($updateCur, $tankdb) or die(mysql_error());
-  }
-  else
+        $updateCur = "UPDATE tk_board SET board_seq = $act_seq+1 WHERE board_id = $cur_id";
+        $RS4 = mysql_query($updateCur, $tankdb) or die(mysql_error());
+      }
+      else
+      {
+        $updateAdd = "UPDATE tk_board SET board_seq = board_seq+1 WHERE board_seq >= $act_seq AND board_seq < $cur_seq";
+        $RS3 = mysql_query($updateAdd, $tankdb) or die(mysql_error());
+
+        $updateCur = "UPDATE tk_board SET board_seq = $act_seq WHERE board_id = $cur_id";
+        $RS4 = mysql_query($updateCur, $tankdb) or die(mysql_error());
+      }
+  }else//从前面移到后面
   {
-    $updateAdd = "UPDATE tk_board SET board_seq = board_seq+1 WHERE board_seq >= $act_seq AND board_seq < $cur_seq";
-    $RS3 = mysql_query($updateAdd, $tankdb) or die(mysql_error());
+    if($tag == 0)
+      {
+        $updateAdd = "UPDATE tk_board SET board_seq = board_seq-1 WHERE board_seq > $cur_seq AND board_seq <= $act_seq";
+        $RS3 = mysql_query($updateAdd, $tankdb) or die(mysql_error());
 
-    $updateCur = "UPDATE tk_board SET board_seq = $act_seq WHERE board_id = $cur_id";
-    $RS4 = mysql_query($updateCur, $tankdb) or die(mysql_error());
+        $updateCur = "UPDATE tk_board SET board_seq = $act_seq WHERE board_id = $cur_id";
+        $RS4 = mysql_query($updateCur, $tankdb) or die(mysql_error());
+      }
+      else
+      {
+        $updateAdd = "UPDATE tk_board SET board_seq = board_seq-1 WHERE board_seq > $cur_seq AND board_seq < $act_seq";
+        $RS3 = mysql_query($updateAdd, $tankdb) or die(mysql_error());
+
+        $updateCur = "UPDATE tk_board SET board_seq = $act_seq-1 WHERE board_id = $cur_id";
+        $RS4 = mysql_query($updateCur, $tankdb) or die(mysql_error());
+      }
   }
 
   //$BoardInfoRS = mysql_query($selBoardInfo, $tankdb) or die(mysql_error());
