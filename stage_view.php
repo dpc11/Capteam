@@ -805,7 +805,7 @@ echo $editcomment_row;
                                                                     <!--            <td><?php echo $row_Recordset_task['TID']; ?></td>-->
                                                                     <td class="task_title">
                                                                         <div class="text_overflow_150 task_title" title="<?php echo $row_Recordset_task['csa_text']; ?>">
-                                                                            <a href="default_task_edit.php?editID=<?php echo $row_Recordset_task['tid']; ?>&pagetab=alltask">
+                                                                            <a href=" task_view.php?editID=<?php echo $row_Recordset_task['tid']; ?>&pagetab=alltask">
                                                                                 <?php echo $row_Recordset_task[ 'csa_text']; ?> </a>
                                                                         </div>
                                                                     </td>
@@ -1158,7 +1158,7 @@ echo $logyear[0]; ?>-<?php echo $logmonth[0]; ?>-<?php echo $logmonth[1]; ?>
 
     <?php echo $multilingual_user_view_do; ?>  
     <?php echo $row_Recordset_log['task_tpye']; ?> - 
-    <a href="default_task_edit.php?editID=<?php echo $row_Recordset_log['TID']; ?>" >
+    <a href=" task_view.php?editID=<?php echo $row_Recordset_log['TID']; ?>" >
     <?php echo $row_Recordset_log['csa_text']; ?></a>
 
     <?php if($row_Recordset_log['csa_tb_text']<>null){ echo "<br/><span class='gray'>".$row_Recordset_log['csa_tb_text']."</span>"; }?>  </td>

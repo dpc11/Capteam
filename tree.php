@@ -33,8 +33,10 @@ if(frm != null && subWeb != null)
 </script>
 <div class="tree_div" id="main_left">
     <?php if($str <> "0"){ ?>
-    <h5 class="font_big18 fontbold"><?php echo $multilingual_project_view_wbs; ?></h5>
-    
+	<td>
+	<div class=" add_title col-xs-12">
+		<h5 ><?php echo $multilingual_project_view_wbs; ?></h5>
+	</div>
 <script type="text/javascript">
 
 		var r =<?php echo $str; ?>;
@@ -49,19 +51,23 @@ if(frm != null && subWeb != null)
                 stage_id = stage_id - 100000;
                 d.add(r[i].id,r[i].pid,r[i].name,"stage_view.php?sid="+stage_id+"&pid="+<?php echo $project_id;?>,r[i].title);
             }else{//表示是任务
-                d.add(r[i].id,r[i].pid,r[i].name,"default_task_edit.php?pagetab=alltask&editID="+r[i].id,r[i].title);
+                d.add(r[i].id,r[i].pid,r[i].name,"task_view.php?pagetab=alltask&editID="+r[i].id,r[i].title);
             }                 
         }
         document.write(d);
 
 </script>
-
-	<h4 style="margin-top:40px; margin-left: 5px;" ><?php echo $multilingual_project_view_nowbs; ?></h4>
-	<p > <?php echo $multilingual_project_view_nowbstext; ?></p>
+	</td>
+	<td valign="top" class="gray2">
+		<h4 style="margin-top:40px; margin-left: 5px;" ><?php echo $multilingual_project_view_nowbs; ?></h4>
+		<p > <?php echo $multilingual_project_view_nowbstext; ?></p>
+	</td>
 	
     <?php } else{ ?>
-	<h4 style="margin-top:40px; margin-left: 5px;" ><?php echo $multilingual_project_view_nowbs; ?></h4>
-	<p > <?php echo $multilingual_project_view_nowbstext; ?></p>
+	<td valign="top" class="gray2">
+		<h4 style="margin-top:40px; margin-left: 5px;" ><?php echo $multilingual_project_view_nowbs; ?></h4>
+		<p > <?php echo $multilingual_project_view_nowbstext; ?></p>
+	</td>
     <?php } ?>
     
 

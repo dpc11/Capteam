@@ -1001,7 +1001,7 @@ $(function() {
 
   	  <?php echo $multilingual_user_view_do; ?>  
   	  <?php echo $row_Recordset_log['task_tpye']; ?> - 
-  	  <a href="default_task_edit.php?editID=<?php echo $row_Recordset_log['TID']; ?>" >
+  	  <a href=" task_view.php?editID=<?php echo $row_Recordset_log['TID']; ?>" >
   	  <?php echo $row_Recordset_log['csa_text']; ?></a>
 
   	  <?php if($row_Recordset_log['csa_tb_text']<>null){ echo "<br/><span class='gray'>".$row_Recordset_log['csa_tb_text']."</span>"; }?>  </td>

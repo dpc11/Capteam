@@ -96,7 +96,7 @@ if($cc_post <> null){
     }
 }
 
-  $updateGoTo = "default_task_edit.php?editID=$colname_Recordset_task";
+  $updateGoTo = " task_view.php?editID=$colname_Recordset_task";
   if (isset($_SERVER['QUERY_STRING'])) {
     $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
     $updateGoTo .= $_SERVER['QUERY_STRING'];
@@ -247,7 +247,7 @@ window.onload = function()
 					<!-- 改成阶段 -->
 					<dl>
 						<dt><h4 class="gray2"><strong><?php echo $multilingual_default_task_parent; ?></strong></h4></dt>
-						<dd><a href="default_task_edit.php?editID=<?php echo $row_Recordset_task['csa_project_stage']; ?>" ><?php echo $row_Recordset_task['staname']; ?></a></dd>
+						<dd><a href=" task_view.php?editID=<?php echo $row_Recordset_task['csa_project_stage']; ?>" ><?php echo $row_Recordset_task['staname']; ?></a></dd>
 					</dl>
 					<dl class="hide">
 						<dt><h4 class="gray2"><?php echo $multilingual_default_taskid; ?></h4></dt>

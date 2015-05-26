@@ -219,7 +219,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
            mysql_select_db($database_tankdb, $tankdb);
            $updateResult = mysql_query($updateTeam, $tankdb) or die(mysql_error()); 
       }
-      $insertGoTo = "default_task_edit.php?editID=$task_id";
+      $insertGoTo = " task_view.php?editID=$task_id";
        
         header(sprintf("Location: %s", $insertGoTo));
     }

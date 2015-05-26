@@ -739,7 +739,7 @@ $totalRows_Recordset2 = mysql_num_rows($Recordset2);
 				<?php do { ?>
 					<tr>
 						<td>
-							<a href="default_task_edit.php?editID=<?php echo $row_timeout['tid']; ?>" target="_parent">
+							<a href="task_view.php?editID=<?php echo $row_timeout['tid']; ?>" target="_parent">
 							<?php echo $row_timeout['csa_text']; ?> 
 							</a>
 						</td>
@@ -800,7 +800,7 @@ $totalRows_Recordset2 = mysql_num_rows($Recordset2);
 				<?php do { ?>
 					<tr>
 						<td>
-							<a href="default_task_edit.php?editID=<?php echo $row_nearout['tid']; ?>" target="_parent">
+							<a href="task_view.php?editID=<?php echo $row_nearout['tid']; ?>" target="_parent">
 							<?php echo $row_nearout['csa_text']; ?> 
 							</a>
 						</td>
@@ -1123,7 +1123,7 @@ $totalRows_Recordset2 = mysql_num_rows($Recordset2);
 							<tr  class="<?php if($R_list%2==1){ echo "odd_line"; }else{echo "even_line"; } ?>" >
 								<td class="week_style_padtd" data-ellipsis="true"data-ellipsis-max-width="80px"  ><?php echo $R_list; ?></td>
 								
-								<td class="week_style_padtd" data-ellipsis="true" data-ellipsis-max-width="300px" title="<?php echo $row_Recordset1['csa_text']; ?>" ><a  href="default_task_edit.php?editID=<?php echo $row_Recordset1['tid']; ?>&pagetab=<?php echo $pagetabs; ?>"  target="_parent"> <?php echo $row_Recordset1['csa_text']; ?></a></td>
+								<td class="week_style_padtd" data-ellipsis="true" data-ellipsis-max-width="300px" title="<?php echo $row_Recordset1['csa_text']; ?>" ><a  href="task_view.php?editID=<?php echo $row_Recordset1['tid']; ?>&pagetab=<?php echo $pagetabs; ?>"  target="_parent"> <?php echo $row_Recordset1['csa_text']; ?></a></td>
 								
 								<td class="week_style_padtd" data-ellipsis="true"data-ellipsis-max-width="160px" title="<?php echo $row_Recordset1['tk_display_name1']; ?>" ><a href="user_view.php?recordID=<?php echo $row_Recordset1['csa_to_user']; ?>" target="_parent"><?php echo $row_Recordset1['tk_display_name1']; ?></a></td>
 							</tr>

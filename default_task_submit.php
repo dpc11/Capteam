@@ -230,7 +230,7 @@ if (isset($_GET['pagetab'])) {
 }
 $ptab = "&pagetab=".$pagetabs;	  
 //  $insertGoTo = "file_view.php?recordID=$newID&folder=$fd&projectID=$project_id".$pf.$ptab;
-$insertGoTo = "default_task_edit.php?editID=$task_id";
+$insertGoTo = " task_view.php?editID=$task_id";
  
 if (isset($_SERVER['QUERY_STRING'])) {
     $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";

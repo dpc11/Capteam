@@ -191,7 +191,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
           }
 
           else {
-            $insertGoTo = "default_task_edit.php?editID=$newID";
+            $insertGoTo = " task_view.php?editID=$newID";
           }*/
           $insertGoTo = "stage_view.php?pid=$thisProj&sid=$thisSid";
           //$insertGoTo = "stage_view.php";
@@ -377,7 +377,7 @@ function submitform()
 <?php if ($task_id <> -1) { ?>
 <dl>
   <dt><h4 class="gray2"><?php echo $multilingual_default_task_parent; ?></h4></dt>
-  <dd><a href="default_task_edit.php?editID=<?php echo $row_Recordset_task['TID']; ?>" ><?php echo $row_Recordset_task['tk_stage_title']; ?></a></dd>
+  <dd><a href=" task_view.php?editID=<?php echo $row_Recordset_task['TID']; ?>" ><?php echo $row_Recordset_task['tk_stage_title']; ?></a></dd>
 </dl><?php } else { ?>
 
 <!--

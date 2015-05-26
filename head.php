@@ -114,7 +114,7 @@ $totalRows_Recordset_anc=0;
 						  "><?php echo $multilingual_head_project; ?></a>
 					  
 						<a href="index.php" class="
-						<?php if($pagename == "index.php" || $pagename == "default_task_edit.php" || $pagename == "default_task_plan.php" || $pagename == "default_task_add.php") { echo "nav_select";} ?> "><?php echo $multilingual_head_task; ?></a>
+						<?php if($pagename == "index.php" || $pagename == " task_view.php" || $pagename == "default_task_plan.php" || $pagename == "default_task_add.php") { echo "nav_select";} ?> "><?php echo $multilingual_head_task; ?></a>
 			
 						<a href="log.php" class="
 						<?php if($pagename == "log.php" ){ echo "nav_select";} ?>"><?php echo $multilingual_head_feed; ?></a>

@@ -24,6 +24,7 @@ $multilingual_global_addbtn = "添加";
 $multilingual_global_filterbtn = "筛选";
 $multilingual_global_excel = "导出Excel";
 $multilingual_global_excelfile = "Capteam_File_TaskList_";
+$multilingual_global_excellog = "Capteam_File_LogList_";
 $multilingual_global_resetbtn = "重置";
 $multilingual_global_to = "到";
 $multilingual_global_total = "总计";
@@ -181,7 +182,7 @@ $multilingual_default_task_project = "所属项目";
 $multilingual_default_task_stage = "所属阶段";
 $multilingual_default_task_from = "来自";
 $multilingual_default_task_createby = "由谁创建";
-$multilingual_default_task_editby = "由谁修改";
+$multilingual_ task_viewby = "由谁修改";
 $multilingual_default_task_priority = "优先级";
 $multilingual_default_task_temp = "临时";
 $multilingual_default_task_week1 = "第一周";
@@ -392,18 +393,17 @@ $multilingual_project_newtask = "下发任务";
 $multilingual_projectmem_title = "项目成员管理";
 $multilingual_projectmem_text = "在WSS 扩展功能中，您可以为一个项目组添加固定的成员，所有项目相关的内容，如：任务、文档、日志、项目详情等，只对该项目组的成员开放。";
 
-$multilingual_project_view_nowbs = "项目->阶段->任务";
-$multilingual_stage_view_nowbs = "关于阶段";
-$multilingual_board_view_nowbs = "关于看板";
-$multilingual_project_view_nowbstext = "<p>项目应该被分解成若干阶段，每个阶段表示项目所处的状态。</p>
-<p>然后在阶段中才对具体组员分配具体任务，用于推进项目进度。</p>";
+$multilingual_project_view_nowbs = "&nbsp;&nbsp;&nbsp;项目->阶段->任务";
+$multilingual_stage_view_nowbs = "&nbsp;&nbsp;&nbsp;关于阶段";
+$multilingual_board_view_nowbs = "&nbsp;&nbsp;&nbsp;关于看板";
+$multilingual_project_view_nowbstext = "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;项目应该被分解成若干阶段，然后在阶段中才能对具体组员分配具体任务，用于推进项目进度，使项目的完成更加有层次、条理。</p>";
 $multilingual_project_add_text = "<p>每个项目包含了一个团队。</p>
-<p>创建一个项目，然后您才能分解阶段。</p>
-<p>项目创建人就是组长，他／她可以为项目选择若干成员，并且分配不同职责：帮助组长分配任务，或者去完成任务。</p>";
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;创建一个项目，然后您才能分解阶段。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;项目创建人就是组长，他／她可以为项目选择若干成员，并且分配不同职责：帮助组长分配任务，或者去完成任务。</p>";
 
 $multilingual_stage_add_text = "<p>每个项目将经历不同阶段。</p><br />
-<p>创建一个阶段，才能下发任务。</p><br />
-<p>只有分解出项目所属的阶段，才能在阶段内下发任务，使项目的完成更加有层次、条理。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;创建一个阶段，才能下发任务。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;只有分解出项目所属的阶段，才能在阶段内下发任务，使项目的完成更加有层次、条理。</p>
 ";
 $multilingual_project_title_tips = "请填写项目名称";
 $multilingual_project_team_tips = "请输入用户名、注册邮箱或手机号";
@@ -501,7 +501,7 @@ $multilingual_user_view_nolog = "没有符合条件的工作日志.";
 $multilingual_user_view_user = "用户";
 $multilingual_user_view_by = "于";
 $multilingual_user_view_do = "执行了";
-$multilingual_user_view_taskname = "任务";
+$multilingual_user_view_taskname = "操作";
 $multilingual_user_view_project2 = "所属项目";
 $multilingual_user_view_cost = "耗时";
 $multilingual_user_view_hour = "小时";
@@ -516,7 +516,6 @@ $multilingual_user_tip_password = "登录凭证，管理员密码如遗失将无
 $multilingual_user_tip_password2 = "再次输入密码";
 $multilingual_user_tip_match = "两次输入不一致";
 $multilingual_user_tip_name = "用户在系统中的显示名称，支持中文";
-$multilingual_user_tip_dis = "角色为禁用的用户将被禁止登录系统  <a href='http://www.wssys.net/zh-CN/help/index.html?page=_27.htm' target='_blank'>角色说明</a>";
 $multilingual_user_tip_mail = "用于邮件提醒，如开启邮件提醒服务，请务必要求每一个用户填写该项";
 $multilingual_user_sorrytip = "没有符合条件的用户";
 $multilingual_user_namequired = "2-12个字符";
@@ -706,7 +705,7 @@ $multilingual_getqrcode = "使用微信扫描二维码，或搜索公众帐号ws
 ";
 
 // *** browser check
-$multilingual_browser_check = "<h4><b>您的浏览器版本过低，为了提升用户体验，WSS不再对IE9以下版本的浏览器进行支持(使用IE9以上版本的用户，请关闭兼容模式)。</b></h4><br />在所有互联网用户中，使用IE9以下版本浏览器的用户已经不足10%，而已经有超过60%的用户选择了Chrome浏览器，WSS开发团队着重向您推荐Google公司的Chrome浏览器，WSS在Chrome浏览器中将获得出色的表现以及流畅的使用速度（我们并不是Google公司的捆绑销售商）。现在，花3分钟的时间，升级您的浏览器，感受不一样的WSS吧。<a href='https://www.google.com/intl/zh-CN/chrome/browser/' target='_blank' class='alert-link'>免费下载Chrome @ Google</a>";
+$multilingual_browser_check = "<h4>您的浏览器版本过低，为了提升用户体验，建议您更换或升级浏览器。</4>";
 
 
 ?>

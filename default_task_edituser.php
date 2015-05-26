@@ -68,7 +68,7 @@ $insertSQL2 = sprintf("INSERT INTO tk_log (tk_log_user, tk_log_action, tk_log_ty
 $Result3 = mysql_query($insertSQL2, $tankdb) or die(mysql_error());
 
  
-    $updateGoTo = "default_task_edit.php?editID=".$taskid;
+    $updateGoTo = " task_view.php?editID=".$taskid;
   if (isset($_SERVER['QUERY_STRING'])) {
     $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
     $updateGoTo .= $_SERVER['QUERY_STRING'];

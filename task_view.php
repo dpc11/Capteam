@@ -213,16 +213,16 @@ function addcomm()
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
       
-<!-- 左边20%的宽度的树或者说明  -->
+<!-- 左边20%的宽度的树或者说明 
+          <td valign="top"></td>  -->
 	<td width="20%" class="input_task_right_bg" valign="top">
       <table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
-        <tr>
-          <td valign="top"><?php
+        <tr><?php
 		  $project_id = $row_Recordset_task['csa_project'];
 		  $project_name = $row_Recordset_task['project_name'];
 		  $node_id_task = $row_Recordset_task['tid'];
 		   require_once('tree.php'); 		   
-		   ?></td>  	   
+		   ?> 	   
         </tr>
       
       </table>
@@ -238,7 +238,7 @@ function addcomm()
           <td >			
 		<ul class="breadcrumb" style="margin-top:10px;">
 			  <li><?php echo $multilingual_default_taskproject; ?>: <a href="project_view.php?recordID=<?php echo $row_Recordset_task['csa_project']; ?>" ><?php echo $row_Recordset_task['project_name']; ?></a></li>
-			  <li><?php echo $multilingual_default_task_parent; ?>: <a href="default_task_edit.php?editID=<?php echo $row_Recordset_task['csa_project_stage']; ?>" ><?php echo $row_Recordset_task['staname']; ?></a></li>
+			  <li><?php echo $multilingual_default_task_parent; ?>: <a href=" task_view.php?editID=<?php echo $row_Recordset_task['csa_project_stage']; ?>" ><?php echo $row_Recordset_task['staname']; ?></a></li>
             </ul>	
 			</td>
         </tr>

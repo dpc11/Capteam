@@ -117,11 +117,11 @@ $insertGoTo = "user_view.php?recordID=$user_id";
 }
 
 else {
-  $insertGoTo = "default_task_edit.php?editID=$newID";
+  $insertGoTo = " task_view.php?editID=$newID";
 }
 */
 
-$insertGoTo = "default_task_edit.php?editID=$newID";
+$insertGoTo = " task_view.php?editID=$newID";
   if (isset($_SERVER['QUERY_STRING'])) {
     $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
     $insertGoTo .= $_SERVER['QUERY_STRING'];
