@@ -303,16 +303,16 @@ function addfolder()
 							<table border="0">
 								<tr>
 								  <td><?php if ($pageNum_DetailRS1 > 0) { // Show if not first page ?>
-									  <a href="<?php printf("%s?pageNum_DetailRS1=%d%s", $currentPage, 0, $queryString_Recordset_file); ?>#task"><?php echo $multilingual_global_first; ?></a>
+									  <a href="<?php printf("%s?pageNum_DetailRS1=%d%s", $currentPage, 0, $queryString_Recordset_file); ?>"><?php echo $multilingual_global_first; ?></a>
 									  <?php } // Show if not first page ?></td>
 								  <td><?php if ($pageNum_DetailRS1 > 0) { // Show if not first page ?>
-									  <a href="<?php printf("%s?pageNum_DetailRS1=%d%s", $currentPage, max(0, $pageNum_DetailRS1 - 1), $queryString_Recordset_file); ?>#task"><?php echo $multilingual_global_previous; ?></a>
+									  <a href="<?php printf("%s?pageNum_DetailRS1=%d%s", $currentPage, max(0, $pageNum_DetailRS1 - 1), $queryString_Recordset_file); ?>"><?php echo $multilingual_global_previous; ?></a>
 									  <?php } // Show if not first page ?></td>
 								  <td><?php if ($pageNum_DetailRS1 < $totalPages_DetailRS1) { // Show if not last page ?>
 									  <a href="<?php printf("%s?pageNum_DetailRS1=%d%s", $currentPage, min($totalPages_DetailRS1, $pageNum_DetailRS1 + 1), $queryString_Recordset_file); ?>#task"><?php echo $multilingual_global_next; ?></a>
 									  <?php } // Show if not last page ?></td>
 								  <td><?php if ($pageNum_DetailRS1 < $totalPages_DetailRS1) { // Show if not last page ?>
-									  <a href="<?php printf("%s?pageNum_DetailRS1=%d%s", $currentPage, $totalPages_DetailRS1, $queryString_Recordset_file); ?>#task"><?php  echo $multilingual_global_last; ?></a>
+									  <a href="<?php printf("%s?pageNum_DetailRS1=%d%s", $currentPage, $totalPages_DetailRS1, $queryString_Recordset_file); ?>"><?php  echo $multilingual_global_last; ?></a>
 									  <?php } // Show if not last page ?></td>
 								</tr>
 							</table>

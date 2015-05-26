@@ -974,7 +974,7 @@ $totalRows_Recordset2 = mysql_num_rows($Recordset2);
 								}
 							}
 							?>
-						</select
+						</select>
 						<!--查找选定项目中的所有阶段-->  
 						<select class="form-control "style="width:200px;"  name="select_stage" id="select_stage">
 							<option value=""

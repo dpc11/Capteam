@@ -5,6 +5,15 @@
 <?php require_once('function/user_function.php'); ?>
 <?php require_once('function/project_function.php'); ?>
 <?php 
+
+$url_this = $_SERVER["QUERY_STRING"] ;
+
+$current_url = current(explode("&sort",$url_this));
+
+$phpself =$_SERVER['PHP_SELF'];
+$temp = explode("/",$phpself);
+$pagenames = end($temp);
+
 $pagetabs = "alllog";
 if (isset($_GET['pagetab'])) {
   $pagetabs = $_GET['pagetab'];
@@ -14,25 +23,22 @@ $currentPage = $_SERVER["PHP_SELF"];
 ?>
 
 <?php require('head.php'); ?>
-<!--
-<div class="subnav">
-<ul class="nav nav-tabs">
-  <li class="<?php if($pagetabs == "mlog") {
-	  echo "active";} ?>">
-    <a href="<?php echo $pagename; ?>"><?php echo $multilingual_log_mylog;?></a>
-  </li>
-  <li class="
-	  <?php if($pagetabs == "alllog") {
-	  echo "active";} ?>
-	  "><a href="<?php echo $pagename; ?>?logtouser=0&pagetab=alllog"><?php echo $multilingual_log_newlog;?></a></li>
-</ul>
-<div class="clearboth"></div>
+
+<div class="pagemargin" id="pagemargin">
+<?php require('log_list.php'); ?>
 </div>
--->
-<div class="pagemargin">
-<?php require('control_log.php'); ?>
 </div>
 <?php require('foot.php'); ?>
+<script>
 
+	$(window).load(function()
+	{
+		$(window).resize();	
+	});
+	$(window).resize(function()
+	{	
+		$("#foot_top").css("min-height",document.getElementById("pagemargin").clientHeight+66+60+70+"px"); 
+	});
+	</script>
 </body>
 </html>
