@@ -116,15 +116,15 @@ function MM_goToURL() {
 }
 
 function   searchtask() 
-      {document.form1.action= "<?php echo $pagename; ?>"; 
-        document.form1.submit(); 
-        return   true; 
+      {document.myform.action= "<?php echo $pagename; ?>"; 
+        document.myform.submit(); 
+        return  true; 
       
   } 
 
-function   exportexcel() 
-      {document.form1.action= "excel_log.php "; 
-        document.form1.submit(); 
+function  exportexcel() 
+      {document.myform.action= "log_list_excel.php"; 
+        document.myform.submit(); 
         return   false; 
       
       } 
