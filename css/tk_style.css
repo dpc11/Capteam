@@ -46,7 +46,10 @@ table {
     font-size: 20px;
 	font-family: 微软雅黑,黑体;
 }
-
+th {
+    font-size: 22px;
+	font-family: 微软雅黑,黑体;
+}
 p {
     margin: 5px;
 }

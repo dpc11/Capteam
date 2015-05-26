@@ -182,12 +182,12 @@ J.check.rules = [
 function checkemail(){
 	
 	$.post('if_email_register.php?email='+document.getElementById("textfield5").value,function(data){
-  if(data ==0){
-   return true;
-  }else{
-	  return false;
-  }
-});
+		 if(data ==0){
+			return true;
+		 }else{
+			  return false;
+		 }
+	});
 }
 
 function changemsg(UP,DOWN){

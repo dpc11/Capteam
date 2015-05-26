@@ -124,14 +124,12 @@ $row_teamleader_lists = mysql_fetch_assoc($teamleader_lists);
 							<!-- 提交按钮 -->
 								<tr >
 									<td >
+										<input style="display:none" name="MM_insert" id="MM_insert" value="form1" />
+										<input style="display:none" id="tk_anc_create"   name="tk_anc_create" value="<?php echo $_SESSION['MM_uid']; ?>" />
 										<button type="submit" class="btn btn-primary btn-lg" name="cont"  data-loading-text="提交中……" style="width:120px"><?php echo $multilingual_global_action_save; ?></button>
 									</td>
 									<td  width="20%" align="center" >
 										<button type="button" class="btn btn-default btn-lg" style="width:120px" onClick="javascript:history.go(-1);"><?php echo $multilingual_global_action_cancel; ?></button>
-										<input type="hidden" name="MM_insert" value="form1" />
-										<input name="tk_anc_create" type="hidden" value="
-										<?php echo $_SESSION['MM_uid']; ?>" />
-
 									</td>
 								</tr>
 							</table>

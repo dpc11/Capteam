@@ -4,27 +4,42 @@
 	$tasklevel = 0;
 	mysql_select_db($database_tankdb,$tankdb);
 
-    //É¾³ýÄ³ÌõÏûÏ¢
+	function delete_all()
+    {
+        global $tankdb;
+        global $database_tankdb;
+        $deleteSQL = "DELETE FROM tk_message WHERE tk_mess_status=-1";
+        mysql_select_db($database_tankdb, $tankdb);
+        $Result1 = mysql_query($deleteSQL, $tankdb) or die(mysql_error());
+    }
+	
     function delete_message($mid)
     {
         global $tankdb;
         global $database_tankdb;
-        $deleteSQL = sprintf("DELETE FROM tk_message WHERE meid=%s",GetSQLValueString($mid, "int"));
+        $deleteSQL = "DELETE FROM tk_message WHERE meid in ".$mid;
         mysql_select_db($database_tankdb, $tankdb);
         $Result1 = mysql_query($deleteSQL, $tankdb) or die(mysql_error());
     }
-    //°ÑÄ³ÌõÏûÏ¢ÖÃÎªÒÑ¶Á
+	
+	function delete_message_to_garbage($mid)
+    {
+        global $tankdb;
+        global $database_tankdb;
+        $deleteSQL = "UPDATE tk_message SET tk_mess_status=-1 WHERE meid in ".$mid;
+		mysql_select_db($database_tankdb, $tankdb);
+        $Result1 = mysql_query($deleteSQL, $tankdb) or die(mysql_error());
+    }
+	
     function update_message($mid,$status1,$status2)
     {
         global $tankdb;
         global $database_tankdb;
-        //1±íÊ¾Î´¶Á£¬0±íÊ¾ÒÑ¶Á,2±íÊ¾°ëÒÑ¶Á
-        //°Ñstatus1µÄ×´Ì¬¸Ä³Éstatus2
         $deleteSQL = sprintf("UPDATE tk_message set tk_mess_status = %s WHERE meid=%s and tk_mess_status = %s",GetSQLValueString($status2, "int"),GetSQLValueString($mid, "int"),GetSQLValueString($status1, "int"));
         mysql_select_db($database_tankdb, $tankdb);
         $Result1 = mysql_query($deleteSQL, $tankdb) or die(mysql_error());
     }	
-	//send message
+
 function send_message( $to, $from, $type, $id=0, $title=0, $cc=0 ) {
     if($to <> $from & $to <> null){
 global $tankdb;

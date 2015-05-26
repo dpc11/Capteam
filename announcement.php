@@ -59,7 +59,6 @@ $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recor
 ?>
 
   <?php require('head.php'); ?>
-
 <div class="subnav" id="subnav">
 
 <div class="float_left" style="width:50%">
@@ -73,8 +72,6 @@ $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recor
 		<?php } ?>
 	</div>
 </div>
-
-
 </div>
 <div class="clearboth"></div>
 
@@ -82,7 +79,6 @@ $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recor
   <div class="filesubtab" id="tasktab" style="margin-top:30px;">
   <div class="filetab " id="filesubtab">
   <?php if ($totalRows_Recordset1 > 0) { // Show if recordset not empty ?>
-   
       <table  class="table table-striped table-hover glink" width="98%" >
         <thead>
           <tr>
@@ -131,17 +127,15 @@ case -1:
 			<td></td>
           </tr>
           <?php } while ($row_Recordset1 = mysql_fetch_assoc($Recordset1)); ?>
-
-
-    <table class="rowcon" border="0" align="center">
-      <tr>
-        <td>  <table border="0">
-          <tr>
-            
-            <td valign="bottom">
+		</tbody>
+	</table>
+	
+	<table class="rowcon" border="0" align="center">
+		<tr>			
+			<td align="left" ><?php echo ($startRow_Recordset1 + 1) ?> <?php echo $multilingual_global_to; ?> <?php echo min($startRow_Recordset1 + $maxRows_Recordset1, $totalRows_Recordset1) ?> (<?php echo $multilingual_global_total; ?> <?php echo $totalRows_Recordset1 ?>)</td>
+			<td>
               <table border="0">
-                <tr></td>
-        <td align="right" valign="bottom"><?php echo ($startRow_Recordset1 + 1) ?> <?php echo $multilingual_global_to; ?> <?php echo min($startRow_Recordset1 + $maxRows_Recordset1, $totalRows_Recordset1) ?> (<?php echo $multilingual_global_total; ?> <?php echo $totalRows_Recordset1 ?>)</td>
+                <tr>
                   <td><?php if ($pageNum_Recordset1 > 0) { // Show if not first page ?>
                     <a href="<?php printf("%s?pageNum_Recordset1=%d%s", $currentPage, 0, $queryString_Recordset1); ?>"><?php echo $multilingual_global_first; ?></a>
                     <?php } // Show if not first page ?></td>
@@ -156,11 +150,11 @@ case -1:
                     <?php } // Show if not last page ?></td>
                 </tr>
               </table>
-            </td>            
+            </td>        
           </tr>
-        </table>
-      </tr>
-    <?php } else { // Show if recordset empty ?>  
+       </table>
+    <?php } else { // Show if recordset empty ?> 
+      <table  class="table table-striped table-hover glink" width="98%" > 
   		<tr>
 			<td colspan="2">
 				<table>
@@ -170,16 +164,14 @@ case -1:
 				</table>
 			</td>
 		</tr>
+		</table>
 <?php } // Show if recordset empty ?>  
-
-</tbody>
-</table>
 </div>
 </div>
 </div>
   </div><!--pagemargin结束 -->
   <?php require('foot.php'); ?>
-	<script>
+  	<script>
 
 	$(window).load(function()
 	{
