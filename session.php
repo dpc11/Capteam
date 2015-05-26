@@ -3,7 +3,6 @@ if (!isset($_SESSION)) {
   session_start();
 }
 
-
 $MM_donotCheckaccess = "true";
 
 $MM_restrictGoTo = "index.php";

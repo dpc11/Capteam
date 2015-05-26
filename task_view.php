@@ -169,15 +169,17 @@ if (!empty($_SERVER['QUERY_STRING'])) {
   }
 }
 $queryString_Recordset_actlog = sprintf("&totalRows_Recordset_actlog=%d%s", $totalRows_Recordset_actlog, $queryString_Recordset_actlog);
-*/
-?>
-<?php require('head.php'); ?>
-<script type="text/javascript" language="javascript">    
+
 //禁止滚动条
 $(document.body).css({
    "overflow-x":"hidden",
    "overflow-y":"hidden"
 });
+*/
+?>
+<?php require('head.php'); ?>
+<script type="text/javascript" language="javascript">    
+
 
  
 function TuneHeight()    

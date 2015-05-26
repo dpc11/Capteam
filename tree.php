@@ -33,7 +33,8 @@ if(frm != null && subWeb != null)
 </script>
 <div class="tree_div" id="main_left">
     <?php if($str <> "0"){ ?>
-	<td>
+	
+	<td valign="top" class="gray2">
 	<div class=" add_title col-xs-12">
 		<h5 ><?php echo $multilingual_project_view_wbs; ?></h5>
 	</div>
@@ -57,8 +58,6 @@ if(frm != null && subWeb != null)
         document.write(d);
 
 </script>
-	</td>
-	<td valign="top" class="gray2">
 		<h4 style="margin-top:40px; margin-left: 5px;" ><?php echo $multilingual_project_view_nowbs; ?></h4>
 		<p > <?php echo $multilingual_project_view_nowbstext; ?></p>
 	</td>
