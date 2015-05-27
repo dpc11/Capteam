@@ -56,7 +56,7 @@ function over()
 </head> 
 <?php  
  
-$username = stripslashes(trim($_GET['textfield1']));
+$displayname = stripslashes(trim($_GET['textfield1']));
 /*
 $query = mysql_query("select uid from tk_user where tk_user_login='$username'");
 $num = mysql_num_rows($query);
@@ -66,6 +66,7 @@ if($num==1){
   exit;
 }
 */
+//echo $displayname;
 $regtime = time();
 $email = trim($_GET['textfield5']);
 
@@ -89,13 +90,14 @@ $tk_user_email = sprintf("%s,", GetSQLValueString(str_replace("%","%%",$_POST['t
 
 $token = md5($username.$password.$regtime); //创建用于激活识别码
 $token_exptime = time()+60*60*24;//过期时间为24小时后
-
+//echo $token;
+//echo $email;
 if($type==1){//注册
 
-$sql = "INSERT into tk_user (tk_user_login,tk_user_pass,tk_display_name,tk_user_email,token_exptime,token)values('$username','$tk_password','$displayname','$email','$token_exptime','$token')";
+$sql = "INSERT into tk_user (tk_user_pass,tk_display_name,tk_user_email,token_exptime,token)values('$tk_password','$displayname','$email','$token_exptime','$token')";
 mysql_query($sql);
-
-if(mysql_insert_id()){//写入成功，发邮件
+echo mysql_insert_id();
+if(mysql_insert_id()){//写入成功，发邮件，出问题
   include_once("plug-in/mail/smtp.class.php");
     $smtpserver = "smtp.qq.com"; //SMTP服务器
     $smtpserverport = 25; //SMTP服务器端口
@@ -107,7 +109,7 @@ if(mysql_insert_id()){//写入成功，发邮件
     $smtpemailto = "$email";
     $smtpemailfrom = $smtpusermail;
     $emailsubject = "用户帐号激活";
-    $emailbody = "亲爱的".$username."：<br/>感谢您在Capteam团队协作平台注册了新帐号。<br/>请点击链接激活您的帐号。<br/><a href='http://localhost/Capteam/Capteam/active.php?verify=".$token."' target='_blank'>http://localhost/Capteam/Capteam/active.php?verify=".$token."</a><br/>如果以上链接无法点击，请将它复制到你的浏览器地址栏中进入访问，该链接24小时内有效。<br/>如果此次激活请求非你本人所发，请忽略本邮件。<br/><p style='text-align:right'>-------- Capteam团队协作平台敬上</p>";
+    $emailbody = "亲爱的".$displayname."：<br/>感谢您在Capteam团队协作平台注册了新帐号。<br/>请点击链接激活您的帐号。<br/><a href='http://localhost/Capteam/active.php?verify=".$token."' target='_blank'>http://localhost/Capteam/active.php?email=".$email."&verify=".$token."</a><br/>如果以上链接无法点击，请将它复制到你的浏览器地址栏中进入访问，该链接24小时内有效。<br/>如果此次激活请求非你本人所发，请忽略本邮件。<br/><p style='text-align:right'>-------- Capteam团队协作平台敬上</p>";
    // $emailbody="哇哈哈";
     $rs = $smtp->sendmail($smtpemailto, $smtpemailfrom, $emailsubject, $emailbody, $emailtype);
     //echo "$rs";
@@ -216,7 +218,7 @@ $('button[data-loading-text]').click(function () {
 </body>
 
 <?php 
-} }else{  //注册失败  ?>
+} }else{  //注册失败 ，写入失败 ?>
 <body onload="register();" > 
 	 <div class="modal-body">
 <form action="<?php echo $editFormAction; ?>" method="post" name="myform" id="form1"  >
@@ -263,7 +265,7 @@ include_once("plug-in/mail/smtp.class.php");
     $smtpemailto = "$email";
     $smtpemailfrom = $smtpusermail;
     $emailsubject = "用户帐号激活";
-    $emailbody = "亲爱的".$username."：<br/>感谢您在Capteam团队协作平台注册了新帐号。<br/>请点击链接激活您的帐号。<br/><a href='http://localhost/Capteam/Capteam/active.php?verify=".$token."' target='_blank'>http://localhost/Capteam/Capteam/active.php?verify=".$token."</a><br/>如果以上链接无法点击，请将它复制到你的浏览器地址栏中进入访问，该链接24小时内有效。<br/>如果此次激活请求非你本人所发，请忽略本邮件。<br/><p style='text-align:right'>-------- Capteam团队协作平台敬上</p>";
+    $emailbody = "亲爱的".$username."：<br/>感谢您在Capteam团队协作平台注册了新帐号。<br/>请点击链接激活您的帐号。<br/><a href='http://localhost/Capteam/active.php?verify=".$token."' target='_blank'>http://localhost/Capteam/Capteam/active.php?verify=".$token."</a><br/>如果以上链接无法点击，请将它复制到你的浏览器地址栏中进入访问，该链接24小时内有效。<br/>如果此次激活请求非你本人所发，请忽略本邮件。<br/><p style='text-align:right'>-------- Capteam团队协作平台敬上</p>";
    // $emailbody="哇哈哈";
     $rs = $smtp->sendmail($smtpemailto, $smtpemailfrom, $emailsubject, $emailbody, $emailtype);
    // echo "$rs";

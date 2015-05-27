@@ -432,7 +432,7 @@ function changemsg(UP,DOWN){
 			<div style="width:90%">
 			<legend  style="border-bottom-width: 3px;font-weight:bold;font-size:20px;">&nbsp;&nbsp;&nbsp;用户注册</legend>
 			</div>
-	<form  role="form" class="form-horizontal" action="" method="post" name="myform" id="myform" >
+	<form  role="form" class="form-horizontal" action="user_register_real.php" method="post" name="myform" id="myform" >
 	<div >
 			
 						<div id="h1">
