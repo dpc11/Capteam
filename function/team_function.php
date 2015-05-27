@@ -39,21 +39,6 @@
         return $user_authority;
     }
 
-    //获得某一个用户在这个项目里的权限
-    function get_user_authority($uid,$pid){
-        global $tankdb;
-        global $database_tankdb;
-        $user_authority =1; 
-        
-        mysql_select_db($database_tankdb, $tankdb);
-        $query_team =  "SELECT * FROM tk_team WHERE tk_team_uid=$uid and tk_team_pid=$pid";  
-        $team = mysql_query($query_team, $tankdb) or die(mysql_error());
-        $row_team = mysql_fetch_assoc($team);
-        //获得权限
-        $user_authority = $row_team['tk_team_ulimit'];
-
-        return $user_authority;
-    }
 
     
 ?>

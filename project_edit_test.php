@@ -28,7 +28,6 @@
     $project_text = sprintf("%s,", GetSQLValueString(str_replace("%","%%",$_POST['project_text']), "text"));
     }
 
-
     //开始时间
     if ( empty( $_POST['project_start'] ) )
     		$_POST['project_start'] = '0000-00-00';
@@ -43,11 +42,10 @@
 	}
     //获得项目的详细信息
     $project_info = get_project_by_id($project_id);
-
+    //获取所有用户
 	$selected="";
     $userRS = get_all_user_select($_SESSION['MM_uid']);
 	$user_arr_list = mysql_fetch_assoc($userRS);
-
 	do { 
 		if($user_arr_list["tk_user_contact"]==""){ 
 			$phone="空";
@@ -66,7 +64,14 @@
 	
 	echo '<input style="display:none" id="constraint" value="'.$constraint.'"/>';
 	echo '<input style="display:none" id="selected" name="selected" value="'.$selected.'"/>';
-	
+	//获取被选中的用户
+	$users_selecred_old = get_user_selected($project_id,$_SESSION['MM_uid']);
+	// echo count($users_selecred_old);
+	// foreach ($users_selecred_old as $key => $val) {
+ //          echo $val['name'];
+ //      }
+
+
     if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
     		//数据库修改后的SQL语句
         $new_project_createtime = date('Y-m-d');
@@ -114,53 +119,91 @@
 		      mysql_select_db($database_tankdb, $tankdb);
 		      $Result_folder = mysql_query($updateSQLFolder, $tankdb) or die(mysql_error());
             //往tk_team表中插入相关的用户成员
-		      
 		    //获取选中的项目成员
-		    // $tk_team_pid= $project_id;//项目id
-		    // $user_list= $_POST['now_selected'];
-		    // //$user_list ="<script>document.write(sel_now).value;</script>";
-		    // echo $user_list;
+		    $tk_team_pid= $project_id;//项目id
+		    $user_list= $_POST['now_selected'];
+		    //$user_list ="<script>document.write(sel_now).value;</script>";
+		    //echo $user_list;
+		    //当前被选中的用户id数组
+		    $user_selected_new = array();
+            
+		    $a_user = explode("||", $user_list);
 
-		    // $a_user = explode("||", $user_list);
-
-		    // $i=0;
-		    // while($a_user[$i])
-		    // {
-		    // 	$r = explode("=",$a_user[$i]);
-		    // 	$user_info = $r[1];
-		    // 	$d = explode("%", $user_info);
-		    // 	$user_id = $d[0];
-		    // 	echo $user_id;
-		    // 	echo '<br>';
-		    // 	$tk_team_ulimit=1;//用户权限,组长是3，组员是1，副组长是2
-		    //     $tk_team_del_status=1;//该用户在该项目中的删除状态
-		    //     $tk_team_jointeamtime=date('Y-m-d H:i:s');//该用户加入该项目的时间，PHP date() 函数会返回服
-
-		    //     $addnewmemSQL="INSERT INTO tk_team (tk_team_pid,tk_team_uid,tk_team_ulimit,tk_team_del_status,tk_team_jointeamtime)
-		    //     VALUES ($tk_team_pid,$user_id,$tk_team_ulimit,$tk_team_del_status,'$tk_team_jointeamtime')";
-		    //     echo "add member    ";
-		    //     mysql_select_db($database_tankdb, $tankdb);
-		    //     $Result1 = mysql_query($addnewmemSQL, $tankdb) or die(mysql_error());
-		    //     //添加项目成员的log记录
-		    //     $searchmemSQL="SELECT* FROM tk_user WHERE uid=$user_id";
-		    //     mysql_select_db($database_tankdb, $tankdb);
-		    //     $Result1 = mysql_query($searchmemSQL, $tankdb) or die(mysql_error());
-		        
-		    //     $FoundUser = mysql_num_rows($Result1);
-		    //       if ($FoundUser) {  
-		    //         $loginStrDisplayname  = mysql_result($Result1,0,'tk_display_name');
-		    //       }
-		    // 	date_default_timezone_set('PRC');
-		    // 	$action='添加了成员:'.$user_id.'--'.$loginStrDisplayname;
-		    //           $timenow=date('Y-m-d H:i:s',time());
-		    //           $insertSQLLog=sprintf("INSERT into tk_log(tk_log_user,tk_log_action,tk_log_time,tk_log_type,tk_log_class)
-		    //             VALUES(%s,'$action','$timenow','$tk_team_pid','1')",GetSQLValueString($_SESSION['MM_uid'], "int"));
+		    $i=0;
+		    while($a_user[$i])
+		    {
+		    	$r = explode("=",$a_user[$i]);
+		    	$user_info = $r[1];
+		    	$d = explode("%", $user_info);
+		    	$user_id = $d[0];
+		    	// echo $user_id;
+		    	// echo '<br>';
+		    	
+                //在当前被选中的数组中添加id
+                $user_selected_new[$user_id]=$user_id;
+                //array_push($user_selected_new, $user_id);
+                //如果该成员是老成员，则不操作
+                if($users_selecred_old[$user_id]){
+                	//该成员原先就存在，不操作
+                }else{
+                	//该成员原先不存在
+                	$tk_team_ulimit=1;//用户权限,组长是3，组员是1，副组长是2
+		            $tk_team_del_status=1;//该用户在该项目中的删除状态
+		            $tk_team_jointeamtime=date('Y-m-d H:i:s');//该用户加入该项目的时间，PHP date() 函数会返回服
+                	$addnewmemSQL="INSERT INTO tk_team (tk_team_pid,tk_team_uid,tk_team_ulimit,tk_team_del_status,tk_team_jointeamtime)
+                        VALUES ($tk_team_pid,$user_id,$tk_team_ulimit,$tk_team_del_status,'$tk_team_jointeamtime')";
+			        mysql_select_db($database_tankdb, $tankdb);
+			        $Result1 = mysql_query($addnewmemSQL, $tankdb) or die(mysql_error());
+			        //添加项目成员的log记录
+			        $searchmemSQL="SELECT* FROM tk_user WHERE uid=$user_id";
+			        mysql_select_db($database_tankdb, $tankdb);
+			        $Result1 = mysql_query($searchmemSQL, $tankdb) or die(mysql_error());
+			        
+			        $FoundUser = mysql_num_rows($Result1);
+			          if ($FoundUser) {  
+			            $loginStrDisplayname  = mysql_result($Result1,0,'tk_display_name');
+			          }
+			    	$action='添加了成员:'.$user_id.'--'.$loginStrDisplayname;
+			        $timenow=date('Y-m-d H:i:s',time());
+			        $insertSQLLog=sprintf("INSERT into tk_log(tk_log_user,tk_log_action,tk_log_time,tk_log_type,tk_log_class)
+			                VALUES(%s,'$action','$timenow','$tk_team_pid','1')",GetSQLValueString($_SESSION['MM_uid'], "int"));
 		 
-		    //            mysql_select_db($database_tankdb, $tankdb);
-		    //           $Result2 = mysql_query($insertSQLLog, $tankdb) or die(mysql_error());
+		             mysql_select_db($database_tankdb, $tankdb);
+		             $Result2 = mysql_query($insertSQLLog, $tankdb) or die(mysql_error());
+                }//else
+		    	$i++;
+    		}//while 
 
-		    // 	$i++;
-    		// }
+    		//删除原先选择但是现在没有选的人
+    	   foreach ($users_selecred_old as $key => $val) {
+    	   	  $user_id = $val['uid'];
+              if($user_selected_new[$user_id]){
+                  //说明该用户已经出现过，跳过不处理
+              }else{
+              	  //该用户为出现过，删除该用户
+              	    $deletememSQL="DELETE from tk_team where tk_team_pid = $tk_team_pid and tk_team_uid = $user_id";
+			        mysql_select_db($database_tankdb, $tankdb);
+			        $Result1 = mysql_query($deletememSQL, $tankdb) or die(mysql_error());
+			        //添加项目成员的log记录
+			        $searchmemSQL="SELECT* FROM tk_user WHERE uid=$user_id";
+			        mysql_select_db($database_tankdb, $tankdb);
+			        $Result1 = mysql_query($searchmemSQL, $tankdb) or die(mysql_error());
+			        
+			        $FoundUser = mysql_num_rows($Result1);
+			          if ($FoundUser) {  
+			            $loginStrDisplayname  = mysql_result($Result1,0,'tk_display_name');
+			          }
+			    	$action='删除了成员:'.$user_id.'--'.$loginStrDisplayname;
+			        $timenow=date('Y-m-d H:i:s',time());
+			        $insertSQLLog=sprintf("INSERT into tk_log(tk_log_user,tk_log_action,tk_log_time,tk_log_type,tk_log_class)
+			                VALUES(%s,'$action','$timenow','$tk_team_pid','1')",GetSQLValueString($_SESSION['MM_uid'], "int"));
+		 
+		             mysql_select_db($database_tankdb, $tankdb);
+		             $Result2 = mysql_query($insertSQLLog, $tankdb) or die(mysql_error());
+              }              
+           }
+
+     
 			  
      //          $insertGoTo = "project_view.php?recordID=$newID";
      //          if (isset($_SERVER['QUERY_STRING'])) {
@@ -461,6 +504,3 @@
 </script>
 </body>
 </html>
-<?php
-    mysql_free_result($Recordset3);
-?>
