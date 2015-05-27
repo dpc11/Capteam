@@ -179,36 +179,36 @@ function   exportexcel()
 <body <?php if($tab==2){ echo "onload='tabs2();'";} elseif($tab==3){ echo "onload='tabs3();'";} ?>>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
-      <td width="25%" class="input_task_right_bg" valign="top"><table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
-          <tr>
-            <td valign="top"  class="gray2">
-	 <h4 style="margin-top:40px"><strong><?php echo "查看个人信息"; ?></strong></h4>
 
+        <!-- 左边20%的宽度的树或者说明  -->
+        <td width="20%" class="input_task_right_bg" valign="top">
+            <table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
+                <tr>
+                    <td valign="top" class="gray2">
+                        <h4 style="margin-top:40px; margin-left: 5px;"><strong><?php echo $multilingual_user_view_title; ?></strong></h4>
+                        <p>
+                            <?php echo $multilingual_user_view_text; ?>
+                        </p>
 
-<?php ?>
-          
-              </td>
-          </tr>
-        </table></td>
-      <td width="75%" valign="top"><table width="98%" border="0" cellspacing="0" cellpadding="5" align="center">
-          <tr>
-            <td>
-			  
-			  
-
-             <table width="98%" border="0" cellspacing="0" cellpadding="5" >
-			 <tr>
-			 <td>
-			 <h3><?php echo $row_DetailRS1['tk_display_name']; ?></h3>
-			 </td>
-			 
-			 </tr>
-			 <tr>
-			 
-			 
-			 <td>
-			 <table width="100%" border="0" cellspacing="0" cellpadding="5"  class="info_task_bg">
-
+                    </td>
+                </tr>
+            </table>
+        </td>
+        
+        <!-- 右边80%宽度的主体内容 -->
+        <td width="80%" valign="top">
+            <table width="98%" border="0" cellspacing="0" cellpadding="5" align="center">
+                <tr>
+                    <td>
+                        <table width="98%" border="0" cellspacing="0" cellpadding="5">
+                            <tr>
+                                <td>
+                                    <h3><?php echo $row_DetailRS1['tk_display_name']; ?></h3>
+                                </td>
+                            </tr>
+                            <tr>
+        <td>
+        <table width="100%" border="0" cellspacing="0" cellpadding="5" class="info_task_bg">
 	 <?php if($row_DetailRS1['tk_user_login'] <> null && $row_DetailRS1['tk_user_login'] <> " ") { ?>
   <tr>
   

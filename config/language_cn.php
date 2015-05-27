@@ -492,7 +492,7 @@ $multilingual_user_register = "注册";
 $multilingual_user_list_title = "用户管理";
 $multilingual_user_list_showdis = "禁用用户";
 $multilingual_user_list_search = "按用户名称搜索";
-$multilingual_user_view_title = "用户详情";
+$multilingual_user_view_title = "用户信息";
 $multilingual_user_view_userinfo = "用户基本信息";
 $multilingual_user_view_project = "负责项目";
 $multilingual_user_view_task = "近期任务";
@@ -506,7 +506,7 @@ $multilingual_user_view_project2 = "所属项目";
 $multilingual_user_view_cost = "耗时";
 $multilingual_user_view_hour = "小时";
 $multilingual_user_view_status = "状态为";
-$multilingual_user_edit_title = "修改资料";
+$multilingual_user_edit_title = "修改信息";
 $multilingual_user_edit_info = "用户基本信息";
 $multilingual_user_edit_password = "修改密码";
 $multilingual_user_tip_account = "登录凭证，用户创建成功后帐号不可编辑";
@@ -543,10 +543,13 @@ $multilingual_user_abouttext = "<p>您可以根据需要为您团队的每一个
 <p>管理员可以为任意用户查询登录帐号，以及重置密码。</p>
 ";
 
-$multilingual_user_tiptitle = "用户资料";
-$multilingual_user_tiptext = "<p>为了保正帐号唯一性，用户帐号创建后无法修改；</p><br />
-<p>只有管理员可以修改帐号的角色。</p><br />
+$multilingual_user_edit_text = "<p>为了保正帐号唯一性，用户帐号创建后无法删除，</p><br />
+<p>只有自己可以修改帐号的信息，但登录账户唯一标识用户，故不能修改。</p><br />
 ";
+
+$multilingual_user_view_text = "<p>用户基本信息，只有本人能够修改</p>
+";
+
 
 // *** 公告列表页(default_announcement.php)
 // *** 公告详情页(announcement_view.php)
