@@ -1,5 +1,5 @@
 
-<div class="foot" id="foot_div" >
+<div class="foot" id="foot_div" style="background-color:white;">
     <div class="wss_title" id="foot_title" style="font-size: 22px;">
 
         <div class="wss_ver" id="capteamfoot">

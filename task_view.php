@@ -233,12 +233,13 @@ function addcomm()
 <!-- 右边80%宽度的主体内容 -->
     <td width="80%" valign="top">
         <div style="overflow:auto; " id="main_right"><!-- right main -->
-        <table width="98%" border="0" cellspacing="0" cellpadding="5" align="center">
+        <table width="90%" border="0" cellspacing="0" cellpadding="5" align="center">
 		
 		<!-- 所属项目，所属阶段 -->
         <tr>
           <td >			
-		<ul class="breadcrumb" style="margin-top:10px;">
+		<ul class="breadcrumb" style="margin-top:30px;background-color:white;font-size:22px;padding: 0px 0px;
+margin-bottom: 10px;">
 			  <li><?php echo $multilingual_default_taskproject; ?>: <a href="project_view.php?recordID=<?php echo $row_Recordset_task['csa_project']; ?>" ><?php echo $row_Recordset_task['project_name']; ?></a></li>
 			  <li><?php echo $multilingual_default_task_parent; ?>: <a href=" task_view.php?editID=<?php echo $row_Recordset_task['csa_project_stage']; ?>" ><?php echo $row_Recordset_task['staname']; ?></a></li>
             </ul>	
@@ -248,21 +249,19 @@ function addcomm()
 		                <tr>
                             <td>
                                 <div class="breakwords">
-                                    <h2>[<?php echo $multilingual_head_task; ?>]<?php echo htmlentities($row_Recordset_task['csa_text'], ENT_COMPAT, 'utf-8'); ?></h2>
+                                    <div>[<?php echo $multilingual_head_task; ?>]<?php echo htmlentities($row_Recordset_task['csa_text'], ENT_COMPAT, 'utf-8'); ?></div>
                                 </div>
 
                             </td>
                         </tr>
 		<tr>
 			<td>
-				<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="info_task_bg" style="margin-bottom:10px;">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="info_task_bg" >
                         
-					
-  
 					<tr>
 						<!-- 指派给谁 -->
-						<td width="12%" class="info_task_title"><?php echo $multilingual_default_task_to; ?></td>
-						<td width="40%"><a href="user_view.php?recordID=<?php echo $row_Recordset_task['csa_to_user']; ?>"><?php echo $row_Recordset_task['tk_display_name1']; ?></a></td>
+						<td width="10%" class="info_task_title"><?php echo $multilingual_default_task_to; ?></td>
+						<td width="25%"><a href="user_view.php?recordID=<?php echo $row_Recordset_task['csa_to_user']; ?>"><?php echo $row_Recordset_task['tk_display_name1']; ?></a></td>
 						
 						<!-- 来自谁 -->
 						<td width="12%" class="info_task_title"><?php echo $multilingual_default_task_from; ?></td>

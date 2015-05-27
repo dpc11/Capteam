@@ -70,6 +70,14 @@ h4{
 	font-weight: bold;
 	color:#5A5A5A;
 }
+
+h5{
+	font-family : 微软雅黑;
+	margin-bottom:17px;
+	font-size: 22px;
+	font-weight: bold;
+	color:#5A5A5A;
+}
 .search_warning{
 	text-align:center;
 	font-size:24px;
@@ -105,6 +113,13 @@ h4{
 .breakwords {
     word-wrap: break-word;
     word-break: normal;
+	font-family : 微软雅黑;
+	margin-bottom:7px;
+	margin-top:20px;
+	font-size: 32px;
+	font-weight: bold;
+	color:#5A5A5A;
+	padding: 0px 0px;
 }
 
 .fontsize-s {}
@@ -922,8 +937,12 @@ a:focus {
 
 .info_task_bg {
     background: #F5F5F5;
+	color:#616161;
     width: 100%;
     border: 1px solid #E6E6E6;
+	font-family : 微软雅黑;
+	font-size:23px;
+	margin: 0px 0px;
 }
 
 .info_task_bg td {
