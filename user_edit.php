@@ -96,11 +96,11 @@ window.onload = function()
                             </div>
 
                             <div class="form-group col-xs-12">
-                                <label for="tk_user_login">
+                                <label>
                                     <?php echo $multilingual_user_account; ?>
                                 </label>
                                 <div>
-                                    <?php echo $row_Recordset1[ 'tk_user_login']; ?>
+                                    <?php echo $row_Recordset1[ 'tk_user_email']; ?>
                                 </div>
                             </div>
 
