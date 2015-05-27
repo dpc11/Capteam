@@ -4,7 +4,7 @@
 	$tasklevel = 0;
 	mysql_select_db($database_tankdb,$tankdb);
 
-	//Ìí¼ÓÏîÄ¿³ÉÔ±Ê±£¬»ñµÃËùÓĞµÄÓÃ»§ĞÅÏ¢
+	//æ ¹æ®å¯¹åº”idè·å–ç›¸åº”çš„ç”¨æˆ·ä¿¡æ¯
 	function get_all_user_select($uid) {
 		global $tankdb;
 		global $database_tankdb;
@@ -33,7 +33,7 @@
 
 		return $userinfo;
 	}
-	//¸ù¾İÓÃ»§id»ñµÃÓÃ»§ĞÅÏ¢
+	//æ ¹æ®ç”¨æˆ·idè·å–ç”¨æˆ·ä¿¡æ¯
 	function get_user_by_userid($userid){
 		global $tankdb;
 		global $database_tankdb;
@@ -56,7 +56,7 @@
 		return $userinfo;
 	}
 
-    //»ñµÃºÍ¸ÃÏîÄ¿ÓĞ¹ØµÄÓÃ»§ĞÅÏ¢
+    //æ ¹æ®é¡¹ç›®idè·å–æ‰€æœ‰è¢«é€‰ä¸­çš„ç”¨æˆ·
     function get_user_select_by_project($prjid) {
         global $tankdb;
         global $database_tankdb;
@@ -81,7 +81,7 @@
     }
 
 
-    //»ñµÃËùÓĞµÄÓÃ»§ĞÅÏ¢
+    //è·å–æ‰€æœ‰çš„ç”¨æˆ·
     function get_all_user() {
         global $tankdb;
         global $database_tankdb;

@@ -400,7 +400,7 @@ $multilingual_project_view_nowbstext = "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&
 $multilingual_project_add_text = "<p>每个项目包含了一个团队。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;创建一个项目，然后您才能分解阶段。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;项目创建人就是组长，他／她可以为项目选择若干成员，并且分配不同职责：帮助组长分配任务，或者去完成任务。</p>";
-$multilingual_project_edit_text = "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每个项目包含了一个团队。</p>
+$multilingual_project_edit_text = "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每个项目包含了一个团队。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;项目创建人就是组长，他／她可以为项目选择若干成员，并且分配不同职责：帮助组长分配任务，或者去完成任务。</p>";
 
 $multilingual_stage_add_text = "<p>每个项目将经历不同阶段。</p><br />

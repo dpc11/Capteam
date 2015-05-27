@@ -1,11 +1,14 @@
 <?php require_once('config/tank_config.php'); ?>
 <?php require_once('session.php'); ?>
 <?php
-$restrictGoTo = "user_error3.php";
-if ($_SESSION['MM_rank'] < "4") {   
-  header("Location: ". $restrictGoTo); 
-  exit;
-}
+
+
+
+// $restrictGoTo = "user_error3.php";
+// if ($_SESSION['MM_rank'] < "4") {   
+//   header("Location: ". $restrictGoTo); 
+//   exit;
+// }
  
 
 if (!function_exists("GetSQLValueString")) {
@@ -70,10 +73,10 @@ if ((isset($_GET['delID'])) && ($_GET['delID'] != "") && ($_SESSION['MM_Username
 
 
   $deleteGoTo = "project.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
-    $deleteGoTo .= (strpos($deleteGoTo, '?')) ? "&" : "?";
-    $deleteGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  // if (isset($_SERVER['QUERY_STRING'])) {
+  //   $deleteGoTo .= (strpos($deleteGoTo, '?')) ? "&" : "?";
+  //   $deleteGoTo .= $_SERVER['QUERY_STRING'];
+  // }
   header(sprintf("Location: %s", $deleteGoTo));
 }
 ?>

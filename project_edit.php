@@ -1,8 +1,10 @@
 <?php require_once('config/tank_config.php'); ?>
 <?php require_once('session_unset.php'); ?>
 <?php require_once('session.php'); ?>
+<?php require_once('function/user_function.php'); ?>
 <?php
 $editFormAction = $_SERVER['PHP_SELF'];
+
 if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
@@ -17,6 +19,7 @@ $project_text = "project_text='',";
 }else{
 $project_text = sprintf("project_text=%s,", GetSQLValueString(str_replace("%","%%",$_POST['project_text']), "text"));
 }
+echo $project_text ;
 
 if ( empty( $_POST['project_start'] ) ){
 $project_start = "project_start='0000-00-00',";
@@ -30,47 +33,46 @@ $project_end = "project_end='0000-00-00',";
 $project_end = sprintf("project_end=%s,", GetSQLValueString($_POST['project_end'], "date"));
 }
 
-if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
-  //把当前时间作为最后一次修改时间
-  $update_project_lastupdate = date("Y-m-d H:i:s",time());
-  $today_date = date('Y-m-d');
-  $now_time = date('Y-m-d H:i:s',time());
+// if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
+//   //把当前时间作为最后一次修改时间
+//   $update_project_lastupdate = date("Y-m-d H:i:s",time());
+//   $today_date = date('Y-m-d');
+//   $now_time = date('Y-m-d H:i:s',time());
 
-  if($_POST['project_end']<$today_date)
-  {
-          //echo("illegal");
-            $dateError = -1;//结束时间小于今天
-  }else if($_POST['project_end'] <$_POST['project_start'])
-  {
-          //echo("can't");
-            $dateError = -2;//结束时间小于开始时间
-  }else{
-      //更新数据库
-      $updateSQL = sprintf("UPDATE tk_project SET project_name=%s, $project_text $project_start $project_end  project_lastupdate = '$update_project_lastupdate' WHERE id=%s",
-                           GetSQLValueString($_POST['project_name'], "text"),
-                           GetSQLValueString($_POST['id'], "int"));
-    echo $updateSQL;
-      mysql_select_db($database_tankdb, $tankdb);
-      $Result1 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
+//   if($_POST['project_end']<$today_date)
+//   {
+//           //echo("illegal");
+//             $dateError = -1;//结束时间小于今天
+//   }else if($_POST['project_end'] <$_POST['project_start'])
+//   {
+//           //echo("can't");
+//             $dateError = -2;//结束时间小于开始时间
+//   }else{
+//       //更新数据库
+//       $updateSQL = sprintf("UPDATE tk_project SET project_name=%s, $project_text $project_start $project_end  project_lastupdate = '$update_project_lastupdate' WHERE id=%s",
+//                            GetSQLValueString($_POST['project_name'], "text"),
+//                            GetSQLValueString($_POST['id'], "int"));
+//     echo $updateSQL;
+//       mysql_select_db($database_tankdb, $tankdb);
+//       $Result1 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
       
-      date_default_timezone_set('PRC');
-      $editlogid=$_POST['id'];
-              $timenow=date('Y-m-d H:i:s',time());
-              $insertSQLLog=sprintf("INSERT into tk_log(tk_log_user,tk_log_action,tk_log_time,tk_log_type,tk_log_class)
-                VALUES(%s,'编辑了项目','$timenow','$editlogid','1')",GetSQLValueString($_SESSION['MM_uid'], "int"));
+//       date_default_timezone_set('PRC');
+//       $editlogid=$_POST['id'];
+//               $timenow=date('Y-m-d H:i:s',time());
+//               $insertSQLLog=sprintf("INSERT into tk_log(tk_log_user,tk_log_action,tk_log_time,tk_log_type,tk_log_class)
+//                 VALUES(%s,'编辑了项目','$timenow','$editlogid','1')",GetSQLValueString($_SESSION['MM_uid'], "int"));
  
-               mysql_select_db($database_tankdb, $tankdb);
-              $Result2 = mysql_query($insertSQLLog, $tankdb) or die(mysql_error());
+//                mysql_select_db($database_tankdb, $tankdb);
+//               $Result2 = mysql_query($insertSQLLog, $tankdb) or die(mysql_error());
 
-      $updateGoTo = "project_view.php?recordID=$colname_Recordset1";
-      if (isset($_SERVER['QUERY_STRING'])) {
-        $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
-        $updateGoTo .= $_SERVER['QUERY_STRING'];
-      }
-      header(sprintf("Location: %s", $updateGoTo));
-  }
-}
-
+//       $updateGoTo = "project_view.php?recordID=$colname_Recordset1";
+//       if (isset($_SERVER['QUERY_STRING'])) {
+//         $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
+//         $updateGoTo .= $_SERVER['QUERY_STRING'];
+//       }
+//       header(sprintf("Location: %s", $updateGoTo));
+//   }
+// }
 
 mysql_select_db($database_tankdb, $tankdb);
 $query_Recordset1 = sprintf("SELECT * FROM tk_project WHERE id = %s", GetSQLValueString($colname_Recordset1, "int"));
@@ -78,21 +80,26 @@ $Recordset1 = mysql_query($query_Recordset1, $tankdb) or die(mysql_error());
 $row_Recordset1 = mysql_fetch_assoc($Recordset1);
 $totalRows_Recordset1 = mysql_num_rows($Recordset1);
 
+
+
 mysql_select_db($database_tankdb, $tankdb);
 $query_Recordset2 = "SELECT * FROM tk_status_project ORDER BY task_status_pbackup1 ASC";
 $Recordset2 = mysql_query($query_Recordset2, $tankdb) or die(mysql_error());
 $row_Recordset2 = mysql_fetch_assoc($Recordset2);
 $totalRows_Recordset2 = mysql_num_rows($Recordset2);
 
-$user_arr = get_all_user_select();
-$user_arr_selected = get_user_select($colname_Recordset1);
-//$user_arr_selected = get_user_select(GetSQLValueString($colname_Recordset1, "int"))；
+echo $totalRows_Recordset2;
 
-$restrictGoTo = "user_error3.php";
-if ($_SESSION['MM_rank'] < "4" && ($row_Recordset1['project_to_user'] <> $_SESSION['MM_uid'] || $_SESSION['MM_rank'] < "2")) {   
-  header("Location: ". $restrictGoTo); 
-  exit;
-}
+//$user_arr = get_all_user_select();
+echo $totalRows_Recordset2;
+//$user_arr_selected = get_user_select($colname_Recordset1);
+
+echo $totalRows_Recordset2;
+// $restrictGoTo = "user_error3.php";
+// if ( && ($row_Recordset1['project_to_user'] <> $_SESSION['MM_uid'] || $_SESSION['MM_rank'] < "2")) {   
+//   header("Location: ". $restrictGoTo); 
+//   exit;
+// }
 
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
