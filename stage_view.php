@@ -7,12 +7,8 @@
 <?php require_once('function/file_log_function.php'); ?>
 <?php
 $currentPage = $_SERVER["PHP_SELF"];
-//$_SESSION['MM_pid'] = 24;
-//$_SESSION['MM_uid'] = 5;
-//$_SESSION['MM_sid'] = 12;
-//$now_pid = $_SESSION['MM_pid'];
 $now_uid = $_SESSION['MM_uid'];
-//$now_sid = $_SESSION['MM_sid'];
+
 $now_pid = -1;
 $now_sid = -1;
 $today_date = date('Y-m-d');
@@ -35,21 +31,6 @@ $Result1 = mysql_query($selLimit,$tankdb) or die(mysql_error());
 $row = mysql_fetch_array($Result1);
 $user_rank = $row['tk_team_ulimit'];
 
-
-/*$pagetabs = "allprj";
-if (isset($_GET['pagetab'])) {
-  $pagetabs = $_GET['pagetab'];
-}
-
-$prjlisturl;
-if($pagetabs=="mprj"){
-$prjlisturl = "project.php?pagetab=mprj";
-}else if ($pagetabs=="jprj") {
-$prjlisturl = "project.php?pagetab=jprj";
-}else if ($pagetabs=="allprj"){
-$prjlisturl = "project.php?pagetab=allprj";
-} */
-
 $maxRows_DetailRS1 = 25;
 $pageNum_DetailRS1 = 0;
 if (isset($_GET['pageNum_DetailRS1'])) {
@@ -63,7 +44,6 @@ if (isset($_GET['recordID'])) {
 }
 mysql_select_db($database_tankdb, $tankdb);
 $query_DetailRS1 = "SELECT * FROM tk_stage WHERE stageid = $now_sid AND tk_stage_delestatus=1";
-//$query_limit_DetailRS1 = sprintf("%s LIMIT %d, %d", $query_DetailRS1, $startRow_DetailRS1, $maxRows_DetailRS1);
 $DetailRS1 = mysql_query($query_DetailRS1, $tankdb) or die(mysql_error());
 $row_DetailRS1 = mysql_fetch_assoc($DetailRS1);
 
@@ -309,40 +289,11 @@ swfobject.embedSWF("plug-in/chart/open-flash-chart.swf", "chart", "600px", "230p
  "9.0.0","expressInstall.swf", flashvars,params);  
 </script>
 <script type="text/javascript">
-//禁止滚动条
-$(document.body).css({
-   "overflow-x":"hidden",
-   "overflow-y":"hidden"
-});
-    
+  
 function addcomm()
 {
     J.dialog.get({ id: "test1", title: '<?php echo $multilingual_default_addcom; ?>', width: 600, height: 500, page: "comment_add.php?taskid=<?php echo $row_DetailRS1['stageid']; ?>&projectid=1&type=2" });
 }
-
-function   searchtask() 
-      {document.form1.action= "project_view.php?#task "; 
-        document.form1.submit(); 
-        return   true; 
-      
-      } 
-
-function   exportexcel() 
-      {document.form1.action= "excel_log.php "; 
-        document.form1.submit(); 
-        return   false; 
-      
-      } 
-    
-    $(document).ready(function() {
-            var h = $(window).height(), h2;
-            var h = h - <?php if($totalRows_Recordset_anc > 0) {echo "75";} else {echo "40";} ?>;
-            $("#main_right").css("height", h);
-            $(window).resize(function() {
-                h2 = $(this).height();
-                $("#main_right").css("height", h2);
-            });
-        })
 </script>
 <script type="text/javascript">
 function addfolder()
@@ -1052,184 +1003,6 @@ case 1:
                                             <?php } ?>
                                         </div>
                                         <!--file end -->
-
-
-                                        <!-- 没有日志了 -->
-                                        <!--<div class="tab_b" id="tab_a3" 
-<?php if ($totalRows_Recordset_task == 0 && $totalRows_Recordset_file == 0) { 
-echo "style='display:block'";
-} else {
-echo "style='display:none'";
-} ?>
->
-<?php if ($totalRows_Recordset_task  > 0) {  ?>
-
-<table width="100%" cellpadding="5">
-  <tr>
-  <td>
-  <div class="condition">
-  <span>
-<form id="form1" name="form1" method="get" class="taskform form-inline">
-  <input name="recordID" id="recordID" value="<?php echo $colname_DetailRS1; ?>" style="display:none" />
-  <input name="tab" id="tab" value="2" style="display:none" />
-      <select name="logyear" id="logyear"  class="form-control input-sm">
-    <option value=""><?php echo $multilingual_taskf_year; ?></option>
-    <?php for($i = 2009; $i <= 2050; $i++) { ?>
-         <option value="<?php echo $i; ?>" <?php 
-    if (isset($_SESSION['ser_logyear'])) {  
-    if (!(strcmp($i, "{$_SESSION['ser_logyear']}"))) {
-      echo "selected=\"selected\"";
-      }
-    }
-else if (!(strcmp($i, date("Y")))) {echo "selected=\"selected\"";} ?>><?php echo $i; ?></option>
-<?php  }?>
-      </select>
-    
-    <select  name="logmonth" id="logmonth" class="form-control input-sm">
-      <option value=""><?php echo $multilingual_taskf_month; ?></option>
-      <?php for($i = 1; $i <= 12; $i++) { ?>
-         <option value="<?php $xi = $i; if($i<=9){$xi ="0".$i;}   echo $xi; ?>" <?php 
-    if (isset($_SESSION['ser_logmonth'])) { 
-    if (!(strcmp($xi, "{$_SESSION['ser_logmonth']}"))) {
-      echo "selected=\"selected\"";
-      }
-    }
-else if (!(strcmp($i, date("n")))) {echo "selected=\"selected\"";} ?>><?php echo $xi; ?></option>
-<?php  }?>
-    </select>
-  
-  <select name="logday" id="logday"  class="form-control input-sm">
-      <option value="" selected="selected"><?php echo $multilingual_taskf_day; ?></option>
-    <?php for($i = 1; $i <= 31; $i++) { ?>
-         <option value="<?php $yi = $i; if($i<=9){$yi ="0".$i;}   echo $yi; ?>" <?php 
-    if (isset($_SESSION['ser_logday'])) { 
-    if (!(strcmp($yi, "{$_SESSION['ser_logday']}"))) {
-      echo "selected=\"selected\"";
-      }
-    } ?>><?php echo $yi; ?></option>
-<?php  }?>
-    </select>
-
-   <button type="button" class="btn btn-default btn-sm" onclick= "return   searchtask(); " /><span class="glyphicon glyphicon-filter" style="display:inline;"></span> 
-    <?php echo $multilingual_global_filterbtn; ?>
-    </button>
-    
-    <button type="button" class="btn btn-link btn-sm" name="export" id="export"  onclick= "return   exportexcel(); " ><?php echo $multilingual_global_excel; ?></button>
-
- </form>
- </span>
- </div>  </td>
-  </tr>
-  <tr>
-    <td>
-  <?php if ($totalRows_Recordset_log > 0) { ?>
-    <div >
-    <table class="table table-striped table-hover"  width="100%" >
-
-
- <thead>
-<tr>
-<th>
-<?php echo $multilingual_global_log; ?></th>
-<th>
-<?php echo $multilingual_user_view_cost; ?></th>
-<th>
-<?php echo $multilingual_user_view_status; ?></th>
-<th>
-<?php echo $multilingual_user_view_project2; ?></th>
-<th>
-<?php echo $multilingual_project_file_update; ?></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-  <?php do { ?>
-<tr>
-      <td class="glink">
-<?php echo $row_Recordset_log['tk_display_name']; ?> <?php echo $multilingual_user_view_by; ?> 
-     
-<?php 
-$logdate = $row_Recordset_log['csa_tb_year'];
-$logyear = str_split($logdate,4);
-$logmonth = str_split($logyear[1],2);
-echo $logyear[0]; ?>-<?php echo $logmonth[0]; ?>-<?php echo $logmonth[1]; ?>  
-
-
-
-    <?php echo $multilingual_user_view_do; ?>  
-    <?php echo $row_Recordset_log['task_tpye']; ?> - 
-    <a href=" task_view.php?editID=<?php echo $row_Recordset_log['TID']; ?>" >
-    <?php echo $row_Recordset_log['csa_text']; ?></a>
-
-    <?php if($row_Recordset_log['csa_tb_text']<>null){ echo "<br/><span class='gray'>".$row_Recordset_log['csa_tb_text']."</span>"; }?>  </td>
-
-<td class="glink" width="80px">
- <?php echo $row_Recordset_log['csa_tb_manhour']; ?> <?php echo $multilingual_user_view_hour; ?></td>
-
-<td class="glink" width="120px">
- <?php echo $row_Recordset_log['task_status_display']; ?></td>
-
-<td class="glink" width="160px" >
- <a href="project_view.php?recordID=<?php echo $row_Recordset_log['csa_project']; ?>">
-  <?php echo $row_Recordset_log['project_name']; ?></a></td>
-
-
-  <td class="glink" width="160px" >
-<?php echo $row_Recordset_log['csa_tb_lastupdate']; ?>  </td>
-  <td class="glink" width="60px" >
-<script>    
-function addcomment<?php echo $row_Recordset_log['tbid']; ?>()
-{
-    J.dialog.get({ id: 'test', title: '<?php echo $multilingual_default_task_section5; ?>', page: 'log_view.php?date=<?php echo $row_Recordset_log['csa_tb_year']; ?>&taskid=<?php echo $row_Recordset_log['csa_tb_backup1']; ?>' });
-}
-</script>
-  <a class="mouse_hover" onClick="addcomment<?php echo $row_Recordset_log['tbid']; ?>()"><?php echo $multilingual_log_comment; ?><?php 
-  if ($row_Recordset_log['csa_tb_comment'] > 0) {
-  echo "(".$row_Recordset_log['csa_tb_comment'].")"; 
-  }?></a>  </td>
-</tr>
-     <?php
-} while ($row_Recordset_log = mysql_fetch_assoc($Recordset_log));
-  $rows = mysql_num_rows($Recordset_log);
-  if($rows > 0) {
-      mysql_data_seek($Recordset_log, 0);
-    $row_Recordset_log = mysql_fetch_assoc($Recordset_log);
-  }
-?>
-</tbody>
-</table>
-</div>
-<table class="rowcon" border="0" align="center">
-<tr>
-<td>   <table border="0">
-        <tr>
-          <td><?php if ($pageNum_Recordset_log > 0) { // Show if not first page ?>
-              <a href="<?php printf("%s?pageNum_Recordset_log=%d%s", $currentPage, 0, $queryString_Recordset_log); ?>&tab=2#task"><?php echo $multilingual_global_first; ?></a>
-              <?php } // Show if not first page ?></td>
-          <td><?php if ($pageNum_Recordset_log > 0) { // Show if not first page ?>
-              <a href="<?php printf("%s?pageNum_Recordset_log=%d%s", $currentPage, max(0, $pageNum_Recordset_log - 1), $queryString_Recordset_log); ?>&tab=2#task"><?php echo $multilingual_global_previous; ?></a>
-              <?php } // Show if not first page ?></td>
-          <td><?php if ($pageNum_Recordset_log < $totalPages_Recordset_log) { // Show if not last page ?>
-              <a href="<?php printf("%s?pageNum_Recordset_log=%d%s", $currentPage, min($totalPages_Recordset_log, $pageNum_Recordset_log + 1), $queryString_Recordset_log); ?>&tab=2#task"><?php echo $multilingual_global_next; ?></a>
-              <?php } // Show if not last page ?></td>
-          <td><?php if ($pageNum_Recordset_log < $totalPages_Recordset_log) { // Show if not last page ?>
-              <a href="<?php printf("%s?pageNum_Recordset_log=%d%s", $currentPage, $totalPages_Recordset_log, $queryString_Recordset_log); ?>&tab=2#task"><?php echo $multilingual_global_last; ?></a>
-              <?php } // Show if not last page ?></td>
-        </tr>
-      </table></td>
-<td align="right">   <?php echo ($startRow_Recordset_log + 1) ?> <?php echo $multilingual_global_to; ?> <?php echo min($startRow_Recordset_log + $maxRows_Recordset_log, $totalRows_Recordset_log) ?> (<?php echo $multilingual_global_total; ?> <?php echo $totalRows_Recordset_log ?>)&nbsp;&nbsp;&nbsp;&nbsp;</td>
-</tr>
-</table> 
-
-<?php } else { ?>
-<div class="alert alert-warning" style="margin:6px;">
-    <?php echo $multilingual_user_view_nolog; ?></div>
-
-<?php }  ?> </td>
-</tr>
-</table>  
-<?php }  ?>
-</div>-->
                                 </td>
                             </tr>
                     </table>
