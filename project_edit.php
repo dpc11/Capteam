@@ -177,12 +177,13 @@
         //删除原先选择但是现在没有选的人
          foreach ($users_selecred_old as $key => $val) {
             $user_id = $val['uid'];
+
               if($user_selected_new[$user_id]){
                   //说明该用户已经出现过，跳过不处理
               }else{
                   //该用户为出现过，删除该用户
                     $deletememSQL="DELETE from tk_team where tk_team_pid = $tk_team_pid and tk_team_uid = $user_id";
-              mysql_select_db($database_tankdb, $tankdb);
+              mysql_select_db($deletememSQL, $tankdb);
               $Result1 = mysql_query($deletememSQL, $tankdb) or die(mysql_error());
               //添加项目成员的log记录
               $searchmemSQL="SELECT* FROM tk_user WHERE uid=$user_id";
@@ -202,16 +203,14 @@
                  $Result2 = mysql_query($insertSQLLog, $tankdb) or die(mysql_error());
               }              
            }
-
-     
         
-     //          $insertGoTo = "project_view.php?recordID=$newID";
-     //          if (isset($_SERVER['QUERY_STRING'])) {
-     //            $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-     //            $insertGoTo .= $_SERVER['QUERY_STRING'];
-     //          }
-     //          header(sprintf("Location: %s", $insertGoTo));
-        // exit;
+            $insertGoTo = "project_view.php?recordID=$newID";
+            if (isset($_SERVER['QUERY_STRING'])) {
+              $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
+              $insertGoTo .= $_SERVER['QUERY_STRING'];
+            }
+            header(sprintf("Location: %s", $insertGoTo));
+        exit;
         }//else
         
       }//MM_update
