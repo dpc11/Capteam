@@ -1,5 +1,6 @@
 <?php
 error_reporting(0);
+date_default_timezone_set('PRC');
 $hostname_tankdb = "paytonsql.mysql.rds.aliyuncs.com:3306";   //database host 
 $database_tankdb = "wss";   //database name
 $username_tankdb = "wss";   //mysql user name
