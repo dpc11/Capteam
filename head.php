@@ -35,60 +35,68 @@ $totalRows_Recordset_anc=0;
 <script type="text/javascript" src="js/lhgcore/lhgcore.js"></script>
 <script type="text/javascript" src="js/lhgcore/lhgdialog.js"></script>
 
-						<script type="text/javascript">  
-							var blinkTitle = function (option) {
-								var title = null;
-								var newTitle = null;
-								var handle = null;
-								var state = false;
-								var interval = null;
-			 
-								if (option) {
-									newTitle = option.newTitle ? option.newTitle : '';
-									title = option.title ? option.title : document.title;
-									interval = option.interval ? option.interval : 600;
-								} else {
-									newTitle = '<?php echo $multilingual_newmessage1;?> Capteam';
-									title = '<?php echo $multilingual_newmessage2;?> Capteam';
-									interval = 600;
-								}
-			 
-								function start() {
-									var step=0, _title = document.title;
-									var timer = setInterval(function() {
-									step++;
-									if (step==3) {step=1};
-									if (step==1) {document.title='<?php echo $multilingual_newmessage1;?> Capteam'};
-									if (step==2) {document.title='<?php echo $multilingual_newmessage2;?> Capteam'};
-									}, 500);
+						<script type="text/javascript">
+    var blinkTitle = function (option) {
+        var title = null;
+        var newTitle = null;
+        var handle = null;
+        var state = false;
+        var interval = null;
 
-									return [timer, _title];
-								}
-								return {
-									start: start
-								}
-							}();
-			 
-							/**
-							 * 开始标题闪烁
-							 */
+        if (option) {
+            newTitle = option.newTitle ? option.newTitle : '';
+            title = option.title ? option.title : document.title;
+            interval = option.interval ? option.interval : 600;
+        } else {
+            newTitle = '<?php echo $multilingual_newmessage1;?> Capteam';
+            title = '<?php echo $multilingual_newmessage2;?> Capteam';
+            interval = 600;
+        }
 
-							setInterval(function() {
-										
-								$.ajax({
-									url:'message_check.php',
-									success:function(resp){
-											
-										resp = JSON.parse(resp);
-										if(resp!="0"){
-											blinkTitle.start();
-											$("#conmsg")[0].innerHTML=' <span class="label label-danger">' + resp + '</span>';	
-										}	
-									}
-								});
-							}, 120000);
-						</script>  
+        function start() {
+            var step = 0,
+                _title = document.title;
+            var timer = setInterval(function () {
+                step++;
+                if (step == 3) {
+                    step = 1
+                };
+                if (step == 1) {
+                    document.title = '<?php echo $multilingual_newmessage1;?> Capteam'
+                };
+                if (step == 2) {
+                    document.title = '<?php echo $multilingual_newmessage2;?> Capteam'
+                };
+            }, 500);
+
+            return [timer, _title];
+        }
+        return {
+            start: start
+        }
+    }();
+
+    /**
+     * 开始标题闪烁
+     */
+
+    setInterval(function () {
+
+        $.ajax({
+            url: 'message_check.php',
+            success: function (resp) {
+
+                resp = JSON.parse(resp);
+                if (resp != "0") {
+                    blinkTitle.start();
+                    $("#conmsg")[0].innerHTML = ' <span class="label label-danger">' + resp + '</span>';
+                }
+            }
+        });
+    }, 120000);
+</script>
 </head>
+    
 <body id="docbody" style="min-width:1510px;">
 		<div class="clearboth"></div>
 		<div id="foot_top" class="foot_top">
@@ -150,8 +158,8 @@ $totalRows_Recordset_anc=0;
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo $_SESSION['MM_Displayname']; ?> <span class="caret"></span></a>
 							<ul class="dropdown-menu pull-right">
 								<li><a href="user_view.php?recordID=<?php echo $_SESSION['MM_uid']; ?>"><?php echo $multilingual_head_myprofile; ?></a></li>
-								<li><a href="default_user_edit.php?UID=<?php echo $_SESSION['MM_uid']; ?>"><?php echo $multilingual_head_edituserinfo; ?></a></li>
-								<li><a href="setting.php?type=setting"><?php echo $multilingual_head_backend; ?></a></li>
+								<li><a href="user_edit.php?UID=<?php echo $_SESSION['MM_uid']; ?>"><?php echo $multilingual_head_edituserinfo; ?></a></li>
+<!--								<li><a href="setting.php?type=setting"><?php echo $multilingual_head_backend; ?></a></li>-->
 								<li><?php echo $multilingual_head_help; ?></li>
 								<li class="divider"></li>
 								<li><a href="<?php echo $logoutAction ?>"  ><?php echo $multilingual_head_logout; ?></a></li>

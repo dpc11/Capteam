@@ -29,14 +29,14 @@ if (isset($_GET['totalRows_DetailRS1'])) {
 }
 $totalPages_DetailRS1 = ceil($totalRows_DetailRS1/$maxRows_DetailRS1)-1;
 
-$maxRows_Recordset_prj = 15;
-$pageNum_Recordset_prj = 0;
-if (isset($_GET['pageNum_Recordset_prj'])) {
-  $pageNum_Recordset_prj = $_GET['pageNum_Recordset_prj'];
-}
-$startRow_Recordset_prj = $pageNum_Recordset_prj * $maxRows_Recordset_prj;
-
-$colname_Recordset_prj = $row_DetailRS1['uid'];
+//$maxRows_Recordset_prj = 15;
+//$pageNum_Recordset_prj = 0;
+//if (isset($_GET['pageNum_Recordset_prj'])) {
+//  $pageNum_Recordset_prj = $_GET['pageNum_Recordset_prj'];
+//}
+//$startRow_Recordset_prj = $pageNum_Recordset_prj * $maxRows_Recordset_prj;
+//
+//$colname_Recordset_prj = $row_DetailRS1['uid'];
 
 /*mysql_select_db($database_tankdb, $tankdb);
 $query_Recordset_prj = sprintf("SELECT * FROM tk_project inner join tk_status_project on tk_project.project_status=tk_status_project.psid WHERE project_to_user = %s ORDER BY project_lastupdate DESC", GetSQLValueString($colname_Recordset_prj, "text"));
@@ -44,61 +44,61 @@ $query_limit_Recordset_prj =  sprintf("%s LIMIT %d, %d", $query_Recordset_prj, $
 $Recordset_prj = mysql_query($query_limit_Recordset_prj, $tankdb) or die(mysql_error());
 $row_Recordset_prj = mysql_fetch_assoc($Recordset_prj);*/
 
-if (isset($_GET['totalRows_Recordset_prj'])) {
-  $totalRows_Recordset_prj = $_GET['totalRows_Recordset_prj'];
-} else {
-  $all_Recordset_prj = mysql_query($query_Recordset_prj);
-  $totalRows_Recordset_prj = mysql_num_rows($all_Recordset_prj);
-}
-$totalPages_Recordset_prj = ceil($totalRows_Recordset_prj/$maxRows_Recordset_prj)-1;
-$queryString_Recordset_prj = "";
-if (!empty($_SERVER['QUERY_STRING'])) {
-  $params = explode("&", $_SERVER['QUERY_STRING']);
-  $newParams = array();
-  foreach ($params as $param) {
-    if (stristr($param, "pageNum_Recordset_prj") == false && 
-        stristr($param, "totalRows_Recordset_prj") == false && 
-        stristr($param, "tab") == false) {
-      array_push($newParams, $param);
-    }
-  }
-  if (count($newParams) != 0) {
-    $queryString_Recordset_prj = "&" . htmlentities(implode("&", $newParams));
-  }
-}
-$queryString_Recordset_prj = sprintf("&totalRows_Recordset_prj=%d%s", $totalRows_Recordset_prj, $queryString_Recordset_prj);
+//if (isset($_GET['totalRows_Recordset_prj'])) {
+//  $totalRows_Recordset_prj = $_GET['totalRows_Recordset_prj'];
+//} else {
+//  $all_Recordset_prj = mysql_query($query_Recordset_prj);
+//  $totalRows_Recordset_prj = mysql_num_rows($all_Recordset_prj);
+//}
+//$totalPages_Recordset_prj = ceil($totalRows_Recordset_prj/$maxRows_Recordset_prj)-1;
+//$queryString_Recordset_prj = "";
+//if (!empty($_SERVER['QUERY_STRING'])) {
+//  $params = explode("&", $_SERVER['QUERY_STRING']);
+//  $newParams = array();
+//  foreach ($params as $param) {
+//    if (stristr($param, "pageNum_Recordset_prj") == false && 
+//        stristr($param, "totalRows_Recordset_prj") == false && 
+//        stristr($param, "tab") == false) {
+//      array_push($newParams, $param);
+//    }
+//  }
+//  if (count($newParams) != 0) {
+//    $queryString_Recordset_prj = "&" . htmlentities(implode("&", $newParams));
+//  }
+//}
+//$queryString_Recordset_prj = sprintf("&totalRows_Recordset_prj=%d%s", $totalRows_Recordset_prj, $queryString_Recordset_prj);
+//
+//$maxRows_Recordset_log = 15;
+//$pageNum_Recordset_log = 0;
+//if (isset($_GET['pageNum_Recordset_log'])) {
+//  $pageNum_Recordset_log = $_GET['pageNum_Recordset_log'];
+//}
+//$startRow_Recordset_log = $pageNum_Recordset_log * $maxRows_Recordset_log;
+//
+//$colname_Recordset_log = $row_DetailRS1['uid'];
+//
+//$colmonth_log = date("m");
+//$_SESSION['ser_logmonth'] = $colmonth_log;
+//if (isset($_GET['logmonth'])) {
+//  $colmonth_log = $_GET['logmonth'];
+//  $_SESSION['ser_logmonth'] = $colmonth_log;
+//}
+//
+//$colyear_log = date("Y");
+//$_SESSION['ser_logyear'] = $colyear_log;
+//if (isset($_GET['logyear'])) {
+//  $colyear_log = $_GET['logyear'];
+//  $_SESSION['ser_logyear'] = $colyear_log;
+//}
+//
+//$colday_log = "";
+//$_SESSION['ser_logday'] = $colday_log;
+//if (isset($_GET['logday'])) {
+//  $colday_log = $_GET['logday'];
+//  $_SESSION['ser_logday'] = $colday_log;
+//}
 
-$maxRows_Recordset_log = 15;
-$pageNum_Recordset_log = 0;
-if (isset($_GET['pageNum_Recordset_log'])) {
-  $pageNum_Recordset_log = $_GET['pageNum_Recordset_log'];
-}
-$startRow_Recordset_log = $pageNum_Recordset_log * $maxRows_Recordset_log;
-
-$colname_Recordset_log = $row_DetailRS1['uid'];
-
-$colmonth_log = date("m");
-$_SESSION['ser_logmonth'] = $colmonth_log;
-if (isset($_GET['logmonth'])) {
-  $colmonth_log = $_GET['logmonth'];
-  $_SESSION['ser_logmonth'] = $colmonth_log;
-}
-
-$colyear_log = date("Y");
-$_SESSION['ser_logyear'] = $colyear_log;
-if (isset($_GET['logyear'])) {
-  $colyear_log = $_GET['logyear'];
-  $_SESSION['ser_logyear'] = $colyear_log;
-}
-
-$colday_log = "";
-$_SESSION['ser_logday'] = $colday_log;
-if (isset($_GET['logday'])) {
-  $colday_log = $_GET['logday'];
-  $_SESSION['ser_logday'] = $colday_log;
-}
-
-$coldate = $colyear_log.$colmonth_log.$colday_log;
+//$coldate = $colyear_log.$colmonth_log.$colday_log;
 
 ?>
 <?php require('head.php'); ?>
@@ -123,58 +123,58 @@ function   exportexcel()
       
       } 
 	 
-<?php 
-$tab = "-1";
-if (isset($_GET['tab'])) {
-  $tab = $_GET['tab'];
-}
-if($tab==2){
-echo "
-<script language='javascript'>
-function tabs2()
-{
-var len = 3;
-for (var i = 1; i <= len; i++)
-{
-document.getElementById('tab_a' + i).style.display = (i == 2) ? 'block' : 'none';
-document.getElementById('tab_' + i).className = (i == 2) ? 'onhover' : 'none';
-}
-}
-</script>
-";
-}
-?>
-<?php 
-$tab = "-1";
-if (isset($_GET['tab'])) {
-  $tab = $_GET['tab'];
-}
-if($tab==3){
-echo "
-<script language='javascript'>
-function tabs3()
-{
-var len = 3;
-for (var i = 1; i <= len; i++)
-{
-document.getElementById('tab_a' + i).style.display = (i == 3) ? 'block' : 'none';
-document.getElementById('tab_' + i).className = (i == 3) ? 'onhover' : 'none';
-}
-}
-</script>
-";
-}
-?>
+//<?php 
+//$tab = "-1";
+//if (isset($_GET['tab'])) {
+//  $tab = $_GET['tab'];
+//}
+//if($tab==2){
+//echo "
+//<script language='javascript'>
+//function tabs2()
+//{
+//var len = 3;
+//for (var i = 1; i <= len; i++)
+//{
+//document.getElementById('tab_a' + i).style.display = (i == 2) ? 'block' : 'none';
+//document.getElementById('tab_' + i).className = (i == 2) ? 'onhover' : 'none';
+//}
+//}
+//</script>
+//";
+//}
+//?>
+//<?php 
+//$tab = "-1";
+//if (isset($_GET['tab'])) {
+//  $tab = $_GET['tab'];
+//}
+//if($tab==3){
+//echo "
+//<script language='javascript'>
+//function tabs3()
+//{
+//var len = 3;
+//for (var i = 1; i <= len; i++)
+//{
+//document.getElementById('tab_a' + i).style.display = (i == 3) ? 'block' : 'none';
+//document.getElementById('tab_' + i).className = (i == 3) ? 'onhover' : 'none';
+//}
+//}
+//</script>
+//";
+//}
+//?>
 
-function tabs(n)
-{
-var len = 3;
-for (var i = 1; i <= len; i++)
-{
-document.getElementById('tab_a' + i).style.display = (i == n) ? 'block' : 'none';
-document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
-}
-}
+//function tabs(n)
+//{
+//var len = 3;
+//for (var i = 1; i <= len; i++)
+//{
+//document.getElementById('tab_a' + i).style.display = (i == n) ? 'block' : 'none';
+//document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
+//}
+//}
 </script>
 <body <?php if($tab==2){ echo "onload='tabs2();'";} elseif($tab==3){ echo "onload='tabs3();'";} ?>>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -252,7 +252,7 @@ document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
               
 		  <?php if ($_SESSION['MM_uid'] == $row_DetailRS1['uid']) { ?>
 		  <td width="10%">
-		  <a href="default_user_edit.php?UID=<?php echo $row_DetailRS1['uid']; ?>"><span class="glyphicon glyphicon-pencil"></span> <?php echo $multilingual_global_action_edit; ?></a>
+		  <a href="user_edit.php?UID=<?php echo $row_DetailRS1['uid']; ?>"><span class="glyphicon glyphicon-pencil"></span> <?php echo $multilingual_global_action_edit; ?></a>
 		  </td>
 		  <?php }  ?> 
               
