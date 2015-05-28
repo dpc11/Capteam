@@ -28,7 +28,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form2")) {
   mysql_select_db($database_tankdb, $tankdb);
   $Result1 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
 
-  $updateGoTo = "default_user_edit.php?UID=".$colname_Recordset1;
+  $updateGoTo = "user_login.php";
   if (isset($_SERVER['QUERY_STRING'])) {
     $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
     $updateGoTo .= $_SERVER['QUERY_STRING'];
