@@ -1,8 +1,7 @@
 <?php
-$username=$_POST['username'];
+$r=$_GET['r'];
 $key=$_POST['key'];
-if (!$username||$username=="Guest") $username="Guest".rand(1000,9999);
-$r=$_POST['r'];
+$username=$_GET['u'];
 
 include_once("incsan.php");
 sanV($username);
@@ -21,7 +20,7 @@ $wmode="transparent";
 	
 <html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Video Consultation by VideoWhisper.com</title>
 <style type="text/css">
 <!--

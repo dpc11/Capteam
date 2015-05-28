@@ -62,7 +62,7 @@ if ($r)
 	?>
 <div class="info">
   <strong>Who are you? </strong>
-<form id="form1" name="form1" method="post" action="videoconsultation.php">
+<form id="form1" name="form1" method="post" action="video.php">
   I am
   <input name="username" type="text" id="username" value="Guest" size="12" maxlength="16" />.
   <input name="r" type="hidden" id="r" value="<?=$r?>" />
