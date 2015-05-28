@@ -370,7 +370,7 @@ $multilingual_project_view_section1 = "项目基本信息";
 $multilingual_project_view_section2 = "甲方信息";
 $multilingual_project_view_section3 = "执行信息";
 $multilingual_project_view_section4 = "相关任务";
-$multilingual_project_view_wbs = "工作分解结构(WBS)";
+$multilingual_project_view_wbs = "&nbsp;&nbsp;工作分解结构(WBS)";
 $multilingual_project_view_log = "项目日志";
 $multilingual_projectlist_title = "项目管理";
 $multilingual_projectlist_new = "新建项目";
@@ -399,6 +399,8 @@ $multilingual_board_view_nowbs = "&nbsp;&nbsp;&nbsp;关于看板";
 $multilingual_project_view_nowbstext = "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;项目应该被分解成若干阶段，然后在阶段中才能对具体组员分配具体任务，用于推进项目进度，使项目的完成更加有层次、条理。</p>";
 $multilingual_project_add_text = "<p>每个项目包含了一个团队。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;创建一个项目，然后您才能分解阶段。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;项目创建人就是组长，他／她可以为项目选择若干成员，并且分配不同职责：帮助组长分配任务，或者去完成任务。</p>";
+$multilingual_project_edit_text = "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每个项目包含了一个团队。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;项目创建人就是组长，他／她可以为项目选择若干成员，并且分配不同职责：帮助组长分配任务，或者去完成任务。</p>";
 
 $multilingual_stage_add_text = "<p>每个项目将经历不同阶段。</p><br />
@@ -615,13 +617,16 @@ $multilingual_log_newlog = "最近更新的日志";
 $multilingual_log_comment = "评论";
 
 // *** 日程
-$multilingual_schedule_view = "所有日程";
-$multilingual_schedule_task = "任务日程";
-$multilingual_schedule_person = "个人日程";
-$multilingual_schedule_course = "课业日程";
+$multilingual_schedule_view = "&nbsp;&nbsp;&nbsp;所有日程";
+$multilingual_schedule_task = "&nbsp;&nbsp;&nbsp;任务日程";
+$multilingual_schedule_person = "&nbsp;&nbsp;&nbsp;个人日程";
+$multilingual_schedule_team = "&nbsp;&nbsp;&nbsp;团队成员日程";
+$multilingual_schedule_course = "&nbsp;&nbsp;&nbsp;课业日程";
 $multilingual_schedule_new = "新建日程";
 $multilingual_schedule_review = "查看日程";
 $multilingual_schedule_edit = "编辑日程";
+
+$multilingual_schedule_team_tip = "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;团队成员日程提供了一个综合性的日程视图，它将团队成员的空闲时间整合到一张表中，便于团队选择讨论时间、分配任务等</p>";
 
 $multilingual_schedule_view_tip = "<p>所有日程提供了一个综合性的日程视图</p><br />
 <p>所有日程是用来查看本月或者本周的任务、个人、课程安排的综合视图，点击事件标签即可查看详细，切换右上角的标签可分别查看概要和详细日程安排</p><br /><p>若需修改日程请前往对应分类视图。</p>

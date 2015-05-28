@@ -37,18 +37,18 @@
 		}
 	}
 	
-	//¸ù¾İËÑË÷Ìõ¼ş²éÑ¯ËùÓĞ·ûºÏÌõ¼şµÄÏîÄ¿
+	//Â¸Ã¹Â¾ÃÃ‹Ã‘Ã‹Ã·ÃŒÃµÂ¼Ã¾Â²Ã©Ã‘Â¯Ã‹Ã¹Ã“ÃÂ·Ã»ÂºÃÃŒÃµÂ¼Ã¾ÂµÃ„ÃÃ®Ã„Â¿
 	function get_project_list($pagetabs,$prjtouser,$today_date,$colinputtitle_Recordset1,$orderlist,$sortlist,$startRow_Recordset1,$maxRows_Recordset1){
 
 		$where="";
 		if($pagetabs == "jprj"){
-			//ÎÒ²ÎÓëµÄ
+			//ÃÃ’Â²ÃÃ“Ã«ÂµÃ„
 			$where .= " t.tk_team_uid = $prjtouser AND p.project_del_status != -1 AND t.tk_team_ulimit != 3 ";
 		}else if($pagetabs == "mprj"){
-			//ÎÒ¸ºÔğµÄÏîÄ¿
+			//ÃÃ’Â¸ÂºÃ”Ã°ÂµÃ„ÃÃ®Ã„Â¿
 			$where .= " p.project_to_user = $prjtouser AND p.project_del_status != -1 ";
 		}else if($pagetabs == "allprj"){
-			//ËùÓĞÏîÄ¿
+			//Ã‹Ã¹Ã“ÃÃÃ®Ã„Â¿
 			$where .= " t.tk_team_uid = $prjtouser AND p.project_del_status != -1";
 		}
 		
@@ -57,7 +57,7 @@
 			$where .= "  AND p.project_name LIKE $colprt ";			
 		}
 		global $tankdb;
-		//ĞŞ¸ÄºóµÄsqlÓï¾ä					
+		//ÃÃÂ¸Ã„ÂºÃ³ÂµÃ„sqlÃ“Ã¯Â¾Ã¤					
 		$query_Recordset1 = sprintf("
 		SELECT
 			p.id,p.project_name,p.project_text,p.project_start,p.project_end,p.project_to_user,user.tk_display_name,p.project_lastupdate,p.project_del_status,p.project_create_time 
@@ -81,18 +81,18 @@
 		return $Recordset1;
 	}
 	
-	//·µ»ØÉÏÃæ²éµ½µÄËùÓĞ·ûºÏÌõ¼şµÄµÄÏîÄ¿ÊıÁ¿
+	//Â·ÂµÂ»Ã˜Ã‰ÃÃƒÃ¦Â²Ã©ÂµÂ½ÂµÃ„Ã‹Ã¹Ã“ÃÂ·Ã»ÂºÃÃŒÃµÂ¼Ã¾ÂµÃ„ÂµÃ„ÃÃ®Ã„Â¿ÃŠÃ½ÃÂ¿
 	function get_project_list_num($pagetabs,$prjtouser,$today_date,$colinputtitle_Recordset1,$orderlist,$sortlist,$startRow_Recordset1,$maxRows_Recordset1){
 
 		$where="";
 		if($pagetabs == "jprj"){
-			//ÎÒ²ÎÓëµÄ
+			//ÃÃ’Â²ÃÃ“Ã«ÂµÃ„
 			$where .= " t.tk_team_uid = $prjtouser AND p.project_del_status != -1 AND t.tk_team_ulimit != 3";
 		}else if($pagetabs == "mprj"){
-			//ÎÒ¸ºÔğµÄÏîÄ¿
+			//ÃÃ’Â¸ÂºÃ”Ã°ÂµÃ„ÃÃ®Ã„Â¿
 			$where .= " p.project_to_user = $prjtouser AND p.project_del_status != -1";
 		}else if($pagetabs == "allprj"){
-			//ËùÓĞÏîÄ¿
+			//Ã‹Ã¹Ã“ÃÃÃ®Ã„Â¿
 			$where .= " t.tk_team_uid = $prjtouser";
 		}
 		
@@ -101,7 +101,7 @@
 			$where .= "  AND p.project_name LIKE $colprt ";			
 		}
 		global $tankdb;
-		//ĞŞ¸ÄºóµÄsqlÓï¾ä					
+		//ÃÃÂ¸Ã„ÂºÃ³ÂµÃ„sqlÃ“Ã¯Â¾Ã¤					
 		$query_Recordset1 = sprintf("
 		SELECT
 			p.id,p.project_name,p.project_text,p.project_start,p.project_end,p.project_to_user,user.tk_display_name,p.project_lastupdate,p.project_del_status,p.project_create_time 
@@ -125,7 +125,7 @@
 	}
 	
 	
-    //¸ù¾İÏîÄ¿id»ñµÃÏîÄ¿ĞÅÏ¢µÄÊı¾İ¿â²Ù×÷
+    //Â¸æ ¹æ®é¡¹ç›®idè·å¾—é¡¹ç›®çš„è¯¦ç»†ä¿¡æ¯
     function get_project_by_id($project_id){
         global $tankdb;
         global $database_tankdb;
@@ -137,7 +137,7 @@
 		return $row_project;
     }
 
-    //»ñÈ¡Ä³¸öÓÃ»§¸ºÔğµÄÏîÄ¿µÄÊıÁ¿
+    //Â»Ã±ÃˆÂ¡Ã„Â³Â¸Ã¶Ã“ÃƒÂ»Â§Â¸ÂºÃ”Ã°ÂµÃ„ÃÃ®Ã„Â¿ÂµÃ„ÃŠÃ½ÃÂ¿
     function get_my_total_project_num($user_id){
         global $tankdb;
         global $database_tankdb;

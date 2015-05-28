@@ -11,7 +11,7 @@ do {
 		$updateSQL = sprintf("UPDATE tk_task SET csa_status=1 WHERE tid=%d",                       GetSQLValueString($row_tasks["tid"], "int"));
 		$Result1 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
 	}
-	if(strtotime($row_tasks["csa_plan_et"])>date("Y-m-d")&&($row_tasks["csa_status"]==1||$row_tasks["csa_status"]==6)){
+	if(strtotime($row_tasks["csa_plan_et"])<date("Y-m-d")&&($row_tasks["csa_status"]==1||$row_tasks["csa_status"]==6)){
 		mysql_select_db($database_tankdb, $tankdb);
 		$updateSQL = sprintf("UPDATE tk_task SET csa_status=2 WHERE tid=%d",                       GetSQLValueString($row_tasks["tid"], "int"));
 		$Result1 = mysql_query($updateSQL, $tankdb) or die(mysql_error());

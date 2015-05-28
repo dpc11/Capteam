@@ -5,13 +5,15 @@
 |--------------------------------------------------*/
 
 .dtree {
-	font-size: 12px;
+	font-size: 20px;
 	color: #666;
 	white-space: nowrap;
+	font-family:微软雅黑,黑体;
 }
 .dtree img {
 	border: 0px;
 	vertical-align: middle;
+	height: 29px;
 }
 .dtree a {
 	color: #333;

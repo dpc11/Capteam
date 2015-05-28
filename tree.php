@@ -1,5 +1,5 @@
 <?php
-$str=get_tree( $project_id );
+$str=get_tree( $project_id ); 
 $prjurl="project_view.php?recordID=".$project_id."&pagetab=allprj";
 ?>
 
@@ -10,7 +10,7 @@ $prjurl="project_view.php?recordID=".$project_id."&pagetab=allprj";
 
 <script type="text/javascript" language="javascript">    
  
- 
+/* 
 function TuneHeight()    
 {    
 var frm = document.getElementById("frame_content");    
@@ -29,15 +29,13 @@ if(frm != null && subWeb != null)
                 $("#main_left").css("height", h2);
             });
         })
-
-</script>
 <div class="tree_div" id="main_left">
+*/
+</script>
     <?php if($str <> "0"){ ?>
 	
 	<td valign="top" class="gray2">
-	<div class=" add_title col-xs-12">
-		<h5 ><?php echo $multilingual_project_view_wbs; ?></h5>
-	</div>
+		<h4 style="margin-top:40px; margin-bottom:20px; margin-left: 5px;"><?php echo $multilingual_project_view_wbs; ?></h4>
 <script type="text/javascript">
 
 		var r =<?php echo $str; ?>;
@@ -58,8 +56,10 @@ if(frm != null && subWeb != null)
         document.write(d);
 
 </script>
-		<h4 style="margin-top:40px; margin-left: 5px;" ><?php echo $multilingual_project_view_nowbs; ?></h4>
+		<h5 style="margin-top:40px; margin-left: 5px;" ><?php echo $multilingual_project_view_nowbs; ?></h5>
 		<p > <?php echo $multilingual_project_view_nowbstext; ?></p>
+        <h5 style="margin-top:20px; margin-left: 5px;"><?php echo $multilingual_schedule_team; ?></h5>
+        <p><?php echo $multilingual_schedule_team_tip; ?></p>
 	</td>
 	
     <?php } else{ ?>
@@ -68,7 +68,5 @@ if(frm != null && subWeb != null)
 		<p > <?php echo $multilingual_project_view_nowbstext; ?></p>
 	</td>
     <?php } ?>
-    
-
-</div>
+ 
 </body>
