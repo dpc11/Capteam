@@ -83,13 +83,39 @@ $msg = stripslashes(trim($_GET['msg']));
 
 						--Capteam敬上</div> 	
 				</div>
-			<?php }?>
-                
 				<div class="form-group col-xs-12">
 					<div class="form-group col-xs-6"></div>
 				<!--<div class="form-group col-xs-2"><button type="button" class="btn btn-default" style="font-size:16px;" name="cont" data-loading-text="跳转中……" onclick="jumpto();">登录邮箱</button></div>	
 				--><div class="form-group col-xs-1">
 				<div class="form-group col-xs-3"><button type="button" class="btn btn-default" style="font-size:16px;" onclick="resend();">重发邮件</button></div>		 
+					
+				</div>  
+				<p>&nbsp;</p>
+		
+			</div>
+			<?php }elseif($msg=='无效的链接'){//无效链接?>
+                <div class="form-group col-xs-12" style="font-size:20px;line-height:1.8; word-break: break-all;">
+					<div style="font-size:20px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;尊敬的： <?php echo $email; ?> ，您好，此条链接是无效链接，可能的原因有，1：您已经使用该链接激活您的账号；2：您在本网站申请过重发邮件功能，该链接不是您最新一次重发邮件里的链接，请尝试使用有效的链接。
+						您可以点击下方“登录界面”进入登录界面。
+
+						--Capteam敬上</div> 	
+				</div>
+				<div class="form-group col-xs-12">
+					<div class="form-group col-xs-6"></div>
+				<!--<div class="form-group col-xs-2"><button type="button" class="btn btn-default" style="font-size:16px;" name="cont" data-loading-text="跳转中……" onclick="jumpto();">登录邮箱</button></div>	
+				--><div class="form-group col-xs-1">
+				<div class="form-group col-xs-3"><button type="button" class="btn btn-default" style="font-size:16px;" onclick="login();">点击登录</button></div>		 
+					
+				</div>  
+				<p>&nbsp;</p>
+		
+			</div>
+				<?php }?>
+				<div class="form-group col-xs-12">
+					<div class="form-group col-xs-6"></div>
+				<!--<div class="form-group col-xs-2"><button type="button" class="btn btn-default" style="font-size:16px;" name="cont" data-loading-text="跳转中……" onclick="jumpto();">登录邮箱</button></div>	
+				--><div class="form-group col-xs-1">
+				
 					
 				</div>  
 				<p>&nbsp;</p>

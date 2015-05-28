@@ -47,7 +47,11 @@ $url = "http://localhost/Capteam/user_login.php";
 </html> 
 	<?php
 }else{
-	$msg = 'error.';	
+	$msg = '无效的链接';
+	 $insertGoTo = "user_registerwitherror.php?&msg=".$msg."&email=".$email;
+
+	
+    header(sprintf("Location: %s", $insertGoTo));
 }
 
 echo $msg;
