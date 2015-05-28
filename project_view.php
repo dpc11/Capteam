@@ -466,7 +466,7 @@ $(function() {
 											<?php foreach($user_arr as $key => $val){ 
 												 ?>
 													<tr>
-													<td><?php echo "姓名:".$val["name"]; ?></td>
+													<td><a href="user_view.php?recordID=<?php echo $val["uid"]; ?>"><?php echo "姓名:".$val["name"]; ?></a></td>
 													<td><?php echo "邮箱:".$val["email"]; ?></td>
 													<td><?php echo "电话:".$val["phone_num"]; ?></td>
 													<td><?php echo "总得分:".$val["score"]; ?></td>
