@@ -181,34 +181,38 @@
               if($user_selected_new[$user_id]){
                   //说明该用户已经出现过，跳过不处理
               }else{
-                  //该用户为出现过，删除该用户
-                    $deletememSQL="DELETE from tk_team where tk_team_pid = $tk_team_pid and tk_team_uid = $user_id";
-              mysql_select_db($deletememSQL, $tankdb);
-              $Result1 = mysql_query($deletememSQL, $tankdb) or die(mysql_error());
-              //添加项目成员的log记录
-              $searchmemSQL="SELECT* FROM tk_user WHERE uid=$user_id";
-              mysql_select_db($database_tankdb, $tankdb);
-              $Result1 = mysql_query($searchmemSQL, $tankdb) or die(mysql_error());
-              
-              $FoundUser = mysql_num_rows($Result1);
-                if ($FoundUser) {  
-                  $loginStrDisplayname  = mysql_result($Result1,0,'tk_display_name');
-                }
-            $action='删除了成员:'.$user_id.'--'.$loginStrDisplayname;
-              $timenow=date('Y-m-d H:i:s',time());
-              $insertSQLLog=sprintf("INSERT into tk_log(tk_log_user,tk_log_action,tk_log_time,tk_log_type,tk_log_class)
-                      VALUES(%s,'$action','$timenow','$tk_team_pid','1')",GetSQLValueString($_SESSION['MM_uid'], "int"));
-     
-                 mysql_select_db($database_tankdb, $tankdb);
-                 $Result2 = mysql_query($insertSQLLog, $tankdb) or die(mysql_error());
-              }              
+                  if($user_id =="" || $user_id == null){
+
+                  }else{
+                    //该用户为出现过，删除该用户
+                    $deletememSQL="DELETE from tk_team where tk_team_pid = $project_id and tk_team_uid = $user_id";
+                    mysql_select_db($deletememSQL, $tankdb);
+                    $Result1 = mysql_query($deletememSQL, $tankdb) or die(mysql_error());
+                    //添加项目成员的log记录
+                    $searchmemSQL="SELECT* FROM tk_user WHERE uid=$user_id";
+                    mysql_select_db($database_tankdb, $tankdb);
+                    $Result1 = mysql_query($searchmemSQL, $tankdb) or die(mysql_error());
+                    
+                    $FoundUser = mysql_num_rows($Result1);
+                      if ($FoundUser) {  
+                        $loginStrDisplayname  = mysql_result($Result1,0,'tk_display_name');
+                      }
+                    $action='删除了成员:'.$user_id.'--'.$loginStrDisplayname;
+                    $timenow=date('Y-m-d H:i:s',time());
+                    $insertSQLLog=sprintf("INSERT into tk_log(tk_log_user,tk_log_action,tk_log_time,tk_log_type,tk_log_class)
+                         VALUES(%s,'$action','$timenow','$project_id','1')",GetSQLValueString($_SESSION['MM_uid'], "int"));
+                   mysql_select_db($database_tankdb, $tankdb);
+                   $Result2 = mysql_query($insertSQLLog, $tankdb) or die(mysql_error());
+                  }//else
+                  
+              }  //foreach            
            }
         
-            $insertGoTo = "project_view.php?recordID=$newID";
-            if (isset($_SERVER['QUERY_STRING'])) {
-              $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-              $insertGoTo .= $_SERVER['QUERY_STRING'];
-            }
+            $insertGoTo = "project_view.php?recordID=$project_id";
+            // if (isset($_SERVER['QUERY_STRING'])) {
+            //   $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
+            //   $insertGoTo .= $_SERVER['QUERY_STRING'];
+            // }
             header(sprintf("Location: %s", $insertGoTo));
         exit;
         }//else
