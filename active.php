@@ -6,12 +6,18 @@ $nowtime = time();
 
 
 $query = mysql_query("select uid,token_exptime from tk_user where status='0' and `token`='$verify'");
+
 $row = mysql_fetch_array($query);
 if($row){
 	
 	if($nowtime>$row['token_exptime']){ //30min
 	
-		$msg = '您的激活有效期已过，请登录您的帐号重新发送激活邮件.';
+		$msg = '该链接已过期';
+		 $insertGoTo = "user_registerwitherror.php?&msg=".$msg."&email=".$email;
+
+	
+    header(sprintf("Location: %s", $insertGoTo));
+
 	}else{
 		
 		mysql_query("update tk_user set status=1 where uid=".$row['uid']);
