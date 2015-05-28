@@ -38,7 +38,7 @@ function over()
 			var username=document.getElementById('textfield1').value;
 			var password=document.getElementById('textfield3').value;
 			var email=document.getElementById('textfield5').value;
-			window.open('register_real.php?textfield1='+username+'&&textfield3='+password+'&&textfield5='+email+'&&TYPE=2','_self');
+			window.open('re_send_mail.php?email='+email);
 		}
 		function register(){
 			window.parent.parent.document.getElementById("lhg_registerDILOG").height="350px";
@@ -140,9 +140,9 @@ if(mysql_insert_id()){//写入成功，发邮件，出问题
 			
 				<div class="form-group col-xs-12">
 					<div class="form-group col-xs-6"></div>
-				<div class="form-group col-xs-2"><button type="button" class="btn btn-default" style="font-size:16px;" name="cont" data-loading-text="跳转中……" onclick="jumpto();">登陆邮箱</button></div>	
+				<div class="form-group col-xs-2"><button type="button" class="btn btn-default" style="font-size:16px;" name="cont" data-loading-text="跳转中……" onclick="jumpto();">登录邮箱</button></div>	
 				<div class="form-group col-xs-1">
-				<div class="form-group col-xs-3"><button type="button" class="btn btn-default" style="font-size:16px;"  onclick="login();">已激活，点击登陆</button></div>		 
+				<div class="form-group col-xs-3"><button type="button" class="btn btn-default" style="font-size:16px;"  onclick="login();">已激活，点击登录</button></div>		 
 					
 				</div>  
 				<p>&nbsp;</p>

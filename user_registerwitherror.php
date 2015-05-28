@@ -38,7 +38,7 @@ function over()
 			var username=document.getElementById('textfield1').value;
 			var password=document.getElementById('textfield3').value;
 			var email=document.getElementById('textfield5').value;
-			window.open('register_real.php?textfield1='+username+'&&textfield3='+password+'&&textfield5='+email+'&&TYPE=2','_self');
+			window.open('re_send_mail.php?email='+email);
 		}
 		function register(){
 			window.parent.parent.document.getElementById("lhg_registerDILOG").height="350px";
@@ -74,13 +74,12 @@ $msg = stripslashes(trim($_GET['msg']));
 				</div>
 			<?php  
 			if($msg=='该链接已过期'){//过期链接
-       $sql = "DELETE FROM tk_user WHERE tk_user_email='$email'";
-mysql_query($sql);
+       
 
 				?>
 				<div class="form-group col-xs-12" style="font-size:20px;line-height:1.8; word-break: break-all;">
 					<div style="font-size:20px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;尊敬的： <?php echo $email; ?> ，您好，此条链接（有效期为24小时，以邮件发到您邮箱的具体时间开始计起）
-						已过期，您可以点击下方“点击注册”按钮进入注册页面，使用本邮箱或其他有效邮箱重新注册。
+						已过期，您可以点击下方“重发邮件”，然后到邮箱重新激活链接。
 
 						--Capteam敬上</div> 	
 				</div>
@@ -90,7 +89,7 @@ mysql_query($sql);
 					<div class="form-group col-xs-6"></div>
 				<!--<div class="form-group col-xs-2"><button type="button" class="btn btn-default" style="font-size:16px;" name="cont" data-loading-text="跳转中……" onclick="jumpto();">登录邮箱</button></div>	
 				--><div class="form-group col-xs-1">
-				<div class="form-group col-xs-3"><button type="button" class="btn btn-default" style="font-size:16px;"  onclick="login();">重发邮件</button></div>		 
+				<div class="form-group col-xs-3"><button type="button" class="btn btn-default" style="font-size:16px;" onclick="resend();">重发邮件</button></div>		 
 					
 				</div>  
 				<p>&nbsp;</p>
