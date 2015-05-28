@@ -102,7 +102,7 @@ $tk_user_email = sprintf("%s,", GetSQLValueString(str_replace("%","%%",$_POST['t
 				 <div class="form-group col-xs-12">
 				 <div class="form-group col-xs-1"></div>
 				 <div class="form-group col-xs-2">
-					<img src="/Capteam/Capteam/img/OK.png" >
+					<img src="/Capteam/img/OK.png" >
 				 </div>
 				 <div class="form-group col-xs-9">
 					<p id="titlemsg" name="titlemsg" style="font-size:24px;font-weight:bold;margin:15px">登录失败!<br></p>
