@@ -9,8 +9,8 @@
 <link type="text/css" href="css/ui/ui.all.css" rel="stylesheet" />
 <link type="text/css" href="css/lhgcore/lhgcheck.css" rel="stylesheet" />
 <script type="text/javascript" src="js/lhgcore/lhgcheck.js"></script>
-<link rel="stylesheet" href="css/bootstrap/bootstrap-multiselect.css" type="text/css"/>
-<script type="text/javascript" src="js/bootstrap/bootstrap-multiselect.js"></script>
+<!-- <link rel="stylesheet" href="css/bootstrap/bootstrap-multiselect.css" type="text/css"/>
+<script type="text/javascript" src="js/bootstrap/bootstrap-multiselect.js"></script> -->
 <link rel="stylesheet" href="css/bootstrap/datepicker3.css" type="text/css"/>
 <script type="text/javascript" src="js/bootstrap/bootstrap-datepicker.js"></script>
 <script type="text/javascript" src="js/bootstrap/locales/bootstrap-datepicker.zh-CN.js"></script>
@@ -53,35 +53,21 @@
   do { 
       if($users_selecred_old[$user_arr_list["uid"]]){
           //如果该成员是原先被选中的
-          if($user_arr_list["tk_user_contact"]==""){ 
-            $phone="空";
-          }else{
-            $phone=$user_arr_list["tk_user_contact"]; 
-          }
-          $selected .= "||".$user_arr_list["tk_display_name"].
-          "【".$user_arr_list["tk_user_contact"].
-          "】【".$user_arr_list["tk_user_email"].
-          "】=".$user_arr_list["uid"]."%".
-          $user_arr_list["tk_display_name"]."%".
-          $phone ."%".$user_arr_list["tk_user_email"]."%".
-          $user_arr_list["tk_display_name"]."'";
-
           $user_id_arr[$user_arr_list["uid"]]=$user_arr_list["uid"];
+      }//if
+
+      if($user_arr_list["tk_user_contact"]==""){ 
+        $phone="空";
       }else{
-          //如果该成员时原先未被选中的
-          if($user_arr_list["tk_user_contact"]==""){ 
-            $phone="空";
-          }else{
-            $phone=$user_arr_list["tk_user_contact"]; 
-          }
-          $constraint .= "||".$user_arr_list["tk_display_name"].
-          "【".$user_arr_list["tk_user_contact"].
-          "】【".$user_arr_list["tk_user_email"].
-          "】=".$user_arr_list["uid"]."%".
-          $user_arr_list["tk_display_name"]."%".
-          $phone ."%".$user_arr_list["tk_user_email"]."%".
-          $user_arr_list["tk_display_name"]."'";
+        $phone=$user_arr_list["tk_user_contact"]; 
       }//else
+      $constraint .= "||".$user_arr_list["tk_display_name"].
+      "【".$user_arr_list["tk_user_contact"].
+      "】【".$user_arr_list["tk_user_email"].
+      "】=".$user_arr_list["uid"]."%".
+      $user_arr_list["tk_display_name"]."%".
+      $phone ."%".$user_arr_list["tk_user_email"]."%".
+      $user_arr_list["tk_display_name"]."'";
   } while ($user_arr_list = mysql_fetch_assoc($userRS)); 
 
   
@@ -225,10 +211,6 @@
            }
         
             $insertGoTo = "project_view.php?recordID=$project_id";
-            // if (isset($_SERVER['QUERY_STRING'])) {
-            //   $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-            //   $insertGoTo .= $_SERVER['QUERY_STRING'];
-            // }
             header(sprintf("Location: %s", $insertGoTo));
         exit;
         }//else
@@ -329,29 +311,6 @@
                             </tr>
                           </thead>
                           <tbody id="teamlist_tr">
-                          <?php
-                          foreach ($user_id_arr as $key => $val) {
-                          ?>
-                            <tr>
-                              <td style="display:none;">
-                              <?php ?>
-                                <span id="<?php echo $val?>"><?php echo $val?></span>
-                              </td>
-                              <td data-ellipsis="true" style="width:150px;text-align:center;">
-                                <span id="<?php echo  $users_selecred_old[$val]['name'];?>"><?php echo  $users_selecred_old[$val]['name'];?></span>
-                              </td>
-                              <td data-ellipsis="true" style="width:150px;text-align:center;">
-                                <span id="<?php echo  $users_selecred_old[$val]['phone_num'];?>"><?php echo  $users_selecred_old[$val]['phone_num'];?></span>
-                              </td>
-                              <td data-ellipsis="true" style="width:200px;text-align:center;">
-                                <span id="<?php echo  $users_selecred_old[$val]['email'];?>"><?php echo  $users_selecred_old[$val]['email'];?></span>
-                              </td>
-                              <td>
-                                <a href="#" onclick="return delet('teamlist_tr',this);">X</a>
-                              </td>
-                              <td></td>
-                            </tr>
-                          <?php } ?>
                           </tbody>
                         </table>
                         </div>
@@ -431,6 +390,10 @@
         format: "yyyy-mm-dd"
       <?php if ($language=="cn") {echo ", language: 'zh-CN'" ;}?>
       });
+
+      init_member();
+
+
     horsey(project_team_name, {
   
       suggestions:[
@@ -452,7 +415,40 @@
   });
    //function get_selected() {  var sel =  document.getElementById('selected').value; alert(sel);} 
    var sel_now="init";
-  
+    function init_member(){
+          //动态添加已有的项目成员
+    <?php   foreach ($user_id_arr as $key => $val) {     ?> 
+      document.getElementById('teamlist_tr').innerHTML=document.getElementById('teamlist_tr') .innerHTML+"<tr><td style=\"display:none;\"><span id=\"<?php echo $val; ?>\"><?php echo $val; ?></span></td><td  data-ellipsis=\"true\" data-ellipsis- max-width=\"30px\" style=\"width:150px;text-align:center;\"><span id=\"<?php echo $users_selecred_old[$val]['name']; ?>\"><?php echo $users_selecred_old[$val][ 'name']; ?></span></td><td data- ellipsis=\"true\" data-ellipsis-max-width=\"30px\" style=\"width:150px;text- align:center;\"><span id=\"<?php echo$users_selecred_old[$val]['phone_num']; ?>\"><?php echo $users_selecred_old[$val]['phone_num']; ?></span></td><td  data-ellipsis=\"true\" data-ellipsis-max-width=\"30px\" style=\"width:200px;text-align:center;\"><span id=\"<?php echo $users_selecred_old[$val]['email']; ?>\"><?php echo $users_selecred_old[$val]['email']; ?></span></td><td ><a href=\"#\" onclick=\"return delet('teamlist_tr',this);\">X</a><td></td></tr>";
+      // var x="<?php echo $users_selecred_old[$val]['name']; ?>【<?php echo $users_selecred_old[$val]['phone_num']; ?>】【<?php echo $users_selecred_old[$val]['email']; ?>】";
+      // var i= document.getElementById('constraint').value.indexOf(x); 
+      // var left=""
+      // var right="";
+      // if(i>0){
+      //   left =document.getElementById('constraint').value.substr(0,i-2);  
+      //   right =document.getElementById('constraint').value.substr(i,document.getElementById('constraint').length); 
+      // }else {
+      //   right =document.getElementById('constraint').value; 
+      // }         
+        
+      // var rrr =right.split('||');
+      // var old_sel=document.getElementById('selected').value;
+      // document.getElementById('selected').value=rrr[0]+"||"+old_sel;
+      // var k=1;
+      // new_con = left;
+      // while(rrr[k])
+      // {
+      //   new_con = new_con+"||"+rrr[k];
+      //   k++;
+      // }
+
+      // document.getElementById('now_sel').innerHTML="<input type=\"text\" id=\"now_selected\" name=\"now_selected\" value=\"" +document.getElementById('selected').value+"\">" ;
+      // document.getElementById('constraint').value=new_con;
+      // document.getElementById('project_team_name').value="";
+
+    <?php } ?> 
+    }
+
+
     function delet(id,obj){
 
       var tr= obj.parentNode.parentNode;
@@ -464,7 +460,7 @@
       var uu_mail = tr.childNodes[3].childNodes[0].id;
       old_con=document.getElementById('constraint').value;
       //alert(document.getElementById('constraint').value);
-      // alert(document.getElementById('selected').value);
+      //alert(document.getElementById('selected').value);
       var xx=uu_name+"【"+uu_phone+"】【"+uu_mail+"】";
       var j= document.getElementById('selected').value.indexOf(xx); 
       var sel_left="";
@@ -487,11 +483,11 @@
         y++;
       }
       document.getElementById('selected').value=new_sel;
-      // alert(document.getElementById('selected').value);
+      //alert(document.getElementById('selected').value);
 
       var add=uu_name+"【"+uu_phone+"】【"+uu_mail+"】="+uu_id+"%"+uu_name+"%"+uu_phone+"%"+uu_mail+"%"+uu_name+"'";
       document.getElementById('constraint').value = old_con+"||"+add;
-      // alert(document.getElementById('constraint').value);
+      //alert(document.getElementById('constraint').value);
       document.getElementById('now_sel').innerHTML="<input type=\"text\" id=\"now_selected\" name=\"now_selected\" value=\"" +document.getElementById('selected').value+"\">" ;
       document.getElementById(id).deleteRow(rowIndex-1);  
       document.getElementById('project_team_name').value="";

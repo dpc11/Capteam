@@ -177,17 +177,32 @@ J.check.rules = [
 	{ name: 'textfield3', mid: 'password_msg', requir: true, type: 'cusfn', cusfunc: 'checkpassword3()', warn: '密码中含有非法字符' },
 	{ name: 'textfield4', mid: 're_password_msg', requir: true, type: 'match', to: 'textfield3', warn: '两次密码不一致' },
 	{ name: 'textfield5', mid: 'email_msg', requir: true, type: 'email|cusfn', warn: '邮箱格式错误|邮箱已被注册' },
+	{ name: 'textfield5', mid: 'email_msg', requir: true, type: 'cusfn', cusfunc: 'checkemail()', warn: '邮箱已被注册' },
 ];
 
 function checkemail(){
-	
-	$.post('if_email_register.php?email='+document.getElementById("textfield5").value,function(data){
-		 if(data ==0){
-			return true;
-		 }else{
-			  return false;
-		 }
-	});
+	var xmlhttp;
+	if (window.XMLHttpRequest)
+	  {// code for IE7+, Firefox, Chrome, Opera, Safari
+	  xmlhttp=new XMLHttpRequest();
+	  }
+	else
+	  {// code for IE6, IE5
+	  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	  }
+	xmlhttp.onreadystatechange=function()
+	  {
+	  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+	    {
+		     if(xmlhttp.responseText ==0){
+				return true;
+			 }else{
+				return false;
+			 }
+	    }
+	  }
+	xmlhttp.open("POST","if_email_register.php",true);
+    xmlhttp.send("email="+document.getElementById("textfield5").value);
 }
 
 function changemsg(UP,DOWN){
