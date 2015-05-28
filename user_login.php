@@ -24,17 +24,25 @@ if (isset($_POST['textfield'])) {
   
 
   mysql_select_db($database_tankdb, $tankdb);  	
-  $LoginRS__query=sprintf("SELECT tk_display_name, uid, tk_user_lastuse,status FROM tk_user WHERE tk_user_del_status =1 AND  tk_user_email=%s AND tk_user_pass=%s ",
+  $LoginRS__query=sprintf("SELECT tk_display_name, uid, tk_user_lastuse,status,tk_user_email FROM tk_user WHERE tk_user_del_status =1 AND  tk_user_email=%s AND tk_user_pass=%s ",
   GetSQLValueString($loginUsername, "text"), GetSQLValueString($tk_password, "text"));    
   $LoginRS = mysql_query($LoginRS__query, $tankdb) or die(mysql_error());
   $loginFoundUser = mysql_num_rows($LoginRS);
    
+
+
   if ($loginFoundUser) {	
 	$loginStrDisplayname  = mysql_result($LoginRS,0,'tk_display_name');
 	$loginStrpid  = mysql_result($LoginRS,0,'uid');
 	$loginStrlast  = mysql_result($LoginRS,0,'tk_user_lastuse');
-	
+	$loginStremail  = mysql_result($LoginRS,0,'tk_user_email');
+
    if(mysql_result($LoginRS,0,'status')==0){//未激活
+
+   $insertGoTo = "user_loginwithoutpass.php?email=".$loginStremail;
+  header(sprintf("Location: %s", $insertGoTo));
+   
+
    
    }else {
 	   

@@ -32,7 +32,7 @@ function over()
 			document.form1.cont.disabled=true;
 		}
 		function login(){
-			top.location.href='index.php';
+			top.location.href='user_login.php';
 		}
 		function resend(){
 			var username=document.getElementById('textfield1').value;
