@@ -10,8 +10,6 @@
 <link type="text/css" href="css/ui/ui.all.css" rel="stylesheet" />
 <link type="text/css" href="css/lhgcore/lhgcheck.css" rel="stylesheet" />
 <script type="text/javascript" src="js/lhgcore/lhgcheck.js"></script>
-<link rel="stylesheet" href="css/bootstrap/bootstrap-multiselect.css" type="text/css"/>
-<script type="text/javascript" src="js/bootstrap/bootstrap-multiselect.js"></script>
 <link rel="stylesheet" href="css/bootstrap/datepicker3.css" type="text/css"/>
 <script type="text/javascript" src="js/bootstrap/bootstrap-datepicker.js"></script>
 <script type="text/javascript" src="js/bootstrap/locales/bootstrap-datepicker.zh-CN.js"></script>
