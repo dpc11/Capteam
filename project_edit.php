@@ -347,6 +347,7 @@
                                 <span id="<?php echo  $users_selecred_old[$val]['email'];?>"><?php echo  $users_selecred_old[$val]['email'];?></span>
                               </td>
                               <td>
+                                <a href="#" onclick="return delet('teamlist_tr',this);">X</a>
                               </td>
                               <td></td>
                             </tr>
