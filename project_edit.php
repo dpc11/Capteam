@@ -40,36 +40,54 @@
   if (isset($_GET['editID'])) {
     $project_id = $_GET['editID'];
   }
-    //获得项目的详细信息
-    $project_info = get_project_by_id($project_id);
-    //获取所有用户
+  //获得项目的详细信息
+  $project_info = get_project_by_id($project_id);
+  //获取被选中的用户
+  $users_selecred_old = get_user_selected($project_id,$_SESSION['MM_uid']);
+  //保存现在有的用户的id数组
+  $user_id_arr = array();
+  //获取所有用户
   $selected="";
-    $userRS = get_all_user_select($_SESSION['MM_uid']);
+  $userRS = get_all_user_select($_SESSION['MM_uid']);
   $user_arr_list = mysql_fetch_assoc($userRS);
   do { 
-    if($user_arr_list["tk_user_contact"]==""){ 
-      $phone="空";
-    }else{
-      $phone=$user_arr_list["tk_user_contact"]; 
-    }
-    $constraint .= "||".$user_arr_list["tk_display_name"].
-    "【".$user_arr_list["tk_user_contact"].
-    "】【".$user_arr_list["tk_user_email"].
-    "】=".$user_arr_list["uid"]."%".
-    $user_arr_list["tk_display_name"]."%".
-    $phone ."%".$user_arr_list["tk_user_email"]."%".
-    $user_arr_list["tk_display_name"]."'";
+      if($users_selecred_old[$user_arr_list["uid"]]){
+          //如果该成员是原先被选中的
+          if($user_arr_list["tk_user_contact"]==""){ 
+            $phone="空";
+          }else{
+            $phone=$user_arr_list["tk_user_contact"]; 
+          }
+          $selected .= "||".$user_arr_list["tk_display_name"].
+          "【".$user_arr_list["tk_user_contact"].
+          "】【".$user_arr_list["tk_user_email"].
+          "】=".$user_arr_list["uid"]."%".
+          $user_arr_list["tk_display_name"]."%".
+          $phone ."%".$user_arr_list["tk_user_email"]."%".
+          $user_arr_list["tk_display_name"]."'";
+
+          $user_id_arr[$user_arr_list["uid"]]=$user_arr_list["uid"];
+      }else{
+          //如果该成员时原先未被选中的
+          if($user_arr_list["tk_user_contact"]==""){ 
+            $phone="空";
+          }else{
+            $phone=$user_arr_list["tk_user_contact"]; 
+          }
+          $constraint .= "||".$user_arr_list["tk_display_name"].
+          "【".$user_arr_list["tk_user_contact"].
+          "】【".$user_arr_list["tk_user_email"].
+          "】=".$user_arr_list["uid"]."%".
+          $user_arr_list["tk_display_name"]."%".
+          $phone ."%".$user_arr_list["tk_user_email"]."%".
+          $user_arr_list["tk_display_name"]."'";
+      }//else
   } while ($user_arr_list = mysql_fetch_assoc($userRS)); 
 
   
   echo '<input style="display:none" id="constraint" value="'.$constraint.'"/>';
   echo '<input style="display:none" id="selected" name="selected" value="'.$selected.'"/>';
-  //获取被选中的用户
-  $users_selecred_old = get_user_selected($project_id,$_SESSION['MM_uid']);
-  // echo count($users_selecred_old);
-  // foreach ($users_selecred_old as $key => $val) {
- //          echo $val['name'];
- //      }
+
 
 
     if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
@@ -89,23 +107,23 @@
             $dateError = -2;//结束时间小于开始时间
         }else{          
           $projectNAME = $_POST['project_name'];
-                //更新项目数据库
-                $insertSQL = sprintf("UPDATE tk_project set project_name=%s, project_text=%s, project_start=%s, project_end=%s, project_lastupdate=%s where id=%s", 
-                  GetSQLValueString($projectNAME, "text"),
-                  GetSQLValueString($_POST['project_text'], "text"),
-                  GetSQLValueString($_POST['project_start'], "date"),
-                  GetSQLValueString($_POST['project_end'], "date"),
-                  GetSQLValueString($new_project_lastupdate, "date"),
-                  GetSQLValueString($project_id, "int"));
+          //更新项目数据库
+          $insertSQL = sprintf("UPDATE tk_project set project_name=%s, project_text=%s, project_start=%s, project_end=%s, project_lastupdate=%s where id=%s", 
+            GetSQLValueString($projectNAME, "text"),
+            GetSQLValueString($_POST['project_text'], "text"),
+            GetSQLValueString($_POST['project_start'], "date"),
+            GetSQLValueString($_POST['project_end'], "date"),
+            GetSQLValueString($new_project_lastupdate, "date"),
+            GetSQLValueString($project_id, "int"));
 
-              mysql_select_db($database_tankdb, $tankdb);
-              $Result1 = mysql_query($insertSQL, $tankdb) or die(mysql_error());
-              //插入日志
-              $timenow=date('Y-m-d H:i:s',time());
-              $insertSQLLog=sprintf("INSERT into tk_log(tk_log_user,tk_log_action,tk_log_time,tk_log_type,tk_log_class)
-                VALUES(%s,'编辑了项目','$timenow','$project_id','1')",GetSQLValueString($_SESSION['MM_uid'], "int")); 
-              mysql_select_db($database_tankdb, $tankdb);
-              $Result2 = mysql_query($insertSQLLog, $tankdb) or die(mysql_error());
+        mysql_select_db($database_tankdb, $tankdb);
+        $Result1 = mysql_query($insertSQL, $tankdb) or die(mysql_error());
+        //插入日志
+        $timenow=date('Y-m-d H:i:s',time());
+        $insertSQLLog=sprintf("INSERT into tk_log(tk_log_user,tk_log_action,tk_log_time,tk_log_type,tk_log_class)
+          VALUES(%s,'编辑了项目','$timenow','$project_id','1')",GetSQLValueString($_SESSION['MM_uid'], "int")); 
+        mysql_select_db($database_tankdb, $tankdb);
+        $Result2 = mysql_query($insertSQLLog, $tankdb) or die(mysql_error());
 
               //更新文件夹信息
         $CurDate = date("Y-m-d H:i:s");
@@ -136,48 +154,46 @@
           $user_info = $r[1];
           $d = explode("%", $user_info);
           $user_id = $d[0];
-          // echo $user_id;
-          // echo '<br>';
+
           
-                //在当前被选中的数组中添加id
-                $user_selected_new[$user_id]=$user_id;
-                //array_push($user_selected_new, $user_id);
-                //如果该成员是老成员，则不操作
-                if($users_selecred_old[$user_id]){
-                  //该成员原先就存在，不操作
-                }else{
-                  //该成员原先不存在
-                  $tk_team_ulimit=1;//用户权限,组长是3，组员是1，副组长是2
-                $tk_team_del_status=1;//该用户在该项目中的删除状态
-                $tk_team_jointeamtime=date('Y-m-d H:i:s');//该用户加入该项目的时间，PHP date() 函数会返回服
-                  $addnewmemSQL="INSERT INTO tk_team (tk_team_pid,tk_team_uid,tk_team_ulimit,tk_team_del_status,tk_team_jointeamtime)
-                        VALUES ($tk_team_pid,$user_id,$tk_team_ulimit,$tk_team_del_status,'$tk_team_jointeamtime')";
-              mysql_select_db($database_tankdb, $tankdb);
-              $Result1 = mysql_query($addnewmemSQL, $tankdb) or die(mysql_error());
-              //添加项目成员的log记录
-              $searchmemSQL="SELECT* FROM tk_user WHERE uid=$user_id";
-              mysql_select_db($database_tankdb, $tankdb);
-              $Result1 = mysql_query($searchmemSQL, $tankdb) or die(mysql_error());
-              
-              $FoundUser = mysql_num_rows($Result1);
-                if ($FoundUser) {  
-                  $loginStrDisplayname  = mysql_result($Result1,0,'tk_display_name');
-                }
-            $action='添加了成员:'.$user_id.'--'.$loginStrDisplayname;
-              $timenow=date('Y-m-d H:i:s',time());
-              $insertSQLLog=sprintf("INSERT into tk_log(tk_log_user,tk_log_action,tk_log_time,tk_log_type,tk_log_class)
-                      VALUES(%s,'$action','$timenow','$tk_team_pid','1')",GetSQLValueString($_SESSION['MM_uid'], "int"));
-     
-                 mysql_select_db($database_tankdb, $tankdb);
-                 $Result2 = mysql_query($insertSQLLog, $tankdb) or die(mysql_error());
-                }//else
-          $i++;
-        }//while 
+          //在当前被选中的数组中添加id
+          $user_selected_new[$user_id]=$user_id;
+          //array_push($user_selected_new, $user_id);
+          //如果该成员是老成员，则不操作
+          if($users_selecred_old[$user_id]){
+            //该成员原先就存在，不操作
+          }else{
+            //该成员原先不存在
+          $tk_team_ulimit=1;//用户权限,组长是3，组员是1，副组长是2
+          $tk_team_del_status=1;//该用户在该项目中的删除状态
+          $tk_team_jointeamtime=date('Y-m-d H:i:s');//该用户加入该项目的时间，PHP date() 函数会返回服
+          $addnewmemSQL="INSERT INTO tk_team (tk_team_pid,tk_team_uid,tk_team_ulimit,tk_team_del_status,tk_team_jointeamtime)
+                  VALUES ($tk_team_pid,$user_id,$tk_team_ulimit,$tk_team_del_status,'$tk_team_jointeamtime')";
+          mysql_select_db($database_tankdb, $tankdb);
+          $Result1 = mysql_query($addnewmemSQL, $tankdb) or die(mysql_error());
+          //添加项目成员的log记录
+          $searchmemSQL="SELECT* FROM tk_user WHERE uid=$user_id";
+          mysql_select_db($database_tankdb, $tankdb);
+          $Result1 = mysql_query($searchmemSQL, $tankdb) or die(mysql_error());
+          
+          $FoundUser = mysql_num_rows($Result1);
+            if ($FoundUser) {  
+              $loginStrDisplayname  = mysql_result($Result1,0,'tk_display_name');
+            }
+          $action='添加了成员:'.$user_id.'--'.$loginStrDisplayname;
+          $timenow=date('Y-m-d H:i:s',time());
+          $insertSQLLog=sprintf("INSERT into tk_log(tk_log_user,tk_log_action,tk_log_time,tk_log_type,tk_log_class)
+                    VALUES(%s,'$action','$timenow','$tk_team_pid','1')",GetSQLValueString($_SESSION['MM_uid'], "int"));
+   
+          mysql_select_db($database_tankdb, $tankdb);
+          $Result2 = mysql_query($insertSQLLog, $tankdb) or die(mysql_error());
+          }//else
+        $i++;
+      }//while 
 
         //删除原先选择但是现在没有选的人
          foreach ($users_selecred_old as $key => $val) {
             $user_id = $val['uid'];
-
               if($user_selected_new[$user_id]){
                   //说明该用户已经出现过，跳过不处理
               }else{
@@ -313,6 +329,28 @@
                             </tr>
                           </thead>
                           <tbody id="teamlist_tr">
+                          <?php
+                          foreach ($user_id_arr as $key => $val) {
+                          ?>
+                            <tr>
+                              <td style="display:none;">
+                              <?php ?>
+                                <span id="<?php echo $val?>"><?php echo $val?></span>
+                              </td>
+                              <td data-ellipsis="true" style="width:150px;text-align:center;">
+                                <span id="<?php echo  $users_selecred_old[$val]['name'];?>"><?php echo  $users_selecred_old[$val]['name'];?></span>
+                              </td>
+                              <td data-ellipsis="true" style="width:150px;text-align:center;">
+                                <span id="<?php echo  $users_selecred_old[$val]['phone_num'];?>"><?php echo  $users_selecred_old[$val]['phone_num'];?></span>
+                              </td>
+                              <td data-ellipsis="true" style="width:200px;text-align:center;">
+                                <span id="<?php echo  $users_selecred_old[$val]['email'];?>"><?php echo  $users_selecred_old[$val]['email'];?></span>
+                              </td>
+                              <td>
+                              </td>
+                              <td></td>
+                            </tr>
+                          <?php } ?>
                           </tbody>
                         </table>
                         </div>
@@ -425,7 +463,7 @@
       var uu_mail = tr.childNodes[3].childNodes[0].id;
       old_con=document.getElementById('constraint').value;
       //alert(document.getElementById('constraint').value);
-      alert(document.getElementById('selected').value);
+      // alert(document.getElementById('selected').value);
       var xx=uu_name+"【"+uu_phone+"】【"+uu_mail+"】";
       var j= document.getElementById('selected').value.indexOf(xx); 
       var sel_left="";
@@ -448,11 +486,11 @@
         y++;
       }
       document.getElementById('selected').value=new_sel;
-      alert(document.getElementById('selected').value);
+      // alert(document.getElementById('selected').value);
 
       var add=uu_name+"【"+uu_phone+"】【"+uu_mail+"】="+uu_id+"%"+uu_name+"%"+uu_phone+"%"+uu_mail+"%"+uu_name+"'";
       document.getElementById('constraint').value = old_con+"||"+add;
-      alert(document.getElementById('constraint').value);
+      // alert(document.getElementById('constraint').value);
       document.getElementById('now_sel').innerHTML="<input type=\"text\" id=\"now_selected\" name=\"now_selected\" value=\"" +document.getElementById('selected').value+"\">" ;
       document.getElementById(id).deleteRow(rowIndex-1);  
       document.getElementById('project_team_name').value="";
