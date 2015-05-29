@@ -58,8 +58,13 @@ $(function() {
 		header: {
 			left: 'prev today next',
 			center: 'title',
-			right: 'month,agendaWeek'
+			right: 'agendaWeek'
 		},
+        defaultView: 'agendaWeek',
+        minTime: 7,
+        maxTime: 23,
+        slotMinutes:30,
+        allDaySlot: false,
         events: <?php echo json_encode($data); ?>,
 
         // 在个人日程中新增日程

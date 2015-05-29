@@ -183,7 +183,7 @@
                 'start' => $start_time,
                 'end' => $end_time,
                 'url' => "",
-                'color' => '#008573',
+                'color' => 'rgb(242, 173, 23)',
                 'allDay' => $allday
                 );
                 }
