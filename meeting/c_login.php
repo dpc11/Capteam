@@ -12,7 +12,7 @@ $loggedin=1;
 if (!$room||!$username)
 	{
 		$loggedin=0;
-		$message=urlencode("<a href=\"index.php\">You need a cookie enabled browser!</a>");
+		$message=urlencode("<a href=\"index.php\">你需要一个能缓存 Cookie 的浏览器!</a>");
 }
 
 if ($administrator)

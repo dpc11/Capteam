@@ -1,30 +1,45 @@
-<style type="text/css">
-<!--
-a {
-	color: #F63;
-}
-body {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 15px;
-	color: #666;
-	margin-left: 0px;
-	margin-top: 0px;
-	margin-right: 0px;
-	margin-bottom: 0px;
-	letter-spacing: -1px;
-}
-.info
-{
-	text-align:left;
-	padding: 10px;
-	margin: 10px;
-	background-color: #F3FFCE;
-	border: 1px dotted #390;
-}
--->
-</style>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 
-<BODY>
-<div style="background-color:#333; padding:10px">
-<a href="http://www.videowhisper.com/?p=Video+Consultation"><img src="templates/consultation/logo.png" alt="Online Video Consultation Software" width="196" height="28" border="0"></a></div>
-<div class="info"><h1><?=$_GET[message]?></h1>Chat session ended: You can close this window.</div>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Capteam</title>
+    <link href="../css/bootstrap/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="../css/tk_style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../js/jquery/jquery.js"></script>
+    <script type="text/javascript" src="../js/bootstrap/bootstrap.js"></script>
+    <style type="text/css">
+        .info {
+            text-align: left;
+            margin: 40px 50px;
+            padding: 10px 30px;
+            background-color: #F3F3F3;
+        }
+    </style>
+</head>
+
+
+
+<body id="docbody" style="min-width:1510px;">
+    <div class="clearboth"></div>
+    <div id="foot_top" class="foot_top">
+        <div class="clearboth"></div>
+        <div id="top_height">
+            <div class="clearboth"></div>
+            <div class="topbar" id="headerlink" name="headerlink">
+                <div class="logo"><a href="index.php" class="logourl">&nbsp;</a>
+                </div>
+                </a>
+            </div>
+            <div class="info">
+                <h2>您已退出视屏会议</h2><h5 style="margin-top: 20px; color: #797979;">该页面可直接关闭，或者<a href="../index.php">返回首页</a></h5>
+            </div>
+        </div>
+    </div>
+    
+    <?php require('../foot.php'); ?>
+               </div><!-- right main -->
+          </td>
+</body>
+
+</html>

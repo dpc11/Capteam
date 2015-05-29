@@ -6,22 +6,22 @@
 
 	if(FlashDetect.installed)
 	{
-	document.write("Flash version detected: " + FlashDetect.major + "."+ FlashDetect.minor + " "); 
+	document.write("监测到的 Flash版本: " + FlashDetect.major + "."+ FlashDetect.minor + " "); 
 	
 	
 	if(!FlashDetect.versionAtLeast(11, 2))
 	{
-		alert("Flash was detected but is too old to run this application. Upgrade your Flash plugin to proceed!"); 
+		alert("检测到 Flash版本太旧，请先升级!"); 
 		updateWarning = true;
 	}
 	
 	}
 	else
 	{
-		alert("Flash was not detected in your browser: Flash plugin is required to use this application!"); 
+		alert("在该浏览器中未检测到 Flash，无法进行视频会议!"); 
 		updateWarning = true;
 	}
 	
-	if (updateWarning)	document.write("<B class=warning>Update to latest flash player: <a href=\"http://get.adobe.com/flashplayer/\" target=\"_blank\">http://get.adobe.com/flashplayer/</a> !</B>");
+	if (updateWarning)	document.write("<B class=warning>升级到最新版本 Flash Player: <a href=\"http://get.adobe.com/flashplayer/\" target=\"_blank\">http://get.adobe.com/flashplayer/</a> !</B>");
 	</script>
   </p>
