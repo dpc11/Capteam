@@ -42,7 +42,7 @@ $date = $_GET['date'];
         <div class="form-group col-xs-12">
             <div style="display: block">    
                 <label for="datepicker">
-                    开始时间
+                    起始时间
                 </label>
             </div>
            <!-- <div class="col-xs-6" style="padding-left: 0;">
@@ -74,8 +74,74 @@ $date = $_GET['date'];
                 </select>
                 </div>
                 <label class="beauty-label" id="textfield_label"   style="font-size:17px;font-weight:bold;float:left;">周</label>
-                <div class="col-xs-3">
-                <select name="s_hour" class="form-control">
+                <label class="beauty-label" id="textfield_label"   style="font-size:17px;float:left;border-left-width: 15px;margin-left: 15px;margin-right: 15px;">至</label>
+                <label class="beauty-label" id="textfield_label"   style="font-size:17px;font-weight:bold;float:left;">第</label>
+                <div class="col-xs-3"
+  style="padding-left: 5px;  border-left-width: 5px; padding-right: 5px;"  >
+                
+                <select name="e_week" class="form-control">
+                    <option value="01"selected>1</option>
+                    <option value="02">2</option>
+                    <option value="03">3</option>
+                    <option value="04">4</option>
+                    <option value="05">5</option>
+                    <option value="06">6</option>
+                    <option value="07">7</option>
+                    <option value="08">8</option>
+                    <option value="09">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+        
+                </select>
+                </div>
+                <label class="beauty-label" id="textfield_label"   style="font-size:17px;font-weight:bold;float:left;">周</label>
+                
+              
+            </span>
+        </div>
+        <div class="form-group col-xs-12">   
+            <div style="display: block">    
+                <label for="datepicker2">
+                    上课时间
+                </label>
+            </div>
+           
+            <span id="sel_end">
+                <label class="beauty-label" id="textfield_label"   style="font-size:17px;font-weight:bold;float:left;">周</label>
+                 <div class="col-xs-3"
+  style="padding-left: 5px;  border-left-width: 5px; padding-right: 5px;"  >
+                
+                <select name="weekday" class="form-control">
+                    <option value="01"selected>1</option>
+                    <option value="02">2</option>
+                    <option value="03">3</option>
+                    <option value="04">4</option>
+                    <option value="05">5</option>
+                    <option value="06">6</option>
+                    <option value="07">7</option>
+                    
+        
+                </select>
+                </div>
+            </span>
+        </div>
+        <div class="form-group col-xs-12">   
+            
+           
+            
+
+               <span id="sel_end1">
+                  <div class="col-xs-3"style="
+    padding-left: 0px;
+    padding-right: 0px;
+    width:99px;
+">
+                <select name="s_hour" class="form-control"style="float:left;width:100%;">
                     <option value="00">00</option>
                     <option value="01">01</option>
                     <option value="02">02</option>
@@ -112,42 +178,8 @@ $date = $_GET['date'];
                     <option value="50">50</option>
                 </select>
                 </div>
-            </span>
-        </div>
-        <div class="form-group col-xs-12">   
-            <div style="display: block">    
-                <label for="datepicker2">
-                    结束时间
-                </label>
-            </div>
-           
-            <span id="sel_end">
-                <label class="beauty-label" id="textfield_label"   style="font-size:17px;font-weight:bold;float:left;">第</label>
-                 <div class="col-xs-3"
-  style="padding-left: 5px;  border-left-width: 5px; padding-right: 5px;"  >
-                
-                <select name="e_week" class="form-control">
-                    <option value="01"selected>1</option>
-                    <option value="02">2</option>
-                    <option value="03">3</option>
-                    <option value="04">4</option>
-                    <option value="05">5</option>
-                    <option value="06">6</option>
-                    <option value="07">7</option>
-                    <option value="08">8</option>
-                    <option value="09">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                    <option value="13">13</option>
-                    <option value="14">14</option>
-                    <option value="15">15</option>
-                    <option value="16">16</option>
-        
-                </select>
-                </div>
-                <label class="beauty-label" id="textfield_label"   style="font-size:17px;font-weight:bold;float:left;">周</label>
-                  <div class="col-xs-3">
+                 <label class="beauty-label" id="textfield_label"   style="font-size:17px;float:left;">至</label>
+                <div class="col-xs-3">
                 <select name="e_hour" class="form-control">
                     <option value="00">00</option>
                     <option value="01">01</option>
@@ -175,8 +207,12 @@ $date = $_GET['date'];
                     <option value="23">23</option>
                 </select>
                 </div>
-                <div class="col-xs-3">
-                <select name="e_minute" class="form-control">
+                <div class="col-xs-3"style="
+    padding-left: 0px;
+">
+                <select name="e_minute" class="form-control"style="
+    width: 101.85714292526245px;
+">
                     <option value="00" selected>00</option>
                     <option value="10">10</option>
                     <option value="20">20</option>
@@ -187,6 +223,8 @@ $date = $_GET['date'];
                 </div>
             </span>
         </div>
+       
+                    
         <div class="sub_btn col-xs-12">
             <button type="submit" class="btn btn-primary btn-sm submitbutton" style="margin-left: 0;">保存</button>
             <button type="button" class="btn btn-default btn-sm" value="取消" onClick="$.fancybox.close()">取消</button>

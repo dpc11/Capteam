@@ -20,13 +20,15 @@ if($action=='add'){
     }
     $s_week = $_POST['s_week'];//开始周
     $e_week = $_POST['e_week'];//结束周
+    
+    $weekday=$_POST['weekday'];
 
 	$s_time = $_POST['s_hour'].':'.$_POST['s_minute'].':00';//开始时间
 	$e_time = $_POST['e_hour'].':'.$_POST['e_minute'].':00';//结束时间
+//echo $weekday;
 
-
-	$query = mysql_query("insert into `tk_course` (`course_name`,`course_place`,`course_startweek`,`course_endweek`,`course_starttime`,`course_endtime`)
-	 values ('$event','$event1','$s_week','$e_week','$s_time','$e_time')");
+	$query = mysql_query("insert into `tk_course` (`course_name`,`course_place`,`course_day`,`course_startweek`,`course_endweek`,`course_starttime`,`course_endtime`)
+	 values ('$event','$event1','$weekday','$s_week','$e_week','$s_time','$e_time')");
 
 	if(mysql_insert_id()>0){//插入成功刷新日程页面
 		echo '1';
