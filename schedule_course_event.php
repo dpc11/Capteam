@@ -3,10 +3,12 @@
 $action = $_GET['action'];
 $id = (int)$_GET['id'];
 $uid = (int)$_GET['uid'];
+$csid=$_GET['csid'];
+echo $csid;
 
 switch($action){
 	case 'add':
-		addform($uid);
+		addform($uid,$csid);
 		break;
 	case 'edit':
 		editform($id);
@@ -14,7 +16,7 @@ switch($action){
 }
 
 // 新增日程部分
-function addform($uid){
+function addform($uid,$csid){
 $date = $_GET['date'];
 ?>
 
@@ -23,8 +25,8 @@ $date = $_GET['date'];
 <script type="text/javascript" src="js/bootstrap/bootstrap-datepicker.js"></script>
 <script type="text/javascript" src="js/bootstrap/locales/bootstrap-datepicker.zh-CN.js"></script>
 <div class="fancy">
-    <h3>新增课程日程</h3>
-    <form id="add_form" action="schedule_course_opt.php?action=add" method="post">
+    <h3>新增课程日程</h3>  
+    <form id="add_form" action="<?php $url='schedule_course_opt.php?action=add&csid='.$csid;echo $url; ?>" method="post">
         <input type="hidden" name="uid" value=<?php echo $uid; ?> />
         <div class="form-group col-xs-12">
             <label for="datepicker">
@@ -235,12 +237,13 @@ $date = $_GET['date'];
 
 // 编辑日程部分
 function editform($id){
-	$query = mysql_query("select * from tk_schedule where id='$id'");
+    echo $id;
+	$query = mysql_query("select * from tk_course where course_id='$id'");
 	$row = mysql_fetch_array($query);
 	if($row){
-		$id = $row['id'];
-		$title = $row['name'];
-		$starttime1 = $row['start_time'];
+		//$id = $row['id'];
+		$time = $row['course_name'];
+		$course_place = $row['course_place'];
         $starttime = strtotime($starttime1);//转换为date类型
 		$start_d = date("Y-m-d",$starttime);
 		$start_h = date("H",$starttime);
@@ -253,14 +256,8 @@ function editform($id){
         $end_h = date("H",$endtime);
         $end_m = date("i",$endtime);
         
-        $allday = $row['is_allday'];
-		if($allday==1){
-			$display = "style='display:none'";
-			$allday_chk = "checked";
-		}else{
-			$display = "style=''";
-			$allday_chk = '';
-		}
+       // $allday = $row['is_allday'];
+		
 	}
 ?>
 
@@ -271,32 +268,125 @@ function editform($id){
 
 <input type="hidden" name="id" id="eventid" value="<?php echo $id;?>" />
 <div class="fancy">
-	<h3>编辑日程</h3>
-    <form id="add_form" action="schedule_person_opt.php?action=edit" method="post">
-        <input type="hidden" name="id" value=<?php echo $id; ?> />
-        <input type="hidden" name="uid" value=<?php echo $uid; ?> />
+	<h3>编辑日程 </h3>
+    <form id="add_form" action="schedule_course_opt.php?action=edit" method="post">
+       <input type="hidden" name="uid" value=<?php echo $uid; ?> />
         <div class="form-group col-xs-12">
             <label for="datepicker">
-                日程内容
+                课程名称
             </label>
-            <textarea name="event" id="event" class="form-control" rows="4" cols="20"><?php echo $title; ?></textarea>
+            <textarea name="event" id="event" class="form-control" rows="1" cols="20"><?php echo $time; ?></textarea>
         </div>
-        <div class="col-xs-12">
-            <input type="checkbox" id="isallday" name="isallday" <?php echo $allday_chk;?>/><label for="isallday">&nbsp;全天日程（精确到天）</label>
+        <div class="form-group col-xs-12">
+            <label for="datepicker">
+                上课地点
+            </label>
+            <textarea name="event2" id="event2" class="form-control" rows="1" cols="20"></textarea>
         </div>
+        
         <div class="form-group col-xs-12">
             <div style="display: block">    
                 <label for="datepicker">
-                    开始时间
+                    起始时间
                 </label>
             </div>
-            <div class="col-xs-6" style="padding-left: 0;">
-                <input type="text" name="startdate" id="datepicker" value="<?php echo $start_d; ?>" class="form-control" />
+           <!-- <div class="col-xs-6" style="padding-left: 0;">
+                <input type="text" name="startdate" id="datepicker" value="<?php echo date('Y-m-d'); ?>" class="form-control" />
+            </div>-->
+            <span id="sel_start">
+                  <label class="beauty-label" id="textfield_label"   style="font-size:17px;font-weight:bold;float:left;">第</label>
+                 <div class="col-xs-3"
+  style="padding-left: 5px;  border-left-width: 5px; padding-right: 5px;"  >
+                
+                <select name="s_week" class="form-control">
+                    <option value="01"selected>1</option>
+                    <option value="02">2</option>
+                    <option value="03">3</option>
+                    <option value="04">4</option>
+                    <option value="05">5</option>
+                    <option value="06">6</option>
+                    <option value="07">7</option>
+                    <option value="08">8</option>
+                    <option value="09">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+        
+                </select>
+                </div>
+                <label class="beauty-label" id="textfield_label"   style="font-size:17px;font-weight:bold;float:left;">周</label>
+                <label class="beauty-label" id="textfield_label"   style="font-size:17px;float:left;border-left-width: 15px;margin-left: 15px;margin-right: 15px;">至</label>
+                <label class="beauty-label" id="textfield_label"   style="font-size:17px;font-weight:bold;float:left;">第</label>
+                <div class="col-xs-3"
+  style="padding-left: 5px;  border-left-width: 5px; padding-right: 5px;"  >
+                
+                <select name="e_week" class="form-control">
+                    <option value="01"selected>1</option>
+                    <option value="02">2</option>
+                    <option value="03">3</option>
+                    <option value="04">4</option>
+                    <option value="05">5</option>
+                    <option value="06">6</option>
+                    <option value="07">7</option>
+                    <option value="08">8</option>
+                    <option value="09">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+        
+                </select>
+                </div>
+                <label class="beauty-label" id="textfield_label"   style="font-size:17px;font-weight:bold;float:left;">周</label>
+                
+              
+            </span>
+        </div>
+        <div class="form-group col-xs-12">   
+            <div style="display: block">    
+                <label for="datepicker2">
+                    上课时间
+                </label>
             </div>
-            <span id="sel_start" <?php echo $display;?>>
-                <div class="col-xs-3">
-                <select name="s_hour" class="form-control">
-                    <option value="<?php echo $start_h;?>" selected><?php echo $start_h;?></option>
+           
+            <span id="sel_end">
+                <label class="beauty-label" id="textfield_label"   style="font-size:17px;font-weight:bold;float:left;">周</label>
+                 <div class="col-xs-3"
+  style="padding-left: 5px;  border-left-width: 5px; padding-right: 5px;"  >
+                
+                <select name="weekday" class="form-control">
+                    <option value="01"selected>1</option>
+                    <option value="02">2</option>
+                    <option value="03">3</option>
+                    <option value="04">4</option>
+                    <option value="05">5</option>
+                    <option value="06">6</option>
+                    <option value="07">7</option>
+                    
+        
+                </select>
+                </div>
+            </span>
+        </div>
+        <div class="form-group col-xs-12">   
+            
+           
+            
+
+               <span id="sel_end1">
+                  <div class="col-xs-3"style="
+    padding-left: 0px;
+    padding-right: 0px;
+    width:99px;
+">
+                <select name="s_hour" class="form-control"style="float:left;width:100%;">
                     <option value="00">00</option>
                     <option value="01">01</option>
                     <option value="02">02</option>
@@ -305,7 +395,7 @@ function editform($id){
                     <option value="05">05</option>
                     <option value="06">06</option>
                     <option value="07">07</option>
-                    <option value="08">08</option>
+                    <option value="08" selected>08</option>
                     <option value="09">09</option>
                     <option value="10">10</option>
                     <option value="11">11</option>
@@ -325,8 +415,7 @@ function editform($id){
                 </div>
                 <div class="col-xs-3">
                 <select name="s_minute" class="form-control">
-                    <option value="<?php echo $start_m;?>" selected><?php echo $start_m;?></option>
-                    <option value="00">00</option>
+                    <option value="00" selected>00</option>
                     <option value="10">10</option>
                     <option value="20">20</option>
                     <option value="30">30</option>
@@ -334,23 +423,9 @@ function editform($id){
                     <option value="50">50</option>
                 </select>
                 </div>
-            </span>
-        </div>
-        <div class="form-group col-xs-12">
-            <div>    
-                <div style="display: block">    
-                <label for="datepicker2">
-                    结束时间
-                </label>
-            </div>
-            </div>
-            <div class="col-xs-6" style="padding-left: 0;">
-                <input type="text" name="enddate" id="datepicker2" value="<?php echo date('Y-m-d'); ?>" class="form-control" />
-            </div>
-            <span id="sel_end" <?php echo $display;?>>
+                 <label class="beauty-label" id="textfield_label"   style="font-size:17px;float:left;">至</label>
                 <div class="col-xs-3">
                 <select name="e_hour" class="form-control">
-                    <option value="<?php echo $end_h;?>" selected><?php echo $end_h;?></option>
                     <option value="00">00</option>
                     <option value="01">01</option>
                     <option value="02">02</option>
@@ -359,7 +434,7 @@ function editform($id){
                     <option value="05">05</option>
                     <option value="06">06</option>
                     <option value="07">07</option>
-                    <option value="08">08</option>
+                    <option value="08" selected>08</option>
                     <option value="09">09</option>
                     <option value="10">10</option>
                     <option value="11">11</option>
@@ -377,10 +452,13 @@ function editform($id){
                     <option value="23">23</option>
                 </select>
                 </div>
-                <div class="col-xs-3">
-                <select name="e_minute" class="form-control">
-                    <option value="<?php echo $end_m;?>" selected><?php echo $end_m;?></option>
-                    <option value="00">00</option>
+                <div class="col-xs-3"style="
+    padding-left: 0px;
+">
+                <select name="e_minute" class="form-control"style="
+    width: 101.85714292526245px;
+">
+                    <option value="00" selected>00</option>
                     <option value="10">10</option>
                     <option value="20">20</option>
                     <option value="30">30</option>
@@ -390,10 +468,11 @@ function editform($id){
                 </div>
             </span>
         </div>
+       
+                    
         <div class="sub_btn col-xs-12">
             <button type="submit" class="btn btn-primary btn-sm submitbutton" style="margin-left: 0;">保存</button>
-            <button class="btn btn-default btn-sm" onClick="$.fancybox.close()">取消</button>
-            <button id="del_event" class="btn btn-warning btn-sm" style="float: right">删除</button>
+            <button type="button" class="btn btn-default btn-sm" value="取消" onClick="$.fancybox.close()">取消</button>
         </div>
     </form>
 </div>

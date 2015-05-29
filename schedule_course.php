@@ -29,6 +29,19 @@ require_once( 'config/tank_config.php'); ?>
 //获得个人日程数据
 $userid = $_SESSION['MM_uid'];
 $data = get_course_events($userid);
+
+
+
+mysql_select_db($database_tankdb, $tankdb);
+       $sql="SELECT * FROM tk_course_schedule WHERE cs_uid=$userid"; 
+       $Result1 = mysql_query($sql, $tankdb) or die(mysql_error());
+        
+      $row=mysql_num_rows($Result1);
+      //echo $row;
+     // echo "string";
+      $firstday=mysql_result($Result1,0,'cs_firstday');
+      $csid=mysql_result($Result1,0,'cs_id');
+      //echo $csid;
 ?>
 
 <?php require( 'head.php'); ?>
@@ -72,7 +85,7 @@ $(function() {
 			var selDate =$.fullCalendar.formatDate(date,'yyyy-MM-dd');
 			$.fancybox({
 				'type':'ajax',
-				'href':'schedule_course_event.php?action=add&uid='+<?php echo $userid; ?>+'&date='+selDate
+				'href':'schedule_course_event.php?action=add&uid='+<?php echo $userid; ?>+'&date='+selDate+'&csid='+<?php echo $csid; ?>
 			});
     	},
     
@@ -80,14 +93,20 @@ $(function() {
         eventClick: function(calEvent, jsEvent, view) {
 			$.fancybox({
 				'type':'ajax',
-				'href':'schedule_person_event.php?action=edit&uid='+<?php echo $userid; ?>+'&id='+calEvent.id
+				'href':'schedule_course_event.php?action=edit&uid='+<?php echo $userid; ?>+'&id='+calEvent.id
 			});
     	}
 	});
 	
 });
 </script>
-
+<script type="text/javascript">
+function start() {
+  //var o = document.getElementById("dd");
+  //o.style.display = (o.style.display=="")?"none":"";
+   window.location.href="schedule_course_first.php";
+ }
+ </script>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
 
@@ -131,11 +150,17 @@ $(function() {
             <div class="clearboth"></div>
 
             <span id="sel_end" style="float:right;margin-bottom: 20px;">
+               
+                <?php if($row==0){?>
+                     <button type="button" id="textfield_label"   style="color:red;font-size:17px;font-weight:bold;float:left;border-color:red;border-right-width: 1px;margin-right: 
+                5px;border-bottom-width: 1.5;margin-bottom: 0px;height: 34.85714292526245px;" data-toggle="modal" data-target="#myModal" >学期开始时间</button>
+                    <?php }else{?>
+
                 <button type="button" id="textfield_label"   style="font-size:17px;font-weight:bold;float:left;border-color:rgb(204, 204, 204);border-right-width: 1px;margin-right: 
-                5px;border-bottom-width: 1.5;margin-bottom: 0px;height: 34.85714292526245px;" href="schedule_course_event.php" >学期开始时间</button>
-                
+                5px;border-bottom-width: 1.5;margin-bottom: 0px;height: 34.85714292526245px;" data-toggle="modal" data-target="#myModal" >学期开始时间</button>
+                <?php }?>
             <div class="col-xs-6" style="padding-left: 0;">
-                <input type="text" name="startdate" id="datepicker" value="<?php echo date('Y-m-d'); ?>" readonly="readonly" style="" class="form-control" />
+                <input type="text" name="startdate" id="datepicker" value="<?php echo $firstday; ?>" readonly="readonly" style="" class="form-control" />
             </div>
             </span>
 
@@ -143,7 +168,9 @@ $(function() {
 
                 <!-- 所有日程表主体部分 -->
                 <div>
+                    <?php if($row==1){?>
                     <div id='calendar'>
+                    <?php }?>
                     </div>
                 </div>
             </div>
@@ -153,5 +180,26 @@ $(function() {
 <?php require( 'foot.php'); ?>
 
 </body>
+<form action="<?php echo "course_add.php?uid=".$userid ?>"  method="post" name="form1" id="form1">
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">  
+  <div class="modal-dialog">  
+    <div class="modal-content">  
+      <div class="modal-header">  
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>  
+        <h4 class="modal-title">选择学期开始时间</h4>  
+      </div>  
+      <div class="modal-body">  
+        
+         <input name='date' type='date' id='date'  class='date' />
+
+      </div>  
+      <div class="modal-footer">  
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+        <button type="submit" class="btn btn-primary">Save changes</button>  
+      </div>  
+    </div><!-- /.modal-content -->  
+  </div><!-- /.modal-dialog -->  
+</div><!-- /.modal -->  
+</form>
 
 </html>
