@@ -81,7 +81,7 @@
 		return $Recordset1;
 	}
 	
-	//·µ»ØÉÏÃæ²éµ½µÄËùÓÐ·ûºÏÌõ¼þµÄµÄÏîÄ¿ÊýÁ¿
+	//获得项目数
 	function get_project_list_num($pagetabs,$prjtouser,$today_date,$colinputtitle_Recordset1,$orderlist,$sortlist,$startRow_Recordset1,$maxRows_Recordset1){
 
 		$where="";

@@ -19,7 +19,11 @@
 //                            `=---='  
 //  
 //         .............................................  
+<<<<<<< HEAD
 //                  佛祖保佑             永无BUG        //借荣儿的一用
+=======
+//                  佛祖保佑             永无BUG 
+>>>>>>> dae543867db0a6a76c04fdaae41aa0e22a6c4168
 require_once( 'config/tank_config.php'); ?>
 <?php require_once( 'session_unset.php'); ?>
 <?php require_once( 'session.php'); ?>
@@ -28,7 +32,11 @@ require_once( 'config/tank_config.php'); ?>
 <?php 
 //获得个人日程数据
 $userid = $_SESSION['MM_uid'];
+<<<<<<< HEAD
 $data = get_course_events($userid);
+=======
+$data = get_person_events($userid);
+>>>>>>> dae543867db0a6a76c04fdaae41aa0e22a6c4168
 ?>
 
 <?php require( 'head.php'); ?>
@@ -54,6 +62,7 @@ $(function() {
 		header: {
 			left: 'prev today next',
 			center: 'title',
+<<<<<<< HEAD
 			right: 'agendaWeek'
 		},
         events: <?php echo json_encode($data); ?>,
@@ -74,6 +83,28 @@ $(function() {
 		// 		'href':'schedule_person_event.php?action=edit&uid='+<?php echo $userid; ?>+'&id='+calEvent.id
 		// 	});
   //   	}
+=======
+			right: 'month,agendaWeek'
+		},
+        events: <?php echo json_encode($data); ?>,
+
+        // 在个人日程中新增日程
+		dayClick: function(date, allDay, jsEvent, view) {
+			var selDate =$.fullCalendar.formatDate(date,'yyyy-MM-dd');
+			$.fancybox({
+				'type':'ajax',
+				'href':'schedule_course_event.php?action=add&uid='+<?php echo $userid; ?>+'&date='+selDate
+			});
+    	},
+    
+        // 修改个人日程中的日程
+        eventClick: function(calEvent, jsEvent, view) {
+			$.fancybox({
+				'type':'ajax',
+				'href':'schedule_person_event.php?action=edit&uid='+<?php echo $userid; ?>+'&id='+calEvent.id
+			});
+    	}
+>>>>>>> dae543867db0a6a76c04fdaae41aa0e22a6c4168
 	});
 	
 });
@@ -110,10 +141,17 @@ $(function() {
                         <a type="button" class="btn btn-default btn-sm" href="schedule_task.php">
                             <?php echo $multilingual_schedule_task;?>
                         </a>
+<<<<<<< HEAD
                         <a type="button" class="btn btn-default btn-sm active" href="schedule_person.php">
                             <?php echo $multilingual_schedule_person;?>
                         </a>
                         <a type="button" class="btn btn-default btn-sm" href="schedule_course.php">
+=======
+                        <a type="button" class="btn btn-default btn-sm " href="schedule_person.php">
+                            <?php echo $multilingual_schedule_person;?>
+                        </a>
+                        <a type="button" class="btn btn-default btn-sm active" href="schedule_course.php">
+>>>>>>> dae543867db0a6a76c04fdaae41aa0e22a6c4168
                             <?php echo $multilingual_schedule_course;?>
                         </a>
                     </div>

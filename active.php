@@ -4,19 +4,38 @@ header("Content-type: text/html;charset=utf-8");
 $verify = stripslashes(trim($_GET['verify']));
 $nowtime = time();
 
+mysql_select_db($database_tankdb, $tankdb); 
 
 $query = mysql_query("select uid,token_exptime from tk_user where status='0' and `token`='$verify'");
+
 $row = mysql_fetch_array($query);
+
+
+
+
+$findsql="SELECT* FROM tk_user WHERE token='$verify'";
+$result=mysql_query($findsql);
+$email  = mysql_result($result,0,'tk_user_email');
+
+//dail  = $row['tk_user_email'];
+
+
 if($row){
 	
-	if($nowtime>$row['token_exptime']){ //30min
+	if($nowtime>$row['token_exptime']){ //24小时
 	
-		$msg = '您的激活有效期已过，请登录您的帐号重新发送激活邮件.';
+		$msg = '该链接已过期';
+		 $insertGoTo = "user_registerwitherror.php?&msg=".$msg."&email=".$email;
+
+	
+    header(sprintf("Location: %s", $insertGoTo));
+
 	}else{
 		
 		mysql_query("update tk_user set status=1 where uid=".$row['uid']);
 		//if(mysql_affected_rows($link)!=1) die(0);
 		$msg = '激活成功！马上为您转入登录页面……';
+		
  }
 $url = "http://localhost/Capteam/user_login.php";   
 ?> 
@@ -28,7 +47,11 @@ $url = "http://localhost/Capteam/user_login.php";
 </html> 
 	<?php
 }else{
-	$msg = 'error.';	
+	$msg = '无效的链接';
+	 $insertGoTo = "user_registerwitherror.php?&msg=".$msg."&email=".$email;
+
+	
+    header(sprintf("Location: %s", $insertGoTo));
 }
 
 echo $msg;

@@ -403,7 +403,16 @@ $(function() {
                                             
                                             <!-- 进入会议 -->
 											 <td width="12%">
-											 <a href="video"><span class="glyphicon glyphicon-user"></span> <?php echo $multilingual_project_conference; ?></a></td>
+                                                 
+                                            <!-- 组长和组员在会议中权限不同 -->
+                                            <?php 
+                                            if($user_authority > 2) { ?>
+											 <a href="meeting/video.php?r=capteam<?php echo $row_DetailRS1['id']; ?>&key=<?php echo md5("videowhispercapteam".$row_DetailRS1['id']); ?>&u=<?php echo $_SESSION['MM_Displayname']; ?>" target="_blank">
+                                            <?php } else { ?>
+                                             <a href="meeting/index.php?r=capteam<?php echo $row_DetailRS1['id'] ?>" target="_blank">
+                                            <?php } ?>
+                                                
+                                                 <span class="glyphicon glyphicon-user"></span> <?php echo $multilingual_project_conference; ?></a></td>
                                             
 											<!-- 增加评论 -->
 											 <td width="12%">
@@ -466,7 +475,7 @@ $(function() {
 											<?php foreach($user_arr as $key => $val){ 
 												 ?>
 													<tr>
-													<td><?php echo "姓名:".$val["name"]; ?></td>
+													<td>姓名:<a href="user_view.php?recordID=<?php echo $val["uid"]; ?>"><?php echo $val["name"]; ?></a></td>
 													<td><?php echo "邮箱:".$val["email"]; ?></td>
 													<td><?php echo "电话:".$val["phone_num"]; ?></td>
 													<td><?php echo "总得分:".$val["score"]; ?></td>
