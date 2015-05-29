@@ -151,4 +151,43 @@
 
         return $data;
     }
+
+    //得到个人课程信息
+    function get_course_events($userid){
+        $selCSsql = "SELECT * FROM tk_course_schedule WHERE cs_uid=$userid";
+        $CSRS = mysql_query($selCSsql);
+        $row_single = mysql_fetch_assoc($CSRS);
+        $cs_id = $row['cs_id'];
+        $term_start_date = $row['cs_firstday'];
+
+        $selCourse = "SELECT * FROM tk_course WHERE course_csid = $cs_id";
+        $CourseRS = mysql_query($selCourse);
+
+        while($row_course=mysql_fetch_array($CourseRS)){
+            $allday = FALSE;//课程没有全天
+
+            $show_title = $row_course['course_name']." @".$row_course['course_place'];
+
+            for($sw=$row_course['course_startweek']-1;$sw<$row_course['course_endweek'];$sw++ )
+            {
+                $week_Monday=date("Y-m-d",strtotime("$term_start_date +$sw week"));//第sw周的周一日期
+                $day_dif = $row_course['course_day']-1;
+                $course_date = date("Y-m-d",strtotime("$week_Monday +$day_dif day"));
+
+                $start_time = $course_date." ".$row_course['course_starttime'];
+                $end_time = $course_date." ".$row_course['course_endtime'];
+            }
+
+            $data[] = array(
+            'id' => $row_course['id'],
+            'title' => $row_course['name'],
+            'start' => $row_course['start_time'],
+            'end' => $row_course['end_time'],
+            'url' => $row_course['url'],
+            'color' => '#008573',
+            'allDay' => $allday
+            );
+        }//while
+        return $data;
+    }
 ?>
