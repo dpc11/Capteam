@@ -157,8 +157,8 @@
         $selCSsql = "SELECT * FROM tk_course_schedule WHERE cs_uid=$userid";
         $CSRS = mysql_query($selCSsql);
         $row_single = mysql_fetch_assoc($CSRS);
-        $cs_id = $row['cs_id'];
-        $term_start_date = $row['cs_firstday'];
+        $cs_id = $row_single['cs_id'];
+        $term_start_date = $row_single['cs_firstday'];
 
         $selCourse = "SELECT * FROM tk_course WHERE course_csid = $cs_id";
         $CourseRS = mysql_query($selCourse);
@@ -176,17 +176,17 @@
 
                 $start_time = $course_date." ".$row_course['course_starttime'];
                 $end_time = $course_date." ".$row_course['course_endtime'];
-            }
 
-            $data[] = array(
-            'id' => $row_course['id'],
-            'title' => $row_course['name'],
-            'start' => $row_course['start_time'],
-            'end' => $row_course['end_time'],
-            'url' => $row_course['url'],
-            'color' => '#008573',
-            'allDay' => $allday
-            );
+                $data[] = array(
+                'id' => $row_course['id'],
+                'title' => $show_title,
+                'start' => $start_time,
+                'end' => $end_time,
+                'url' => "",
+                'color' => '#008573',
+                'allDay' => $allday
+                );
+                }
         }//while
         return $data;
     }

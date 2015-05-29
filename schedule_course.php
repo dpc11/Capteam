@@ -19,11 +19,7 @@
 //                            `=---='  
 //  
 //         .............................................  
-<<<<<<< HEAD
-//                  佛祖保佑             永无BUG        //借荣儿的一用
-=======
 //                  佛祖保佑             永无BUG 
->>>>>>> dae543867db0a6a76c04fdaae41aa0e22a6c4168
 require_once( 'config/tank_config.php'); ?>
 <?php require_once( 'session_unset.php'); ?>
 <?php require_once( 'session.php'); ?>
@@ -32,11 +28,7 @@ require_once( 'config/tank_config.php'); ?>
 <?php 
 //获得个人日程数据
 $userid = $_SESSION['MM_uid'];
-<<<<<<< HEAD
 $data = get_course_events($userid);
-=======
-$data = get_person_events($userid);
->>>>>>> dae543867db0a6a76c04fdaae41aa0e22a6c4168
 ?>
 
 <?php require( 'head.php'); ?>
@@ -56,34 +48,16 @@ $data = get_person_events($userid);
 <script src='js/jquery/jquery-ui-1.10.4.min.js'></script>
 <script src='plug-in/calendar/js/fullcalendar.js'></script>
 <script src='plug-in/calendar/js/jquery.fancybox-1.3.1.pack.js'></script>
+<link rel="stylesheet" type="text/css" href="plug-in/calendar/css/jquery-ui.css">
+<link rel="stylesheet" href="css/bootstrap/datepicker3.css" type="text/css"/>
+<script type="text/javascript" src="js/bootstrap/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="js/bootstrap/locales/bootstrap-datepicker.zh-CN.js"></script>
 <script type="text/javascript">
 $(function() {
 	$('#calendar').fullCalendar({
 		header: {
 			left: 'prev today next',
 			center: 'title',
-<<<<<<< HEAD
-			right: 'agendaWeek'
-		},
-        events: <?php echo json_encode($data); ?>,
-
-  //       // 在个人日程中新增日程
-		// dayClick: function(date, allDay, jsEvent, view) {
-		// 	var selDate =$.fullCalendar.formatDate(date,'yyyy-MM-dd');
-		// 	$.fancybox({
-		// 		'type':'ajax',
-		// 		'href':'schedule_person_event.php?action=add&uid='+<?php echo $userid; ?>+'&date='+selDate
-		// 	});
-  //   	},
-    
-  //       // 修改个人日程中的日程
-  //       eventClick: function(calEvent, jsEvent, view) {
-		// 	$.fancybox({
-		// 		'type':'ajax',
-		// 		'href':'schedule_person_event.php?action=edit&uid='+<?php echo $userid; ?>+'&id='+calEvent.id
-		// 	});
-  //   	}
-=======
 			right: 'month,agendaWeek'
 		},
         events: <?php echo json_encode($data); ?>,
@@ -104,7 +78,6 @@ $(function() {
 				'href':'schedule_person_event.php?action=edit&uid='+<?php echo $userid; ?>+'&id='+calEvent.id
 			});
     	}
->>>>>>> dae543867db0a6a76c04fdaae41aa0e22a6c4168
 	});
 	
 });
@@ -141,23 +114,26 @@ $(function() {
                         <a type="button" class="btn btn-default btn-sm" href="schedule_task.php">
                             <?php echo $multilingual_schedule_task;?>
                         </a>
-<<<<<<< HEAD
-                        <a type="button" class="btn btn-default btn-sm active" href="schedule_person.php">
-                            <?php echo $multilingual_schedule_person;?>
-                        </a>
-                        <a type="button" class="btn btn-default btn-sm" href="schedule_course.php">
-=======
                         <a type="button" class="btn btn-default btn-sm " href="schedule_person.php">
                             <?php echo $multilingual_schedule_person;?>
                         </a>
                         <a type="button" class="btn btn-default btn-sm active" href="schedule_course.php">
->>>>>>> dae543867db0a6a76c04fdaae41aa0e22a6c4168
                             <?php echo $multilingual_schedule_course;?>
                         </a>
                     </div>
                 </div>
             </div>
             <div class="clearboth"></div>
+
+            <span id="sel_end" style="float:right;margin-bottom: 20px;">
+                <button type="button" id="textfield_label"   style="font-size:17px;font-weight:bold;float:left;border-color:rgb(204, 204, 204);border-right-width: 1px;margin-right: 
+                5px;border-bottom-width: 1.5;margin-bottom: 0px;height: 34.85714292526245px;" href="schedule_course_event.php" >学期开始时间</button>
+                
+            <div class="col-xs-6" style="padding-left: 0;">
+                <input type="text" name="startdate" id="datepicker" value="<?php echo date('Y-m-d'); ?>" readonly="readonly" style="" class="form-control" />
+            </div>
+            </span>
+
             <div class="pagemargin">
 
                 <!-- 所有日程表主体部分 -->
