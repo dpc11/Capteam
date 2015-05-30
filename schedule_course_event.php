@@ -487,7 +487,11 @@ function editform($id){
         <div class="sub_btn col-xs-12">
             <button type="submit" class="btn btn-primary btn-sm submitbutton" style="margin-left: 0;">保存</button>
             <button type="button" class="btn btn-default btn-sm" value="取消" onClick="$.fancybox.close()">取消</button>
+            <button id="del_event" class="btn btn-warning btn-sm" style="float: right">删除a </button>
         </div>
+
+
+
     </form>
 </div>
 <?php }?>
@@ -520,21 +524,22 @@ $(function(){
     }); 
 	
 	//删除事件
-	$("#del_event").click(function(){
-		if(confirm("您确定要删除吗？")){
-			var eventid = $("#eventid").val();
-			$.post("schedule_person_opt.php?action=del",{id:eventid},function(msg){
-				if(msg==1){//删除成功
-					$.fancybox.close();
+	   $("#del_event").click(function(){
+        if(confirm("您确定要删除吗？")){
+            var eventid = $("#eventid").val();
+            $.post("schedule_person_opt.php?action=del",{id:eventid},function(msg){
+                if(msg==1){//删除成功
+                    $.fancybox.close();
                     location.reload();
-					// $('#calendar').fullCalendar('refetchEvents'); //重新获取所有事件数据
-				}else{
-					alert(msg);	
-				}
-			});
-		}
-	});
+                    // $('#calendar').fullCalendar('refetchEvents'); //重新获取所有事件数据
+                }else{
+                    alert(msg); 
+                }
+            });
+        }
+    });
 });
+
 
 function showRequest(){
 	var events = $("#event").val();

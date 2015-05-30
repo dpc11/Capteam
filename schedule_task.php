@@ -26,7 +26,7 @@ $(function() {
 		},
 		events: <?php echo json_encode($data); ?>,
 
-		eventClick: function(calEvent, jsEvent, view) {
+		eventClick: {
 			$.fancybox({
 				'type':'ajax',
                 

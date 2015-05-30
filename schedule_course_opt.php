@@ -67,8 +67,8 @@ elseif($action=="edit"){
 	$s_time = $_POST['s_hour'].':'.$_POST['s_minute'].':00';//开始时间
 	$e_time = $_POST['e_hour'].':'.$_POST['e_minute'].':00';//结束时间
     mysql_select_db($database_tankdb, $tankdb);
-	//mysql_query("UPDATE `tk_course` set `course_name`='$event',`course_place`='$event1',`course_day`='$weekday',`course_startweek`
-		//='$s_week',`course_endweek`='$e_week',`course_starttime`='$s_time',`course_endtime`='$e_time' where `id`='$id'");
+	mysql_query("UPDATE `tk_course` set `course_name`='$event',`course_place`='$event1',`course_day`='$weekday',`course_startweek`
+		='$s_week',`course_endweek`='$e_week',`course_starttime`='$s_time',`course_endtime`='$e_time' where `id`='$id'");
 	
 	$sql="UPDATE tk_course SET course_name='$event',course_place='$event1',course_day='$weekday',course_startweek='$s_week',
 	course_endweek='$e_week',course_starttime='$s_time',
@@ -83,7 +83,7 @@ elseif($action=="edit"){
 }elseif($action=="del"){
 	$id = $_POST['id'];
 	if($id>0){
-		mysql_query("delete from `tk_schedule` where `id`='$id'");
+		mysql_query("delete from `tk_course` where `course_id`='$id'");
 		if(mysql_affected_rows()==1){
 			echo '1';
 		}else{
