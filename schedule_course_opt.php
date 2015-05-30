@@ -50,23 +50,31 @@ elseif($action=="edit"){
 		exit;	
 	}
 
-    $isallday = $_POST['isallday'];//是否是全天
-	if($isallday == 'on'){
-        $isallday1 = 1;
-    }else{
-    	$isallday1 = 0;
-    }
-	$event = $_POST['event'];//事件内容
+    $event = $_POST['event'];//课程名字  
+	$event1 = $_POST['event2'];//上课地点
+    
+    //echo $csid;
+    //$startdate = $_POST['startdate'];//开始日期
+    //$enddate = $_POST['enddate'];//开始日期
+    //$isallday = $_POST['isallday'];//是否是全天
 
-    $startdate = $_POST['startdate'];//开始日期
-    $enddate = $_POST['enddate'];//开始日期
 
-	$s_time = $_POST['s_hour'].':'.$_POST['s_minute'].':00';//开始时间	
+    $s_week = $_POST['s_week'];//开始周
+    $e_week = $_POST['e_week'];//结束周
+    
+    $weekday=$_POST['weekday'];
+
+	$s_time = $_POST['s_hour'].':'.$_POST['s_minute'].':00';//开始时间
 	$e_time = $_POST['e_hour'].':'.$_POST['e_minute'].':00';//结束时间
-	$starttime = $startdate.' '.$s_time;//开始时间
-	$endtime = $enddate.' '.$e_time;//结束时间
+    mysql_select_db($database_tankdb, $tankdb);
+	//mysql_query("UPDATE `tk_course` set `course_name`='$event',`course_place`='$event1',`course_day`='$weekday',`course_startweek`
+		//='$s_week',`course_endweek`='$e_week',`course_starttime`='$s_time',`course_endtime`='$e_time' where `id`='$id'");
+	
+	$sql="UPDATE tk_course SET course_name='$event',course_place='$event1',course_day='$weekday',course_startweek='$s_week',
+	course_endweek='$e_week',course_starttime='$s_time',
+	course_endtime='$e_time' WHERE course_id='$id'"; 
+       $Result1 = mysql_query($sql, $tankdb) or die(mysql_error()); 
 
-	mysql_query("update `tk_schedule` set `name`='$event',`start_time`='$starttime',`end_time`='$endtime',`is_allday`='$isallday1' where `id`='$id'");
 	if(mysql_affected_rows()==1){
 		echo '1';
 	}else{
