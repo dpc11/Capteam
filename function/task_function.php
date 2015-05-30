@@ -45,7 +45,8 @@
 		global $tankdb;
 		global $database_tankdb;
 		global $multilingual_log_addtask;
-		$insertSQL = sprintf("INSERT INTO tk_task (csa_testto, csa_from_user, csa_to_user, csa_project, csa_project_stage, csa_text, csa_priority, csa_plan_st, csa_plan_et, csa_plan_hour, csa_tag,csa_description,csa_status) VALUES (%s, %s, %s, %s, %s,%s, %s, %s, %s, %s, %s, $csa_description, %s)",
+		$timenow=date('Y-m-d H:i:s',time());
+		$insertSQL = sprintf("INSERT INTO tk_task (csa_testto, csa_from_user, csa_to_user, csa_project, csa_project_stage, csa_text, csa_priority, csa_plan_st, csa_plan_et, csa_plan_hour, csa_tag,csa_description,csa_status,csa_last_update) VALUES (%s, %s, %s, %s, %s ,%s, %s, %s, %s, %s, %s, $csa_description, %s ,'$timenow')",
 						   GetSQLValueString($ccuser, "text"),
 						   GetSQLValueString($fuser, "int"),
 						   GetSQLValueString($tuser, "int"),
@@ -58,6 +59,7 @@
 						   GetSQLValueString($hour, "text"),
 						   GetSQLValueString($tag, "text"),
 						   GetSQLValueString($status, "int"));
+						   echo $insertSQL;
 		mysql_select_db($database_tankdb, $tankdb);
 		$Result1 = mysql_query($insertSQL, $tankdb) or die(mysql_error());
 	  
