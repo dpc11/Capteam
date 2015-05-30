@@ -1,6 +1,6 @@
 <?php
 $r=$_GET['r'];
-$key=$_POST['key'];
+$key=$_GET['key'];
 $username=$_GET['u'];
 
 include_once("incsan.php");
@@ -13,7 +13,7 @@ setcookie("user_name",urlencode($username),time()+50000);
 setcookie("room_name",urlencode($r),time()+50000);
 
 $swfurl="consultation.swf?room=" . urlencode($r);
-$bgcolor="#333333";
+$bgcolor="#626262";
 $baseurl="";
 $wmode="transparent";
 ?>
@@ -21,7 +21,7 @@ $wmode="transparent";
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Video Consultation by VideoWhisper.com</title>
+<title>Capteam Meeting</title>
 <style type="text/css">
 <!--
 a {
@@ -42,19 +42,36 @@ body {
 -->
 </style>
 </head>
-<body bgcolor="#223333">
-<center>
-<div id="videowhisperConsultation">
-<object width="100%" height="100%">
-<param name="movie" id="movie" value="<?=$swfurl?>" /><param name="bgcolor" value="<?=$bgcolor?>" /><param name="salign" value="lt" /><param name="scale" value="noscale" /><param name="allowFullScreen" value="true" /><param name="allowscriptaccess" value="always" /> <param name="base" value="<?=$baseurl?>" /> <param name="wmode" value="<?=$wmode?>" /> <embed name="videowhisper_chat" width="100%" height="100%" scale="noscale" salign="lt" src="<?=$swfurl?>" bgcolor="<?=$bgcolor?>" base="<?=$baseurl?>" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="<?=$wmode?>"></embed>
-</object>
-<noscript>
-<p align=center>
-<a href="http://www.videowhisper.com/?p=Video+Consultation"><img src="templates/consultation/logo.png" alt="Online Video Consultation and Presentation Software" width="196" height="28" border="0"> Online Video Consultation and Presentation Software</a></p>
-<p align="center"><strong>This content requires the Adobe Flash Player:
-<a href="http://get.adobe.com/flashplayer/">Get Latest Flash</a></strong>!</p>
-</noscript>
-</div>		
-</center>
+
+<body bgcolor="#444444">
+    <center>
+        <div id="video">
+            <object width="100%" height="120%">
+                <param name="movie" id="movie" value="<?=$swfurl?>" />
+                <param name="bgcolor" value="<?=$bgcolor?>" />
+                <param name="salign" value="lt" />
+                <param name="scale" value="noscale" />
+                <param name="allowFullScreen" value="true" />
+                <param name="allowscriptaccess" value="always" />
+                <param name="base" value="<?=$baseurl?>" />
+                <param name="wmode" value="<?=$wmode?>" />
+                <embed name="videowhisper_chat" width="100%" height="100%" scale="noscale" salign="lt" src="<?=$swfurl?>" bgcolor="<?=$bgcolor?>" base="<?=$baseurl?>" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="<?=$wmode?>"></embed>
+            </object>
+
+            <noscript>
+                <p align=center>
+                    <img src="../images/ui/logo.png" width="300" height="60" border="0">
+                </p>
+                <p align=center>
+                    <a href="index.php" style="font-size: 1.8em;">大学生团队协作管理工具</a>
+                </p>
+                <p align="center" style="color: #dddddd; font-size: 1.4em">视频会议需要最新的 Adobe Flash Player :
+                    <a href="http://get.adobe.com/flashplayer/">获取最新 Flash</a>
+                </p>
+            </noscript>
+
+        </div>
+    </center>
 </body>
+
 </html>
