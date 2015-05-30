@@ -28,7 +28,6 @@ require_once( 'config/tank_config.php'); ?>
 <?php 
 //获得个人日程数据
 $userid = $_SESSION['MM_uid'];
-$data = get_course_events($userid);
 
 
 
@@ -42,6 +41,9 @@ mysql_select_db($database_tankdb, $tankdb);
       $firstday=mysql_result($Result1,0,'cs_firstday');
       $csid=mysql_result($Result1,0,'cs_id');
       //echo $csid;
+
+
+     $data = get_course_events($csid);
 ?>
 
 <?php require( 'head.php'); ?>
@@ -80,7 +82,7 @@ $(function() {
         allDaySlot: false,
         events: <?php echo json_encode($data); ?>,
 
-        // 在个人日程中新增日程
+        // 在课程日程中新增日程
 		dayClick: function(date, allDay, jsEvent, view) {
 			var selDate =$.fullCalendar.formatDate(date,'yyyy-MM-dd');
 			$.fancybox({
@@ -88,8 +90,8 @@ $(function() {
 				'href':'schedule_course_event.php?action=add&uid='+<?php echo $userid; ?>+'&date='+selDate+'&csid='+<?php echo $csid; ?>
 			});
     	},
-    
-        // 修改个人日程中的日程
+       
+        // 修改课程日程中的日程
         eventClick: function(calEvent, jsEvent, view) {
 			$.fancybox({
 				'type':'ajax',
