@@ -4,7 +4,7 @@ $action = $_GET['action'];
 $id = (int)$_GET['id'];
 $uid = (int)$_GET['uid'];
 $csid=$_GET['csid'];
-echo $csid;
+
 
 switch($action){
 	case 'add':
@@ -237,20 +237,26 @@ $date = $_GET['date'];
 
 // 编辑日程部分
 function editform($id){
-    echo $id;
+   // echo $id;
 	$query = mysql_query("select * from tk_course where course_id='$id'");
 	$row = mysql_fetch_array($query);
 	if($row){
 		//$id = $row['id'];
 		$time = $row['course_name'];
 		$course_place = $row['course_place'];
+        $startweek = $row['course_startweek'];//转换为date类型
+		$endweek = $row['course_endweek'];//转换为date类型
+
+
+        $course_day=$row['course_day'];
+
+        $starttime1 = $row['course_starttime'];
         $starttime = strtotime($starttime1);//转换为date类型
-		$start_d = date("Y-m-d",$starttime);
 		$start_h = date("H",$starttime);
 		$start_m = date("i",$starttime);
 
 		
-		$endtime1 = $row['end_time'];
+		$endtime1 = $row['course_endtime'];
         $endtime = strtotime($endtime1);//转换为date类型
         $end_d = date("Y-m-d",$endtime);
         $end_h = date("H",$endtime);
@@ -281,7 +287,7 @@ function editform($id){
             <label for="datepicker">
                 上课地点
             </label>
-            <textarea name="event2" id="event2" class="form-control" rows="1" cols="20"></textarea>
+            <textarea name="event2" id="event2" class="form-control" rows="1" cols="20"><?php echo $course_place; ?></textarea>
         </div>
         
         <div class="form-group col-xs-12">
@@ -298,8 +304,9 @@ function editform($id){
                  <div class="col-xs-3"
   style="padding-left: 5px;  border-left-width: 5px; padding-right: 5px;"  >
                 
-                <select name="s_week" class="form-control">
-                    <option value="01"selected>1</option>
+                <select name="s_week" class="form-control" >
+                    <option value="<?php echo $startweek;?>" selected><?php echo $startweek;?></option>
+                    <option value="01">1</option>
                     <option value="02">2</option>
                     <option value="03">3</option>
                     <option value="04">4</option>
@@ -325,7 +332,8 @@ function editform($id){
   style="padding-left: 5px;  border-left-width: 5px; padding-right: 5px;"  >
                 
                 <select name="e_week" class="form-control">
-                    <option value="01"selected>1</option>
+                     <option value="<?php echo $endweek;?>" selected><?php echo $endweek;?></option>
+                    <option value="01">1</option>
                     <option value="02">2</option>
                     <option value="03">3</option>
                     <option value="04">4</option>
@@ -362,7 +370,8 @@ function editform($id){
   style="padding-left: 5px;  border-left-width: 5px; padding-right: 5px;"  >
                 
                 <select name="weekday" class="form-control">
-                    <option value="01"selected>1</option>
+                    <option value="<?php echo $course_day;?>" selected><?php echo $course_day;?></option>
+                    <option value="01">1</option>
                     <option value="02">2</option>
                     <option value="03">3</option>
                     <option value="04">4</option>
@@ -387,6 +396,7 @@ function editform($id){
     width:99px;
 ">
                 <select name="s_hour" class="form-control"style="float:left;width:100%;">
+                    <option value="<?php echo $start_h;?>" selected><?php echo $start_h;?></option>
                     <option value="00">00</option>
                     <option value="01">01</option>
                     <option value="02">02</option>
@@ -395,7 +405,7 @@ function editform($id){
                     <option value="05">05</option>
                     <option value="06">06</option>
                     <option value="07">07</option>
-                    <option value="08" selected>08</option>
+                    <option value="08" >08</option>
                     <option value="09">09</option>
                     <option value="10">10</option>
                     <option value="11">11</option>
@@ -415,7 +425,8 @@ function editform($id){
                 </div>
                 <div class="col-xs-3">
                 <select name="s_minute" class="form-control">
-                    <option value="00" selected>00</option>
+                    <option value="<?php echo $start_m;?>" selected><?php echo $start_m;?></option>
+                    <option value="00">00</option>
                     <option value="10">10</option>
                     <option value="20">20</option>
                     <option value="30">30</option>
@@ -426,6 +437,7 @@ function editform($id){
                  <label class="beauty-label" id="textfield_label"   style="font-size:17px;float:left;">至</label>
                 <div class="col-xs-3">
                 <select name="e_hour" class="form-control">
+                    <option value="<?php echo $end_h;?>" selected><?php echo $end_h;?></option>
                     <option value="00">00</option>
                     <option value="01">01</option>
                     <option value="02">02</option>
@@ -434,7 +446,7 @@ function editform($id){
                     <option value="05">05</option>
                     <option value="06">06</option>
                     <option value="07">07</option>
-                    <option value="08" selected>08</option>
+                    <option value="08" >08</option>
                     <option value="09">09</option>
                     <option value="10">10</option>
                     <option value="11">11</option>
@@ -457,7 +469,8 @@ function editform($id){
 ">
                 <select name="e_minute" class="form-control"style="
     width: 101.85714292526245px;
-">
+">             
+                    <option value="<?php echo $end_m;?>" selected><?php echo $end_m;?></option>
                     <option value="00" selected>00</option>
                     <option value="10">10</option>
                     <option value="20">20</option>

@@ -3,7 +3,7 @@
 $action = $_GET['action'];
 $id = (int)$_GET['id'];
 $uid = (int)$_GET['uid'];
-
+echo $id;
 switch($action){
 	case 'add':
 		addform($uid);

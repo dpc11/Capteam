@@ -23,6 +23,21 @@
 		return $data;
 	}
     
+function get_course_events1($csid){
+        $sql = "select * from tk_course where course_csid='$csid'";
+        $query = mysql_query($sql);
+        while($row=mysql_fetch_array($query)){
+            $data[] = array(
+                'id' => $row['course_id'],
+                'name' => $row['course_name'],
+                'start' => $row['course_place'],
+               // 'place' => $row['csa_plan_et'],
+               
+                // 'color' => $row['color']
+            );
+        }
+        return $data;
+    }
     //»ñÈ¡¸öÈËÈÕ³ÌµÄÊý¾Ý
     function get_person_events($userid){
         $sql = "select * from tk_schedule where uid='$userid'";
@@ -178,7 +193,7 @@
                 $end_time = $course_date." ".$row_course['course_endtime'];
 
                 $data[] = array(
-                'id' => $row_course['id'],
+                'id' => $row_course['course_id'],
                 'title' => $show_title,
                 'start' => $start_time,
                 'end' => $end_time,
