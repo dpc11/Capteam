@@ -8,7 +8,9 @@ $pagename = end($pagename);
 if($pagename=="index.php") {
   require('task_update.php');
 }
-
+if($pagename=="task_view.php") {
+  require('task_update.php');
+}
 mysql_select_db($database_tankdb, $tankdb);
 $query_Recordset_anc = sprintf("SELECT * FROM tk_announcement WHERE tk_anc_type = 2 ORDER BY tk_anc_lastupdate DESC");
 $Recordset_anc = mysql_query($query_Recordset_anc, $tankdb) or die(mysql_error());

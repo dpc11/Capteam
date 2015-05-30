@@ -120,18 +120,27 @@ J.exend( J.check, {
     },
 	blurchk : function()
 	{
-	    for( var i = 0; i < J.check.rules.length; i++ )
-		{
-		    var r = J.check.rules[i];
-			if( r.name == this.name || r.name == this.id ) break;
-		}
-		var c = J.check, msgs = c.formchk( this, r ), okmg = r.okmsg || '&nbsp;'; 
-		c.ermsg = msgs; c.msgid = [r.mid]; c.sucmg = [okmg];
-		
+		var flag=true;
+		var c = J.check; c.msgid = []; c.ermsg = []; c.sucid = []; c.sucmg = [];
+			for( var i = 0; i < c.rules.length; i++ )
+			{
+				var r = J.check.rules[i];
+			    if( r.name == this.name || r.name == this.id ) {
+					var msgs = c.formchk(this,r);
+					if( msgs.length > 0 ){
+						for( var n in msgs ) 
+							c.adderrs( r.mid, msgs[n] );
+						break;
+					}else if(flag){
+						flag=false;
+						c.addsucc( r.mid, r.okmsg );
+					}						
+				}
+			}	
 		if( msgs.length > 0 )
 		    c.showerrs( c.msgid, c.ermsg );
 		else
-		    c.showsucc( c.msgid, c.sucmg );
+		    c.showsucc( c.sucid, c.sucmg );
 	},
 	
 	formchk : function(e,r)

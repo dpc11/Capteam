@@ -208,11 +208,9 @@ $user_arr = get_user_select_by_project($project_id);
 			  </tr>
 			  <tr>
 			  <td width="540px" valign="top">
-				
-                <span class="help-block"><?php echo $multilingual_taskadd_totip; ?></span>
 			  	<!--指派给-->		  
 			  <div class="form-group" >
-                <label for="select4" ><?php echo $multilingual_taskadd_totip; ?><span id="csa_to_user_msg"></span></label>
+                <label for="select4" ><?php echo $multilingual_default_task_to; ?><span id="csa_to_user_msg"></span></label>
                 <div >
                   <select id="select4" name="csa_to_user"  class="form-control">
 					 <?php foreach($user_arr as $key => $val){  ?>
@@ -330,13 +328,76 @@ $user_arr = get_user_select_by_project($project_id);
 <script type="text/javascript">
 
 J.check.rules = [
-	{ name: 'select4', mid: 'csa_to_user_msg', requir: true, type: 'group', noselected: '', warn: '<?php echo $multilingual_default_required1; ?>' },
-	{ name: 'datepicker2', mid: 'csa_plan_st_msg', requir: true, type: 'date',  warn: '<?php echo $multilingual_error_date; ?>' },
-	{ name: 'datepicker3', mid: 'csa_plan_et_msg', requir: true, type: 'date',  warn: '<?php echo $multilingual_error_date; ?>' },
-	{ name: 'csa_text', mid: 'csa_text_msg', requir: true, type: '',  warn: '<?php echo $multilingual_default_required4; ?>'},
-	{ name: 'plan_hour', mid: 'plan_hour_msg', type: 'rang', min: -1, warn: '<?php echo $multilingual_default_required5; ?>' }
+	{ name: 'csa_text', mid: 'csa_text_msg', requir: true },
+	{ name: 'csa_tag', mid: 'csa_tag_msg', type: 'limit',  max:20, warn: '标签最多20个英文字符' },
+	{ name: 'select4', mid: 'csa_to_user_msg', requir: true, type: 'group',  min: 1, max: 1,warn: '<?php echo $multilingual_default_required1; ?>' },
+	{ name: 'datepicker2', mid: 'csa_plan_st_msg', requir: true, type: 'date|cusfn',cusfunc:'checstagetaskstart()',  warn: '<?php echo $multilingual_error_date; ?>|任务开始时间早于本阶段开始时间' },
+	{ name: 'datepicker2', mid: 'csa_plan_st_msg', requir: true, type: 'cusfn',cusfunc: 'checstagetaskstart2()',  warn: '任务开始时间晚于本阶段结束时间' },
+	{ name: 'datepicker3', mid: 'csa_plan_et_msg', requir: true, type: 'date|cusfn',cusfunc: 'chectaskdate()',  warn: '<?php echo $multilingual_error_date; ?>|计划完成日期早于计划开始日期' },
+	{ name: 'datepicker3', mid: 'csa_plan_et_msg', requir: true, type: 'cusfn',cusfunc: 'checstagetaskend1()',  warn: '任务结束时间晚于本阶段结束时间' },
+	{ name: 'datepicker3', mid: 'csa_plan_et_msg', requir: true, type: 'cusfn',cusfunc: 'checstagetaskend2()',  warn: '任务结束时间早于本阶段开始时间' },
+	{ name: 'datepicker3', mid: 'csa_plan_et_msg', requir: true, type: 'cusfn',cusfunc: 'checstagetaskend3()',  warn: '任务结束时间不得早于当天' },
+	{name: 'plan_hour', mid: 'plan_hour_msg',requir: true,  type: 'cusfn',cusfunc: 'chectaskhour()', warn: '<?php echo $multilingual_default_required5; ?>' }
+   
 ];
+function checstagetaskend3(){
+	var date1=new Date();
+	var date2=Date.parse(document.getElementById("datepicker3").value.replace(/-/g,"/"));
+	if(date1>date2){
+		return false;
+	}
+	return true;
+}
+function checstagetaskend2(){
+	var date1=Date.parse(document.getElementById("stage_start").value.replace(/-/g,"/"));
+	var date2=Date.parse(document.getElementById("datepicker3").value.replace(/-/g,"/"));
+	if(date1>date2){
+		return false;
+	}
+	return true;
+}
+function checstagetaskend1(){
+	var date1=Date.parse(document.getElementById("stage_end").value.replace(/-/g,"/"));
+	var date2=Date.parse(document.getElementById("datepicker3").value.replace(/-/g,"/"));
+	if(date1<date2){
+		return false;
+	}
+	return true;
+}
 
+function checstagetaskstart(){
+	var date1=Date.parse(document.getElementById("stage_start").value.replace(/-/g,"/"));
+	var date2=Date.parse(document.getElementById("datepicker2").value.replace(/-/g,"/"));
+	if(date1>date2){
+		return false;
+	}
+	return true;
+}
+
+function checstagetaskstart2(){
+	var date1=Date.parse(document.getElementById("stage_end").value.replace(/-/g,"/"));
+	var date2=Date.parse(document.getElementById("datepicker2").value.replace(/-/g,"/"));
+	if(date1<date2){
+		return false;
+	}
+	return true;
+}
+
+function chectaskdate(){
+	var date1=Date.parse(document.getElementById("datepicker3").value.replace(/-/g,"/"));
+	var date2=Date.parse(document.getElementById("datepicker2").value.replace(/-/g,"/"));
+	if(date1<date2){
+		return false;
+	}
+	return true;
+}
+
+function chectaskhour(){
+	if(document.getElementById("plan_hour").value<=0){
+		return false;
+	}
+	return true;
+}		
         var editor;
         KindEditor.ready(function(K) {
                 editor = K.create('#csa_remark1', {
