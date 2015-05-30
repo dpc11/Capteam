@@ -4,7 +4,7 @@
 	$tasklevel = 0;
 	mysql_select_db($database_tankdb,$tankdb);
 
-	//Ìí¼ÓÏîÄ¿³ÉÔ±Ê±£¬»ñµÃËùÓĞµÄÓÃ»§ĞÅÏ¢
+	//æ ¹æ®å¯¹åº”idè·å–ç›¸åº”çš„ç”¨æˆ·ä¿¡æ¯
 	function get_all_user_select($uid) {
 		global $tankdb;
 		global $database_tankdb;
@@ -33,7 +33,7 @@
 
 		return $userinfo;
 	}
-	//¸ù¾İÓÃ»§id»ñµÃÓÃ»§ĞÅÏ¢
+	//æ ¹æ®ç”¨æˆ·idè·å–ç”¨æˆ·ä¿¡æ¯
 	function get_user_by_userid($userid){
 		global $tankdb;
 		global $database_tankdb;
@@ -56,7 +56,7 @@
 		return $userinfo;
 	}
 
-    //»ñµÃºÍ¸ÃÏîÄ¿ÓĞ¹ØµÄÓÃ»§ĞÅÏ¢
+    //æ ¹æ®é¡¹ç›®idè·å–æ‰€æœ‰è¢«é€‰ä¸­çš„ç”¨æˆ·
     function get_user_select_by_project($prjid) {
         global $tankdb;
         global $database_tankdb;
@@ -76,12 +76,37 @@
         $user_arr[$row_user['uid']]['ulimit'] =  $row_user['tk_team_ulimit'];
         $user_arr[$row_user['uid']]['score'] =  $row_user['tk_team_score'];
         } while ($row_user = mysql_fetch_assoc($userRS));     
+
+        mysql_free_result($userRS);
+        return $user_arr;
+    }
     
+    //æ ¹æ®é¡¹ç›®idè·å–æ‰€æœ‰è¢«é€‰ä¸­çš„ç”¨æˆ·,ä¸åŒ…æ‹¬é˜Ÿé•¿
+    function get_user_selected($prjid,$userid) {
+        global $tankdb;
+        global $database_tankdb;
+        $query_user ="SELECT * 
+        FROM tk_user 
+        inner join tk_team on tk_team.tk_team_uid=tk_user.uid 
+        WHERE tk_team.tk_team_pid = $prjid and tk_team.tk_team_uid<>$userid  ORDER BY CONVERT(tk_display_name USING gbk )";
+        $userRS = mysql_query($query_user, $tankdb) or die(mysql_error());
+        $row_user = mysql_fetch_assoc($userRS);
+ 
+        $user_arr = array ();
+        do { 
+        $user_arr[$row_user['uid']]['uid'] =  $row_user['uid'];
+        $user_arr[$row_user['uid']]['name'] =  $row_user['tk_display_name'];
+        $user_arr[$row_user['uid']]['email'] =  $row_user['tk_user_email'];
+        $user_arr[$row_user['uid']]['phone_num'] =  $row_user['tk_user_contact'];
+        $user_arr[$row_user['uid']]['ulimit'] =  $row_user['tk_team_ulimit'];
+        $user_arr[$row_user['uid']]['score'] =  $row_user['tk_team_score'];
+        } while ($row_user = mysql_fetch_assoc($userRS));     
+        
+        mysql_free_result($userRS);
         return $user_arr;
     }
 
-
-    //»ñµÃËùÓĞµÄÓÃ»§ĞÅÏ¢
+    //è·å–æ‰€æœ‰çš„ç”¨æˆ·
     function get_all_user() {
         global $tankdb;
         global $database_tankdb;
@@ -94,8 +119,9 @@
         $user_arr[$row_user['uid']]['name'] =  $row_user['tk_display_name'];
         $user_arr[$row_user['uid']]['email'] =  $row_user['tk_user_email'];
         $user_arr[$row_user['uid']]['phone_num'] =  $row_user['tk_user_contact'];
-        } while ($row_user = mysql_fetch_assoc($userRS));     
-    
+        } while ($row_user = mysql_fetch_assoc($userRS));  
+
+        mysql_free_result($userRS);
         return $user_arr;
     }
 

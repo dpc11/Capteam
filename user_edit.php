@@ -26,14 +26,14 @@ $tk_user_contact = "tk_user_contact='',";
 $tk_user_contact = sprintf("tk_user_contact=%s,", GetSQLValueString(str_replace("%","%%",$_POST['tk_user_contact']), "text"));
 }
 
-if ( empty( $_POST['tk_user_email'] ) ){
-$tk_user_email = "tk_user_email=''";
-}else{
-$tk_user_email = sprintf("tk_user_email=%s", GetSQLValueString(str_replace("%","%%",$_POST['tk_user_email']), "text"));
-}
+//if ( empty( $_POST['tk_user_email'] ) ){
+//$tk_user_email = "tk_user_email=''";
+//}else{
+//$tk_user_email = sprintf("tk_user_email=%s", GetSQLValueString(str_replace("%","%%",$_POST['tk_user_email']), "text"));
+//}
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
-  $updateSQL = sprintf("UPDATE tk_user SET tk_display_name=%s,$tk_user_contact $tk_user_email WHERE uid='$userid'",
+  $updateSQL = sprintf("UPDATE tk_user SET tk_display_name=%s, $tk_user_contact WHERE uid='$userid'",
                        
                        GetSQLValueString($_POST['tk_display_name'], "text"));
 
@@ -102,6 +102,7 @@ window.onload = function()
                                 <div>
                                     <?php echo $row_Recordset1[ 'tk_user_email']; ?>
                                 </div>
+                                <span class="help-block"><?php echo $multilingual_user_tip_mail; ?></span>
                             </div>
 
                             <div class="form-group col-xs-12">
@@ -138,6 +139,7 @@ window.onload = function()
                             </div>
 
 
+<!--
                             <div class="form-group col-xs-12">
                                 <label for="tk_user_email">
                                     <?php echo $multilingual_user_email; ?>
@@ -147,6 +149,7 @@ window.onload = function()
                                 </div>
                                 <span class="help-block"><?php echo $multilingual_user_tip_mail; ?></span>
                             </div>
+-->
 
 
                         </td>

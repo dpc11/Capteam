@@ -10,8 +10,6 @@
 <link type="text/css" href="css/ui/ui.all.css" rel="stylesheet" />
 <link type="text/css" href="css/lhgcore/lhgcheck.css" rel="stylesheet" />
 <script type="text/javascript" src="js/lhgcore/lhgcheck.js"></script>
-<link rel="stylesheet" href="css/bootstrap/bootstrap-multiselect.css" type="text/css"/>
-<script type="text/javascript" src="js/bootstrap/bootstrap-multiselect.js"></script>
 <link rel="stylesheet" href="css/bootstrap/datepicker3.css" type="text/css"/>
 <script type="text/javascript" src="js/bootstrap/bootstrap-datepicker.js"></script>
 <script type="text/javascript" src="js/bootstrap/locales/bootstrap-datepicker.zh-CN.js"></script>
@@ -423,7 +421,7 @@
 			var uu_mail = tr.childNodes[3].childNodes[0].id;
 			old_con=document.getElementById('constraint').value;
 			//alert(document.getElementById('constraint').value);
-			alert(document.getElementById('selected').value);
+			//alert(document.getElementById('selected').value);
 			var xx=uu_name+"【"+uu_phone+"】【"+uu_mail+"】";
 			var j= document.getElementById('selected').value.indexOf(xx); 
 			var sel_left="";
@@ -446,11 +444,11 @@
 				y++;
 			}
 			document.getElementById('selected').value=new_sel;
-			alert(document.getElementById('selected').value);
+			//alert(document.getElementById('selected').value);
 
 			var add=uu_name+"【"+uu_phone+"】【"+uu_mail+"】="+uu_id+"%"+uu_name+"%"+uu_phone+"%"+uu_mail+"%"+uu_name+"'";
 			document.getElementById('constraint').value = old_con+"||"+add;
-			alert(document.getElementById('constraint').value);
+			//alert(document.getElementById('constraint').value);
 			document.getElementById('now_sel').innerHTML="<input type=\"text\" id=\"now_selected\" name=\"now_selected\" value=\"" +document.getElementById('selected').value+"\">" ;
 			document.getElementById(id).deleteRow(rowIndex-1);	
 			document.getElementById('project_team_name').value="";

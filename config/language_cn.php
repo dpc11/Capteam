@@ -391,6 +391,8 @@ $multilingual_project_view_nowbstext = "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&
 $multilingual_project_add_text = "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每个项目包含了一个团队。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;创建一个项目，然后您才能分解阶段。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;项目创建人就是组长，他／她可以为项目选择若干成员，并且分配不同职责：帮助组长分配任务，或者去完成任务。</p>";
+$multilingual_project_edit_text = "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每个项目包含了一个团队。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;项目创建人就是组长，他／她可以为项目选择若干成员，并且分配不同职责：帮助组长分配任务，或者去完成任务。</p>";
 
 $multilingual_stage_add_text = "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每个项目将经历不同阶段。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;创建一个阶段，才能下发任务。</p>
@@ -405,7 +407,8 @@ $multilingual_privilege_remove = "回收权限";
 $multilingual_board_add_text = "<p>看板分为项目看板和个人看板。</p><br />
 <p>创建一个项目，才能在项目详情页面点击进入看板页添加项目看板。</p><br />
 <p>点击菜单栏看板即可进入个人看板。</p><br />
-<p>便签可以相互交换，只有组长可以移动项目看板</p>
+<p>便签可以相互交换和插入，直接拖拽便签到另一便签上执行交换，拖拽到两个便签之间执行插入</p><br />
+<p>只有组长可以移动项目看板，个人可以移动自己的个人看板。</p>
 ";
 // *** 文档管理
 $multilingual_project_file = "项目文档";
@@ -472,7 +475,7 @@ $multilingual_user_newpassword2 = "确认新密码";
 $multilingual_user_role = "角色";
 $multilingual_user_dept = "部门";
 $multilingual_user_remark = "备注";
-$multilingual_user_contact = "电话";
+$multilingual_user_contact = "联系电话";
 $multilingual_user_email = "电子邮件";
 $multilingual_user_updatetask = "更新了任务";
 $multilingual_user_updatetask2 = "的执行人";
@@ -501,13 +504,13 @@ $multilingual_user_edit_title = "修改信息";
 $multilingual_user_edit_info = "用户基本信息";
 $multilingual_user_edit_password = "修改密码";
 $multilingual_user_tip_account = "登录凭证，用户创建成功后帐号不可编辑";
-$multilingual_user_tip_contact = "手机或分机等";
+$multilingual_user_tip_contact = "任何可以联系的号码";
 $multilingual_user_tip_remark = "职务、部门或详细的联系方式等，可记录在备注中";
 $multilingual_user_tip_password = "登录凭证，管理员密码如遗失将无法找回，请妥善保管";
 $multilingual_user_tip_password2 = "再次输入密码";
 $multilingual_user_tip_match = "两次输入不一致";
 $multilingual_user_tip_name = "用户在系统中的显示名称，支持中文";
-$multilingual_user_tip_mail = "用于邮件提醒，如开启邮件提醒服务，请务必要求每一个用户填写该项";
+$multilingual_user_tip_mail = "不可修改，用于用户登录和邮件提醒";
 $multilingual_user_sorrytip = "没有符合条件的用户";
 $multilingual_user_namequired = "2-12个字符";
 $multilingual_user_alpha = "用户帐号只允许使用字母、数字或下划线";
