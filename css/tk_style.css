@@ -950,7 +950,8 @@ a:focus {
 }
 
 .info_task_title {
-    font-weight: bold;
+	width:320px;
+	float:left;
 }
 /********task log*******/
 

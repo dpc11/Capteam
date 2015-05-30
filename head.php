@@ -8,18 +8,14 @@ $pagename = end($pagename);
 if($pagename=="index.php") {
   require('task_update.php');
 }
-$colname_Recordset_anc = "2";
 
 mysql_select_db($database_tankdb, $tankdb);
-$query_Recordset_anc = sprintf("SELECT * FROM tk_announcement WHERE tk_anc_type = %s ORDER BY tk_anc_lastupdate DESC", GetSQLValueString($colname_Recordset_anc, "text"));
+$query_Recordset_anc = sprintf("SELECT * FROM tk_announcement WHERE tk_anc_type = 2 ORDER BY tk_anc_lastupdate DESC");
 $Recordset_anc = mysql_query($query_Recordset_anc, $tankdb) or die(mysql_error());
 $row_Recordset_anc = mysql_fetch_assoc($Recordset_anc);
 $totalRows_Recordset_anc = mysql_num_rows($Recordset_anc);
 
 $message_count = check_message( $_SESSION['MM_uid'] );
-
-$totalRows_Recordset_anc=0;
-
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

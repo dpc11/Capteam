@@ -178,47 +178,12 @@ $(document.body).css({
 */
 ?>
 <?php require('head.php'); ?>
-<script type="text/javascript" language="javascript">    
-
-
- 
-function TuneHeight()    
-{    
-var frm = document.getElementById("frame_content");    
-var subWeb = document.frames ? document.frames["main_frame"].document : frm.contentDocument;    
-if(frm != null && subWeb != null)    
-{ frm.height = subWeb.body.scrollHeight;}    
-}    
- 
-
-        $(document).ready(function() {
-            var h = $(window).height(), h2;
-            var h = h - <?php if($totalRows_Recordset_anc > 0) {echo "75";} else {echo "40";} ?>;
-            $("#main_right").css("height", h);
-            $(window).resize(function() {
-                h2 = $(this).height();
-                $("#main_right").css("height", h2);
-            });
-        })
-</script>
-
-<script type="text/javascript">
-
-function addcomm()
-{
-    J.dialog.get({ id: "test1", title: '<?php echo $multilingual_default_addcom; ?>', width: 600, height: 500, page: "comment_add.php?taskid=<?php echo $row_Recordset_task['tid']; ?>&type=1" });
-}
-
-</script>
-
-
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<div id="pagemargin">
+<div class="clearboth"></div>
+<table width="100%"  border="0" cellspacing="0" cellpadding="0" >
   <tr>
-      
-<!-- 左边20%的宽度的树或者说明 
-          <td valign="top"></td>  -->
-	<td width="20%" class="input_task_right_bg" valign="top">
-      <table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
+	<td width="23%" class="input_task_right_bg" valign="top">
+      <table width="90%" border="0" cellspacing="0" cellpadding="0" align="center" id="tree">
         <tr><?php
 		  $project_id = $row_Recordset_task['csa_project'];
 		  $project_name = $row_Recordset_task['project_name'];
@@ -231,7 +196,7 @@ function addcomm()
 	</td>
       
 <!-- 右边80%宽度的主体内容 -->
-    <td width="80%" valign="top">
+    <td width="77%" valign="top" height="100%">
         <div style="overflow:auto; " id="main_right"><!-- right main -->
         <table width="90%" border="0" cellspacing="0" cellpadding="5" align="center">
 		
@@ -258,21 +223,20 @@ margin-bottom: 10px;">
 			<td>
 				<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="info_task_bg" >
                         
-					<tr>
+					<tr >
+						<td width="30%" >
 						<!-- 指派给谁 -->
-						<td width="10%" class="info_task_title"><?php echo $multilingual_default_task_to; ?></td>
-						<td width="25%"><a href="user_view.php?recordID=<?php echo $row_Recordset_task['csa_to_user']; ?>"><?php echo $row_Recordset_task['tk_display_name1']; ?></a></td>
+							<div class="info_task_title"><strong>指&nbsp;&nbsp;派&nbsp;&nbsp;给</strong>&nbsp;&nbsp;&nbsp;<a href="user_view.php?recordID=<?php echo $row_Recordset_task['csa_to_user']; ?>"><?php echo $row_Recordset_task['tk_display_name1']; ?></a></div>
+						</td>
 						
+						<td width="30%" >
 						<!-- 来自谁 -->
-						<td width="12%" class="info_task_title"><?php echo $multilingual_default_task_from; ?></td>
-						<td><a href="user_view.php?recordID=<?php echo $row_Recordset_task['csa_from_user']; ?>"><?php echo $row_Recordset_task['tk_display_name2']; ?></a></td>
-					</tr>
-					
-					<!-- 抄送 -->
-					<tr>
-						<td class="info_task_title"><?php echo $multilingual_default_task_cc; ?></td>
-						<td colspan="3">
-						<?php if ($row_Recordset_task['testto'] <> "") {
+						<div class="info_task_title"><strong>来&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;自</strong>&nbsp;&nbsp;&nbsp;<a href="user_view.php?recordID=<?php echo $row_Recordset_task['csa_from_user']; ?>"><?php echo $row_Recordset_task['tk_display_name2']; ?></a></div>
+						  </td>
+						
+						<td width="30%" >
+						<div class="info_task_title"><strong>抄&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;送
+						</strong>&nbsp;&nbsp;&nbsp;&nbsp;<?php if ($row_Recordset_task['testto'] <> "") {
 							//var_dump(json_decode($row_Recordset_task['test01'], true));  
 	
 							$ccarr = json_decode($row_Recordset_task['testto'], true);
@@ -285,51 +249,55 @@ margin-bottom: 10px;">
 						}else{ 
 						echo "无";
 						} ?>
+						</div>
 						</td>
 					</tr>
-				</table>
-		
-				<table width="100%" border="0" cellspacing="0" cellpadding="0"  class="info_task_bg" >
 					<tr>
 						<!-- 状态 -->
-						<td width="12%" class="info_task_title"><?php echo $multilingual_default_task_status; ?></td>
-						<td  width="40%"><div class="float_left view_task_status"><?php echo $row_Recordset_task['task_status_display']; ?></div></td>
+						<td width="30%" >
+							<div class="info_task_title"><div style="float:left"><strong>状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态</strong>&nbsp;&nbsp;</div><div class="float_left view_task_status"><?php echo $row_Recordset_task['task_status_display']; ?></div></div>
+						  </td>
 						
 						<!-- 优先级 -->
-						<td  width="12%" class="info_task_title"><?php echo $multilingual_default_task_priority; ?></td>
-						<td><?php echo$row_Recordset_task['csa_priority']; ?></td>
+						<td width="30%" >
+						<div  width="12%" class="info_task_title"><strong>优&nbsp;&nbsp;先&nbsp;&nbsp;级</strong>&nbsp;&nbsp;&nbsp;<?php echo$row_Recordset_task['csa_priority']; ?>
+						</div>
+						  </td>
+						
+						<!-- 工作量 -->
+						<td width="30%" >
+						<div class="info_task_title"><strong>工&nbsp;&nbsp;&nbsp;作&nbsp;&nbsp;&nbsp;量&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong><?php echo $row_Recordset_task['csa_plan_hour']; ?> 
+							<?php echo $multilingual_global_hour; ?></div>
+						</td>
 					</tr>
 					<tr>
 						<!-- 计划开始时间 -->
-						<td class="info_task_title"><?php echo $multilingual_default_task_planstart; ?></td>
-						<td><?php echo $row_Recordset_task['csa_plan_st']; ?></td>
+						<td width="30%" >
+						<div class="info_task_title"><strong><?php echo $multilingual_default_task_planstart; ?></strong>&nbsp;&nbsp;&nbsp;<?php echo $row_Recordset_task['csa_plan_st']; ?></div>
+						  </td>
                         
                         <!-- 计划完成 -->
-						<td class="info_task_title"><?php echo $multilingual_default_task_planend; ?></td>
-						<td><?php echo $row_Recordset_task['csa_plan_et']; ?></td>
-					</tr>
-					<tr>
-						<!-- 工作量 -->
-						<td class="info_task_title"><?php echo $multilingual_default_task_planpv; ?></td>
-						<td><?php echo $row_Recordset_task['csa_plan_hour']; ?>
-							<?php echo $multilingual_global_hour; ?></td>
-                        
+						<td width="30%" >
+						<div class="info_task_title"><strong>计划完成</strong>&nbsp;&nbsp;&nbsp;<?php echo $row_Recordset_task['csa_plan_et']; ?></div>
+						  </td>
+						
 						<!-- 据完工日期 -->
-						<td class="info_task_title"><?php 
+						<td width="30%" >
+						<div class="info_task_title"><strong><?php 
 						  $live_days = (strtotime($row_Recordset_task['csa_plan_et']) - strtotime(date("Y-m-d")))/86400;
 						  if ($live_days < 0){
 						  echo $multilingual_tasklog_overday;
 						  } else {
 						  echo $multilingual_tasklog_liveday;
 						  }
-						  ?></td>
-						<td><?php 
+						  ?>&nbsp;&nbsp;&nbsp;</strong>
+						  <?php 
 						  if ($live_days < 0){
-						  //echo "<span class='red'>".$live_days." ".$multilingual_tasklog_day."</span>";
 						  } else {
 						  echo $live_days." ".$multilingual_tasklog_day;
 						  }
-						  ?></td>
+						  ?></div>
+						  </td>
 					</tr>
 				</table>
 
@@ -345,21 +313,21 @@ margin-bottom: 10px;">
 						
                         <!-- 审核-->
 						<?php if ($row_Recordset_task['csa_status']==3) { ?>
-						<td width="10%">
+						<td width="100px">
 						<a href="default_task_check.php?taskid=<?php echo $row_Recordset_task['tid']; ?>"><span class="glyphicon glyphicon-check"></span> <?php echo $multilingual_exam_title; ?></a>
 						</td>
 						<?php }  ?>						
 						
 						<!-- 编辑修改-->
 						<?php if ($row_Recordset_task['csa_status']<3) { ?>
-						<td width="10%">
-						<a onClick="javascript:self.location='default_task_plan.php?editID=<?php echo $row_Recordset_task['tid']; ?>';" class="mouse_over"><span class="glyphicon glyphicon-pencil"></span> <?php echo $multilingual_global_action_edit; ?></a>
+						<td width="100px">
+						<a onClick="javascript:self.location='task_edit.php?editID=<?php echo $row_Recordset_task['tid']; ?>';" class="mouse_over"><span class="glyphicon glyphicon-pencil"></span> <?php echo $multilingual_global_action_edit; ?></a>
 						</td>
 						<?php }  ?>	
 						
 						<!-- 删除-->
 						<?php if ($row_Recordset_task['csa_status']<3) { ?>
-						<td width="10%">
+						<td width="100px">
 						<a  class="mouse_over" onClick="javascript:if(confirm( '<?php echo $multilingual_global_action_delconfirm; ?>'))self.location= 'task_del.php?delID=<?php echo $row_Recordset_task['tid']; ?>';"><span class="glyphicon glyphicon-remove"></span> <?php echo $multilingual_global_action_del; ?></a>
 						</td>
 						<?php }  ?>		
@@ -371,33 +339,28 @@ margin-bottom: 10px;">
 						
 						<!-- 提交任务-->
 						<?php if ($row_Recordset_task['csa_status']==2) { ?>
-						<td width="10%">
+						<td width="140px">
 						<a href="default_task_submit.php?taskid=<?php echo $row_Recordset_task['tid']; ?>&stageid=<?php echo $row_Recordset_task['csa_project_stage']; ?>&projectid=<?php echo $row_Recordset_task['csa_project']; ?>"><span class="glyphicon glyphicon-check"></span> <?php echo $multilingual_submit_task; ?></a>
 						</td>
 						<?php }  ?>			
 						
 						<!-- 替换任务-->
 						<?php if ($row_Recordset_task['csa_status']==3) { ?>
-						<td width="10%">
+						<td width="140px">
 						<a href="default_task_submit.php?taskid=<?php echo $row_Recordset_task['tid']; ?>&stageid=<?php echo $row_Recordset_task['csa_project_stage']; ?>&projectid=<?php echo $row_Recordset_task['csa_project']; ?>"><span class="glyphicon glyphicon-check"></span> <?php echo $multilingual_change_submit_task; ?></a>
 						</td>
 						<?php }  ?>	
 						
 						<!-- 驳回后重新提交-->
 						<?php if ($row_Recordset_task['csa_status']==5) { ?>
-						<td width="10%">
+						<td width="140px">
 						<a href="default_task_submit.php?taskid=<?php echo $row_Recordset_task['tid']; ?>&stageid=<?php echo $row_Recordset_task['csa_project_stage']; ?>&projectid=<?php echo $row_Recordset_task['csa_project']; ?>"><span class="glyphicon glyphicon-check"></span> <?php echo $multilingual_re_submit_task; ?></a>
 						</td>
 						<?php }  ?>	
 						<?php }  ?>	
-						
-						<!-- 添加评论-->
-						<td width="12%">			
-						<a href="#" onclick="addcomm();"><span class="glyphicon glyphicon-comment"></span> <?php echo $multilingual_default_addcom; ?></a>
-						</td>
             
 						<!-- 返回-->
-						<td>
+						<td width="100px">
 						<a class="mouse_over" href="<?php echo $tasklisturl; ?>"><span class="glyphicon glyphicon-arrow-left"></span> <?php echo $multilingual_global_action_back; ?></a>
 						</td>
 						<td>&nbsp;
@@ -408,155 +371,56 @@ margin-bottom: 10px;">
 			</td>
         </tr>
 		
-		<!-- 描述,如果有-->
-		<?php if ($row_Recordset_task['csa_description'] <> "&nbsp;" && $row_Recordset_task['csa_description'] <> "") { ?>
-		<tr>
+		
+		<tr >
           <td>&nbsp;</td>
         </tr>
-		<tr>
-          <td><div class="float_left"><span class="font_big18 fontbold" ><?php echo $multilingual_default_task_description; ?></span><a name="comment"></a></div>
+		<tr style="border-bottom: 3px #D1D1D1 double;border-width:6px;margin-bottom:6px;" >
+          <td><div class="float_left"><h5 ><?php echo $multilingual_default_task_description; ?></h5><a name="comment"></a></div>
           </td>
         </tr>
         <tr>
-          <td><?php echo $row_Recordset_task['csa_description']; ?></td>
+          <td><?php  
+			if($row_Recordset_task['csa_description']==""){
+				echo "无";
+			}else{
+				echo $row_Recordset_task['csa_description'];
+			} ?></td>
         </tr>
-        <?php } ?>
-		
-		
-		<!-- 评论,如果有-->
-		<?php if($totalRows_Recordset_comment > 0){ //如果有评论?>
-        <tr>
-          <td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td><div class="float_left"><span class="font_big18 fontbold" ><?php echo $multilingual_default_comment; ?></span><a name="comment"></a></div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-		  <table class="table table-striped table-hover glink" style="margin-bottom:3px;">
-              <?php do { ?>
-              <tr>
-                <td ><div class="float_left gray"> <a href="user_view.php?recordID=<?php echo $row_Recordset_comment['tk_comm_user']; ?>"><?php echo $row_Recordset_comment['tk_display_name']; ?></a> <?php echo $multilingual_default_by; ?> <?php echo $row_Recordset_comment['tk_comm_lastupdate']; ?> <?php echo $multilingual_default_at; ?></div>
-                  <div class="float_right">
-                    <?php if ($_SESSION['MM_rank'] > "4" || ($row_Recordset_comment['tk_comm_user'] == $_SESSION['MM_uid'] && $_SESSION['MM_rank'] > "1")) {  ?>
-                    <?php
-						  $coid =$row_Recordset_comment['coid'];
-						  $editcomment_row = "
-					<script type='text/javascript'>
-						  function editcomm$coid()
-					{
-						J.dialog.get({ id: 'test3', title: '$multilingual_default_editcom', width: 600, height: 500, page: 'comment_edit.php?editcoID=$coid' });
-					}
-					</script>";
-
-					echo $editcomment_row;
-					?>
-                    <a onclick="editcomm<?php echo $coid; ?>();" class="mouse_hover"> <?php echo $multilingual_global_action_edit; ?></a>
-                    <?php if ($_SESSION['MM_Username'] <> $multilingual_dd_user_readonly) {  ?>
-                    <a  class="mouse_hover" 
-						  onclick="javascript:if(confirm( '<?php 
-						  echo $multilingual_global_action_delconfirm; ?>'))self.location='comment_del.php?delID=<?php echo $row_Recordset_comment['coid']; ?>&taskID=<?php echo $row_Recordset_task['tid']; ?>';"
-						  ><?php echo $multilingual_global_action_del; ?></a>
-										<?php } else {  
-						   echo $multilingual_global_action_del; 
-							}  ?>
-										<?php } ?>
-									  </div>
-									  <?php 
-						echo "<br/>".$row_Recordset_comment['tk_comm_title']; 
-						?>                </td>
-								  </tr>
-								  <?php
-					} while ($row_Recordset_comment = mysql_fetch_assoc($Recordset_comment));
-					  $rows = mysql_num_rows($Recordset_comment);
-					  if($rows > 0) {
-						  mysql_data_seek($Recordset_comment, 0);
-						  $row_Recordset_comment = mysql_fetch_assoc($Recordset_comment);
-					  }
-					?>
-            </table>
-			
-            <table class="rowcon" border="0" align="center">
-              <tr>
-                <td><table border="0">
-                    <tr>
-                      <td><?php if ($pageNum_Recordset_comment > 0) { // Show if not first page ?>
-                          <a href="<?php printf("%s?pageNum_Recordset_comment=%d%s", $currentPage, 0, $queryString_Recordset_comment); ?>#comment"><?php echo $multilingual_global_first; ?></a>
-                          <?php } // Show if not first page ?></td>
-                      <td><?php if ($pageNum_Recordset_comment > 0) { // Show if not first page ?>
-                          <a href="<?php printf("%s?pageNum_Recordset_comment=%d%s", $currentPage, max(0, $pageNum_Recordset_comment - 1), $queryString_Recordset_comment); ?>#comment"><?php echo $multilingual_global_previous; ?></a>
-                          <?php } // Show if not first page ?></td>
-                      <td><?php if ($pageNum_Recordset_comment < $totalPages_Recordset_comment) { // Show if not last page ?>
-                          <a href="<?php printf("%s?pageNum_Recordset_comment=%d%s", $currentPage, min($totalPages_Recordset_comment, $pageNum_Recordset_comment + 1), $queryString_Recordset_comment); ?>#comment"><?php echo $multilingual_global_next; ?></a>
-                          <?php } // Show if not last page ?></td>
-                      <td><?php if ($pageNum_Recordset_comment < $totalPages_Recordset_comment) { // Show if not last page ?>
-                          <a href="<?php printf("%s?pageNum_Recordset_comment=%d%s", $currentPage, $totalPages_Recordset_comment, $queryString_Recordset_comment); ?>#comment"><?php echo $multilingual_global_last; ?></a>
-                          <?php } // Show if not last page ?></td>
-                    </tr>
-                  </table></td>
-                <td align="right"><?php echo ($startRow_Recordset_comment + 1) ?> <?php echo $multilingual_global_to; ?> <?php echo min($startRow_Recordset_comment + $maxRows_Recordset_comment, $totalRows_Recordset_comment) ?> (<?php echo $multilingual_global_total; ?> <?php echo $totalRows_Recordset_comment ?>)&nbsp;&nbsp;&nbsp;&nbsp;</td>
-              </tr>
-            </table></td>
-        </tr>
-        <?php } //如果有评论 ?>
 		
 		
 		<!--操作记录，如果有-->
         <tr>
           <td>&nbsp;</td>
         </tr>
-        <tr>
-          <td><span class="font_big18 fontbold"><?php echo $multilingual_log_title; ?></span><a name="log"></td>
+        <tr style="border-bottom: 3px #D1D1D1 double;border-width:6px;margin-bottom:6px;" >
+          <td><h5><?php echo $multilingual_log_title; ?></h5><a name="log"></td>
         </tr>
         <tr>
-          <td><table class="table table-striped table-hover glink" style="margin-bottom:3px;">
+          <td><table class="table table-striped table-hover glink" style="margin-bottom:3px;max-height:350px;">
               <?php while ($row_log = mysql_fetch_assoc($TaskLog_Result)) { ?>
               <tr>
-                <td ><?php echo $row_log['tk_log_time']; ?>     <!--<a href="user_view.php?recordID=<?php echo $row_Recordset_actlog['tk_log_user']; ?>">--><?php echo $row_log['tk_user_login']; ?><!--</a>-->  <?php echo $row_log['tk_log_action']; ?>
+                <td ><?php echo $row_log['tk_log_time']; ?>&nbsp;&nbsp;:&nbsp;&nbsp; <a href="user_view.php?recordID=<?php echo $row_Recordset_actlog['tk_log_user']; ?>"><?php echo $row_log['tk_display_name']; ?></a><?php echo $row_log['tk_log_action']; ?>
                 </td>              
               </tr>
               <?php
-          } 
-        //$rows = mysql_num_rows($Recordset_actlog);
-        //if($rows > 0) {
-          //mysql_data_seek($Recordset_actlog, 0);
-          //$row_Recordset_actlog = mysql_fetch_assoc($Recordset_actlog);
-        //}
+          }
       ?>
-            </table>
-            <p><?php echo '<br>'?></p>
-            <!--<table class="rowcon" border="0" align="center">
-              <tr>
-                <td><table border="0">
-                    <tr>
-                      <td><?php if ($pageNum_Recordset_actlog > 0) { // Show if not first page ?>
-                          <a href="<?php printf("%s?pageNum_Recordset_actlog=%d%s", $currentPage, 0, $queryString_Recordset_actlog); ?>#log"><?php echo $multilingual_global_first; ?></a>
-                          <?php } // Show if not first page ?></td>
-                      <td><?php if ($pageNum_Recordset_actlog > 0) { // Show if not first page ?>
-                          <a href="<?php printf("%s?pageNum_Recordset_actlog=%d%s", $currentPage, max(0, $pageNum_Recordset_actlog - 1), $queryString_Recordset_actlog); ?>#log"><?php echo $multilingual_global_previous; ?></a>
-                          <?php } // Show if not first page ?></td>
-                      <td><?php if ($pageNum_Recordset_actlog < $totalPages_Recordset_actlog) { // Show if not last page ?>
-                          <a href="<?php printf("%s?pageNum_Recordset_actlog=%d%s", $currentPage, min($totalPages_Recordset_actlog, $pageNum_Recordset_actlog + 1), $queryString_Recordset_actlog); ?>#log"><?php echo $multilingual_global_next; ?></a>
-                          <?php } // Show if not last page ?></td>
-                      <td><?php if ($pageNum_Recordset_actlog < $totalPages_Recordset_actlog) { // Show if not last page ?>
-                          <a href="<?php printf("%s?pageNum_Recordset_actlog=%d%s", $currentPage, $totalPages_Recordset_actlog, $queryString_Recordset_actlog); ?>#log"><?php echo $multilingual_global_last; ?></a>
-                          <?php } // Show if not last page ?></td>
-                    </tr>
-                  </table></td>
-                <td align="right"><?php echo ($startRow_Recordset_actlog + 1) ?> <?php echo $multilingual_global_to; ?> <?php echo min($startRow_Recordset_actlog + $maxRows_Recordset_actlog, $totalRows_Recordset_actlog) ?> (<?php echo $multilingual_global_total; ?> <?php echo $totalRows_Recordset_actlog ?>)&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            </td>
               </tr>
-            </table>-->
+            </table>
           </td>
         </tr>
         
         
       </table>
-            <?php require('foot.php'); ?>
         </div><!-- right main -->
 </td>
   </tr>
 </table>
+</div>
+</div>
+            <?php require('foot.php'); ?>
 <!-- Modal -->
 <div class="modal fade" id="edituserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -574,6 +438,28 @@ margin-bottom: 10px;">
 
 
 </body>
+
+	<script>
+
+	$(window).load(function()
+	{
+		$("#foot_top").css("min-height",document.getElementById("pagemargin").clientHeight+60+document.getElementById("top_height").clientHeight+"px");
+		$(window).resize();	
+	});
+	$(window).resize(function()
+	{	
+		$("#foot_top").css("height",$(window).height()+"px"); 
+		$("#tree").css("height",document.getElementById("foot_top").clientHeight-66-60+"px"); 
+	});
+	
+ function addcomm()
+{
+    J.dialog.get({ id: "test1", title: '<?php echo $multilingual_default_addcom; ?>', width: 600, height: 500, page: "comment_add.php?taskid=<?php echo $row_Recordset_task['tid']; ?>&type=1" });
+}
+
+</script>
+
+
 </html>
 <?php
 mysql_free_result($Recordset_task);

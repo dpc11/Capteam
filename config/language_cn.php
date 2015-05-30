@@ -121,15 +121,6 @@ $multilingual_head_loglist = "日志列表";
 $multilingual_head_myprofile = "我的资料";
 $multilingual_head_feed = "动态";
 
-// *** 页面底部(foot.php)
-$multilingual_foot_about = "关于WSS";
-$multilingual_foot_abouttitle = "当前版本";
-$multilingual_foot_officialsite = "官方网站";
-$multilingual_foot_officialsitetitle = "关于WSS最新的资讯";
-$multilingual_foot_feedback = "<a href='http://www.wssys.net/zh-cn/feedback.php' target='_blank' title='我们将在第一时间对您提出的问题给予答复'>问题反馈</a>";
-$multilingual_foot_feedbacktitle = "我们将在第一时间对您提出的问题给予答复";
-$multilingual_foot_contact = "联系我们";
-
 // *** 首页(index.php)
 // *** 新建阶段页(stage_add.php)
 // *** 编辑阶段页(stage_edit.php)
@@ -296,7 +287,7 @@ $multilingual_taskadd_totip = "任务执行人，任务创建后，执行人会�
 
 $multilingual_default_task_planpv = "工作量";
 
-$multilingual_default_task_tag_tips = "Tag是任务的自定义标签，您可以按Tag来搜索所有具有相同标签的任务";
+$multilingual_default_task_tag_tips = "Tag是任务的自定义标签，您可以按Tag来搜索任务";
 $multilingual_default_task_type_tips = "阶段类型是任务的重要属性，您可以根据任务类型来搜索任务，或进行统计";
 $multilingual_default_stage_title_tips = "阶段名称用于标识项目所处的状态";
 
@@ -305,7 +296,7 @@ $multilingual_default_task_cc_tips = "您可以将该任务抄送给多个人，
 
 $multilingual_default_task_starttime_tips = "您希望任务在何时开始，此项适合做计划时填写";
 $multilingual_default_task_endtime_tips = "任务截止日期，超过该日期还未完成的任务，会出现在任务执行人的提醒列表里";
-$multilingual_default_task_pv_tips = "估算该任务所需时间，以此作为参照计算到该组员在本团队的得分中";
+$multilingual_default_task_pv_tips = "估算该任务所需时间，作为计算该组员在本团队的得分的参数";
 
 $multilingual_default_task_start_status = "任务初始状态";
 $multilingual_default_task_start_status_tips = "如果任务在创建前已经开始，请设置任务初始状态";
@@ -315,11 +306,11 @@ $multilingual_default_task_priority_tips = "供任务执行人参考的任务紧
 $multilingual_default_stage_help_title = "分解项目阶段";
 $multilingual_default_stage_help_text = "项目阶段是一个项目所处的状态，不同的任务应当属于项目不同的阶段，以此来让整个项目的工作过程更加科学、条理。";
 
-$multilingual_default_task_help_title = "快速创建任务";
-$multilingual_default_task_help_text = "您只需要填写任务标题，并选择任务类型与任务执行人，就可以快速创建一个任务。";
+$multilingual_default_task_help_title = "&nbsp;&nbsp;&nbsp;快速创建任务";
+$multilingual_default_task_help_text = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您只需要填写任务标题，并选择任务类型与任务执行人，就可以快速创建一个任务。";
 
-$multilingual_default_task_help_title2 = "工作分解结构 WBS";
-$multilingual_default_task_help_text2 = "从项目管理的角度，一个任务只能指派给一个人，如果任务需要多人协作完成，请将任务进行分解。<br /><br />优秀的项目经理善于将复杂的任务按类型分解为若干简单的任务，相对于复杂的任务，简单的任务更容易推进与执行，也便于跟踪。";
+$multilingual_default_task_help_title2 = "工作分解结构WBS";
+$multilingual_default_task_help_text2 = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;从项目管理的角度，一个任务只能指派给一个人，优秀的团队管理者善于将复杂的任务分解为若干简单的任务，相对于复杂的任务，简单的任务更容易推进与执行，也便于跟踪。";
 
 $multilingual_default_task_createby = "创建于";
 $multilingual_user_filter = "搜索";
@@ -397,11 +388,11 @@ $multilingual_project_view_nowbs = "&nbsp;&nbsp;&nbsp;项目->阶段->任务";
 $multilingual_stage_view_nowbs = "&nbsp;&nbsp;&nbsp;关于阶段";
 $multilingual_board_view_nowbs = "&nbsp;&nbsp;&nbsp;关于看板";
 $multilingual_project_view_nowbstext = "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;项目应该被分解成若干阶段，然后在阶段中才能对具体组员分配具体任务，用于推进项目进度，使项目的完成更加有层次、条理。</p>";
-$multilingual_project_add_text = "<p>每个项目包含了一个团队。</p>
+$multilingual_project_add_text = "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每个项目包含了一个团队。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;创建一个项目，然后您才能分解阶段。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;项目创建人就是组长，他／她可以为项目选择若干成员，并且分配不同职责：帮助组长分配任务，或者去完成任务。</p>";
 
-$multilingual_stage_add_text = "<p>每个项目将经历不同阶段。</p><br />
+$multilingual_stage_add_text = "<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每个项目将经历不同阶段。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;创建一个阶段，才能下发任务。</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;只有分解出项目所属的阶段，才能在阶段内下发任务，使项目的完成更加有层次、条理。</p>
 ";

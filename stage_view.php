@@ -444,7 +444,7 @@ document.getElementById('tab_' + i).className = (i == ".$tabid.") ? 'onhover' : 
                                         <!-- 下发任务 -->
                                         <?php if($user_rank > 1) { ?>
                                         <td width="12%">
-                                            <a href="default_task_add.php?projectID=<?php echo $now_pid?>&stageID=<?php echo $row_DetailRS1['stageid']; ?>">
+                                            <a href="task_add.php?projectID=<?php echo $now_pid?>&stageID=<?php echo $row_DetailRS1['stageid']; ?>">
                                                 <span class="glyphicon glyphicon-random"></span>
                                                 <?php echo $multilingual_project_newtask; ?>
                                             </a>

@@ -312,147 +312,6 @@ if (!empty($_SERVER['QUERY_STRING']))
 }
 $queryString_Recordset1 = sprintf("&totalRows_Recordset1=%d%s", $totalRows_Recordset1, $queryString_Recordset1);
 
-/*
-if($YEAR <> "0000" && $MONTH <> "00"){
-mysql_select_db($database_tankdb, $tankdb);
-$query_Reclog = sprintf("SELECT *							
-							FROM tk_task  
-							inner join tk_task_byday on tk_task.TID=tk_task_byday.csa_tb_backup1
-							inner join tk_status on tk_task.csa_status=tk_status.id 
-							inner join tk_status as tk_status1 on tk_task_byday.csa_tb_status=tk_status1.id 
-
-							$where 
-							(tk_task.csa_plan_st <=%s
- 							AND tk_task.csa_plan_et >=%s
-							OR tk_task.csa_plan_st <=%s
- 							AND tk_task.csa_plan_et >=%s
-							OR tk_task.csa_plan_st >=%s
- 							AND tk_task.csa_plan_et <=%s)
-														
-							ORDER BY csa_last_update DESC", 
-							
-							GetSQLValueString($startday , "text"),
-							GetSQLValueString($startday , "text"),
-							GetSQLValueString($endday , "text"),
-							GetSQLValueString($endday , "text"),
-							GetSQLValueString($startday , "text"),
-							GetSQLValueString($endday , "text")
-							);
-$Reclog = mysql_query($query_Reclog, $tankdb) or die(mysql_error());
-
-$strslog=null;
-while($row_Reclog=mysql_fetch_array($Reclog)){
-$rowstatus = str_replace("'",   "\'",   $row_Reclog['task_status_display']);
-
-$strtext =   htmlspecialchars($row_Reclog['csa_tb_text']);
-$strtext =  stripslashes($strtext);
-$strtext = str_replace("\n",   "<br>",   $strtext);  
-$strtext = str_replace("\r",   "",   $strtext);  
-$strtext = str_replace("  ",   "&nbsp;",   $strtext); 
-$strtext = str_replace("'",   " ",   $strtext); 
-
-$strtexttip =   htmlspecialchars($row_Reclog['csa_tb_text']);
-$strtexttip =  stripslashes($strtexttip);
-$strtexttip = str_replace("\n",   " ",   $strtexttip);  
-$strtexttip = str_replace("\r",   " ",   $strtexttip);  
-$strtexttip = str_replace("'",   " ",   $strtexttip); 
-
-
-$logyear = str_split($row_Reclog['csa_tb_year'],4);
-$logmonth = str_split($logyear[1],2);
-$logdate = $logyear[0]."-".$logmonth[0]."-".$logmonth[1];
-
-$strslog.="var "."d".$row_Reclog['TID'].$row_Reclog['csa_tb_year']."="."'<span title=\'$logdate  $multilingual_calendar_view\'>"."$rowstatus"."</span>"."</td><td width=\'30px\'  class=\'week_style_padtd\'>".$row_Reclog['csa_tb_manhour']."'; ";
-}
-} else {$strslog=null;}
-
-mysql_select_db($database_tankdb, $tankdb);
-$query_Sumlog = sprintf("SELECT *,
-							sum(csa_tb_manhour) as sumhour							
-							FROM tk_task  
-							
-							inner join tk_status on tk_task.csa_status=tk_status.id 
-
-							$where 
-							(tk_task.csa_plan_st <=%s
- 							AND tk_task.csa_plan_et >=%s
-							OR tk_task.csa_plan_st <=%s
- 							AND tk_task.csa_plan_et >=%s
-							OR tk_task.csa_plan_st >=%s
- 							AND tk_task.csa_plan_et <=%s)
-														
-							GROUP BY TID", 
-							
-							GetSQLValueString($startday , "text"),
-							GetSQLValueString($startday , "text"),
-							GetSQLValueString($endday , "text"),
-							GetSQLValueString($endday , "text"),
-							GetSQLValueString($startday , "text"),
-							GetSQLValueString($endday , "text")
-							);
-$Sumlog = mysql_query($query_Sumlog, $tankdb) or die(mysql_error());
-
-$strssumlog=null;
-while($row_Sumlog=mysql_fetch_array($Sumlog)){
-$strssumlog.="var "."sum".$row_Sumlog['TID']."='".$row_Sumlog['sumhour']."'; ";
-}
-
-mysql_select_db($database_tankdb, $tankdb);
-$query_Sumtotal = sprintf("SELECT sum(csa_tb_manhour) as sumtotal							
-							FROM tk_task  
-							
-							inner join tk_status on tk_task.csa_status=tk_status.id 
-
-							$where 
-							(tk_task.csa_plan_st <=%s
- 							AND tk_task.csa_plan_et >=%s
-							OR tk_task.csa_plan_st <=%s
- 							AND tk_task.csa_plan_et >=%s
-							OR tk_task.csa_plan_st >=%s
- 							AND tk_task.csa_plan_et <=%s)													
-							", 
-							
-							GetSQLValueString($startday , "text"),
-							GetSQLValueString($startday , "text"),
-							GetSQLValueString($endday , "text"),
-							GetSQLValueString($endday , "text"),
-							GetSQLValueString($startday , "text"),
-							GetSQLValueString($endday , "text")
-							);
-$Sumtotal = mysql_query($query_Sumtotal, $tankdb) or die(mysql_error());
-$row_Sumtotal = mysql_fetch_assoc($Sumtotal);
-
-if($YEAR <> "0000" && $MONTH <> "00"){
-mysql_select_db($database_tankdb, $tankdb);
-$query_Sumbyday = sprintf("SELECT *, sum(csa_tb_manhour) as Sumbyday							
-							FROM tk_task  
-							 
-							inner join tk_status on tk_task.csa_status=tk_status.id 
-
-							$where 
-							(tk_task.csa_plan_st <=%s
- 							AND tk_task.csa_plan_et >=%s
-							OR tk_task.csa_plan_st <=%s
- 							AND tk_task.csa_plan_et >=%s
-							OR tk_task.csa_plan_st >=%s
- 							AND tk_task.csa_plan_et <=%s)													
-							GROUP BY csa_tb_year", 
-							
-							GetSQLValueString($startday , "text"),
-							GetSQLValueString($startday , "text"),
-							GetSQLValueString($endday , "text"),
-							GetSQLValueString($endday , "text"),
-							GetSQLValueString($startday , "text"),
-							GetSQLValueString($endday , "text")
-							);
-$Sumbyday = mysql_query($query_Sumbyday, $tankdb) or die(mysql_error());
-$strssumbyday=null;
-while($row_Sumbyday=mysql_fetch_array($Sumbyday)){
-$strssumbyday.="var "."sumbd".$row_Sumbyday['csa_tb_year']."='".$row_Sumbyday['Sumbyday']."'; ";
-} 
-} else {$strssumbyday=null;}
-*/
-
 if ($pagetabs <> "etask") {
 	//查找过期任务
 	$outday = date("Y-m-d");
@@ -728,8 +587,6 @@ $totalRows_Recordset2 = mysql_num_rows($Recordset2);
   
 </script>
 
-<!-- 此处显示过期的任务 -->
-<?php if ($pagetabs <> "etask") { // Show outofdate if recordset not empty ?>
 	<?php if ($totalRows_timeout > 0 && $outofdate=="on") { // Show outofdate if recordset not empty ?>
 		<div class="panel panel-warning timeout_color pagemarginfix">
 			<!-- Default panel contents -->
@@ -787,7 +644,6 @@ $totalRows_Recordset2 = mysql_num_rows($Recordset2);
 			</table>
 		</div>
 	<?php } // Show outofdate if recordset not empty ?>
-<?php } // Show outofdate if recordset not empty ?>
 
 <!-- 此处显示即将过期的任务 -->
 <?php if ($pagetabs <> "etask") { // Show outofdate if recordset not empty ?>
