@@ -12,6 +12,8 @@ if (isset($_GET['editID'])) {
 }
 $pid = $_GET['pid'];
 
+$proInfo = get_pro_info($pid);
+
 $editFormAction = $_SERVER['PHP_SELF'];
 if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
@@ -25,6 +27,7 @@ $selStage = "SELECT * FROM tk_stage WHERE stageid = $colname_Recordset1";
   $stage_desc = $row['tk_stage_desc'];
   $stage_st = $row['tk_stage_st'];
   $stage_et = $row['tk_stage_et'];
+  $stage_folder = $row['tk_stage_folder_id'];
   //echo $stage_title;
 
   $title = "-1";
@@ -108,6 +111,12 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
   }else if($en_time<$mostLate)
   {
          $dateError = -4;//结束时间比已有的任务时间早
+  }else if($st_time < $proInfo['project_start'])
+  {
+         $dateError = -5;//开始时间小于项目的开始时间
+  }else if($en_time > $proInfo['project_end'])
+  {
+         $dateError = -6;//结束时间大于项目的结束时间
   }else {
 
   //更新数据库
@@ -120,6 +129,14 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
 
           mysql_select_db($database_tankdb, $tankdb);
           $Result2 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
+
+          $new_doc_desc = "本文件夹用于存放【".$_POST['tk_stage_title']."】阶段的所有资料。";
+          $updateDocSQL = sprintf("UPDATE tk_document SET tk_doc_title=%s,tk_doc_description=%s WHERE docid=$stage_folder",
+                    GetSQLValueString($_POST['tk_stage_title'],"text"),
+                    GetSQLValueString($new_doc_desc,"text"));
+
+           mysql_select_db($database_tankdb, $tankdb);
+          $Result3 = mysql_query($updateDocSQL, $tankdb) or die(mysql_error());
 
           $log_id = update_log($colname_Recordset1,$myid);
 
@@ -345,7 +362,9 @@ $('#datepicker3').datepicker({
                                  <label for="datepicker2"><?php echo $multilingual_default_task_planstart; ?><!--<span id="csa_plan_st_msg"></span>-->
                                         <lable style="color:#F00;font-size:14px">
                                            <?php if($dateError==-2) { echo ('&nbsp&nbsp&nbsp');echo "结束时间小于开始时间";} 
-                                                  else if($dateError==-3) {echo ('&nbsp&nbsp&nbsp');echo "开始时间大于已存在子任务时间开始时间";} ?>
+                                                  else if($dateError==-3) {echo ('&nbsp&nbsp&nbsp');echo "开始时间大于已存在子任务时间开始时间";} 
+                                                  else if($dateError == -5){echo ('&nbsp&nbsp&nbsp');echo "开始时间小于项目的开始时间";}
+                                                  ?>
                                         </lable>
                                 </label>
                                 <div>
@@ -373,6 +392,7 @@ $('#datepicker3').datepicker({
                                        <?php if($dateError==-2) {echo ('&nbsp&nbsp&nbsp');echo "结束时间小于开始时间";} 
                                               else if ($dateError==-1) {echo ('&nbsp&nbsp&nbsp'); echo "结束时间小于今天";} 
                                               else if ($dateError==-4) {echo ('&nbsp&nbsp&nbsp'); echo "结束时间小于已存在子任务时间结束时间";}
+                                              else if ($dateError==-6) {echo ('&nbsp&nbsp&nbsp'); echo "结束时间大于项目的结束时间";}
                                        ?>
                                     </lable>
                                 </label>
