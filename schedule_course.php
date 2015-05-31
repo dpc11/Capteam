@@ -118,9 +118,9 @@ function start() {
             <table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
                 <tr>
                     <td valign="top" class="gray2">
-                        <h4 style="margin-top:40px; margin-left: 5px;"><strong><?php echo $multilingual_schedule_person; ?></strong></h4>
+                        <h4 style="margin-top:40px; margin-left: 5px;"><strong><?php echo $multilingual_schedule_course; ?></strong></h4>
                         <p>
-                            <?php echo $multilingual_schedule_person_tip; ?>
+                            <?php echo $multilingual_schedule_course_tip; ?>
                         </p>
 
                     </td>
