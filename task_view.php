@@ -319,7 +319,7 @@ margin-bottom: 10px;">
 						<?php }  ?>						
 						
 						<!-- 编辑修改-->
-						<?php if ($row_Recordset_task['csa_status']<3) { ?>
+						<?php if ($row_Recordset_task['csa_status']==4||$row_Recordset_task['csa_status']==5) { ?>
 						<td width="100px">
 						<a onClick="javascript:self.location='task_edit.php?editID=<?php echo $row_Recordset_task['tid']; ?>';" class="mouse_over"><span class="glyphicon glyphicon-pencil"></span> <?php echo $multilingual_global_action_edit; ?></a>
 						</td>
@@ -376,13 +376,13 @@ margin-bottom: 10px;">
           <td>&nbsp;</td>
         </tr>
 		<tr style="border-bottom: 3px #D1D1D1 double;border-width:6px;margin-bottom:6px;" >
-          <td><div class="float_left"><h5 ><?php echo $multilingual_default_task_description; ?></h5><a name="comment"></a></div>
+          <td><div class="float_left"><h5 ><?php echo $multilingual_default_task_description; ?></h5></div>
           </td>
         </tr>
         <tr>
           <td><?php  
 			if($row_Recordset_task['csa_description']==""){
-				echo "无";
+				echo "暂无";
 			}else{
 				echo $row_Recordset_task['csa_description'];
 			} ?></td>
@@ -394,7 +394,7 @@ margin-bottom: 10px;">
           <td>&nbsp;</td>
         </tr>
         <tr style="border-bottom: 3px #D1D1D1 double;border-width:6px;margin-bottom:6px;" >
-          <td><h5><?php echo $multilingual_log_title; ?></h5><a name="log"></td>
+          <td><h5><?php echo $multilingual_log_title; ?></h5></td>
         </tr>
         <tr>
           <td><table class="table table-striped table-hover glink" style="margin-bottom:3px;max-height:350px;">

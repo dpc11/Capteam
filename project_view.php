@@ -85,21 +85,6 @@
 
 	$file_log_Result = get_project_file_log($project_folder_id);
 
-	if (isset($_GET['totalRows_DetailRS1'])) {
-		$totalRows_DetailRS1 = $_GET['totalRows_DetailRS1'];
-	} else {
-		$all_DetailRS1 = mysql_query($query_DetailRS1);
-		$totalRows_DetailRS1 = mysql_num_rows($all_DetailRS1);
-	}
-	$totalPages_DetailRS1 = ceil($totalRows_DetailRS1/$maxRows_DetailRS1)-1;
-
-	$maxRows_Recordset_task = 15;
-	$pageNum_Recordset_task = 0;
-	if (isset($_GET['pageNum_Recordset_task'])) {
-		$pageNum_Recordset_task = $_GET['pageNum_Recordset_task'];
-	}
-	$startRow_Recordset_task = $pageNum_Recordset_task * $maxRows_Recordset_task;
-
 	$colname_Recordset_task = $row_DetailRS1['id'];
 
 	//修改数据库后的SQL语句，寻找相关task
@@ -109,18 +94,10 @@
 					inner join tk_user on tk_task.csa_to_user=tk_user.uid 
 					inner join tk_status on tk_task.csa_status=tk_status.id 
 					WHERE csa_project = %s ORDER BY csa_last_update DESC", GetSQLValueString($colname_Recordset_task, "text"));
-	$query_limit_Recordset_task = sprintf("%s LIMIT %d, %d", $query_Recordset_task, $startRow_Recordset_task, $maxRows_Recordset_task);
-	$Recordset_task = mysql_query($query_limit_Recordset_task, $tankdb) or die(mysql_error());
+	$Recordset_task = mysql_query($query_Recordset_task, $tankdb) or die(mysql_error());
 	$row_Recordset_task = mysql_fetch_assoc($Recordset_task);
-
-	if (isset($_GET['totalRows_Recordset_task'])) {
-		$totalRows_Recordset_task = $_GET['totalRows_Recordset_task'];
-	} else {
-		$all_Recordset_task = mysql_query($query_Recordset_task);
-		$totalRows_Recordset_task = mysql_num_rows($all_Recordset_task);
-	}
-	$totalPages_Recordset_task = ceil($totalRows_Recordset_task/$maxRows_Recordset_task)-1;
-
+	$totalRows_Recordset_task = mysql_num_rows($Recordset_task);
+/*
 	$queryString_Recordset_task = "";
 	if (!empty($_SERVER['QUERY_STRING'])) {
 		$params = explode("&", $_SERVER['QUERY_STRING']);
@@ -138,59 +115,13 @@
 		}
 	}
 	$queryString_Recordset_task = sprintf("&totalRows_Recordset_task=%d%s", $totalRows_Recordset_task, $queryString_Recordset_task);
-
-	//显示评论和对评论的操作
-	$maxRows_Recordset_comment = 10;
-	$pageNum_Recordset_comment = 0;
-	if (isset($_GET['pageNum_Recordset_comment'])) {
-		$pageNum_Recordset_comment = $_GET['pageNum_Recordset_comment'];
-	}
-	$startRow_Recordset_comment = $pageNum_Recordset_comment * $maxRows_Recordset_comment;
-	mysql_select_db($database_tankdb, $tankdb);
-	$query_Recordset_comment = sprintf("SELECT * FROM tk_comment 
-	inner join tk_user on tk_comment.tk_comm_user =tk_user.uid 
-  								 WHERE tk_comm_pid = %s AND tk_comm_type = 2 
-  								
-  								ORDER BY tk_comm_lastupdate DESC", 
-  								GetSQLValueString($colname_DetailRS1, "text")
-  								);
-	$query_limit_Recordset_comment = sprintf("%s LIMIT %d, %d", $query_Recordset_comment, 	$startRow_Recordset_comment, $maxRows_Recordset_comment);
-	$Recordset_comment = mysql_query($query_limit_Recordset_comment, $tankdb) or die(mysql_error());
-	$row_Recordset_comment = mysql_fetch_assoc($Recordset_comment);
-
-	if (isset($_GET['totalRows_Recordset_comment'])) {
-		$totalRows_Recordset_comment = $_GET['totalRows_Recordset_comment'];
-	} else {
-		$all_Recordset_comment = mysql_query($query_Recordset_comment);
-		$totalRows_Recordset_comment = mysql_num_rows($all_Recordset_comment);
-	}
-	$totalPages_Recordset_comment = ceil($totalRows_Recordset_comment/$maxRows_Recordset_comment)-1;
-
-	$queryString_Recordset_comment = "";
-	if (!empty($_SERVER['QUERY_STRING'])) {
-		$params = explode("&", $_SERVER['QUERY_STRING']);
-		$newParams = array();
-		foreach ($params as $param) {
-			if (stristr($param, "pageNum_Recordset_comment") == false && 
-				stristr($param, "totalRows_Recordset_comment") == false && 
-				stristr($param, "tab") == false) {
-				
-				array_push($newParams, $param);
-			}
-		}
-		if (count($newParams) != 0) {
-			$queryString_Recordset_comment = "&" . htmlentities(implode("&", $newParams));
-		}
-	}
-	$queryString_Recordset_comment = sprintf("&totalRows_Recordset_comment=%d%s", $totalRows_Recordset_comment,$queryString_Recordset_comment);
+*/
 
 	$host_url="http://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']."?".$_SERVER["QUERY_STRING"];
 	$host_url=strtr($host_url,"&","!");
 ?>
 
 <?php require('head.php'); ?>
-<link rel="stylesheet" type="text/css" href="plug-in/calendar/css/fullcalendar.css">
-<link rel="stylesheet" type="text/css" href="plug-in/calendar/css/fancybox.css">
 <style type="text/css">
     .fc-day
     {
@@ -203,64 +134,6 @@
 </style>
 <script src='js/jquery/jquery-1.9.1.js'></script>
 <script src='js/jquery/jquery-ui-1.10.4.min.js'></script>
-<script src='plug-in/calendar/js/fullcalendar.js'></script>
-<script src='plug-in/calendar/js/jquery.fancybox-1.3.1.pack.js'></script>
-<script type="text/javascript">
-$(function() {
-	$('#calendar').fullCalendar({
-		header: {
-			left: 'prev today next',
-			center: 'title',
-			right: 'month,agendaWeek'
-    },
-   
-    events: <?php echo json_encode($data); ?>,
-  });
-  
-});
-</script>
-<script type="text/javascript" src="js/lhgcore/lhgcore.js"></script>
-<script type="text/javascript" src="js/lhgcore/lhgdialog.js"></script>
-<script type="text/javascript" src="plug-in/chart/js/swfobject.js"></script> 
-<script type="text/javascript"> 
-	var flashvars = {"data-file":"chart_pie_project.php?recordID=<?php echo $row_DetailRS1['id']; ?>"};  
-	var params = {menu: "false",scale: "noScale",wmode:"opaque"};  
-	swfobject.embedSWF("chart/open-flash-chart.swf", "chart", "600px", "230px", 
-		"9.0.0","expressInstall.swf", flashvars,params);  
- 
-	function addcomm()
-	{
-		J.dialog.get({ id: "test1", title: '<?php echo $multilingual_default_addcom; ?>', width: 600, height: 500, page: "comment_add.php?taskid=<?php echo $row_DetailRS1['id']; ?>&projectid=1&type=2" });
-	}
-
-	function   searchtask() 
-    {
-		document.form1.action= "project_view.php?#task "; 
-        document.form1.submit(); 
-        return   true; 
-    } 
-
-	function   exportexcel() 
-    {
-		document.form1.action= "excel_log.php "; 
-        document.form1.submit(); 
-        return   false; 
-    } 
-      
-    $(document).ready(function() {
-        var h = $(window).height(), h2;
-        var h = h - <?php if($totalRows_Recordset_anc > 0) {echo "75";} else {echo "40";} ?>;
-        $("#main_right").css("height", h);
-        $(window).resize(function() {
-            h2 = $(this).height();
-            $("#main_right").css("height", h2);
-        });
-    })
-	function addfolder()
-	{
-		J.dialog.get({ id: "test2", title: '<?php echo $multilingual_project_file_addfolder; ?>', width: 600, height: 500, page: "file_add_folder.php?projectid=<?php echo $row_DetailRS1['id']; ?>&pid=0&folder=1&pagetab=allfile" });
-	}
-</script>
 <?php 
 	$tab = "-1";
 	if (isset($_GET['tab'])) {
@@ -286,25 +159,13 @@ $(function() {
 	}
 ?>
 
-<script language="javascript">
-	function tabs(n)
-	{
-		var len = 3;
-		for (var i = 1; i <= len; i++)
-		{
-			document.getElementById('tab_a' + i).style.display = (i == n) ? 'block' : 'none';
-			document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
-		}
-	}
-</script>
-
-
-	<body>
+<div id="pagemargin">
+<div class="clearboth"></div>
 		<table width="100%" border="0" cellspacing="0" cellpadding="0">
 			<tr>
 				<!-- 左边20%的宽度的树或者说明  -->
-				<td width="20%" height="100%"  class="input_task_right_bg" valign="top">
-					<table width="90%" border="0" cellspacing="0" cellpadding="0" align="center">
+				<td width="23%" class="input_task_right_bg" valign="top">
+					<table width="90%" border="0" cellspacing="0" cellpadding="0" align="center" id="tree">
 						<tr>
 							<?php
 								$project_id = $row_DetailRS1['id'];
@@ -317,12 +178,12 @@ $(function() {
 				</td>
         
 				<!-- 右边80%宽度的主体内容 -->
-				<td width="80%" valign="top">
+				<td width="77%" valign="top" height="100%">
 					<div style="overflow:auto; " id="main_right"><!-- right main --> 
-						<table width="98%" border="0" cellspacing="0" cellpadding="5" align="center">
+						<table width="90%" border="0" cellspacing="0" cellpadding="5" align="center">
 							<tr>
 								<td >
-									<div class="breakwords"><h2>[<?php echo $multilingual_head_project; ?>]<?php echo $row_DetailRS1['project_name']; ?></h2></div> 
+									<div class="breakwords">[<?php echo $multilingual_head_project; ?>]<?php echo $row_DetailRS1['project_name']; ?></div> 
 								</td>
 							</tr>
 							<tr>
@@ -331,45 +192,30 @@ $(function() {
 									<table width="100%" border="0" cellspacing="0" cellpadding="5"  class="info_task_bg">
 										<tr>
 											<!-- 显示项目状态 -->
-											<td width="12%" class="info_task_title"><?php echo $multilingual_project_status; ?></td>   
-											<td  width="40%">
-												<div class="status_view">        
-												<?php 
+											<td width="40%">
+											
+							<div class="info_task_title"><div style="float:left"><strong>项目状态</strong>&nbsp;&nbsp;&nbsp;</div><?php 
 													$today_date = date('Y-m-d');//今天的日期，用于计算项目状态
 													if($today_date < $row_DetailRS1['project_start']){
 													  //表示项目还没有开始
-													  echo "<div style='background-color: #FF6666; width:100%; text-align:center;'>未开始</div>";
+													  echo "<div class=\"float_left view_task_status\" style='background-color: #FF6666; width:160px; text-align:center;'>未开始</div>";
 													}elseif ($today_date > $row_DetailRS1['project_end']) {
 													  //表示项目已结结束
-													  echo "<div style='background-color: #B3B3B3; width:100%; text-align:center;'>已结束</div>";
+													  echo "<div class=\"float_left view_task_status\"  style='background-color: #B3B3B3; width:160px; text-align:center;'>已结束</div>";
 													}else{
 													  //表示项目正在进行中
-													  echo "<div style='background-color: #6ABD78; width:100%; text-align:center;'>进行中</div>";
+													  echo "<div class=\"float_left view_task_status\"    style='background-color: #6ABD78; width:160px; text-align:center;'>进行中</div>";
 													}
-												?>
-												</div>
-											</td>
-											<td width="12%" class="info_task_title">
-												<?php if ($row_DetailRS1['project_start'] <> "0000-00-00") {  ?>
-												<?php echo $multilingual_project_start; ?>
-												<?php } ?>	</td>
-												  <td>
-												<?php if ($row_DetailRS1['project_start'] <> "0000-00-00") {  ?>
-												<?php echo $row_DetailRS1['project_start']; ?>
-												<?php } ?>		
-											</td>
+												?></div>
+											</td> 
+											<td width="40%">
+						<div class="info_task_title"><strong><?php echo $multilingual_project_start; ?></strong>&nbsp;&nbsp;&nbsp;<?php echo $row_DetailRS1['project_start']; ?></div></td>
 										</tr>
 										<tr>
-											<td class="info_task_title"><?php echo $multilingual_project_captain; ?></td>
-											<td><a href="user_view.php?recordID=<?php echo $row_DetailRS1['project_to_user']; ?>"><?php echo $row_DetailRS1['tk_display_name']; ?></a></td>     
-											<td class="info_task_title">
-												<?php if ($row_DetailRS1['project_end'] <> "0000-00-00") {  ?>
-												<?php echo $multilingual_project_end; ?>
-												<?php } ?>	</td>
-												  <td><?php if ($row_DetailRS1['project_end'] <> "0000-00-00") {  ?>
-												<?php echo $row_DetailRS1['project_end']; ?>
-												<?php } ?>
-											</td>
+											<td width="30%" ><div class="info_task_title"><strong>组&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;长</strong>&nbsp;&nbsp;&nbsp;<a href="user_view.php?recordID=<?php echo $row_DetailRS1['project_to_user']; ?>"><?php echo $row_DetailRS1['tk_display_name']; ?></a></div></td> 
+											
+											<td width="40%">
+						<div class="info_task_title"><strong><?php echo $multilingual_project_end; ?></strong>&nbsp;&nbsp;&nbsp;<?php echo $row_DetailRS1['project_end']; ?></div></td>
 										</tr>
 									</table>
 								</td>
@@ -385,25 +231,24 @@ $(function() {
 											$tk_team_uid=$_SESSION['MM_uid'];//用户id
 											$user_authority = get_user_authority($tk_team_uid,$tk_team_pid);//获得当前用户的权限
 											if($user_authority > 2) { //只有组长才能分解阶段?>
-												<td width="12%">
+												<td width="140px">
 												<a href="stage_add.php?pid=<?php echo $row_DetailRS1['id']; ?>&formproject=1" >
 												<span class="glyphicon glyphicon-random"></span> <?php echo $multilingual_project_newstage; ?></a></td>
 												<!-- 新建文件夹 -->
-												<td width="13%">
+												<td width="160px">
 												<a onClick="addfolder()" class="mouse_hover"><span class="glyphicon glyphicon-folder-open"></span> <?php echo $multilingual_project_file_addfolder; ?></a></td>
 											 <?php }  ?>
 										  
 											<!-- 上传文档 -->
-											 <td width="12%">
+											 <td width="140px">
 											 <a target="_blank" href="file_add.php?projectid=<?php echo $row_DetailRS1['id']; ?>&pid=<?php echo $project_folder_id;?>&pagetab=allfile"><span class="glyphicon glyphicon-file"></span> <?php echo $multilingual_project_file_addfile; ?></a></td>
 											 
 											 <!-- 项目看板 -->
-											 <td width="12%">
+											 <td width="140px">
 											 <a href="board_view.php?pid=<?php echo $colname_DetailRS1;?>"><span class="glyphicon glyphicon-board"></span> <?php echo $multilingual_project_board_view; ?></a></td>
                                             
                                             <!-- 进入会议 -->
-											 <td width="12%">
-                                                 
+											 <td width="140px">
                                             <!-- 组长和组员在会议中权限不同 -->
                                             <?php 
                                             if($user_authority > 2) { ?>
@@ -414,11 +259,6 @@ $(function() {
                                                 
                                                  <span class="glyphicon glyphicon-user"></span> <?php echo $multilingual_project_conference; ?></a></td>
                                             
-											<!-- 增加评论 -->
-											 <td width="12%">
-											 <a onClick="addcomm();" class="mouse_over"><span class="glyphicon glyphicon-comment"></span> <?php echo $multilingual_default_addcom; ?></a>
-											 </td>
-											
 											<!-- 项目修改 -->
 											 <?php 
 												$tk_team_pid=$colname_DetailRS1;//项目id
@@ -426,12 +266,12 @@ $(function() {
 												$user_authority = get_user_authority($tk_team_uid,$tk_team_pid);//获得当前用户的权限
 										   
 												if($user_authority > 2 || ($_SESSION['MM_uid'] == $row_DetailRS1['project_to_user'])) { //只有组长才可以修改?>
-													<td width="10%">
+													<td width="100px">
 														<a href="project_edit.php?editID=<?php echo $row_DetailRS1['id']; ?>">
 														<span class="glyphicon glyphicon-pencil"></span> <?php echo $multilingual_global_action_edit; ?>			 </a>
 													</td>
 													<!--删除项目-->
-													 <td width="10%">
+													 <td width="100px">
 													 <a class="mouse_over" onClick="javascript:if(confirm( '<?php 
 														 if($totalRows_Recordset_task == "0"){  
 														  echo $multilingual_global_action_delconfirm;
@@ -454,8 +294,8 @@ $(function() {
 							<tr>
 								<td>&nbsp;</td>
 							</tr>
-							<tr>
-								<td><span class="font_big18 fontbold"><?php echo $multilingual_project_description; ?></span></td>
+							<tr style="border-bottom: 3px #D1D1D1 double;border-width:6px;margin-bottom:6px;" >
+								<td><div class="float_left"><h5 ><?php echo $multilingual_project_description; ?></h5></div></td>
 							</tr>
 							<tr>
 								<td>
@@ -466,19 +306,31 @@ $(function() {
 							</tr>
 							<!-- 项目成员 -->
 							<tr>
-							  <td><span class="font_big18 fontbold"><?php echo $multilingual_project_memeber; ?></span></td>
+							  <td><h5 ><?php echo $multilingual_project_memeber; ?></h5></td>
 							</tr>
 							<tr>
 								<td colspan="2">
 									<table class="table table-striped table-hover glink">
+									<thead>
+									<th>姓名
+									</th>
+									<th>邮箱
+									</th>
+									<th>联系方式
+									</th>
+									<th>小组得分
+									</th>
+									<th>权限
+									</th>
+									</thead>
 										<tbody>                 
 											<?php foreach($user_arr as $key => $val){ 
 												 ?>
 													<tr>
-													<td>姓名:<a href="user_view.php?recordID=<?php echo $val["uid"]; ?>"><?php echo $val["name"]; ?></a></td>
-													<td><?php echo "邮箱:".$val["email"]; ?></td>
-													<td><?php echo "电话:".$val["phone_num"]; ?></td>
-													<td><?php echo "总得分:".$val["score"]; ?></td>
+													<td><a href="user_view.php?recordID=<?php echo $val["uid"]; ?>"><?php echo $val["name"]; ?></a></td>
+													<td><?php echo $val["email"]; ?></td>
+													<td><?php echo $val["phone_num"]; ?></td>
+													<td><?php echo $val["score"]; ?></td>
 													<?php 
 														$tk_team_pid=$colname_DetailRS1;//项目id
 														$tk_team_uid=$_SESSION['MM_uid'];//用户id
@@ -487,7 +339,7 @@ $(function() {
 														if($user_authority > 2){ //只有组长才能分配权限
 															if($val["ulimit"] < 3){?>
 
-															<td><a type="button" class="btn btn-default btn-sm" href=<?php echo 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF'].'?recordID='.$colname_DetailRS1.'&authority_user_id='.$val["uid"].'&authority_ulimit='.$val["ulimit"]; ?>>
+															<td><a type="button" class="btn btn-default btn-lg" href=<?php echo 'http://'.$_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF'].'?recordID='.$colname_DetailRS1.'&authority_user_id='.$val["uid"].'&authority_ulimit='.$val["ulimit"]; ?>>
 															  <?php
 															  if($val["ulimit"] == 1){
 																  echo $multilingual_privilege_grant;
@@ -496,13 +348,19 @@ $(function() {
 															  }   
 																?></a></td>  
 														<?php }else{   ?>
-                                                              <td><a type="button" class="btn btn-default btn-sm">
-															  <?php
-																  echo "组长";															   
-																?></a></td>  
-
-														<?php	 }
-															} ?>  
+                                                              <td><?php  echo "组长"; ?></td> 
+															  <?php	 }
+															}else{ ?>
+	<td>
+	<?php if($val["ulimit"] == 1){
+																  echo "组员";
+															  }else if($val["ulimit"] == 2){
+																  echo "副组长";
+															  }else if($val["ulimit"] == 3){
+																  echo "组长";
+															  }	?>	
+	</td>										
+<?php } ?>  
 													</tr>                      
 											<?php }?>                                 
 										</tbody>
@@ -512,15 +370,48 @@ $(function() {
 							<tr>
 								<td>&nbsp;</td>
 							</tr>
-							<!--操作记录，如果有-->
-        <tr>
-          <td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td><span class="font_big18 fontbold"><?php echo $multilingual_log_title; ?></span><a name="log"></td>
-        </tr>
-        <tr>
-          <td><table class="table table-striped table-hover glink" style="margin-bottom:3px;">
+  <!-- 工作量饼图 -->
+  		  <?php if ($sum_hour > 0.5) {  ?>
+            <tr>
+              <td>&nbsp;</td>
+            </tr>
+            <tr>
+              <td><span class="font_big18 fontbold"><?php echo $multilingual_project_taskoverlay; ?></span></td>
+            </tr>
+            <tr>
+              <td>
+  	<div id="chart"></div>		</td>
+            </tr>
+  		  <?php }  ?>
+  		  <tr>
+              <td>&nbsp;</td>
+            </tr>
+  		  <tr>
+              <td>
+              
+  <!-- 项目详细切换部分 -->
+  <div class="tab">
+  <ul class="menu" id="menutitle">
+  <li id="tab_1"  class="onhover" >
+  <a href="javascript:void(0)" onClick="tabs('1');" >
+  团队空闲时间</a></li>
+  <li id="tab_2" class="none" >
+  <a href="javascript:void(0)" onClick="tabs('2');" >子阶段</a></li>
+
+  <li id="tab_3" class="none">
+  <a href="javascript:void(0)" onClick="tabs('3');" >
+  <?php echo $multilingual_project_file; ?></a></li>
+
+  <li id="tab_4"  class="none" >
+  <a href="javascript:void(0)" onClick="tabs('4');" >
+  <?php echo $multilingual_log_title; ?></a></li>
+  </ul>
+</div>
+
+  <!-- 操作记录 -->
+  <div class="tab_b" id="tab_a4"  style="display:none">
+		  <div style="overflow-y: auto;max-height:300px">
+		  <table class="table table-striped table-hover glink" >
               <?php while ($row_log = mysql_fetch_assoc($ProjectLog_Result)) { ?>
               <tr>
                 <td ><?php echo $row_log['tk_log_time']; ?>     <!--<a href="user_view.php?recordID=<?php echo $row_Recordset_actlog['tk_log_user']; ?>">-->
@@ -548,178 +439,24 @@ $(function() {
                 </tr>
               <?php } ?>
             </table>
-            <p><?php echo '<br>'?></p>
-            <!--<table class="rowcon" border="0" align="center">
-              <tr>
-                <td><table border="0">
-                    <tr>
-                      <td><?php if ($pageNum_Recordset_actlog > 0) { // Show if not first page ?>
-                          <a href="<?php printf("%s?pageNum_Recordset_actlog=%d%s", $currentPage, 0, $queryString_Recordset_actlog); ?>#log"><?php echo $multilingual_global_first; ?></a>
-                          <?php } // Show if not first page ?></td>
-                      <td><?php if ($pageNum_Recordset_actlog > 0) { // Show if not first page ?>
-                          <a href="<?php printf("%s?pageNum_Recordset_actlog=%d%s", $currentPage, max(0, $pageNum_Recordset_actlog - 1), $queryString_Recordset_actlog); ?>#log"><?php echo $multilingual_global_previous; ?></a>
-                          <?php } // Show if not first page ?></td>
-                      <td><?php if ($pageNum_Recordset_actlog < $totalPages_Recordset_actlog) { // Show if not last page ?>
-                          <a href="<?php printf("%s?pageNum_Recordset_actlog=%d%s", $currentPage, min($totalPages_Recordset_actlog, $pageNum_Recordset_actlog + 1), $queryString_Recordset_actlog); ?>#log"><?php echo $multilingual_global_next; ?></a>
-                          <?php } // Show if not last page ?></td>
-                      <td><?php if ($pageNum_Recordset_actlog < $totalPages_Recordset_actlog) { // Show if not last page ?>
-                          <a href="<?php printf("%s?pageNum_Recordset_actlog=%d%s", $currentPage, $totalPages_Recordset_actlog, $queryString_Recordset_actlog); ?>#log"><?php echo $multilingual_global_last; ?></a>
-                          <?php } // Show if not last page ?></td>
-                    </tr>
-                  </table></td>
-                <td align="right"><?php echo ($startRow_Recordset_actlog + 1) ?> <?php echo $multilingual_global_to; ?> <?php echo min($startRow_Recordset_actlog + $maxRows_Recordset_actlog, $totalRows_Recordset_actlog) ?> (<?php echo $multilingual_global_total; ?> <?php echo $totalRows_Recordset_actlog ?>)&nbsp;&nbsp;&nbsp;&nbsp;</td>
-              </tr>
-            </table>-->
-          </td>
-        </tr>
-  <!-- 工作量饼图 -->
-  		  <?php if ($sum_hour > 0.5) {  ?>
-            <tr>
-              <td>&nbsp;</td>
-            </tr>
-            <tr>
-              <td><span class="font_big18 fontbold"><?php echo $multilingual_project_taskoverlay; ?></span></td>
-            </tr>
-            <tr>
-              <td>
-  	<div id="chart"></div>		</td>
-            </tr>
-  		  <?php }  ?>
-  		  <tr>
-              <td>&nbsp;</td>
-            </tr>
-  		  
-  <!-- 项目评论 -->
-  		<?php if($totalRows_Recordset_comment > 0){ ?>
-  	<tr >
-        <td><span class="font_big18 fontbold"><?php echo $multilingual_default_comment; ?></span><a name="comment"></a></td>
-      </tr>
-  		  <tr>
-  		    <td>
-  			<table class="table table-striped table-hover glink" style="margin-bottom:3px;">
-  			<?php do { ?>
-  		<tr >
-        <td >
-  	  <div class="float_left gray">
-  	  
-  	  <a href="user_view.php?recordID=<?php echo $row_Recordset_comment['tk_comm_user']; ?>"><?php echo $row_Recordset_comment['tk_display_name']; ?></a> 
-  	  <?php echo $multilingual_default_by; ?>
-  	  <?php echo $row_Recordset_comment['tk_comm_lastupdate']; ?> 
-  	  <?php echo $multilingual_default_at; ?>	  </div>
-  	  <div class="float_right">
-  	  <?php
-  	  $coid =$row_Recordset_comment['coid'];
-  	  $editcomment_row = "
-  <script type='text/javascript'>
-  	  function editcomm$coid()
-  {
-      J.dialog.get({ id: 'test3', title: '$multilingual_default_editcom', width: 600, height: 500, page: 'comment_edit.php?editcoID=$coid' });
-  }
-  </script>";
-
-  echo $editcomment_row;
-  ?>
-  	  <a onClick="editcomm<?php echo $coid; ?>();" class="mouse_hover">
-  	  <?php echo $multilingual_global_action_edit; ?></a>
-  	  
-  	  <?php if ($_SESSION['MM_Username'] <> $multilingual_dd_user_readonly) {  ?>
-  	   <a  class="mouse_hover" 
-  	  onclick="javascript:if(confirm( '<?php 
-  	  echo $multilingual_global_action_delconfirm; ?>'))self.location='comment_del.php?delID=<?php echo $row_Recordset_comment['coid']; ?>&projectID=<?php echo $row_DetailRS1['id']; ?>';"
-  	  ><?php echo $multilingual_global_action_del; ?></a>
-  	  <?php } else {  
-  	   echo $multilingual_global_action_del; 
-  	    }  ?>
-  	  </div>
-  	  <?php 
-  	echo "<br />".$row_Recordset_comment['tk_comm_title']; 
-  	?>	  </td>
-      </tr>
-  	<?php
-  } while ($row_Recordset_comment = mysql_fetch_assoc($Recordset_comment));
-    $rows = mysql_num_rows($Recordset_comment);
-    if($rows > 0) {
-        mysql_data_seek($Recordset_comment, 0);
-  	  $row_Recordset_comment = mysql_fetch_assoc($Recordset_comment);
-    }
-  ?>
-  			</table>
-  			
-  <!-- 项目评论分页？ -->
-  			<table class="rowcon" border="0" align="center">
-  <tr>
-  <td>   <table border="0">
-          <tr>
-            <td><?php if ($pageNum_Recordset_comment > 0) { // Show if not first page ?>
-                <a href="<?php printf("%s?pageNum_Recordset_comment=%d%s", $currentPage, 0, $queryString_Recordset_comment); ?>#comment"><?php echo $multilingual_global_first; ?></a>
-                <?php } // Show if not first page ?></td>
-            <td><?php if ($pageNum_Recordset_comment > 0) { // Show if not first page ?>
-                <a href="<?php printf("%s?pageNum_Recordset_comment=%d%s", $currentPage, max(0, $pageNum_Recordset_comment - 1), $queryString_Recordset_comment); ?>#comment"><?php echo $multilingual_global_previous; ?></a>
-                <?php } // Show if not first page ?></td>
-            <td><?php if ($pageNum_Recordset_comment < $totalPages_Recordset_comment) { // Show if not last page ?>
-                <a href="<?php printf("%s?pageNum_Recordset_comment=%d%s", $currentPage, min($totalPages_Recordset_comment, $pageNum_Recordset_comment + 1), $queryString_Recordset_comment); ?>#comment"><?php echo $multilingual_global_next; ?></a>
-                <?php } // Show if not last page ?></td>
-            <td><?php if ($pageNum_Recordset_comment < $totalPages_Recordset_comment) { // Show if not last page ?>
-                <a href="<?php printf("%s?pageNum_Recordset_comment=%d%s", $currentPage, $totalPages_Recordset_comment, $queryString_Recordset_comment); ?>#comment"><?php echo $multilingual_global_last; ?></a>
-                <?php } // Show if not last page ?></td>
-          </tr>
-        </table></td>
-  <td align="right">   <?php echo ($startRow_Recordset_comment + 1) ?> <?php echo $multilingual_global_to; ?> <?php echo min($startRow_Recordset_comment + $maxRows_Recordset_comment, $totalRows_Recordset_comment) ?> (<?php echo $multilingual_global_total; ?> <?php echo $totalRows_Recordset_comment ?>)&nbsp;&nbsp;&nbsp;&nbsp;</td>
-  </tr>
-  </table>			</td>
-  	    </tr>
-  		<?php } ?>
-
-  		  <tr>
-              <td>
-              
-  <!-- 项目详细切换部分 -->
-  <div class="tab">
-  <ul class="menu" id="menutitle">
-
-  <li id="tab_1"  class="onhover" 
-  <?php if ($totalRows_Recordset_task == 0) { echo "style='display:none'"; }?>>
-
-  <a href="javascript:void(0)" onClick="tabs('1');" >
-  <?php echo $multilingual_default_task_substage; ?></a></li>
-
-  <li id="tab_2" 
-  <?php if ($totalRows_Recordset_task == 0 ) { echo "class='onhover'"; }?> 
-  <?php if ($totalRows_Recordset_file == 0) { echo "style='display:none'"; }?>>
-  <a href="javascript:void(0)" onClick="tabs('2');" >
-  <?php echo $multilingual_project_file; ?></a></li>
-
-  <li id="tab_3" 
-  <?php if ($totalRows_Recordset_task == 0 && $totalRows_Recordset_file == 0) { echo "class='onhover'"; }?> 
-  <?php if ($totalRows_Recordset_task == 0) { echo "style='display:none'"; }?>>
-  <a href="javascript:void(0)" onClick="tabs('3');" >
-  <?php echo $multilingual_project_view_log; ?></a></li>
-
-  <?php if ($totalRows_Recordset_file <> 0 ||  $totalRows_Recordset_task <> 0) { ?>
-  <li >&nbsp;</li><li >&nbsp;</li>
-  <?php }?><a name="task"></a>
-  </ul>
-</div>
+			</div>
+		</div>
   <!-- 分解阶段，需要重写填充数据 -->
-  <div class="tab_b" id="tab_a1" >
+  <div class="tab_b" id="tab_a2" style="display:none">
   <?php if ($totalRows_Recordset_task > 0) { // Show if recordset not empty ?>
     <table width="100%">
     <tr>
       <td colspan="2">
 
   <!-- 阶段详细信息表 -->
-      <table class="table table-striped table-hover glink">
+  <div style="overflow-y: auto;max-height:300px">
+      <table class="table table-striped table-hover glink" >
   <thead >
           
           <tr>
-  <!--          <th><?php echo $multilingual_default_task_id; ?></th>-->
             <th><?php echo $multilingual_default_task_title; ?></th>
-  <!--          <th><?php echo $multilingual_default_task_to; ?></th>-->
-  <!--          <th><?php echo $multilingual_default_task_status; ?></th>-->
             <th><?php echo $multilingual_default_task_planstart; ?></th>
             <th><?php echo $multilingual_default_task_planend; ?></th>
-  <!--          <th><?php echo $multilingual_default_task_priority; ?></th>-->
-  <!--          <th class="hide"><?php echo $multilingual_default_tasklevel; ?></th>-->
           </tr>
           </thead>
           <tbody>
@@ -739,36 +476,15 @@ $(function() {
           <?php } ?>
   		  </tbody>
         </table>
-
-        <table class="rowcon" border="0" align="center">
-  <tr>
-  <td>   <table border="0">
-          <tr>
-            <td><?php if ($pageNum_Recordset_task > 0) { // Show if not first page ?>
-                <a href="<?php printf("%s?pageNum_Recordset_task=%d%s", $currentPage, 0, $queryString_Recordset_task); ?>#task"><?php echo $multilingual_global_first; ?></a>
-                <?php } // Show if not first page ?></td>
-            <td><?php if ($pageNum_Recordset_task > 0) { // Show if not first page ?>
-                <a href="<?php printf("%s?pageNum_Recordset_task=%d%s", $currentPage, max(0, $pageNum_Recordset_task - 1), $queryString_Recordset_task); ?>#task"><?php echo $multilingual_global_previous; ?></a>
-                <?php } // Show if not first page ?></td>
-            <td><?php if ($pageNum_Recordset_task < $totalPages_Recordset_task) { // Show if not last page ?>
-                <a href="<?php 
-  			  printf("%s?pageNum_Recordset_task=%d%s", $currentPage, min($totalPages_Recordset_task, $pageNum_Recordset_task + 1), $queryString_Recordset_task); ?>#task" ><?php echo $multilingual_global_next; ?></a>
-  			  <?php } // Show if not last page ?>			  </td>
-            <td><?php if ($pageNum_Recordset_task < $totalPages_Recordset_task) { // Show if not last page ?>
-                <a href="<?php printf("%s?pageNum_Recordset_task=%d%s", $currentPage, $totalPages_Recordset_task, $queryString_Recordset_task); ?>#task"><?php echo $multilingual_global_last; ?></a>
-                <?php } // Show if not last page ?></td>
-          </tr>
-        </table></td>
-  <td align="right">   <?php echo ($startRow_Recordset_task + 1) ?> <?php echo $multilingual_global_to; ?> <?php echo min($startRow_Recordset_task + $maxRows_Recordset_task, $totalRows_Recordset_task) ?> (<?php echo $multilingual_global_total; ?> <?php echo $totalRows_Recordset_task ?>)&nbsp;&nbsp;&nbsp;&nbsp;</td>
-  </tr>
-  </table>      </td>
+		</div>
+		</td>
   </tr>
   </table>
   <?php } // Show if recordset not empty ?>
   </div>
 
   <!-- 文件管理部分 -->
-  <div class="tab_b" id="tab_a2"  >
+  <div class="tab_b" id="tab_a3"  style="overflow-y: auto;max-height:300px"  style="display:none">
 
   <?php if ($totalRows_Recordset_file > 0) {  ?>
   <table class="table table-striped table-hover glink" >
@@ -792,8 +508,7 @@ $(function() {
   	  <a href="file.php?recordID=<?php echo $row_Recordset_file['docid']; ?><?php 
   	  if($row_Recordset_file['tk_doc_backup1']=="1"){
   	  echo "&folder=".$row_Recordset_file['tk_doc_backup1'];
-  	  } ?>&projectID=<?php echo $colname_DetailRS1; ?>&pagetab=allfile
-  	  " class="icon_folder">
+  	  } ?>&projectID=<?php echo $colname_DetailRS1; ?>&pagetab=allfile" class="icon_folder">
   	  <?php echo $row_Recordset_file['tk_doc_title']; ?></a>
   	  <?php }else{ ?>
   	  
@@ -814,7 +529,6 @@ $(function() {
   	   <?php if ($row_Recordset_file['tk_doc_backup1'] <> "1") {  ?>
   	   <a href="word.php?fileid=<?php echo $row_Recordset_file['docid']; ?>" class="icon_word"><?php echo $multilingual_project_file_word; ?></a> 
   	 <?php } ?>
-  	 &nbsp;
   	 
   	 <?php if($_SESSION['MM_rank'] > "1") { ?>
   	 <?php if ($row_Recordset_file['tk_doc_backup1'] == "1") {  ?>
@@ -841,8 +555,7 @@ $(function() {
   	  if ($row_Recordset_file['tk_doc_backup1'] == 0){
   	  echo $multilingual_global_action_delconfirm;}
   	  else {
-  	  echo $multilingual_global_action_delconfirm5;}
-  	   ?>'))self.location='file_del.php?delID=<?php echo $row_Recordset_file['docid']; ?>&projectID=<?php echo $row_DetailRS1['id']; ?>&pid=0&url=<?php echo $host_url; ?>';"
+  	  echo $multilingual_global_action_delconfirm5; } ?>'))self.location='file_del.php?delID=<?php echo $row_Recordset_file['docid']; ?>&projectID=<?php echo $row_DetailRS1['id']; ?>&pid=0&url=<?php echo $host_url; ?>';"
   	  ><?php echo $multilingual_global_action_del; ?></a>
   	  <?php } else {  
   	   echo $multilingual_global_action_del; 
@@ -858,48 +571,125 @@ $(function() {
   	  $row_Recordset_file = mysql_fetch_assoc($Recordset_file);
     }
   ?>
-  </table>  
-  <table class="rowcon" border="0" align="center">
-  <tr>
-  <td>   <table border="0">
-          <tr>
-            <td><?php if ($pageNum_Recordset_file > 0) { // Show if not first page ?>
-                <a href="<?php printf("%s?pageNum_Recordset_file=%d%s", $currentPage, 0, $queryString_Recordset_file); ?>&tab=1#task"><?php echo $multilingual_global_first; ?></a>
-                <?php } // Show if not first page ?></td>
-            <td><?php if ($pageNum_Recordset_file > 0) { // Show if not first page ?>
-                <a href="<?php printf("%s?pageNum_Recordset_file=%d%s", $currentPage, max(0, $pageNum_Recordset_file - 1), $queryString_Recordset_file); ?>&tab=1#task"><?php echo $multilingual_global_previous; ?></a>
-                <?php } // Show if not first page ?></td>
-            <td><?php if ($pageNum_Recordset_file < $totalPages_Recordset_file) { // Show if not last page ?>
-                <a href="<?php printf("%s?pageNum_Recordset_file=%d%s", $currentPage, min($totalPages_Recordset_file, $pageNum_Recordset_file + 1), $queryString_Recordset_file); ?>&tab=1#task"><?php echo $multilingual_global_next; ?></a>
-                <?php } // Show if not last page ?></td>
-            <td><?php if ($pageNum_Recordset_file < $totalPages_Recordset_file) { // Show if not last page ?>
-                <a href="<?php printf("%s?pageNum_Recordset_file=%d%s", $currentPage, $totalPages_Recordset_file, $queryString_Recordset_file); ?>&tab=1#task"><?php echo $multilingual_global_last; ?></a>
-                <?php } // Show if not last page ?></td>
-          </tr>
-        </table></td>
-  <td align="right">   <?php echo ($startRow_Recordset_file + 1) ?> <?php echo $multilingual_global_to; ?> <?php echo min($startRow_Recordset_file + $maxRows_Recordset_file, $totalRows_Recordset_file) ?> (<?php echo $multilingual_global_total; ?> <?php echo $totalRows_Recordset_file ?>)&nbsp;&nbsp;&nbsp;&nbsp;</td>
-  </tr>
-  </table>
+  </table> 
   <?php }  ?>
   </div>
   <!--file end -->
 
           <!-- 日历表 -->
-          <div class="clearboth"></div>
+  <div class="tab_b" id="tab_a1"  style="overflow-y: auto;max-height:300px"  style="display:none">
             <div class="pagemargin">
 
                 <!-- 所有日程表主体部分 -->
                 <div>
-                    <div id='calendar'>
+					<button id="example-a-PreviousDomain-selector" style="margin-bottom: 10px;" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-left    "></span></button>
+					<button id="example-a-NextDomain-selector" style="margin-bottom: 10px;" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-right"></span></button>
+			
+                    <div id='calendar'  class="chart" >
                     </div>
                 </div>
             </div>
-
-          <?php require('foot.php'); ?>
+               </div>
                </div><!-- right main -->
           </td>
       </tr>
     </table>
+</div>
+</div>
+
+<?php require('foot.php'); ?>
+<link rel="stylesheet" type="text/css" href="plug-in/calendar/css/fullcalendar.css">
+<link rel="stylesheet" type="text/css" href="plug-in/calendar/css/fancybox.css">
+<!-- <script src='plug-in/calendar/js/fullcalendar.js'></script>
+<script src='plug-in/calendar/js/jquery.fancybox-1.3.1.pack.js'></script>-->
+<script type="text/javascript" src="js/lhgcore/lhgcore.js"></script>
+<script type="text/javascript" src="js/lhgcore/lhgdialog.js"></script>
+<script type="text/javascript" src="plug-in/chart/js/swfobject.js"></script> 
+<script src='plug-in/calendar/js/d3.min.js'></script>
+<script src='plug-in/calendar/js/cal-heatmap.js'></script>
+<link rel="stylesheet" type="text/css" href="plug-in/calendar/css/cal-heatmap.css">
+<script type="text/javascript"> 
+	var flashvars = {"data-file":"chart_pie_project.php?recordID=<?php echo $row_DetailRS1['id']; ?>"};  
+	var params = {menu: "false",scale: "noScale",wmode:"opaque"};  
+	swfobject.embedSWF("chart/open-flash-chart.swf", "chart", "600px", "230px", 
+		"9.0.0","expressInstall.swf", flashvars,params);  
+ 
+	function   exportexcel() 
+    {
+		document.form1.action= "excel_log.php "; 
+        document.form1.submit(); 
+        return   false; 
+    } 
+	
+	function addfolder()
+	{
+		J.dialog.get({ id: "test2", title: '<?php echo $multilingual_project_file_addfolder; ?>', width: 600, height: 500, page: "file_add_folder.php?projectid=<?php echo $row_DetailRS1['id']; ?>&pid=0&folder=1&pagetab=allfile" });
+	}
+	
+	function tabs(n)
+	{
+		var len = 3;
+		for (var i = 1; i <= len; i++)
+		{
+			document.getElementById('tab_a' + i).style.display = (i == n) ? 'block' : 'none';
+			document.getElementById('tab_' + i).className = (i == n) ? 'onhover' : 'none';
+		}
+	}
+	
+	function createCalendar(DOMElID, legendcolors, considermData) {
+        yearcal = new CalHeatMap();
+        yearcal.init({
+			itemSelector: "#calendar",
+            subDomain: "hour",
+            domain: "day",
+			cellSize:20,
+			legendVerticalPosition:"top",
+			domainDynamicDimension:true,
+			previousSelector: "#example-a-PreviousDomain-selector",
+			nextSelector: "#example-a-NextDomain-selector",
+			domainGutter:10,
+			subDomainTextFormat: "%H",
+            displayLegend: true,
+            legendColors: legendcolors,
+            considerMissingDataAsZero: considermData,
+            start: new Date()
+        });
+    }
+	 $(window).hover(function(){
+		 var d = document.elementFromPoint(event.clientX,event.clientY).id;
+		 if(d.indexOf('g|')>=0||d.indexOf('rect|')>=0||d.indexOf('text|')>=0){
+
+		 }
+	 });
+	$(window).load(function()
+	{
+        var h = $(window).height();
+        var h = h - <?php if($totalRows_Recordset_anc > 0) {echo "75";} else {echo "40";} ?>;
+        $("#main_right").css("height", h);
+		
+		createCalendar("#calendar", {}, false);
+		/*
+		$('#calendar').fullCalendar({
+			header: {
+				left: 'prev today next',
+				center: 'title',
+				right: 'month,agendaWeek'
+			},
+			events: <?php echo json_encode($data); ?>,
+		});
+		*/
+		$("#foot_top").css("min-height",document.getElementById("pagemargin").clientHeight+60+document.getElementById("top_height").clientHeight+"px");
+		$(window).resize();	
+	});
+	$(window).resize(function()
+	{	
+        var h2 = $(this).height();
+        $("#main_right").css("height", h2);
+		$("#foot_top").css("height",$(window).height()+"px"); 
+		$("#tree").css("height",document.getElementById("foot_top").clientHeight-66-60+"px"); 
+	});
+</script>
+
 
   </body>
   </html>

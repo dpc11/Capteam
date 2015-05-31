@@ -3,18 +3,10 @@
 <?php require_once('function/project_function.php'); ?>
 <?php
 
-$restrictGoTo = "user_error3.php";
-
 if ((isset($_GET['delID'])) && ($_GET['delID'] != "")) {
   $user_id = $_SESSION['MM_uid'];
   $project_id = $_GET['delID'];
   $project_info = get_project_by_id($project_id);
-  //当前用户不是项目的组长，则没有权限删除该项目
-  if ($user_id <> $project_info['project_to_user'] || $user_id == "") {   
-    header("Location: ". $restrictGoTo); 
-    exit;
-  }
-  
 
   $del_project_id = GetSQLValueString($_GET['delID'], "int");
   $del_project_lastupdate = date("Y-m-d H:i:s",time());
