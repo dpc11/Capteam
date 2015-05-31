@@ -80,6 +80,7 @@ $(function() {
         maxTime: 23,
         slotMinutes:30,
         allDaySlot: false,
+        contentHeight: 1200,
         events: <?php echo json_encode($data); ?>,
 
         // 在课程日程中新增日程
@@ -180,6 +181,22 @@ function start() {
     </tr>
 </table>
 <?php require( 'foot.php'); ?>
+<script>
+
+    $(window).load(function()
+    {
+        $(window).resize(); 
+    });
+    $(window).resize(function()
+    {   
+        //$("#tbody_br").css("width",$("#tasktab").width()-551+"px");
+        //$("#headerlink").css("width",$("#tasktab").width()/0.9+"px");
+        //var o = document.getElementById("view");
+        //var h = o.offsetHeight;  //高度
+        $("#foot_div").css("margin-top",0);
+        
+    });
+</script>
 
 </body>
 <form action="<?php echo "course_add.php?uid=".$userid ?>"  method="post" name="form1" id="form1">
