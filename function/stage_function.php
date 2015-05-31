@@ -71,4 +71,15 @@
     
         return $stage_arr;
     }
+
+    //得到阶段所属项目的信息
+	function get_pro_info($proid)
+	{
+		global $tankdb;
+		$selProInfo="SELECT * FROM tk_project WHERE  id=$proid";
+		$proRS=mysql_query($selProInfo, $tankdb) or die(mysql_error());
+		$row = mysql_fetch_assoc($proRS);
+
+		return $row;
+	}
 ?>

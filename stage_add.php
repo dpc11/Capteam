@@ -15,6 +15,7 @@ if(isset($_GET['pid'])){
   $thisProj = $_GET['pid'];
 }
 
+$proInfo = get_pro_info($thisProj);
 $dateError = 1;//没有错误
 /*
 $to_user = "-1";
@@ -136,7 +137,14 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
       {
           //echo("can't");
          $dateError = -2;//结束时间小于开始时间
-      }else
+      }else if($st_time < $proInfo['project_start'])
+      {
+        $dateError = -3;//开始时间小于项目的开始时间
+      }else if($en_time > $proInfo['project_end'])
+      {
+        $dateError = -4;//结束时间大于项目的结束时间
+      }
+      else
       {
 		  $stageNAME = GetSQLValueString($_POST['tk_stage_title'], "text");
 		  
@@ -542,7 +550,12 @@ do {
 				<div class="form-group col-xs-12">
                 <label for="datepicker2"><?php echo $multilingual_default_task_planstart; ?><!--<span id="csa_plan_st_msg"></span>-->
                     <lable style="color:#F00;font-size:14px">
-                       <?php if($dateError==-2) { echo ('&nbsp&nbsp&nbsp');echo "结束时间小于开始时间";} ?>
+                       <?php if($dateError==-2) 
+                                { echo ('&nbsp&nbsp&nbsp');echo "结束时间小于开始时间";}
+                             else if($dateError == -3)
+                             {
+                                echo ('&nbsp&nbsp&nbsp');echo "开始时间小于项目的开始时间";
+                             } ?>
                     </lable>
                 </label>
                 <div>
@@ -555,7 +568,11 @@ do {
               <div class="form-group col-xs-12">
                 <label for="datepicker3"><?php echo $multilingual_default_task_planend; ?><!--<span id="csa_plan_et_msg"></span>-->
                     <lable style="color:#F00;font-size:14px">
-                       <?php if($dateError==-2) {echo ('&nbsp&nbsp&nbsp');echo "结束时间小于开始时间";} else if ($dateError==-1) {echo ('&nbsp&nbsp&nbsp'); echo "结束时间小于今天";} ?>
+                       <?php if($dateError==-2) 
+                                {echo ('&nbsp&nbsp&nbsp');echo "结束时间小于开始时间";} 
+                            else if ($dateError==-1) {echo ('&nbsp&nbsp&nbsp'); echo "结束时间小于今天";}
+                            else if ($dateError==-4) {echo ('&nbsp&nbsp&nbsp'); echo "结束时间大于项目的结束时间";}
+                                 ?>
                     </lable>
                 </label>
                 <div>
