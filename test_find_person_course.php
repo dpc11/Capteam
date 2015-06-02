@@ -10,7 +10,7 @@
 	$hend = "09:30:00";
 
 	//返回的字符串
-	$str="";
+	$src="";
  	
  	//从数据库读取课程信息
  	$selCSSQL = "SELECT * FROM tk_course_schedule WHERE cs_uid=$uid";
@@ -32,7 +32,12 @@
 	$lastday = date('Y-m-d',strtotime("$date Sunday"));
 	$this_Mon = date('Y-m-d',strtotime("$lastday -6 days"));//得到指定日期所在周的周一日期
 	$week_num = (strtotime($this_Mon)-strtotime($CSinfo['cs_firstday']))/86400/7 + 1;//计算是第几周
-	echo $week_num."<br>";
+	//echo $week_num."<br>";
+
+	if($week_num < 1)//在开学日期之前
+	{
+		return $src;
+	}
 
 	//判断在给定时间段是否有课程
 	while($row=mysql_fetch_assoc($RS2))
@@ -58,5 +63,5 @@
 	}
 
 	//改为return该值就好 格式：课程名(开始时间~结束时间);
-	echo $src;
+	return $src;
  ?>
