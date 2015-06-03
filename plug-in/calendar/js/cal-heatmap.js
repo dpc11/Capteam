@@ -1511,12 +1511,16 @@ CalHeatMap.prototype = {
 		;
 
 		rect.transition().duration(options.animationDuration).select("title")
-			.text(function(d) { return parent.getSubDomainTitle(d); })
+			.text(function(d) { return "";
+			//return parent.getSubDomainTitle(d); 
+			})
 		;
 
 		function formatSubDomainText(element) {
 			if (typeof options.subDomainTextFormat === "function") {
-				element.text(function(d) { return options.subDomainTextFormat(d.t, d.v); });
+				element.text(function(d) { return "";
+				//return options.subDomainTextFormat(d.t, d.v); 
+				});
 			}
 		}
 
