@@ -21,7 +21,7 @@ for($i=0;$i<$length;$i++){//每天
 			$date = date('Y-m-d',strtotime("$start +$i days"));
 			$hstart = sprintf('%02d', $j).":00:00";
 			$hend = sprintf('%02d', $j).":59:59";
-			/*
+
 			//从数据库读取课程信息
 			$selCSSQL = "SELECT * FROM tk_course_schedule WHERE cs_uid=$uid";
 			$RS1 = mysql_query($selCSSQL, $tankdb) or die(mysql_error());
@@ -40,26 +40,46 @@ for($i=0;$i<$length;$i++){//每天
 			$trans_date = mktime($hour, $minute, $second, $month, $day, $year); //将时间转换成时间戳
 			$dayofweek =  date("w", $trans_date); //获取星期值
 			$lastday = date('Y-m-d',strtotime("$date Sunday"));
+			//echo $lastday." ";
 			$this_Mon = date('Y-m-d',strtotime("$lastday -6 days"));//得到指定日期所在周的周一日期
+			//echo $this_Mon." ";
+			//echo $CSinfo['cs_firstday']." ";
 			$week_num = (strtotime($this_Mon)-strtotime($CSinfo['cs_firstday']))/86400/7 + 1;//计算是第几周
 			//echo $week_num."<br>";
+			//echo $week_num;
 
 			if($week_num >= 1)//在开学日期之前
 			{
 				//判断在给定时间段是否有课程
-				if($row=mysql_fetch_assoc($RS2))
+				while($row=mysql_fetch_assoc($RS2))
 				{
 					if($week_num>=$row['course_startweek'] && $week_num<=$row['course_endweek'])
 					{
 						if($row['course_day']==$dayofweek)
 						{
-							$grade=$grade+20;
+							if($hstart <= $row['course_starttime'] && $hend> $row['course_starttime'])
+							{
+								//$src = $src.$row['course_name']."(".$row['course_starttime']."~".$row['course_endtime'].");";
+								$grade=$grade+20;
+							}
+							else if($hend >= $row['course_endtime'] && $hstart < $row['course_endtime'])
+							{
+								//$src = $src.$row['course_name']."(".$row['course_starttime']."~".$row['course_endtime'].");";
+								$grade=$grade+20;
+							}
+							else if($hstart > $row['course_starttime'] && $hend < $row['course_endtime'])
+							{
+								//$src = $src.$row['course_name']."(".$row['course_starttime']."~".$row['course_endtime'].");";
+								$grade=$grade+20;
+							}
+										//$grade=$grade+20;
 						}
 					}
 				}
 			}
-			echo "===course====".$grade;
-				
+			//echo "<br>";
+			//echo "===course====".$grade;
+			/*	
 			//查找个人日程
 			 $sql = "select * from tk_schedule where uid=".$uid." and ( 
 							(end_time<= '".date("Y-m-d H:i:s",strtotime($date." ".$hend))."' and  
@@ -75,7 +95,7 @@ for($i=0;$i<$length;$i++){//每天
 							)";
             $query = mysql_query($sql);
             $row=mysql_num_rows($query);
-			$grade=$grade+$row*10;*/
+			$grade=$grade+$row*10;
 			
 			//查找任务
 			$sql = "select * from tk_task where csa_to_user=".$uid." and csa_plan_st<= '".$date."' and  
@@ -83,7 +103,7 @@ for($i=0;$i<$length;$i++){//每天
 			$query = mysql_query($sql);
             $row=mysql_num_rows($query);
 			$grade=$grade+$row*5;
-			echo "===task====".$row."|||".$grade;
+			//echo "===task====".$row."|||".$grade;*/
 			
 		}
 		if($grade>0){
