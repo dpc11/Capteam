@@ -32,7 +32,7 @@
 
 .cal-heatmap-container .subdomain-text {
 	font-size: 8px;
-	fill: #999;
+	fill: #000;
 	pointer-events: none
 }
 
@@ -57,34 +57,69 @@ Remove comment to apply this style to date with value equal to 0
 
 .cal-heatmap-container .q1
 {
-	background-color: #dae289;
-	fill: #dae289
+	background-color: #C7E6FF;
+	fill: #C7E6FF
 }
 
 .cal-heatmap-container .q2
 {
-	background-color: #cedb9c;
-	fill: #9cc069
+	background-color: #BCFF96;
+	fill: #BCFF96
 }
 
 .cal-heatmap-container .q3
 {
-	background-color: #b5cf6b;
-	fill: #669d45
+	background-color: #DBFD70;
+	fill: #DBFD70
 }
 
 .cal-heatmap-container .q4
 {
-	background-color: #637939;
-	fill: #637939
+	background-color: #FAF292;
+	fill: #FAF292
 }
 
 .cal-heatmap-container .q5
 {
-	background-color: #3b6427;
-	fill: #3b6427
+	background-color: #FCDA51;
+	fill:#FCDA51
 }
 
+.cal-heatmap-container .q6
+{
+	background-color: #FFA959;
+	fill: #FFA959
+}
+
+.cal-heatmap-container .q7
+{
+	background-color: #FF8500;
+	fill: #FF8500
+}
+
+.cal-heatmap-container .q8
+{
+	background-color: #FC6328;
+	fill: #FC6328
+}
+
+.cal-heatmap-container .q9
+{
+	background-color: #FF3A3A;
+	fill: #FF3A3A
+}
+
+.cal-heatmap-container .q10
+{
+	background-color: #CC3030;
+	fill: #CC3030
+}
+
+.cal-heatmap-container .q11
+{
+	background-color: #8F0404;
+	fill: #8F0404
+}
 .cal-heatmap-container rect.highlight
 {
 	stroke:#444;

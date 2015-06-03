@@ -583,7 +583,7 @@
                 <!-- 所有日程表主体部分 -->
                 <div>
 					<button  data-placement="top"
-    data-title="sample tooltip text" id="example-a-PreviousDomain-selector" style="margin-bottom: 10px;" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-left    "></span></button>
+    data-title="sample tooltip text" id="example-a-PreviousDomain-selector" style="margin-bottom: 10px;" class="btn btn-lg" style="height:10px;"><span class="glyphicon glyphicon-chevron-left    "></span></button>
 					<button id="example-a-NextDomain-selector" style="margin-bottom: 10px;" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-right"></span></button>
 			
                     <div id='calendar'  class="chart" >
@@ -654,10 +654,10 @@
 			nextSelector: "#example-a-NextDomain-selector",
 			domainGutter:10,
 			subDomainTextFormat: "%H",
-            displayLegend: true,
+            displayLegend: false,
             legendColors: legendcolors,
             considerMissingDataAsZero: considermData,
-            start: new Date()
+            start: new Date('<?php  echo $row_DetailRS1['project_start']; ?>')
         });
     }
 	$(window).load(function()

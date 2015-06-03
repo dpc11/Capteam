@@ -121,7 +121,7 @@ var CalHeatMap = function() {
 		// ================================================
 
 		// Threshold for the legend
-		legend: [10, 20, 30, 40],
+		legend: [30, 60, 100, 160,240,290,360,530,860,1090,160],
 
 		// Whether to display the legend
 		displayLegend: true,
@@ -130,7 +130,7 @@ var CalHeatMap = function() {
 
 		legendCellPadding: 2,
 
-		legendMargin: [0, 0, 0, 0],
+		legendMargin: [0, 0, 0, 0,0,0,0,0,0,0,0],
 
 		// Legend vertical position
 		// top: place legend above calendar
@@ -421,7 +421,7 @@ var CalHeatMap = function() {
 			},
 			format: {
 				date: "%A %B %-e, %Y",
-				legend: "%e %b",
+				legend: "%m/%e",
 				connector: "on"
 			},
 			extractUnit: function(d) {
