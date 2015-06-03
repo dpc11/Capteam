@@ -28,6 +28,9 @@ require_once( 'config/tank_config.php'); ?>
 <?php 
 //获得个人日程数据
 $userid = $_SESSION['MM_uid'];
+$data = get_course_events($userid);
+
+
 
 
 
@@ -42,8 +45,8 @@ mysql_select_db($database_tankdb, $tankdb);
       $csid=mysql_result($Result1,0,'cs_id');
       //echo $csid;
 
+    //$data1 = get_course_events1($csid);
 
-     $data = get_course_events($csid);
 ?>
 
 <?php require( 'head.php'); ?>
@@ -83,7 +86,7 @@ $(function() {
         contentHeight: 1200,
         events: <?php echo json_encode($data); ?>,
 
-        // 在课程日程中新增日程
+        // 在个人日程中新增日程
 		dayClick: function(date, allDay, jsEvent, view) {
 			var selDate =$.fullCalendar.formatDate(date,'yyyy-MM-dd');
 			$.fancybox({
@@ -91,7 +94,7 @@ $(function() {
 				'href':'schedule_course_event.php?action=add&uid='+<?php echo $userid; ?>+'&date='+selDate+'&csid='+<?php echo $csid; ?>
 			});
     	},
-       
+      // events: <?php echo json_encode($data1); ?>,
         // 修改课程日程中的日程
         eventClick: function(calEvent, jsEvent, view) {
 			$.fancybox({
@@ -205,7 +208,7 @@ function start() {
     <div class="modal-content">  
       <div class="modal-header">  
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>  
-        <h4 class="modal-title">选择学期开始时间</h4>  
+        <h4 class="modal-title">请选择学期开始时间</h4>  
       </div>  
       <div class="modal-body">  
         
