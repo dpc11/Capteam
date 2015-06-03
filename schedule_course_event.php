@@ -525,7 +525,7 @@ $(function(){
 	
 	//删除事件
 	   $("#del_event").click(function(){
-        if(confirm("您确定要删除吗？")){
+        if(confirm("您真的确定要删除该课程吗？")){
             var eventid = $("#eventid").val();
             $.post("schedule_course_opt.php?action=del",{id:eventid},function(msg){
                 if(msg==1){//删除成功

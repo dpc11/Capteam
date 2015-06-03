@@ -77,21 +77,20 @@ elseif($action=="edit"){
 	if(mysql_affected_rows()==1){
 		echo '1';
 	}else{
-		echo '出错哎哎哎了！';	
+		echo '出错了！';	
 	}
 }elseif($action=="del"){
 	$id = $_POST['id'];
-	echo $id;
-	echo "stringaaa";
-	if($id>0){
+	if($id==0){
+		echo '事件不存在1！';
+		exit;	
+	}else{
 
 
-		mysql_select_db($database_tankdb, $tankdb);
-	
-	
+
+	mysql_select_db($database_tankdb, $tankdb);
 	$sql="DELETE FROM tk_course WHERE course_id='$id'"; 
        $Result1 = mysql_query($sql, $tankdb) or die(mysql_error()); 
-
 
 
 		//mysql_query("delete from `tk_course` where `course_id`='$id'");
@@ -101,8 +100,6 @@ elseif($action=="edit"){
 		}else{
 			echo "2";
 		}
-	}else{
-		echo '事件不存在！';
 	}
 }else{
 	
