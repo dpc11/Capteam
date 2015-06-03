@@ -5,7 +5,7 @@
 	$tasklevel = 0;
 	mysql_select_db($database_tankdb,$tankdb);
 
-	//»ñÈ¡¸öÈËÈÎÎñµÄÊý¾Ý
+
 	function get_task_events($userid){
 		$sql = "select * from tk_task where csa_to_user='$userid'";
 		$query = mysql_query($sql);
@@ -38,7 +38,7 @@ function get_course_events1($csid){
         }
         return $data;
     }
-    //»ñÈ¡¸öÈËÈÕ³ÌµÄÊý¾Ý
+
     function get_person_events($userid){
         $sql = "select * from tk_schedule where uid='$userid'";
         $query = mysql_query($sql);
@@ -61,9 +61,7 @@ function get_course_events1($csid){
         return $data;
     }
 
-    //»ñÈ¡¸öÈËËùÓÐÈÕ³ÌµÄÊý¾Ý
     function get_person_all_events($userid){
-        //»ñµÃÓÃ»§µÄ¸öÈËÈÕ³ÌÐÅÏ¢
         $sql = "select * from tk_schedule where uid='$userid'";
         $query = mysql_query($sql);
         while($row=mysql_fetch_array($query)){
@@ -83,7 +81,6 @@ function get_course_events1($csid){
             );
         }
 
-        //»ñµÃÓÃ»§µÄÈÎÎñÐÅÏ¢
         $sql = "select * from tk_task where csa_to_user=$userid";
         $query = mysql_query($sql);
         while($row=mysql_fetch_array($query)){
@@ -97,7 +94,6 @@ function get_course_events1($csid){
                 // 'color' => '#1874CD'
             );
         }
-        //ÕâÀï»¹ÐèÒªÌí¼Ó¿ÎÒµÐÅÏ¢
 
         $selCSsql = "SELECT * FROM tk_course_schedule WHERE cs_uid=$userid";
         $CSRS = mysql_query($selCSsql);
@@ -137,9 +133,8 @@ function get_course_events1($csid){
         return $data;
     }
 
-    //»ñÈ¡ÍÅ¶ÓÊÂ¼þµÄÊý¾Ý
+	
     function get_team_events($project_id){
-        //»ñµÃ¸ÃÏîÄ¿µÄËùÓÐ³ÉÔ±
 		global $tankdb;
         global $database_tankdb;
         $query_user ="SELECT * 
@@ -159,9 +154,9 @@ function get_course_events1($csid){
         } while ($row_user = mysql_fetch_assoc($userRS)); 
 		
         foreach($user_arr as $key => $val){ 
-            //»ñµÃÓÃ»§id
+
             $userid = $val['uid'];
-            //»ñµÃÓÃ»§ÔÚ±¾ÏîÄ¿ÖÐµÄÈÎÎñÐÅÏ¢
+
             $sql = "select * from tk_task where csa_to_user=$userid and csa_project=$project_id";
             $query = mysql_query($sql);
             while($row=mysql_fetch_array($query)){
@@ -175,7 +170,7 @@ function get_course_events1($csid){
                     // 'color' => '#1874CD'
                 );
             }
-            //»ñµÃÓÃ»§µÄ¸öÈËÈÕ³Ì
+
             $sql = "select * from tk_schedule where uid='$userid'";
             $query = mysql_query($sql);
             while($row=mysql_fetch_array($query)){
@@ -195,8 +190,6 @@ function get_course_events1($csid){
                 'allDay' => $allday
                 );
             }
-            //ÕâÀï»¹ÐèÒªÌí¼ÓÃ¿¸ö³ÉÔ±µÄ¿ÎÒµÐÅÏ¢
-
         }   
 
         return $data;

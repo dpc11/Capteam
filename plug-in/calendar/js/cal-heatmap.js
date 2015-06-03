@@ -597,6 +597,7 @@ var CalHeatMap = function() {
 			})
 			.append("div")
 			.attr("class", "ch-tooltip")
+			.attr("id", "ch-tooltip")
 		;
 
 		self.root.attr("x", 0).attr("y", 0).append("svg").attr("class", "graph");
@@ -744,6 +745,7 @@ var CalHeatMap = function() {
 					return 0;
 				}
 			})
+			.attr("id","id_svg")
 			.attr("class", function(d) {
 				var classname = "graph-domain";
 				var date = new Date(d);
@@ -804,6 +806,7 @@ var CalHeatMap = function() {
 			.attr("width", function(d) { return w(d, true) - options.domainGutter - options.cellPadding; })
 			.attr("height", function(d) { return h(d, true) - options.domainGutter - options.cellPadding; })
 			.attr("class", "domain-background")
+			.attr("id", "domain-background")
 		;
 
 		// =========================================================================//
@@ -2729,6 +2732,7 @@ CalHeatMap.prototype = {
 		;
 
 		this.root.select(".graph").transition().duration(options.animationDuration)
+			.attr("id", "id_graph") 
 			.attr("y", function() {
 				if (options.legendVerticalPosition === "top") {
 					return legendHeight;
@@ -3207,6 +3211,7 @@ Legend.prototype.redraw = function(width) {
 
 		legendItem = legend
 			.attr("class", "graph-legend")
+			.attr("id", "graph-legend")
 			.attr("height", parent.getDim("height"))
 			.attr("width", parent.getDim("width"))
 			.append("g")
@@ -3220,6 +3225,7 @@ Legend.prototype.redraw = function(width) {
 		.call(legendCellLayout)
 		.attr("class", function(d){ return calendar.Legend.getClass(d, (calendar.legendScale === null)); })
 		.attr("fill-opacity", 0)
+		.attr("id", "id_rect")
 		.call(function(selection) {
 			if (calendar.legendScale !== null && options.legendColors !== null && options.legendColors.hasOwnProperty("base")) {
 				selection.attr("fill", options.legendColors.base);
@@ -3260,25 +3266,27 @@ Legend.prototype.redraw = function(width) {
 		;
 	}
 
-	legendItem.select("title").text(function(d, i) {
-		if (i === 0) {
-			return (options.legendTitleFormat.lower).format({
-				min: options.legend[i],
-				name: options.itemName[1]
-			});
-		} else if (i === _legend.length-1) {
-			return (options.legendTitleFormat.upper).format({
-				max: options.legend[i-1],
-				name: options.itemName[1]
-			});
-		} else {
-			return (options.legendTitleFormat.inner).format({
-				down: options.legend[i-1],
-				up: options.legend[i],
-				name: options.itemName[1]
-			});
-		}
-	})
+	legendItem.select("title")
+		.text(function(d, i) {
+			if (i === 0) {
+				return (options.legendTitleFormat.lower).format({
+					min: options.legend[i],
+					name: options.itemName[1]
+				});
+			} else if (i === _legend.length-1) {
+				return (options.legendTitleFormat.upper).format({
+					max: options.legend[i-1],
+					name: options.itemName[1]
+				});
+			} else {
+				return (options.legendTitleFormat.inner).format({
+					down: options.legend[i-1],
+					up: options.legend[i],
+					name: options.itemName[1]
+				});
+			}
+		})		
+		.attr("id", "id_title")
 	;
 
 	legend.transition().duration(options.animationDuration)

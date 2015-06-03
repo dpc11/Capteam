@@ -72,8 +72,7 @@
 	$query_DetailRS1 = sprintf("SELECT * FROM tk_project 
 	inner join tk_user on tk_project.project_to_user=tk_user.uid 
 	WHERE tk_project.id = %s", GetSQLValueString($colname_DetailRS1, "int"));
-	$query_limit_DetailRS1 = sprintf("%s LIMIT %d, %d", $query_DetailRS1, $startRow_DetailRS1, $maxRows_DetailRS1);
-	$DetailRS1 = mysql_query($query_limit_DetailRS1, $tankdb) or die(mysql_error());
+	$DetailRS1 = mysql_query($query_DetailRS1, $tankdb) or die(mysql_error());
 	$row_DetailRS1 = mysql_fetch_assoc($DetailRS1);
 
 	//查找该项目所对应的文件夹
@@ -121,6 +120,7 @@
 	$host_url=strtr($host_url,"&","!");
 ?>
 
+<?php require('project_spare_time_data.php'); ?>
 <?php require('head.php'); ?>
 <style type="text/css">
     .fc-day
@@ -199,7 +199,7 @@
 													if($today_date < $row_DetailRS1['project_start']){
 													  //表示项目还没有开始
 													  echo "<div class=\"float_left view_task_status\" style='background-color: #FF6666; width:160px; text-align:center;'>未开始</div>";
-													}elseif ($today_date > $row_DetailRS1['project_end']) {
+													}else if ($today_date > $row_DetailRS1['project_end']) {
 													  //表示项目已结结束
 													  echo "<div class=\"float_left view_task_status\"  style='background-color: #B3B3B3; width:160px; text-align:center;'>已结束</div>";
 													}else{
@@ -582,7 +582,8 @@
 
                 <!-- 所有日程表主体部分 -->
                 <div>
-					<button id="example-a-PreviousDomain-selector" style="margin-bottom: 10px;" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-left    "></span></button>
+					<button  data-placement="top"
+    data-title="sample tooltip text" id="example-a-PreviousDomain-selector" style="margin-bottom: 10px;" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-left    "></span></button>
 					<button id="example-a-NextDomain-selector" style="margin-bottom: 10px;" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-right"></span></button>
 			
                     <div id='calendar'  class="chart" >
@@ -608,6 +609,8 @@
 <script src='plug-in/calendar/js/d3.min.js'></script>
 <script src='plug-in/calendar/js/cal-heatmap.js'></script>
 <link rel="stylesheet" type="text/css" href="plug-in/calendar/css/cal-heatmap.css">
+<script src='plug-in/calendar/js/ggtooltip.js'></script>
+<link rel="stylesheet" type="text/css" href="plug-in/calendar/css/ggtooltip.css">
 <script type="text/javascript"> 
 	var flashvars = {"data-file":"chart_pie_project.php?recordID=<?php echo $row_DetailRS1['id']; ?>"};  
 	var params = {menu: "false",scale: "noScale",wmode:"opaque"};  
@@ -643,6 +646,7 @@
             subDomain: "hour",
             domain: "day",
 			cellSize:20,
+			data:"project_spare_time_data.json",
 			legendVerticalPosition:"top",
 			domainDynamicDimension:true,
 			previousSelector: "#example-a-PreviousDomain-selector",
@@ -655,10 +659,13 @@
             start: new Date()
         });
     }
-	 $(window).hover(function(){
+	 $("#calendar").hover(function(){
 		 var d = document.elementFromPoint(event.clientX,event.clientY).id;
 		 if(d.indexOf('g|')>=0||d.indexOf('rect|')>=0||d.indexOf('text|')>=0){
-
+			d=d.split('|')[1];
+			d=d.split('-');
+			var date=d[0]+"-"+d[1]+"-"+d[2];
+			var hour=d[3];
 		 }
 	 });
 	$(window).load(function()
@@ -688,6 +695,7 @@
 		$("#foot_top").css("height",$(window).height()+"px"); 
 		$("#tree").css("height",document.getElementById("foot_top").clientHeight-66-60+"px"); 
 	});
+	$("button").ggtooltip();   
 </script>
 
 
