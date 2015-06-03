@@ -13,7 +13,7 @@
 			$data[] = array(
 				'id' => $row['tid'],
 				'title' => $row['csa_text'],
-				'start' => $row['csa_plan_et'],
+				'start' => $row['csa_plan_st'],
 				'end' => $row['csa_plan_et'],
 				'url' => $row['url'],
 				'allDay' => TRUE,

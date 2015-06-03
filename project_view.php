@@ -120,7 +120,7 @@
 	$host_url=strtr($host_url,"&","!");
 ?>
 
-<?php require('project_spare_time_data.php'); ?>
+<?php require('project_spare_time_update.php'); ?>
 <?php require('head.php'); ?>
 <style type="text/css">
     .fc-day
@@ -643,9 +643,10 @@
         yearcal = new CalHeatMap();
         yearcal.init({
 			itemSelector: "#calendar",
-            subDomain: "hour",
             domain: "day",
+			colLimit: 6,
 			cellSize:20,
+            subDomain: "x_hour",
 			data:"project_spare_time_data.json",
 			legendVerticalPosition:"top",
 			domainDynamicDimension:true,
@@ -659,15 +660,6 @@
             start: new Date()
         });
     }
-	 $("#calendar").hover(function(){
-		 var d = document.elementFromPoint(event.clientX,event.clientY).id;
-		 if(d.indexOf('g|')>=0||d.indexOf('rect|')>=0||d.indexOf('text|')>=0){
-			d=d.split('|')[1];
-			d=d.split('-');
-			var date=d[0]+"-"+d[1]+"-"+d[2];
-			var hour=d[3];
-		 }
-	 });
 	$(window).load(function()
 	{
         var h = $(window).height();
@@ -695,7 +687,17 @@
 		$("#foot_top").css("height",$(window).height()+"px"); 
 		$("#tree").css("height",document.getElementById("foot_top").clientHeight-66-60+"px"); 
 	});
-	$("button").ggtooltip();   
+	$("button").ggtooltip(); 
+
+	 $("#calendar").hover(function(){
+		 var d = document.elementFromPoint(event.clientX,event.clientY).id;
+		 if(d.indexOf('g|')>=0||d.indexOf('rect|')>=0||d.indexOf('text|')>=0){
+			d=d.split('|')[1];
+			d=d.split('-');
+			var date=d[0]+"-"+d[1]+"-"+d[2];
+			var hour=d[3];
+		 }
+	 });	
 </script>
 
 

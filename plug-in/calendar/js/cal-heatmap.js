@@ -1887,7 +1887,6 @@ CalHeatMap.prototype = {
 
 	getSubDomainColumnNumber: function(d) {
 		"use strict";
-
 		if (this.options.rowLimit > 0) {
 			var i = this._domainType[this.options.subDomain].maxItemNumber;
 			if (typeof i === "function") {
@@ -1906,7 +1905,6 @@ CalHeatMap.prototype = {
 
 	getSubDomainRowNumber: function(d) {
 		"use strict";
-
 		if (this.options.colLimit > 0) {
 			var i = this._domainType[this.options.subDomain].maxItemNumber;
 			if (typeof i === "function") {
