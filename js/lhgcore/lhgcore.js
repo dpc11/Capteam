@@ -541,38 +541,31 @@
 		}
 	);
 	g.ajax=g.A={
-		geth:function(){
-			try{
-				return new ActiveXObject('Msxml2.XMLHTTP')
-			}catch(e){
-				
-			}
-			try{
-				return new XMLHttpRequest()
-			}catch(e){
-				
-			}
-			return null
-		},
 		send:function(u,m,p,f,x){
-			m=m?m.toLocaleUpperCase():'GET';x=x?x:0;
-			p=p?p+'&uuid='+new Date().getTime():null;
-			var a=(typeof(f)=='function'),ret;
-			var b=this.geth();
-			b.open(m,u,a);
-			if(a){
-				b.onreadystatechange=function(){
-					if(b.readyState==4){
-						ret=(x==0)?b.responseText:b.responseXML;
-						f(ret);
-						delete(b);
-						return
+			var xmlHTTP;
+			var t=u.split('?');
+			m='POST';
+			var a=false;
+			if (window.XMLHttpRequest)
+			  {// code for IE7+, Firefox, Chrome, Opera, Safari
+			   xmlHTTP = new XMLHttpRequest();
+			  }
+			else
+			  {// code for IE6, IE5
+			  xmlHTTP = ActiveXObject("Microsoft.XMLHTTP");
+			  }
+			xmlHTTP.onreadystatechange=function(){
+						if(xmlHTTP.readyState==4&&xmlHTTP.status==200){
+							if(xmlHTTP.responseText ==0){
+							return false;
+						 }else{
+							return true;
+						 }
 					}
-					else 
-						return false
 				}
-			}
-			if(m=='GET')
+			xmlHTTP.open(m,t[0],a);
+			xmlHTTP.send(t[1]);
+			/*if(m=='GET')
 				b.send(null);
 			else{
 				b.setRequestHeader('content-type','application/x-www-form-urlencoded');
@@ -589,6 +582,7 @@
 				}else 
 					return false
 			}
+			*/
 		}
 	}
 })();

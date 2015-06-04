@@ -49,12 +49,12 @@ function get_parent_folder_id($id){
 function getPATH($id,$path){
 	if($id<0){
 		if($path==""){
-			$PATH = " \\ ".$path;
+			$PATH = " /".$path;
 		}else{
 			$PATH = $path;
 		}
 	}else{
-		$PATH = " \\ ".get_document_name($id).$path;
+		$PATH = " / ".get_document_name($id).$path;
 		global $tankdb;
 		$query_Recordset_pfilename = sprintf("SELECT * FROM tk_document WHERE docid = %s", GetSQLValueString($id, "int"));
 		$Recordset_pfilename = mysql_query($query_Recordset_pfilename, $tankdb) or die(mysql_error());

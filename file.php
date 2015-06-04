@@ -81,7 +81,8 @@ if ($searchf == "1"){
 	inner join tk_user as tk_user1 on tk_document.tk_doc_create=tk_user1.uid  
  
 	WHERE tk_document.tk_doc_parentdocid = %s  and tk_doc_del_status=1 
-	", GetSQLValueString($colname_DetailRS1, "int"));
+	and tk_doc_pid in ( select tk_team_pid from tk_team where tk_team_uid = %s and tk_team_del_status=1)
+	", GetSQLValueString($colname_DetailRS1, "int"),$_SESSION['MM_uid']);
 	$query_limit_DetailRS1 = sprintf("%s LIMIT %d, %d", $query_DetailRS1, $startRow_DetailRS1, $maxRows_DetailRS1);
 	$DetailRS1 = mysql_query($query_limit_DetailRS1, $tankdb) or die(mysql_error());
 	$row_DetailRS1 = mysql_fetch_assoc($DetailRS1);
@@ -103,9 +104,9 @@ if ($searchf == "1"){
 	
 	WHERE tk_document.tk_doc_parentdocid = %s  and tk_doc_del_status=1 
 	
-	and (tk_doc_create = %s or tk_doc_backup1=1)", 
+	and (tk_doc_create = %s or tk_doc_backup1=1) and tk_doc_pid in ( select tk_team_pid from tk_team where tk_team_uid = %s and tk_team_del_status=1)", 
 	GetSQLValueString($colname_DetailRS1, "int"),
-	$_SESSION['MM_uid']);
+	$_SESSION['MM_uid'],$_SESSION['MM_uid']);
 	//$inproject  $inprojects
 	$query_limit_DetailRS1 = sprintf("%s LIMIT %d, %d", $query_DetailRS1, $startRow_DetailRS1, $maxRows_DetailRS1);
 	$DetailRS1 = mysql_query($query_limit_DetailRS1, $tankdb) or die(mysql_error());

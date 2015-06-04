@@ -1,4 +1,5 @@
 <?php require_once('config/tank_config.php'); ?>
+<?php require_once('function/config_function.php'); ?>
 <?php
 
 $self =$_SERVER['PHP_SELF'];

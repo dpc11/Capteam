@@ -421,7 +421,7 @@ var CalHeatMap = function() {
 			},
 			format: {
 				date: "%A %B %-e, %Y",
-				legend: "%m/%e",
+				legend: "%m/%d",
 				connector: "on"
 			},
 			extractUnit: function(d) {
@@ -867,13 +867,34 @@ var CalHeatMap = function() {
 					g_id += "|" + id_name;
 					g_id+= "-" + hour_name;
 					return g_id;
+				})
+			.attr("class", function(d){
+					var hour_name=self.formatDate(new Date(d.t), options.subDomainTextFormat);
+					var date=new Date(d.t);
+					id_name="";
+					id_name += "" + date.getFullYear();
+					id_name += "-" + (date.getMonth() + 1);
+					id_name += "-" + date.getDate();
+					g_id="";
+					g_id += id_name;
+					g_id+= "-" + hour_name;
+					return " tipsodiv "+g_id;
+				})
+				.attr("onclick", function(d){
+					var hour_name=self.formatDate(new Date(d.t), options.subDomainTextFormat);
+					var date=new Date(d.t);
+					id_name="";
+					id_name += "" + date.getFullYear();
+					id_name += "-" + (date.getMonth() + 1);
+					id_name += "-" + date.getDate();
+					rect_id="rect";
+					rect_id += "|" +id_name;
+					rect_id+= "-" + hour_name;
+					return "getmsg(\""+rect_id+"\")";
 				});
 
 		rect
 			.append("rect")
-			.attr("class", function(d) {
-				return "graph-rect" + self.getHighlightClassName(d.t) + (options.onClick !== null ? " hover_cursor": "");
-			})
 			.attr("width", options.cellSize)
 			.attr("height", options.cellSize)
 			.attr("x", function(d) { return self.positionSubDomainX(d.t); })
@@ -889,6 +910,30 @@ var CalHeatMap = function() {
 					rect_id += "|" + id_name;
 					rect_id+= "-" + hour_name;
 					return rect_id;
+			})
+				.attr("onclick", function(d){
+					var hour_name=self.formatDate(new Date(d.t), options.subDomainTextFormat);
+					var date=new Date(d.t);
+					id_name="";
+					id_name += "" + date.getFullYear();
+					id_name += "-" + (date.getMonth() + 1);
+					id_name += "-" + date.getDate();
+					rect_id="rect";
+					rect_id += "|" +id_name;
+					rect_id+= "-" + hour_name;
+					return "getmsg(\""+rect_id+"\")";
+				})
+			.attr("class", function(d) {
+					var hour_name=self.formatDate(new Date(d.t), options.subDomainTextFormat);
+					var date=new Date(d.t);
+					id_name="";
+					id_name += "" + date.getFullYear();
+					id_name += "-" + (date.getMonth() + 1);
+					id_name += "-" + date.getDate();
+					rect_id="rect";
+					rect_id += "|" + id_name;
+					rect_id+= "-" + hour_name;
+				return "graph-rect tipsodiv "+rect_id + self.getHighlightClassName(d.t) + (options.onClick !== null ? " hover_cursor": "");
 			})
 			.on("click", function(d) {
 				if (options.onClick !== null) {
@@ -955,8 +1000,6 @@ var CalHeatMap = function() {
 		if (options.subDomainTextFormat !== null) {
 			rect
 				.append("text")
-				.attr("class", function(d) {
-				return "subdomain-text" + self.getHighlightClassName(d.t); })
 				.attr("x", function(d) { return self.positionSubDomainX(d.t) + options.cellSize/2; })
 				.attr("y", function(d) { return self.positionSubDomainY(d.t) + options.cellSize/2; })
 				.attr("text-anchor", "middle")
@@ -974,6 +1017,20 @@ var CalHeatMap = function() {
 					text_id+= "-" + hour_name;
 					return hour_name;
 				})
+				.attr("class", function(d) {
+					var hour_name=self.formatDate(new Date(d.t), options.subDomainTextFormat);
+					var date=new Date(d.t);
+					id_name="";
+					id_name += "" + date.getFullYear();
+					id_name += "-" + (date.getMonth() + 1);
+					id_name += "-" + date.getDate();
+					rect_id="rect";
+					text_id="";
+					rect_id +=  id_name;
+					rect_id+= "-" + hour_name;
+					text_id += "|" + id_name;
+					text_id+= "-" + hour_name;
+				return "subdomain-text tipsodiv  "+text_id+" " + self.getHighlightClassName(d.t); })
 				.attr("id", function(d){
 					var hour_name=self.formatDate(new Date(d.t), options.subDomainTextFormat);
 					var date=new Date(d.t);
@@ -988,6 +1045,18 @@ var CalHeatMap = function() {
 					text_id += "|" + id_name;
 					text_id+= "-" + hour_name;
 					return text_id;
+				})
+				.attr("onclick", function(d){
+					var hour_name=self.formatDate(new Date(d.t), options.subDomainTextFormat);
+					var date=new Date(d.t);
+					id_name="";
+					id_name += "" + date.getFullYear();
+					id_name += "-" + (date.getMonth() + 1);
+					id_name += "-" + date.getDate();
+					rect_id="rect";
+					rect_id += "|" +id_name;
+					rect_id+= "-" + hour_name;
+					return "getmsg(\""+rect_id+"\")";
 				});
 		}
 
@@ -1488,7 +1557,16 @@ CalHeatMap.prototype = {
 				if (parent.legendScale === null ||
 					(d.v === null && (options.hasOwnProperty("considerMissingDataAsZero") && !options.considerMissingDataAsZero) &&!options.legendColors.hasOwnProperty("base"))
 				) {
-					htmlClass.push("graph-rect");
+					var hour_name=parent.formatDate(new Date(d.t), options.subDomainTextFormat);
+					var date=new Date(d.t);
+					var id_name="";
+					id_name += "" + date.getFullYear();
+					id_name += "-" + (date.getMonth() + 1);
+					id_name += "-" + date.getDate();
+					var rect_id="";
+					rect_id +=id_name;
+					rect_id+= "-" + hour_name;
+					htmlClass.push("graph-rect  tipsodiv "+rect_id);
 				}
 
 				if (!pastDate && htmlClass.indexOf("now") === -1) {
@@ -1530,7 +1608,17 @@ CalHeatMap.prototype = {
 		 * instead of the date
 		 */
 		rect.transition().duration(options.animationDuration).select("text")
-			.attr("class", function(d) { return "subdomain-text" + parent.getHighlightClassName(d.t); })
+			.attr("class", function(d) { 
+			var hour_name=parent.formatDate(new Date(d.t), options.subDomainTextFormat);
+					var date=new Date(d.t);
+					var id_name="";
+					id_name += "" + date.getFullYear();
+					id_name += "-" + (date.getMonth() + 1);
+					id_name += "-" + date.getDate();
+					var text_id="";
+					text_id +=  id_name;
+					text_id+= "-" + hour_name;
+			return "subdomain-text  tipsodiv "+text_id+" " + parent.getHighlightClassName(d.t); })
 			.call(formatSubDomainText)
 		;
 	},

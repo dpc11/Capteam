@@ -582,10 +582,9 @@
 
                 <!-- 所有日程表主体部分 -->
                 <div>
-					<button  data-placement="top"
-    data-title="sample tooltip text" id="example-a-PreviousDomain-selector" style="margin-bottom: 10px;" class="btn btn-lg" style="height:10px;"><span class="glyphicon glyphicon-chevron-left    "></span></button>
-					<button id="example-a-NextDomain-selector" style="margin-bottom: 10px;" class="btn btn-lg"><span class="glyphicon glyphicon-chevron-right"></span></button>
-			
+					<button id="example-a-PreviousDomain-selector" class="btn" style="font-size:10px;height:30px;width:30px;margin-right: 10px;margin-left: 10px;padding:0px;"><span class="glyphicon glyphicon-chevron-left    "></span></button>
+					<button id="example-a-NextDomain-selector" style="font-size:10px;height:30px;width:30px;margin-right: 10px;padding:0px;" class="btn"><span class="glyphicon glyphicon-chevron-right"></span></button>
+					<p>颜色越深代表该时间段团队成员的日程越多</p>
                     <div id='calendar'  class="chart" >
                     </div>
                 </div>
@@ -609,8 +608,8 @@
 <script src='plug-in/calendar/js/d3.min.js'></script>
 <script src='plug-in/calendar/js/cal-heatmap.js'></script>
 <link rel="stylesheet" type="text/css" href="plug-in/calendar/css/cal-heatmap.css">
-<script src='plug-in/calendar/js/ggtooltip.js'></script>
-<link rel="stylesheet" type="text/css" href="plug-in/calendar/css/ggtooltip.css">
+<script src='plug-in/calendar/js/tipso.js'></script>
+<link rel="stylesheet" type="text/css" href="plug-in/calendar/css/tipso.css">
 <script type="text/javascript"> 
 	var flashvars = {"data-file":"chart_pie_project.php?recordID=<?php echo $row_DetailRS1['id']; ?>"};  
 	var params = {menu: "false",scale: "noScale",wmode:"opaque"};  
@@ -667,6 +666,12 @@
         $("#main_right").css("height", h);
 		
 		createCalendar("#calendar", {}, false);
+		$('.tipsodiv').tipso({
+							position: 'left',
+							background: 'rgb(236,236,236)',
+							color: '#663399',
+							useTitle: false
+						});
 		/*
 		$('#calendar').fullCalendar({
 			header: {
@@ -677,6 +682,10 @@
 			events: <?php echo json_encode($data); ?>,
 		});
 		*/
+		//$("button").ggtooltip({html:true}); 
+	
+		//$("rect").ggtooltip({html:true,title:"111"});
+		
 		$("#foot_top").css("min-height",document.getElementById("pagemargin").clientHeight+60+document.getElementById("top_height").clientHeight+"px");
 		$(window).resize();	
 	});
@@ -687,17 +696,36 @@
 		$("#foot_top").css("height",$(window).height()+"px"); 
 		$("#tree").css("height",document.getElementById("foot_top").clientHeight-66-60+"px"); 
 	});
-	$("button").ggtooltip(); 
 
-	 $("#calendar").hover(function(){
-		 var d = document.elementFromPoint(event.clientX,event.clientY).id;
-		 if(d.indexOf('g|')>=0||d.indexOf('rect|')>=0||d.indexOf('text|')>=0){
-			d=d.split('|')[1];
+	function getmsg(id){
+		 
+			var d=id.split('|')[1];
 			d=d.split('-');
 			var date=d[0]+"-"+d[1]+"-"+d[2];
 			var hour=d[3];
+			var xmlhttp;
+			if (window.XMLHttpRequest)
+			  {// code for IE7+, Firefox, Chrome, Opera, Safari
+			  xmlhttp=new XMLHttpRequest();
+			  }
+			else
+			  {// code for IE6, IE5
+			  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+			  }
+			xmlhttp.onreadystatechange=function()
+			  {
+			  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+				{
+					//document.getElementById(id).setAttribute("data-tipso",xmlhttp.responseText);
+					
+					$('.'+id.split('|')[1]).tipso('update','content',xmlhttp.responseText);
+					$('.tipsodiv').tipso('hide');
+					$('.'+id.split('|')[1]).tipso('show');
+				}
+			  }
+			xmlhttp.open("POST","project_spare_time_get.php",true);
+			xmlhttp.send("<?php echo $colname_DetailRS1; ?>|"+hour+"|"+date);
 		 }
-	 });	
 </script>
 
 

@@ -158,9 +158,9 @@ function addfolder()
 					<thead >
 						<tr>
 							<?php if($searchf == "1"){ ?>
-							<th  width="2%"  >
+							<th  width="1%"  >
 							</th>
-							<th  width="15%"  style="padding-left:2%" >
+							<th  width="20%"  style="padding-left:2%" >
 							<?php echo $multilingual_project_file_management; ?>
 							</th>
 							<th width="25%" style="text-align:center;" >
@@ -172,12 +172,12 @@ function addfolder()
 							<th width="10%" style="text-align:center;" >
 							<?php echo $multilingual_project_file_update_by; ?>
 							</th>
-							<th width="15%" style="text-align:center;" >
+							<th width="13%" style="text-align:center;" >
 							<?php echo $multilingual_project_file_update; ?>
 							</th>
 							<th width="16%" >	
 							</th>
-							<th  width="2%"  >
+							<th  width="1%"  >
 							</th>
 							<?php  } else { ?>
 							<th  width="10%"  >

@@ -44,9 +44,35 @@ J.exend( J.check, {
 	
 	chkajax : function( val, r )
 	{
+		var judge;
 	    J(r.mid).html('Ajax验证中...').acls('chkaj');
-		var ret = J.A.send( r.url + val ); return (ret == 0) ? false : true;
-	},
+		u= r.url+val;
+		var xmlHTTP;
+			var t=u.split('?');
+			var m='POST';
+			var a=false;
+			if (window.XMLHttpRequest)
+			  {// code for IE7+, Firefox, Chrome, Opera, Safari
+			   xmlHTTP = new XMLHttpRequest();
+			  }
+			else
+			  {// code for IE6, IE5
+			  xmlHTTP = ActiveXObject("Microsoft.XMLHTTP");
+			  }
+			xmlHTTP.onreadystatechange=function(){
+						if(xmlHTTP.readyState==4&&xmlHTTP.status==200){
+							if(xmlHTTP.responseText ==0){
+							judge=false;
+						 }else{
+							judge=true;
+						 }
+					}
+				}
+			xmlHTTP.open(m,t[0],a);
+			xmlHTTP.send(t[1]);
+			
+		return judge;
+	},													
 	
 	chkmatch : function( val, el )
 	{
@@ -162,7 +188,7 @@ J.exend( J.check, {
 				    case 'email': case 'english': case 'chinese': case 'url': case 'ip': case 'zip': case 'qq': case 'alpha': case 'phone':
 					    bool = this.chkregex( v, this.dtype[types[i]] ); break;
 					case 'cusre': bool = this.chkregex( v, new RegExp(r.regexp,'g') ); break;
-					case 'cusfn': bool = eval( r.cusfunc ); break;
+					case 'cusfn': bool = eval(r.cusfunc); break;
 					default : bool = eval( this.dtype[types[i]] ); break;
 				}
 				if(!bool){ einfo.push(warns[i]); break; }

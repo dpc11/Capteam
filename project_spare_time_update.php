@@ -77,9 +77,7 @@ for($i=0;$i<$length;$i++){//每天
 					}
 				}
 			}
-			//echo "<br>";
-			//echo "===course====".$grade;
-			/*	
+			
 			//查找个人日程
 			 $sql = "select * from tk_schedule where uid=".$uid." and ( 
 							(end_time<= '".date("Y-m-d H:i:s",strtotime($date." ".$hend))."' and  
@@ -103,8 +101,7 @@ for($i=0;$i<$length;$i++){//每天
 			$query = mysql_query($sql);
             $row=mysql_num_rows($query);
 			$grade=$grade+$row*5;
-			//echo "===task====".$row."|||".$grade;*/
-			
+					
 		}
 		if($grade>0){
 			fwrite($fp,"\"".strtotime($date." ".$hstart)."\":".$grade.",\r\n");

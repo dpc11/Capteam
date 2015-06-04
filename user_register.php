@@ -176,7 +176,7 @@ J.check.rules = [
 	{ name: 'textfield3', mid: 'password_msg', requir: true, type: 'cusfn', cusfunc: 'checkpassword2()', warn: '密码长度至多为25位' },
 	{ name: 'textfield3', mid: 'password_msg', requir: true, type: 'cusfn', cusfunc: 'checkpassword3()', warn: '密码中含有非法字符' },
 	{ name: 'textfield4', mid: 're_password_msg', requir: true, type: 'match', to: 'textfield3', warn: '两次密码不一致' },
-	{ name: 'textfield5', mid: 'email_msg', requir: true, type: 'email|cusfn',cusfunc: 'checkemail()', warn: '邮箱格式错误|邮箱已被注册' }
+	{ name: 'textfield5', mid: 'email_msg', requir: true, type: 'email|ajax', url:'if_email_register.php?', warn: '邮箱格式错误|邮箱已被注册'}
 ];
 
 function checkemail(){
@@ -200,7 +200,7 @@ function checkemail(){
 			 }
 	    }
 	  }
-	xmlhttp.open("POST","if_email_register.php",true);
+	xmlhttp.open("POST","if_email_register.php",false);
     xmlhttp.send("email="+document.getElementById("textfield5").value);
 }
 
