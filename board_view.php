@@ -112,11 +112,13 @@ span.usr.catch{background:#ffc!important;}
     var curTarget = null; //鼠标拖拽的目标元素 
     var curPos = null; 
     var dropTarget = null; //要放下的目标元素 
+    var activeTarget = null;
     var iMouseDown = false; //鼠标是否按下 
     var lMouseState = false; //前一个iMouseDown状态 
     var dragreplaceCont = []; 
     var mouseOffset = null; 
     var callbackFunc = null; 
+    var isboundary = 0;
     Number.prototype.NaN0 = function() { return isNaN(this) ? 0 : this; } 
     function setdragreplace(obj, callback) { 
         dragreplaceCont.push(obj); 
@@ -175,20 +177,61 @@ span.usr.catch{background:#ffc!important;}
                 with (dragreplaceCont[i]) { 
                     if (dragreplaceCont[i] == curTarget) 
                         continue; 
-                    if ((parseInt(getAttribute('startLeft')) < xPos) && 
-                        (parseInt(getAttribute('startTop')) < yPos) && 
-                        ((parseInt(getAttribute('startLeft')) + parseInt(getAttribute('startWidth'))) > xPos) && 
-                        ((parseInt(getAttribute('startTop')) + parseInt(getAttribute('startHeight'))) > yPos)) { 
+                    if (((parseInt(getAttribute('startLeft'))+0.3*parseInt(getAttribute('startWidth'))) < xPos) && 
+                        ((parseInt(getAttribute('startTop'))+0.3*parseInt(getAttribute('startHeight'))) < yPos) && 
+                        ((parseInt(getAttribute('startLeft')) + 0.6*parseInt(getAttribute('startWidth'))) > xPos) && 
+                        ((parseInt(getAttribute('startTop')) + 0.6*parseInt(getAttribute('startHeight'))) > yPos)) { 
                             havedrop = true; 
+                            isboundary = 0;
                             dropTarget = dragreplaceCont[i]; 
                             dropTarget.className = 'usr catch'; 
+                            activeTarget = null;
+                            break; 
+                    }
+                    if (((parseInt(getAttribute('startLeft'))+0.7*parseInt(getAttribute('startWidth'))) < xPos) && 
+                        ((parseInt(getAttribute('startTop'))+0.3*parseInt(getAttribute('startHeight'))) < yPos) && 
+                        ((parseInt(getAttribute('startLeft')) + 1.425*parseInt(getAttribute('startWidth'))) > xPos) && 
+                        ((parseInt(getAttribute('startTop')) + 0.6*parseInt(getAttribute('startHeight'))) > yPos)) { 
+                            havedrop = true; 
+                            isboundary = 0;
+                            activeTarget = dragreplaceCont[i]; 
+                            dropTarget = null;
                             break; 
                     } 
+
+                    if ((parseInt(getAttribute('startLeft')) < 650)&&((parseInt(getAttribute('startLeft'))-0.325*parseInt(getAttribute('startWidth'))) < xPos) && 
+                    ((parseInt(getAttribute('startTop'))+0.3*parseInt(getAttribute('startHeight'))) < yPos) && 
+                    ((parseInt(getAttribute('startLeft')) + 0.3*parseInt(getAttribute('startWidth'))) > xPos) && 
+                    ((parseInt(getAttribute('startTop')) + 0.6*parseInt(getAttribute('startHeight'))) > yPos))
+                    {
+                            havedrop = true;
+                            isboundary = 1;//是左边的时候
+                            activeTarget = dragreplaceCont[i]; 
+                            dropTarget = null;
+                            break; 
+                    }
+                        
                 } 
-            } 
+            }
+            /*将元素“放”在合适的地方*/
+            if(activeTarget){
+                if(isboundary==0 && beforeOrAfter(dragHelper,activeTarget) == "before" && activeTarget.parentNode.parentNode != nextElement(curTarget)){
+                    document.getElementById("displayRoom").insertBefore(curTarget.parentNode.parentNode,activeTarget.parentNode.parentNode);
+                }else if(isboundary==0 && beforeOrAfter(dragHelper,activeTarget) == "after" && activeTarget != previousElement(curTarget)){
+                    document.getElementById("displayRoom").insertBefore(curTarget.parentNode.parentNode,nextElement(activeTarget));
+                }
+                else if(isboundary == 1 && activeTarget != curTarget)
+                {
+                    document.getElementById("displayRoom").insertBefore(curTarget.parentNode.parentNode,activeTarget.parentNode.parentNode);
+                }
+            }
+
             if (!havedrop && dropTarget != null) { 
                 dropTarget.className = 'usr'; 
                 dropTarget = null; 
+            } 
+            if (!havedrop && activeTarget != null) {
+                activeTarget = null; 
             } 
         } //正在拖拽end 
         lMouseState = iMouseDown; 
@@ -217,10 +260,103 @@ span.usr.catch{background:#ffc!important;}
                 sourceP.appendChild(dropTarget); 
                 dropTarget.className = 'usr'; 
                 dropTarget = null; 
+                isboundary=0;
                 if (callbackFunc != null) { 
                     callbackFunc(curTarget); 
                 }
             } 
+            else if(curTarget.style.display == 'none' && activeTarget != null)
+            {
+                var curID = curTarget.parentNode.id;
+                var actID = activeTarget.parentNode.id;
+                var tag = 0; //顺序改变的时候是否activeTarget也要加1
+                //alert(curID);
+                // alert(actID);
+                if(isboundary == 1)//是换了左边界的 便签
+                {
+                    tag = 1;//active的顺序也要+1,cur变为active的顺序，cur之前的都要+1
+                }else//其他位置的标签
+                {
+                    tag = 0;//active以后的顺序+1,cur变为active+1的顺序，cur之前的都要+1
+                }
+                $.ajax( {
+                        type: "post",
+                        url : "insert_board.php",
+                        data: {"cur_board":curID,"act_board":actID,"tag":tag},
+                        success: function(data){//如果调用php成功,data为执行php文件后的返回值
+                        if(data == 1);
+                        else;
+                        }
+                 });
+                //改对象的顺序id
+                var curSeqID = parseInt(curID.substring(6));
+                var actSeqID = parseInt(actID.substring(6));
+
+                if(curSeqID>actSeqID)//从后到前移
+                {
+                    if(isboundary == 0)//激活的位置不是边界的便签
+                    {
+                        for(var k=curSeqID-1;k>actSeqID && k<curSeqID;k--)
+                        {
+                            var before_id = "parent"+k;
+                            var need_node = document.getElementById(before_id);
+                            var kk = k+1;
+                            var after_id = "parent"+kk;
+                            need_node.id=after_id;
+                        }
+                        var cur_after = actSeqID+1;
+                        var cur_after_id = "parent"+cur_after;
+                        curTarget.parentNode.id=cur_after_id;
+                    }else //交换的是左边边界上的便签
+                    {
+                        for(var k=curSeqID-1;k>=actSeqID && k<curSeqID;k--)
+                        {
+                            var before_id = "parent"+k;
+                            var need_node = document.getElementById(before_id);
+                            var kk = k+1;
+                            var after_id = "parent"+kk;
+                            need_node.id=after_id;
+                        }
+                        var cur_after = actSeqID;
+                        var cur_after_id = "parent"+cur_after;
+                        curTarget.parentNode.id=cur_after_id;
+                    }
+                }
+                else//从前到后移
+                {
+                    if(isboundary == 0)//激活的位置不是边界的便签
+                    {
+                        for(var k=curSeqID+1;k<=actSeqID && k>curSeqID;k++)
+                        {
+                            var before_id = "parent"+k;
+                            var need_node = document.getElementById(before_id);
+                            var kk = k-1;
+                            var after_id = "parent"+kk;
+                            need_node.id=after_id;
+                        }
+                        var cur_after = actSeqID;
+                        var cur_after_id = "parent"+cur_after;
+                        curTarget.parentNode.id=cur_after_id;
+                    }else //交换的是左边边界上的便签
+                    {
+                        for(var k=curSeqID+1;k<actSeqID && k>curSeqID;k++)
+                        {
+                            var before_id = "parent"+k;
+                            var need_node = document.getElementById(before_id);
+                            var kk = k-1;
+                            var after_id = "parent"+kk;
+                            need_node.id=after_id;
+                        }
+                        var cur_after = actSeqID-1;
+                        var cur_after_id = "parent"+cur_after;
+                        curTarget.parentNode.id=cur_after_id;
+                    }
+                }
+
+                
+                activeTarget=null;
+                isboundary = 0;
+            }
             curTarget.style.display = ''; 
             curTarget.style.visibility = 'visible'; 
             curTarget.setAttribute('candrag', '1'); 
@@ -239,6 +375,46 @@ span.usr.catch{background:#ffc!important;}
             return false; 
         } 
     } 
+
+    /*
+     * 返回下一个兄弟“元素”节点（跳过文本节点），为了应付非ie浏览器将换行符视为文本节点的想象。
+     */
+    function nextElement(node){
+        var rowNode = node.parentNode.parentNode;
+        for(var nextNode = rowNode.nextSibling;nextNode;nextNode = nextNode.nextSibling){
+            if(nextNode.nodeType == 1){
+                return nextNode;
+            }
+        }
+        return null;
+    }
+    /*
+     * 返回上一个兄弟“元素”节点（跳过文本节点），为了应付非ie浏览器将换行符视为文本节点的想象。
+     */
+    function previousElement(node){
+        var rowNode = node.parentNode.parentNode;
+        for(var previousNode = rowNode.previousSibling;previousNode;previousNode = previousNode.previousSibling){
+            if(previousNode.nodeType == 1){
+                return previousNode;
+            }
+        }
+        return null;
+    }
+
+    /*
+     * 判断obj1（的中点）是在obj2之前还是之后。用于决定curItem应该插在activeItem之前还是之后
+     */
+    function beforeOrAfter(obj1,obj2){
+        var center = {
+            x : obj1.offsetLeft + (obj1.offsetWidth)/2
+        };
+        if(center.x < (obj2.offsetLeft + (obj2.offsetWidth)/2)){
+            return "before";
+        }else{
+            return "after";
+        }
+    }
+
     //返回当前item相对页面左上角的坐标 
     function getPosition(e) { 
         var left = 0; 
