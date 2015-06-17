@@ -254,7 +254,7 @@
                                             if($user_authority > 2) { ?>
 											 <a href="meeting/video.php?r=capteam<?php echo $row_DetailRS1['id']; ?>&key=<?php echo md5("videowhispercapteam".$row_DetailRS1['id']); ?>&u=<?php echo $_SESSION['MM_Displayname']; ?>" target="_blank">
                                             <?php } else { ?>
-                                             <a href="meeting/index.php?r=capteam<?php echo $row_DetailRS1['id'] ?>" target="_blank">
+                                             <a href="meeting/video.php?r=capteam<?php echo $row_DetailRS1['id']; ?>&u=<?php echo $_SESSION['MM_Displayname']; ?>" target="_blank">
                                             <?php } ?>
                                                 
                                                  <span class="glyphicon glyphicon-user"></span> <?php echo $multilingual_project_conference; ?></a></td>
