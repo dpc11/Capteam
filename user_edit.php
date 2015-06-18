@@ -33,9 +33,7 @@ $tk_user_contact = sprintf("tk_user_contact=%s,", GetSQLValueString(str_replace(
 //}
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
-  $updateSQL = sprintf("UPDATE tk_user SET tk_display_name=%s, $tk_user_contact WHERE uid='$userid'",
-                       
-                       GetSQLValueString($_POST['tk_display_name'], "text"));
+  $updateSQL = sprintf("UPDATE tk_user SET tk_display_name=%s, tk_user_contact=%s WHERE uid=$userid", GetSQLValueString($_POST['tk_display_name'], "text"), GetSQLValueString($_POST['tk_user_contact'], "text"));
 
   mysql_select_db($database_tankdb, $tankdb);
   $Result1 = mysql_query($updateSQL, $tankdb) or die(mysql_error());
