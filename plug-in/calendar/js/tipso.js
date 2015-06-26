@@ -8,7 +8,7 @@
 ;(function($, window, document, undefined) {
   var pluginName = "tipso",
     defaults = {
-      speed           : 3,
+      speed           : 150,
       background      : '#99ccff',
       color           : '#333333',
       position        : 'top',

@@ -9,7 +9,6 @@ $date=$data[2];
 
 $user_arr = get_user_select_by_project($pid);
 
-	$src="";
 	//返回的字符串
 	$src="<h5>课程：</h5>";		
 	foreach($user_arr as $key => $val){ 
@@ -54,15 +53,15 @@ $user_arr = get_user_select_by_project($pid);
 					{
 						if($hstart <= $row['course_starttime'] && $hend> $row['course_starttime'])
 						{
-							$src = $src."<p class='message'>".$val['name']."  ".$row['course_name']."(".$row['course_starttime']."~".$row['course_endtime'].")</p>";
+							$src = $src."<p>".$val['name']."  ".$row['course_name']."(".$row['course_starttime']."~".$row['course_endtime'].")</p>";
 						}
 						else if($hend >= $row['course_endtime'] && $hstart < $row['course_endtime'])
 						{
-							$src = $src."<p class='message'>".$val['name']."  ".$row['course_name']."(".$row['course_starttime']."~".$row['course_endtime'].")</p>";
+							$src = $src."<p>".$val['name']."  ".$row['course_name']."(".$row['course_starttime']."~".$row['course_endtime'].")</p>";
 						}
 						else if($hstart > $row['course_starttime'] && $hend < $row['course_endtime'])
 						{
-							$src = $src."<p class='message'>".$val['name']."  ".$row['course_name']."(".$row['course_starttime']."~".$row['course_endtime'].")</p>";
+							$src = $src."<p>".$val['name']."  ".$row['course_name']."(".$row['course_starttime']."~".$row['course_endtime'].")</p>";
 						}
 					}
 				}
@@ -93,7 +92,7 @@ $user_arr = get_user_select_by_project($pid);
 			$RS2 = mysql_query($sql, $tankdb) or die(mysql_error());
 			while($row=mysql_fetch_assoc($RS2))
 			{
-				$src=$src."<p class='message'>".$val['name']."  ".$row['name']."(".$row['start_time']."~".$row['end_time'].")</p>";
+				$src=$src."<p>".$val['name']."  ".$row['name']."(".$row['start_time']."~".$row['end_time'].")</p>";echo $src;
 			}
 		}
 		
@@ -110,7 +109,7 @@ $user_arr = get_user_select_by_project($pid);
             $RS2 = mysql_query($sql, $tankdb) or die(mysql_error());
 			while($row=mysql_fetch_assoc($RS2))
 			{
-				$src=$src."<p class='message'>".$val['name']."  ".$row['project_name']."(".$row['csa_plan_st']."~".$row['csa_plan_et'].")</p>";
+				$src=$src."<p>".$val['name']."  ".$row['project_name']."(".$row['csa_plan_st']."~".$row['csa_plan_et'].")</p>";
 			}
 		}
 	//改为return该值就好 格式：课程名(开始时间~结束时间);

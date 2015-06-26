@@ -578,7 +578,7 @@
 
           <!-- 日历表 -->
   <div class="tab_b" id="tab_a1"  style="overflow-y: auto;max-height:300px"  style="display:none">
-            <div >
+            <div class="pagemargin">
 
                 <!-- 所有日程表主体部分 -->
                 <div>
@@ -594,10 +594,6 @@
           </td>
       </tr>
     </table>
-</div>
-</td>
-</tr>
-</table>
 </div>
 </div>
 
@@ -634,7 +630,7 @@
 	
 	function tabs(n)
 	{
-		var len = 4;
+		var len = 3;
 		for (var i = 1; i <= len; i++)
 		{
 			document.getElementById('tab_a' + i).style.display = (i == n) ? 'block' : 'none';
@@ -675,7 +671,21 @@
 							background: 'rgb(236,236,236)',
 							color: '#663399',
 							useTitle: false
-						});		
+						});
+		/*
+		$('#calendar').fullCalendar({
+			header: {
+				left: 'prev today next',
+				center: 'title',
+				right: 'month,agendaWeek'
+			},
+			events: <?php echo json_encode($data); ?>,
+		});
+		*/
+		//$("button").ggtooltip({html:true}); 
+	
+		//$("rect").ggtooltip({html:true,title:"111"});
+		
 		$("#foot_top").css("min-height",document.getElementById("pagemargin").clientHeight+60+document.getElementById("top_height").clientHeight+"px");
 		$(window).resize();	
 	});
@@ -694,7 +704,6 @@
 			var date=d[0]+"-"+d[1]+"-"+d[2];
 			var hour=d[3];
 			var xmlhttp;
-			$('.tipsodiv').tipso('hide');
 			if (window.XMLHttpRequest)
 			  {// code for IE7+, Firefox, Chrome, Opera, Safari
 			  xmlhttp=new XMLHttpRequest();
@@ -710,6 +719,7 @@
 					//document.getElementById(id).setAttribute("data-tipso",xmlhttp.responseText);
 					
 					$('.'+id.split('|')[1]).tipso('update','content',xmlhttp.responseText);
+					$('.tipsodiv').tipso('hide');
 					$('.'+id.split('|')[1]).tipso('show');
 				}
 			  }
